@@ -6,9 +6,9 @@ plugins {
 }
 
 application {
-    mainClass.set(/* Main class name here */)
+    // Define the main class for the application.
+    mainClass.set("oop23.gfight.App")
 }
-
 repositories {
     mavenCentral()
 }
@@ -22,6 +22,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-    testLogging { events(TestLogEvent.values()) }
-    testLogging.showStandardStreams = true
+    testLogging { 
+        events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
+        showStandardStreams = true 
+        }
 }
