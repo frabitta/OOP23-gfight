@@ -55,7 +55,6 @@ classDiagram
 
     class AliveEntity{
         getLife() int
-
     }
 
     class MovableEntity{
@@ -71,6 +70,70 @@ classDiagram
 ```
 # Capitolo 2 - Design
 ## 2.1 Architettura
+L'architettura del nostro programma è quella del tipico Model View Controller. L'applicazione si compone di un controller composto da una singola view che svolge il ruolo di visualizzare gli elementi passati dal controller e di ricevere input dalle periferiche e passarle al controller. Il controller gestisce il main loop del gioco e il passaggio degli input dalla view al model, e dei dati da stampare (sotto forma di GraphicsComponent) dal Model alla View.
+Per questo motivo View e Model sono indipendenti tra di loro e si affidano unicamente al controller. Facendo riferimento alle interfacce richieste è possibile cambiare tecnologia della View facilmente in quanto è necessario solo definire la finestra, i metodi per stampare le forme richieste dal gioco (in ViewAPI) e notificare il controller degli input.
+Il controller richiama l'update del model, gli passa gli input, prende da lui i componenti grafici che devono essere stampati e ne legge lo stato del gioco. 
+Per questo motivo è anche facile cambiare il model dell'applicazione e riusare il resto dell'applicazione per altri giochi.
+```mermaid
+classDiagram
+    Controller o--o View
+    View --> GraphicsComponent
+    Controller o-- Model
+    Model o-- GameObject  
+    GraphicsComponent --o GameObject
+
+    View --> ViewAPI
+
+    <<Interface>> View
+    <<Interface>> ViewAPI
+    <<Interface>> Controller
+    <<Interface>> Model
+    <<Interface>> GameObject
+    <<Interface>> GraphicsComponent
+
+    class View {
+      render()
+    }
+
+    class ViewAPI {
+      enum DrawableShape
+      drawCircle()
+      drawRectangle()
+    }
+
+    class GameObject {
+
+    }
+
+    class GraphicsComponent {
+      DrawableShape
+      Color
+      Position
+      Rotation
+    }
+
+    class Controller {
+      init()
+      mainLoop()
+      notifyCommand()
+    }
+
+    class Model {
+      update()
+      getGraphicsComponents()
+    }
+```
+```
+Nel rendering la View chiede al controller i componenti grafici da stampare (di tutti gli elementi del gioco) e ciclandoli li stampa seguendo le loro indicazioni
+
+Controller (ENGINE):
+- init:
+  - crea finestra
+  - crea model
+- mainLoop:
+  - come da gameAsALab
+- l'input lo prende la view, la passa al controller (pattern Observer step 4 gameAsALab), il controller lo passa al model.
+```
 ## 2.2 Design dettagliato
 # Capitolo 3 - Sviluppo
 ## 3.1 Testing automatizzato
