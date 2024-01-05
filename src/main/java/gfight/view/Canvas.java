@@ -2,13 +2,11 @@ package gfight.view;
 
 import javax.swing.JPanel;
 
-import gfight.common.Pair;
-import gfight.view.GraphicsComponent.EngineColor;
-import gfight.view.ShapeGraphicsComponent.ShapeType;
-
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+
+import java.util.List;
 
 /**
  * Canvas class for JSwing,
@@ -16,14 +14,16 @@ import java.awt.RenderingHints;
  */
 public class Canvas extends JPanel {
 
-    private final int centerX;
-    private final int centerY;
+    //private final int centerX;
+    //private final int centerY;
+    private final SwingView scene;
 
-    Canvas(final int width, final int height) {
+    Canvas(final int width, final int height, final SwingView scene) {
+        this.scene = scene;
+        //this.centerX = width / 2;
+        //this.centerY = height / 2;
+
         setSize(width, height);
-
-        this.centerX = width / 2;
-        this.centerY = height / 2;
         //this.addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -39,9 +39,7 @@ public class Canvas extends JPanel {
 		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
         final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2);
-
-        renderer.drawGraphicsComponent(new ShapeGraphicsComponent(EngineColor.BLUE, new Pair(centerX, centerY), null, ShapeType.CIRCLE, 40, 40));
-        renderer.drawGraphicsComponent(new ShapeGraphicsComponent(EngineColor.RED, new Pair(100, 100), null, ShapeType.RECTANGLE, 100, 100));
-        renderer.drawGraphicsComponent(new TextGraphicsComponent(EngineColor.BLACK, new Pair(40, 60), null, "Banco di prova"));
+        final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();
+        gCompList.stream().forEach(comp -> renderer.drawGraphicsComponent(comp));
     }
 }

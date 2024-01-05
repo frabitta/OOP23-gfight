@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 
 import gfight.engine.Engine;
 
+import java.util.List;
+
 /**
  * An EngineView implementation using JSwing.
  */
@@ -18,6 +20,7 @@ public class SwingView implements EngineView {
 
     private final Engine controller;
     private JFrame frame;
+    private List<GraphicsComponent> gComponentsList;
 
     /**
      * Constructor of the view.
@@ -34,7 +37,7 @@ public class SwingView implements EngineView {
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         //frame.setResizable(false);
 
-        final Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        final Canvas canvas = new Canvas(WIDTH, HEIGHT, this);
         frame.getContentPane().add(canvas);
 
         frame.addWindowListener(new WindowAdapter() { //needs to be changed------------
@@ -54,8 +57,13 @@ public class SwingView implements EngineView {
     }
 
     @Override
-    public void render() {
+    public void render(List<GraphicsComponent> gComponentsList) {
+        this.gComponentsList = gComponentsList;
         this.frame.repaint();
+    }
+
+    List<GraphicsComponent> getGraphicsComponents() {
+        return gComponentsList;
     }
 
 }

@@ -1,5 +1,7 @@
 package gfight.view;
 
+import java.util.List;
+
 /**
  * A viewer for the engine.
  */
@@ -13,5 +15,5 @@ public interface EngineView {
     /**
      * Renders a frame.
      */
-    void render();
+    void render(List<GraphicsComponent> gComponentsList);
 }

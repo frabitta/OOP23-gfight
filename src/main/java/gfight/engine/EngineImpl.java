@@ -1,6 +1,8 @@
 package gfight.engine;
 
 import gfight.view.EngineView;
+import gfight.world.TestWorld;
+import gfight.world.World;
 import gfight.view.SwingView;
 
 /**
@@ -12,11 +14,15 @@ public class EngineImpl implements Engine {
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
 
     private EngineView view;
+    private World world;
 
     @Override
     public void initialize() {
         view = new SwingView(this);
         view.initialize();
+
+        world = new TestWorld();
+        world.instantiate();
     }
 
     @Override
@@ -46,10 +52,11 @@ public class EngineImpl implements Engine {
     }
 
     private void render() {
-        view.render();
+        view.render(world.getGraphicsComponents());
     }
 
     private void update(final long deltaTime) {
+        world.update(deltaTime);
     }
 
     private void processInput() {

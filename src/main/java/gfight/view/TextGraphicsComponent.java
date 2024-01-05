@@ -17,7 +17,7 @@ public class TextGraphicsComponent extends AbstractGraphicsComponent {
      * @param rot
      * @param text
      */
-    TextGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot, final String text) {
+    public TextGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot, final String text) {
         super(color, pos, rot);
         this.text = text;
     }

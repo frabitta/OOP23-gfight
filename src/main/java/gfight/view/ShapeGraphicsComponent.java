@@ -11,7 +11,7 @@ public class ShapeGraphicsComponent extends AbstractGraphicsComponent {
     /**
      * available shapes.
      */
-    enum ShapeType {
+    public enum ShapeType {
         CIRCLE, RECTANGLE 
     }
 
@@ -19,7 +19,7 @@ public class ShapeGraphicsComponent extends AbstractGraphicsComponent {
     private int width;
     private int height;
 
-    ShapeGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot,
+    public ShapeGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot,
     final ShapeType shapeType, final int width, final int height) {
         super(color, pos, rot);
         this.shapeType = shapeType;
