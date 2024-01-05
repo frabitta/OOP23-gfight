@@ -10,6 +10,9 @@ import gfight.view.TextGraphicsComponent;
 
 import java.util.stream.Stream;
 
+/**
+ * A test implementation of the World interface.
+ */
 public class TestWorld implements World {
 
     private int counter;
@@ -28,7 +31,7 @@ public class TestWorld implements World {
     }
 
     @Override
-    public void update(long deltaTime) {
+    public void update(final long deltaTime) {
         this.counter++;
         counterGraph.setText(String.valueOf(counter));
     }

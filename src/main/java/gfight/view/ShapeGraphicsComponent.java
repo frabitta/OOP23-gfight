@@ -12,13 +12,29 @@ public class ShapeGraphicsComponent extends AbstractGraphicsComponent {
      * available shapes.
      */
     public enum ShapeType {
-        CIRCLE, RECTANGLE 
+        /**
+         * Circle
+         */
+        CIRCLE,
+        /**
+         * Rectangle
+         */
+        RECTANGLE 
     }
 
     private ShapeType shapeType;
     private int width;
     private int height;
 
+    /**
+     * Contructor of a GraphicsComponent for shapes
+     * @param color
+     * @param pos
+     * @param rot
+     * @param shapeType
+     * @param width
+     * @param height
+     */
     public ShapeGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot,
     final ShapeType shapeType, final int width, final int height) {
         super(color, pos, rot);

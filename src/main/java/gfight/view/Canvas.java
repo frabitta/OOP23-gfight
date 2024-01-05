@@ -35,8 +35,8 @@ public class Canvas extends JPanel {
         final Graphics2D g2 = (Graphics2D) g;   //Unchecked/unconfirmed cast da sistemare---------
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		g2.clearRect(0, 0, this.getWidth(), this.getHeight());
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
         final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2);
         final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();

@@ -14,6 +14,7 @@ public interface EngineView {
 
     /**
      * Renders a frame.
+     * @param gComponentsList
      */
     void render(List<GraphicsComponent> gComponentsList);
 }
