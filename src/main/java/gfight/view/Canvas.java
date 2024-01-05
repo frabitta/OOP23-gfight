@@ -27,12 +27,12 @@ public class Canvas extends JPanel {
         //this.addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        requestFocusInWindow(); 
+        requestFocusInWindow(); //spotbugs  Overridable method requestFocusInWindow is called from constructor, sistema --------------
     }
 
     @Override
     public void paint(final Graphics g) {
-        final Graphics2D g2 = (Graphics2D) g;
+        final Graphics2D g2 = (Graphics2D) g;   //Unchecked/unconfirmed cast da sistemare---------
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
