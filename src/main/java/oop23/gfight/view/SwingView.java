@@ -6,15 +6,21 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
-import oop23.gfight.engine.EngineView;
+import oop23.gfight.engine.Engine;
 
 public class SwingView implements EngineView{
+
+    //private final Engine controller;
 
     private JFrame frame;
     private Canvas canvas;
 
     private int width = 500;
     private int height = 400;
+
+    public SwingView(Engine controller) {
+    //    this.controller = controller;
+    }
 
     @Override
     public void initialize() {
@@ -28,12 +34,13 @@ public class SwingView implements EngineView{
 
         frame.addWindowListener(new WindowAdapter(){//needs to be changed------------
 			public void windowClosing(WindowEvent ev){
-				System.exit(-1);
+				System.exit(1);
 			}
 			public void windowClosed(WindowEvent ev){
-				System.exit(-1);
+				System.exit(1);
 			}
 		});
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		frame.pack();
 		frame.setVisible(true);

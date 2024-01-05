@@ -2,8 +2,10 @@ package oop23.gfight.view;
 
 import javax.swing.JPanel;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+import oop23.gfight.common.Pair;
+import oop23.gfight.view.GraphicsComponent.EngineColor;
+import oop23.gfight.view.ShapeGraphicsComponent.ShapeType;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -33,9 +35,11 @@ public class Canvas extends JPanel{
 		g2.setRenderingHint(RenderingHints.KEY_RENDERING,
 				RenderingHints.VALUE_RENDER_QUALITY);
 		g2.clearRect(0,0,this.getWidth(),this.getHeight());
+        
+        GraphicsRenderer renderer = new SwingGraphicsRenderer(g2);
 
-        g2.setColor(Color.BLUE);
-		g2.setStroke(new BasicStroke(4f));
-        g2.drawOval(centerX-20, centerY-20, 40, 40);
+        renderer.drawGraphicsComponent(new ShapeGraphicsComponent(EngineColor.Blue, new Pair(centerX,centerY), null, ShapeType.Circle, 40, 40));
+        renderer.drawGraphicsComponent(new ShapeGraphicsComponent(EngineColor.Red, new Pair(100,100), null, ShapeType.Rectangle,100,100));
+        renderer.drawGraphicsComponent(new TextGraphicsComponent(EngineColor.Black, new Pair(40, 60), null, "Banco di prova"));
     }
 }

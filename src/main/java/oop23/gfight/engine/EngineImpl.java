@@ -1,5 +1,6 @@
 package oop23.gfight.engine;
 
+import oop23.gfight.view.EngineView;
 import oop23.gfight.view.SwingView;
 
 public class EngineImpl implements Engine{
@@ -12,7 +13,7 @@ public class EngineImpl implements Engine{
     @Override
     public void initialize() {
         System.out.println("Initialized");
-        view = new SwingView();
+        view = new SwingView(this);
         view.initialize();
     }
 
@@ -31,7 +32,7 @@ public class EngineImpl implements Engine{
         System.out.println("App closed");
     }
 
-    /*Needs to be checked--------------------- */
+    /*Needs to be changed--------------------- */
     private void waitNextFrame(long frameStartTime) {
         long dt = System.currentTimeMillis() - frameStartTime;
 		if (dt < frameLenght){

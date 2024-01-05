@@ -1,4 +1,4 @@
-package oop23.gfight.engine;
+package oop23.gfight.view;
 
 public interface EngineView {
     void initialize();
