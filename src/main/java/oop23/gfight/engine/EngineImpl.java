@@ -1,13 +1,19 @@
 package oop23.gfight.engine;
 
+import oop23.gfight.view.SwingView;
+
 public class EngineImpl implements Engine{
     
     private static final int frameRate = 60;
-    private final long frameLenght = 1000/frameRate;
+    private static final long frameLenght = 1000/frameRate;
+    
+    private EngineView view; 
 
     @Override
     public void initialize() {
         System.out.println("Initialized");
+        view = new SwingView();
+        view.initialize();
     }
 
     @Override
@@ -25,6 +31,7 @@ public class EngineImpl implements Engine{
         System.out.println("App closed");
     }
 
+    /*Needs to be checked--------------------- */
     private void waitNextFrame(long frameStartTime) {
         long dt = System.currentTimeMillis() - frameStartTime;
 		if (dt < frameLenght){
@@ -35,7 +42,8 @@ public class EngineImpl implements Engine{
     }
 
     private void render() {
-        System.out.println(counter+"");
+        //System.out.println(counter+"");
+        view.render();
     }
 
     private int counter=0;
