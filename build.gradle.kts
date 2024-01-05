@@ -7,7 +7,7 @@ plugins {
 
 application {
     // Define the main class for the application.
-    mainClass.set("oop23.gfight.App")
+    mainClass.set("gfight.App")
 }
 repositories {
     mavenCentral()

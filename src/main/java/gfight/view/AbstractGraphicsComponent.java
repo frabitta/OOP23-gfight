@@ -1,15 +1,18 @@
-package oop23.gfight.view;
+package gfight.view;
 
-import oop23.gfight.common.Position2D;
-import oop23.gfight.common.Rotation2D;
+import gfight.common.Position2D;
+import gfight.common.Rotation2D;
 
+/**
+ * Abstract class for a generic GraphicsComponent.
+ */
 public class AbstractGraphicsComponent implements GraphicsComponent {
 
     private EngineColor color;
     private Position2D pos;
     private Rotation2D rot;
 
-    AbstractGraphicsComponent(EngineColor color, Position2D pos, Rotation2D rot) {
+    AbstractGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot) {
         this.color = color;
         this.pos = pos;
         this.rot = rot;
@@ -30,15 +33,18 @@ public class AbstractGraphicsComponent implements GraphicsComponent {
         return this.rot;
     }
 
-    public void setColor(EngineColor color) {
+    @Override
+    public void setColor(final EngineColor color) {
         this.color = color;
     }
 
-    public void setPos(Position2D pos) {
+    @Override
+    public void setPosition(final Position2D pos) {
         this.pos = pos;
     }
 
-    public void setRot(Rotation2D rot) {
+    @Override
+    public void setRotation(final Rotation2D rot) {
         this.rot = rot;
     }
 
