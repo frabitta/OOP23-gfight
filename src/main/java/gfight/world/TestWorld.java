@@ -18,6 +18,7 @@ public class TestWorld implements World {
     private int counter;
     private TextGraphicsComponent counterGraph;
     private List<GraphicsComponent> elements;
+    private MovableCamera camera;
 
     @Override
     public void instantiate() {
@@ -39,6 +40,11 @@ public class TestWorld implements World {
     @Override
     public List<GraphicsComponent> getGraphicsComponents() {
         return Stream.concat(this.elements.stream(), Stream.of(counterGraph)).toList();
+    }
+
+    @Override
+    public void installCamera(MovableCamera camera) {
+        this.camera = camera;
     }
 
 }

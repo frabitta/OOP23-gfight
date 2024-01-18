@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Canvas class for JSwing,
@@ -18,7 +19,9 @@ public class Canvas extends JPanel {
     //private final int centerY;
     private final SwingView scene;
 
-    Canvas(final int width, final int height, final SwingView scene) {
+    private final ViewableCamera camera;
+
+    Canvas(final int width, final int height, final SwingView scene, ViewableCamera camera) {
         this.scene = scene;
         //this.centerX = width / 2;
         //this.centerY = height / 2;
@@ -28,6 +31,8 @@ public class Canvas extends JPanel {
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
         requestFocusInWindow(); //spotbugs  Overridable method requestFocusInWindow is called from constructor, sistema --------------
+
+        this.camera = camera;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class Canvas extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2);
+        final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2,this.camera);
         final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();
         gCompList.stream().forEach(comp -> renderer.drawGraphicsComponent(comp));
     }

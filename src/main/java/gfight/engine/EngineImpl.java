@@ -1,5 +1,6 @@
 package gfight.engine;
 
+import gfight.common.Pair;
 import gfight.view.EngineView;
 import gfight.world.TestWorld;
 import gfight.world.World;
@@ -18,11 +19,15 @@ public class EngineImpl implements Engine {
 
     @Override
     public void initialize() {
+        Camera camera = new CameraImpl();
+        camera.moveTo(new Pair(40, 40));
+
         view = new SwingView(this);
-        view.initialize();
+        view.initialize(camera);
 
         world = new TestWorld();
         world.instantiate();
+        world.installCamera(camera);
     }
 
     @Override

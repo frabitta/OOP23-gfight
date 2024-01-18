@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import gfight.engine.Engine;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * An EngineView implementation using JSwing.
@@ -31,13 +32,13 @@ public class SwingView implements EngineView {
     }
 
     @Override
-    public void initialize() {
+    public void initialize(ViewableCamera camera) {
         frame = new JFrame("Geometry Fight");
         frame.setSize(WIDTH, HEIGHT);     //needs to be changed---------------
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         //frame.setResizable(false);
 
-        final Canvas canvas = new Canvas(WIDTH, HEIGHT, this);
+        final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
         frame.getContentPane().add(canvas);
 
         frame.addWindowListener(new WindowAdapter() { //needs to be changed------------
