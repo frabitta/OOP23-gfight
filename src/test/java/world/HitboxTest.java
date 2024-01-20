@@ -1,15 +1,11 @@
 package world;
 
-import org.locationtech.jts.geom.Polygon;
 import gfight.world.Hitbox;
 import org.locationtech.jts.geom.Coordinate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HitboxTest {
     /*
@@ -18,19 +14,18 @@ public class HitboxTest {
     @Test
     void testBox() {
         Hitbox hitbox = new Hitbox();
-        assertTrue(
-                hitbox.isColliding(
-                        hitbox.getGeometry(new Coordinate[] {
-                                new Coordinate(0, 0),
-                                new Coordinate(0, 2),
-                                new Coordinate(2, 2),
-                                new Coordinate(2, 0)
-                        }),
-                        hitbox.getGeometry(new Coordinate[] {
-                                new Coordinate(1, 1),
-                                new Coordinate(3, 1),
-                                new Coordinate(1, 3)
-                        })));
+        assertTrue(hitbox.isColliding(
+                hitbox.getGeometry(new Coordinate[] {
+                        new Coordinate(0, 0),
+                        new Coordinate(0, 2),
+                        new Coordinate(2, 2),
+                        new Coordinate(2, 0)
+                }),
+                hitbox.getGeometry(new Coordinate[] {
+                        new Coordinate(1, 1),
+                        new Coordinate(3, 1),
+                        new Coordinate(1, 3)
+                })));
         assertFalse(hitbox.isColliding(
                 hitbox.getGeometry(new Coordinate[] {
                         new Coordinate(0, 0),
