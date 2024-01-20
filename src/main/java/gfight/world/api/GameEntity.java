@@ -1,4 +1,4 @@
-package gfight.world;
+package gfight.world.api;
 
 import java.util.Set;
 import org.locationtech.jts.geom.Polygon;
