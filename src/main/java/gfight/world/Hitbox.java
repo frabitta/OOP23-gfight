@@ -1,7 +1,8 @@
 package gfight.world;
 
+import java.util.Arrays;
+
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
@@ -13,9 +14,11 @@ public class Hitbox {
      * @param vertexes of the polygon
      * @return polygon geometry itself
      */
-    public Geometry getGeometry(Coordinate[] vertexes){
+    public Polygon getGeometry(Coordinate[] vertexes){
         final GeometryFactory factory = new GeometryFactory();
-        return factory.createPolygon(vertexes);
+        final Coordinate[] polygon = Arrays.copyOf(vertexes, vertexes.length+1);
+        polygon[vertexes.length]=polygon[0];
+        return factory.createPolygon(polygon);
     }
 
 
@@ -27,8 +30,8 @@ public class Hitbox {
      * @param coollided is the object that can be hitted
      * @return if the collision happens
      */
-    boolean isColliding(Polygon collider, Geometry coollided){
-        PreparedPolygon myObject = new PreparedPolygon(collider);
-        return myObject.crosses(coollided);
+    public boolean isColliding(Polygon collider, Polygon coollided){
+        final PreparedPolygon myObject = new PreparedPolygon(collider);
+        return myObject.intersects(coollided);
     }
 }
