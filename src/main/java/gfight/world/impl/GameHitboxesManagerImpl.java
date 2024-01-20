@@ -19,6 +19,5 @@ public class GameHitboxesManagerImpl implements GameHitboxesManager{
         Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
         gameObjects.stream().forEach(entity->collisionMap.put(entity, entity.getAllCollided()));
         return collisionMap;
-    }
-    
+    }    
 }
