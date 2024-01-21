@@ -1,13 +1,12 @@
 package gfight.world.api;
 
-import java.util.Set;
 import org.locationtech.jts.geom.Polygon;
-import org.locationtech.jts.geom.Coordinate;
 
 public interface GameEntity {
+
+    /**
+     * 
+     * @return the boudingBox of the game entity
+     */
     Polygon getHitBox();
-
-    Set<GameEntity> getAllCollided();
-
-    void reset();
 }

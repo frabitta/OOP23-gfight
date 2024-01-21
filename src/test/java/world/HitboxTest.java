@@ -1,6 +1,8 @@
 package world;
 
 import gfight.world.Hitbox;
+import gfight.world.impl.CachedGameEntityImpl;
+
 import org.locationtech.jts.geom.Coordinate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,5 +44,6 @@ public class HitboxTest {
         polygon4.add(new Coordinate(3.1, 2));
 
         assertFalse(hitbox.isColliding(hitbox.getGeometry(polygon3), hitbox.getGeometry(polygon4)));
+    
     }
 }

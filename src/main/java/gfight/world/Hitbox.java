@@ -1,7 +1,6 @@
 package gfight.world;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
