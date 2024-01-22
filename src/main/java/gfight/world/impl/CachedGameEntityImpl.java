@@ -6,9 +6,10 @@ import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import java.util.LinkedHashSet;
-import gfight.world.Hitbox;
+
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
+import gfight.world.api.Hitbox;
 
 public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
@@ -50,7 +51,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private void allCollisions(Set<CachedGameEntity> gameObjects) {
         collidedObjectes.clear();
-        final Hitbox hitbox = new Hitbox();
+        final Hitbox hitbox = new HitboxImpl();
         gameObjects.stream()
                 .filter(a -> !a.equals(this) && hitbox.isColliding(this.getHitBox(), a.getHitBox()))
                 .forEach(entity -> collidedObjectes.add(entity));
