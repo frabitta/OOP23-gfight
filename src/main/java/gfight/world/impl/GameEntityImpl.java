@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class GameEntityImpl implements GameEntity {
     private final List<Coordinate> vertexes = new ArrayList<>();
+    private Coordinate position;
 
     public GameEntityImpl(List<Coordinate> vertexes) {
         vertexes.addAll(vertexes);
@@ -19,5 +20,15 @@ public class GameEntityImpl implements GameEntity {
     public Polygon getHitBox() {
         Hitbox hitbox = new Hitbox();
         return hitbox.getGeometry(vertexes);
+    }
+
+    @Override
+    public void setPosition(Coordinate position) {
+        this.position = new Coordinate(position);
+    }
+
+    @Override
+    public Coordinate getPosition() {
+        return new Coordinate(position);
     }
 }

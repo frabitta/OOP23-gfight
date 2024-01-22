@@ -1,7 +1,6 @@
 package world;
 
 import gfight.world.Hitbox;
-import gfight.world.impl.CachedGameEntityImpl;
 
 import org.locationtech.jts.geom.Coordinate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
