@@ -35,4 +35,22 @@ public class Hitbox {
         final PreparedPolygon myObject = new PreparedPolygon(collider);
         return myObject.intersects(coollided);
     }
+
+    /**
+     * Crea un poligono rappresentante un quadrato dato il centro e la lunghezza del
+     * lato.
+     * 
+     * @param centre centro del quadrato
+     * @param side   lunghezza del lato
+     * @return poligono rappresentante il quadrato
+     */
+    public Polygon getSquare(Coordinate centre, double side) {
+        double halfSide = side / 2.0;
+        List<Coordinate> coordinates = new ArrayList<>();
+        coordinates.add(new Coordinate(centre.getX() - halfSide, centre.getY() - halfSide));
+        coordinates.add(new Coordinate(centre.getX() + halfSide, centre.getY() - halfSide));
+        coordinates.add(new Coordinate(centre.getX() + halfSide, centre.getY() + halfSide));
+        coordinates.add(new Coordinate(centre.getX() - halfSide, centre.getY() + halfSide));
+        return getGeometry(coordinates);
+    }
 }
