@@ -9,4 +9,11 @@ public interface GameTile {
         EMPTY,
         SPAWNER
     }
+
+    /**
+     * Get the status of a game tile
+     * 
+     * @return the status of the game tile
+     */
+    TileStatus getStatus();
 }
