@@ -3,7 +3,8 @@ package gfight.world.impl;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import java.util.List;
-
+import java.util.Set;
+import java.util.LinkedHashSet;
 import gfight.world.api.GameEntity;
 import gfight.world.api.Hitbox;
 
@@ -31,5 +32,16 @@ public class GameEntityImpl implements GameEntity {
     @Override
     public Coordinate getPosition() {
         return new Coordinate(position);
+    }
+
+    @Override
+    public Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects) {
+        final Hitbox hitbox = new HitboxImpl();
+        final Polygon boundingBox = this.getHitBox();
+        final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
+        gameObjects.stream()
+                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox()))
+                .forEach(entity -> collidedObjectes.add(entity));
+        return collidedObjectes;
     }
 }

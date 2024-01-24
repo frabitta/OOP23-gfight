@@ -17,5 +17,5 @@ public interface GameHitboxesManager {
      * @param gameObjects you want to calculate collision
      * @return Graph of the colisions
      */
-    Map<CachedGameEntity, Set<CachedGameEntity>> getAllCollision(Set<CachedGameEntity> gameObjects);
+    Map<GameEntity, Set<GameEntity>> getAllCollision(Set<GameEntity> gameObjects);
 }
