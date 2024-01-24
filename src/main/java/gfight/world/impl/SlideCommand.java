@@ -22,7 +22,7 @@ public class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extend
         } else {
             collider.setDirection(new Vector2D(collider.getDirection().getX(), -collider.getDirection().getY()));
         }
-        //TODO this really needs to be test in the game
+        // TODO this really needs to be test in the game
     }
 
 }
