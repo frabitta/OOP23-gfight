@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 
-public abstract class CachedGameEntityImpl implements CachedGameEntity {
+public class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Polygon> boundigBox;
@@ -46,5 +46,15 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
             collidedObjectes.addAll(originalEntity.getAllCollided(gameObjects));
         }
         return collidedObjectes;
+    }
+
+    @Override
+    public void setPosition(Coordinate position) {
+        originalEntity.setPosition(position);;
+    }
+
+    @Override
+    public Coordinate getPosition() {
+        return originalEntity.getPosition();
     }
 }
