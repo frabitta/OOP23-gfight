@@ -1,6 +1,9 @@
 package gfight.world.api.map;
 
+import java.util.Map;
 import java.util.Set;
+
+import org.locationtech.jts.geom.Coordinate;
 
 import gfight.world.api.GameEntity;
 
@@ -29,4 +32,12 @@ public interface GameMap {
      * @return a set containing all the game tiles of the map
      */
     Set<GameTile> getGameTiles();
+
+    /**
+     * Get the graph of the game tiles on the map
+     * 
+     * @return an immutable map which associates to every node
+     *         the set of the adjacents, thus creating a graph
+     */
+    Map<Coordinate, Set<Coordinate>> getTilesGraph();
 }
