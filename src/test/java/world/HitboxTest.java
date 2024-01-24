@@ -1,9 +1,9 @@
 package world;
 
-import gfight.world.Hitbox;
-import gfight.world.impl.CachedGameEntityImpl;
-
 import org.locationtech.jts.geom.Coordinate;
+
+import gfight.world.impl.HitboxImpl;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,7 +17,7 @@ public class HitboxTest {
      */
     @Test
     void testBox() {
-        Hitbox hitbox = new Hitbox();
+        HitboxImpl hitbox = new HitboxImpl();
         
         List<Coordinate> polygon1 = new ArrayList<>();
         polygon1.add(new Coordinate(0, 0));

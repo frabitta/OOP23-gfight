@@ -19,6 +19,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     implementation("org.locationtech.jts:jts-core:1.19.0")
+    implementation("org.apache.commons:commons-math3:3.6.1")
 }
 
 tasks.test {
