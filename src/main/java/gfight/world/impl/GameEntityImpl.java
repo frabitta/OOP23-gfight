@@ -17,8 +17,14 @@ import java.util.ArrayList;
 public class GameEntityImpl implements GameEntity {
     private final List<Coordinate> vertexes = new ArrayList<>();
     private Coordinate position;
+    private final Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
 
     public GameEntityImpl(List<Coordinate> vertexes) {
+        vertexes.addAll(vertexes);
+    }
+
+    public GameEntityImpl(List<Coordinate> vertexes, Set<GameEntity> ignoredEntities) {
+        this.ignoredEntities.addAll(ignoredEntities);
         vertexes.addAll(vertexes);
     }
 
@@ -47,7 +53,8 @@ public class GameEntityImpl implements GameEntity {
         final Polygon boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
-                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox()))
+                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
+                        && !ignoredEntities.contains(a))
                 .forEach(entity -> collidedObjectes.add(entity));
         return collidedObjectes;
     }

@@ -53,7 +53,6 @@ public class CachedGameEntityImpl implements CachedGameEntity {
     @Override
     public void setPosition(Coordinate position) {
         originalEntity.setPosition(position);
-        ;
     }
 
     @Override
