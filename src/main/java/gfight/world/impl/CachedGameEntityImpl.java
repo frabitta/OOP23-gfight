@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
@@ -45,12 +47,13 @@ public class CachedGameEntityImpl implements CachedGameEntity {
             collidedObjectes.clear();
             collidedObjectes.addAll(originalEntity.getAllCollided(gameObjects));
         }
-        return collidedObjectes;
+        return new HashSet<>(collidedObjectes);
     }
 
     @Override
     public void setPosition(Coordinate position) {
-        originalEntity.setPosition(position);;
+        originalEntity.setPosition(position);
+        ;
     }
 
     @Override
