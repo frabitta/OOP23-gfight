@@ -1,10 +1,14 @@
 package gfight.world.impl;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
+
+import gfight.common.api.GeomOperator;
+import gfight.common.impl.GeomOperatorImpl;
 import gfight.world.api.GameEntity;
 import gfight.world.api.Hitbox;
 
@@ -26,6 +30,9 @@ public class GameEntityImpl implements GameEntity {
 
     @Override
     public void setPosition(Coordinate position) {
+        GeomOperator calculator = new GeomOperatorImpl();
+        Vector2D distance = calculator.distance(position, this.position);
+        vertexes.stream().map(vetex -> calculator.sum(vetex, distance));
         this.position = new Coordinate(position);
     }
 
