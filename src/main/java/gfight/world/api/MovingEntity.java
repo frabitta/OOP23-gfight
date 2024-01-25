@@ -18,5 +18,5 @@ public interface MovingEntity extends CachedGameEntity {
     /**
      * it update the data of the object following new position and the collisions
      */
-    void updatePos();
+    void updatePos(long deltaTime);
 }

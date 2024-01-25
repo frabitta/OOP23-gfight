@@ -15,7 +15,7 @@ public class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Polygon> boundigBox;
-    private final Set<GameEntity> collidedObjectes;
+    protected final Set<GameEntity> collidedObjectes;
     private boolean needResHitbox = false;
     private boolean needResCollided = false;
 
