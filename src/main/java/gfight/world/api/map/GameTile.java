@@ -29,4 +29,12 @@ public interface GameTile {
      * @return the position of the tile
      */
     Coordinate getPosition();
+
+    /**
+     * Check if a given position is inside the game tile or not
+     * 
+     * @param position the position to check
+     * @return true if position is inside this game tile, false otherwise
+     */
+    boolean isWithin(Coordinate position);
 }
