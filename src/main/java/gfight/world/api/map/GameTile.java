@@ -7,6 +7,9 @@ import org.locationtech.jts.geom.Coordinate;
  */
 public interface GameTile {
 
+    /**
+     * Defines whether the game tile is empty, a spawner or an obstacle (e.g. wall)
+     */
     public enum TileStatus {
         EMPTY,
         OBSTACLE,
