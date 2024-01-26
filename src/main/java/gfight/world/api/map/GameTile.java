@@ -10,18 +10,18 @@ public interface GameTile {
     /**
      * Defines whether the game tile is empty, a spawner or an obstacle (e.g. wall)
      */
-    public enum TileStatus {
+    public enum TileType {
         EMPTY,
         OBSTACLE,
         SPAWNER
     }
 
     /**
-     * Get the status of a game tile
+     * Get the type of a game tile
      * 
-     * @return the status of the game tile
+     * @return the type of the game tile
      */
-    TileStatus getStatus();
+    TileType getType();
 
     /**
      * Get the position of the center of the tile
