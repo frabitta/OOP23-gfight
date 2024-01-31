@@ -1,4 +1,4 @@
-package gfight.view;
+package gfight.view.impl;
 
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -7,6 +7,9 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 import gfight.engine.Engine;
+import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.engine.graphics.api.ViewableCamera;
+import gfight.view.api.EngineView;
 
 import java.util.List;
 

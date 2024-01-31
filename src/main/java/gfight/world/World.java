@@ -2,7 +2,7 @@ package gfight.world;
 
 import java.util.List;
 
-import gfight.view.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent;
 
 /**
  * Interface to create a world (model part of the application).

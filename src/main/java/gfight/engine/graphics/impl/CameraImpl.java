@@ -1,7 +1,8 @@
-package gfight.engine;
+package gfight.engine.graphics.impl;
 
 import gfight.common.Pair;
 import gfight.common.Position2D;
+import gfight.engine.graphics.api.Camera;
 
 public class CameraImpl implements Camera {
 

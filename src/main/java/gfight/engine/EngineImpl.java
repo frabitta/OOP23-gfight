@@ -1,10 +1,12 @@
 package gfight.engine;
 
 import gfight.common.Pair;
-import gfight.view.EngineView;
+import gfight.engine.graphics.api.Camera;
+import gfight.engine.graphics.impl.CameraImpl;
 import gfight.world.TestWorld;
 import gfight.world.World;
-import gfight.view.SwingView;
+import gfight.view.api.EngineView;
+import gfight.view.impl.SwingView;
 
 /**
  * Implementation of the game engine.

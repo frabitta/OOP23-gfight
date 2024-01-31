@@ -1,6 +1,10 @@
-package gfight.view;
+package gfight.view.impl;
 
 import javax.swing.JPanel;
+
+import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.engine.graphics.api.RenderableGraphicComponent;
+import gfight.engine.graphics.api.ViewableCamera;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -42,8 +46,11 @@ public class Canvas extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2,this.camera);
+        //final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2,this.camera);
         final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();
-        gCompList.stream().forEach(comp -> renderer.drawGraphicsComponent(comp));
+        gCompList.stream()
+            .filter(comp -> comp instanceof RenderableGraphicComponent)
+            .map(comp -> (RenderableGraphicComponent)comp)
+            .forEach(comp -> comp.getRenderer().render(g2, this.camera));
     }
 }

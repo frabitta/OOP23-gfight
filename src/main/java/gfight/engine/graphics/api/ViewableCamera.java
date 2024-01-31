@@ -1,4 +1,4 @@
-package gfight.view;
+package gfight.engine.graphics.api;
 
 import gfight.common.Position2D;
 
