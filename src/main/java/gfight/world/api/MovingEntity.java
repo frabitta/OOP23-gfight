@@ -3,6 +3,8 @@ package gfight.world.api;
 import java.util.Optional;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import gfight.world.movement.api.Movement;
+
 public interface MovingEntity extends CachedGameEntity {
     /**
      * 

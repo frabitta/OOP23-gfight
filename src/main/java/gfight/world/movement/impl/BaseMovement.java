@@ -1,7 +1,8 @@
-package gfight.world.impl;
+package gfight.world.movement.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import gfight.world.api.Movement;
+
+import gfight.world.movement.api.Movement;
 
 public abstract class BaseMovement implements Movement{
     protected Vector2D dirVector;

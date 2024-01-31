@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.movement.api;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 

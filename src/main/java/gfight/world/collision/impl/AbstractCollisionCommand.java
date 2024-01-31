@@ -1,8 +1,8 @@
-package gfight.world.impl;
+package gfight.world.collision.impl;
 
-import gfight.world.api.CollisionCommand;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
+import gfight.world.collision.api.CollisionCommand;
 
 public abstract class AbstractCollisionCommand<ME extends MovingEntity, GE extends GameEntity>
         implements CollisionCommand<ME, GE> {

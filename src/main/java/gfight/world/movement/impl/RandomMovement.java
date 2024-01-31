@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.movement.impl;
 
 import java.util.Random;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
