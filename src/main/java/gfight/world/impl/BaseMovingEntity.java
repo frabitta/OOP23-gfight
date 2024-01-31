@@ -1,35 +1,37 @@
 package gfight.world.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
+import gfight.view.GraphicsComponent;
 import gfight.world.api.Movement;
 import gfight.world.api.MovingEntity;
 
-public abstract class BaseMovingEntity extends CachedGameEntityImpl implements MovingEntity {
-    private Movement movement;
+public abstract class BaseMovingEntity extends CachedGameEntityImpl  implements MovingEntity {
+    private Optional<Movement> movement;
 
-    public BaseMovingEntity(List<Coordinate> vertexes, Movement movement) {
-        super(vertexes);
+    public BaseMovingEntity(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,Optional<Movement> movement) {
+        super(vertexes, position, graphicsComponent);
         this.movement = movement;
     }
 
     @Override
     public Vector2D getDirection() {
-        return movement.getDirection();
+        return movement.get().getDirection();
     }
 
     @Override
     public void setDirection(Vector2D direction) {
-        movement.setDirection(direction);
+        movement.get().setDirection(direction);
     }
 
     @Override
     public void updatePos(long dt) {
         GeomOperator calculator = new GeomOperatorImpl();
-        movement.update();
+        movement.get().update();
         applyCollisions();
         setPosition(calculator.sum(getPosition(), getDirection().scalarMultiply(0.0001)));
     }

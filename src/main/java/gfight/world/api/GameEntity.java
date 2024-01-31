@@ -29,4 +29,10 @@ public interface GameEntity {
      * @return all the objects in collision with this
      */
     Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects);
+
+    /**
+     * Set ignoredEntities for the related entity
+     * @param ignoredEntities
+     */
+    void setIgnoredEntities(Set<GameEntity> ignoredEntities);
 }
