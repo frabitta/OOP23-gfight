@@ -8,7 +8,7 @@ import gfight.world.api.ActiveEntity;
 import gfight.world.movement.api.Movement;
 
 
-public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity{
+public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     private int health;
     private Optional<Movement> movement;
     
@@ -27,13 +27,11 @@ public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity{
         this.health = health;
     }
 
-    @Override
     public void rotate() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rotate'");
     }
 
-    @Override
     public void shoot() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shoot'");

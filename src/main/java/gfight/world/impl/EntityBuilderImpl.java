@@ -10,7 +10,7 @@ import gfight.world.api.EntityBuilder;
 import gfight.world.movement.api.Movement;
 
 
-public class EntityBuilderImpl implements EntityBuilder{
+public class EntityBuilderImpl implements EntityBuilder {
     private final List<Coordinate> vertexes;
     private final Coordinate position;
     private final GraphicsComponent graphicsComponent;
