@@ -13,11 +13,11 @@ public abstract class AbstractAliveEntity extends CachedGameEntityImpl{
         this.health = health;
     }
 
-    int getHealt(){
+    int getHealth(){
         return this.health;
     }
     
-    void setHeal(int health){
+    void setHealth(int health){
         this.health =  health;
     }
 
