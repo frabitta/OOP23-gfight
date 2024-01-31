@@ -2,22 +2,36 @@ package gfight.world.movement.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-public class LinearMovement extends BaseMovement {
+/**
+ * An implementation of BaseMovement that returns a linear or linear accelerated Movement.
+ */
+public final class LinearMovement extends BaseMovement {
     private final double accelleration;
 
-    public LinearMovement(Vector2D direction){
-        this.dirVector = direction;
+    /**
+     * 
+     * @param direction of the vector
+     */
+    public LinearMovement(final Vector2D direction) {
+        setDirection(direction);
         accelleration = 1;
     }
 
-    public LinearMovement(double accelleration, Vector2D direction){
-        this.dirVector = direction;
+    /**
+     * 
+     * @param accelleration of the vector
+     * @param direction of the vector
+     */
+    public LinearMovement(final double accelleration, final Vector2D direction) {
+        setDirection(direction);
         this.accelleration = accelleration;
     }
 
     @Override
     public void update() {
-       this.dirVector = new Vector2D(accelleration, dirVector);
+        if (accelleration != 1) {
+            setDirection(new Vector2D(accelleration, getDirection()));
+        }
     }
-    
+
 }

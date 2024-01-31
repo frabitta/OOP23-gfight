@@ -24,18 +24,17 @@ public class EntityBuilderImpl implements EntityBuilder{
         this.health = health;
     }
 
-	@Override
-	public EntityBuilder addMovement(Movement movement) {
-		this.movement = Optional.ofNullable(movement);
+    @Override
+    public EntityBuilder addMovement(final Movement movement) {
+        this.movement = Optional.ofNullable(movement);
         return this;
-	}
+    }
 
-	@Override
-	public ActiveEntityImpl build() throws IllegalStateException {
-		if (this.vertexes == null || this.position == null || this.graphicsComponent == null){
+    @Override
+    public ActiveEntityImpl build() throws IllegalStateException {
+        if (this.vertexes == null || this.position == null || this.graphicsComponent == null) {
             throw new IllegalStateException();
         }
         return new ActiveEntityImpl(vertexes, position, graphicsComponent, movement, health);
-	}
-    
+    }
 }

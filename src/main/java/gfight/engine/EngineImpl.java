@@ -1,14 +1,17 @@
 package gfight.engine;
 
-import gfight.view.EngineView;
+import gfight.common.Pair;
+import gfight.engine.graphics.api.Camera;
+import gfight.engine.graphics.impl.CameraImpl;
 import gfight.world.TestWorld;
 import gfight.world.World;
-import gfight.view.SwingView;
+import gfight.view.api.EngineView;
+import gfight.view.impl.SwingView;
 
 /**
  * Implementation of the game engine.
  */
-public class EngineImpl implements Engine {
+public final class EngineImpl implements Engine {
 
     private static final int FRAME_RATE = 60;
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
@@ -18,11 +21,15 @@ public class EngineImpl implements Engine {
 
     @Override
     public void initialize() {
+        final Camera camera = new CameraImpl();
+        camera.moveTo(new Pair(40, 40)); //---- adjust--------------------------------
+
         view = new SwingView(this);
-        view.initialize();
+        view.initialize(camera);
 
         world = new TestWorld();
         world.instantiate();
+        world.installCamera(camera);
     }
 
     @Override
@@ -39,7 +46,6 @@ public class EngineImpl implements Engine {
         }
     }
 
-    /*Needs to be changed--------------------- */
     private void waitNextFrame(final long frameStartTime) {
         final long dt = System.currentTimeMillis() - frameStartTime;
         if (dt < FRAME_LENGHT) {

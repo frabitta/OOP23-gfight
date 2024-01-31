@@ -1,28 +1,38 @@
 package gfight.world.collision.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.api.GeomOperator;
+import gfight.common.impl.GeomOperatorImpl;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 
-public class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extends AbstractCollisionCommand<ME, GE> {
+/**
+ * This type of collision change the direction of the moving entity in order to
+ * move away from the other entity.
+ * 
+ * @param <ME> is the entitiy that moves and causes the collision
+ * @param <GE> is the other entity
+ */
+public final class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extends AbstractCollisionCommand<ME, GE> {
 
-    public SlideCommand(ME outercollider, GE outercollided) {
+    /**
+     * 
+     * @param outercollider
+     * @param outercollided
+     */
+    public SlideCommand(final ME outercollider, final GE outercollided) {
         super(outercollider, outercollided);
     }
 
     @Override
     public void execute() {
-        Coordinate colliderCenter = collider.getPosition();
-        Coordinate collidedCenter = collided.getPosition();
-        Vector2D distance = new Vector2D(collidedCenter.x - colliderCenter.x, collidedCenter.y - colliderCenter.y);
+        GeomOperator operator = new GeomOperatorImpl();
+        Vector2D distance = operator.distance(collider().getPosition(), collided().getPosition());
         if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
-            collider.setDirection(new Vector2D(-collider.getDirection().getX(), collider.getDirection().getY()));
+            collider().setDirection(new Vector2D(-collider().getDirection().getX(), collider().getDirection().getY()));
         } else {
-            collider.setDirection(new Vector2D(collider.getDirection().getX(), -collider.getDirection().getY()));
+            collider().setDirection(new Vector2D(collider().getDirection().getX(), -collider().getDirection().getY()));
         }
-        // TODO this really needs to be test in the game
     }
 
 }

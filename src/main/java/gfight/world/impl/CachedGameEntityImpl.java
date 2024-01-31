@@ -6,12 +6,14 @@ import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import java.util.LinkedHashSet;
-
-import gfight.view.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 
-public class CachedGameEntityImpl implements CachedGameEntity {
+/**
+ * An implementation of the cached game entity.
+ */
+public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Polygon> boundigBox;
@@ -20,14 +22,22 @@ public class CachedGameEntityImpl implements CachedGameEntity {
     private boolean needResHitbox = false;
     private boolean needResCollided = false;
 
-    public CachedGameEntityImpl(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent) {
+    /**
+     * Chached Game Entity constructor.
+     * 
+     * @param vertexes
+     * @param position
+     * @param graphicsComponent
+     */
+    public CachedGameEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+            final GraphicsComponent graphicsComponent) {
         originalEntity = new GameEntityImpl(vertexes, position, graphicsComponent);
         boundigBox = Optional.empty();
         collidedObjects = Optional.empty();
     }
 
     @Override
-    public Polygon getHitBox() {
+    public final Polygon getHitBox() {
         if (needResHitbox || boundigBox.isEmpty()) {
             needResHitbox = false;
             boundigBox = Optional.of(originalEntity.getHitBox());
@@ -36,13 +46,13 @@ public class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public void reset() {
+    public final void reset() {
         needResHitbox = true;
         needResCollided = true;
     }
 
     @Override
-    public Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects) {
+    public final Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
         if (needResCollided || collidedObjects.isEmpty()) {
             needResCollided = false;
             collidedObjects = Optional.of(originalEntity.getAllCollided(gameObjects));
@@ -51,17 +61,23 @@ public class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public void setPosition(Coordinate position) {
+    public final void setPosition(final Coordinate position) {
         originalEntity.setPosition(position);
     }
 
     @Override
-    public Coordinate getPosition() {
+    public final Coordinate getPosition() {
         return originalEntity.getPosition();
     }
 
     @Override
-    public void setIgnoredEntities(Set<GameEntity> ignoredEntities) {
+    public final void setIgnoredEntities(final Set<GameEntity> ignoredEntities) {
         originalEntity.setIgnoredEntities(ignoredEntities);
     }
+
+    @Override
+    public final GraphicsComponent getGraphics() {
+        return originalEntity.getGraphics();
+    }
+
 }
