@@ -34,6 +34,14 @@ public interface GameMap {
     Set<GameTile> getGameTiles();
 
     /**
+     * Get the GameTile which contains the given position.
+     * 
+     * @param position
+     * @return the GameTile containing position
+     */
+    GameTile searchTile(Coordinate position);
+
+    /**
      * Get the graph of the game tiles on the map.
      * 
      * @return an immutable map which associates to every node
