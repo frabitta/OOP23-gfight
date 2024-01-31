@@ -5,9 +5,12 @@ import java.util.List;
 import gfight.common.Position2D;
 import gfight.view.api.GraphicsComponentRenderer;
 
-public class PolygonGraphicsComponent extends AbstractGraphicsComponent{
+/**
+ * GraphicsComponent that describes a generic Polygon.
+ */
+public class PolygonGraphicsComponent extends AbstractGraphicsComponent {
 
-    PolygonGraphicsComponent(EngineColor color, List<Position2D> pos, GraphicsComponentRenderer renderer) {
+    PolygonGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer) {
         super(color, pos, renderer);
     }
 

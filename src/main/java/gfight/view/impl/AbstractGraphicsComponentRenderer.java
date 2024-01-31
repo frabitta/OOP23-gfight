@@ -1,6 +1,7 @@
 package gfight.view.impl;
 
 import java.awt.Graphics2D;
+import java.util.Optional;
 import java.awt.BasicStroke;
 import java.awt.Color;
 
@@ -10,34 +11,39 @@ import gfight.view.api.GraphicsComponentRenderer;
 
 abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRenderer {
 
-    GraphicsComponent gComp;
+    private Optional<GraphicsComponent> gComp = Optional.empty();
 
     @Override
-    public void render(Graphics2D g, ViewableCamera camera) {
-        g.setColor(getColorFromComponent(gComp));
+    public void render(final Graphics2D g, final ViewableCamera camera) {
+        g.setColor(getColorFromComponent(gComp.get()));
         g.setStroke(new BasicStroke(4f));
-        
+
         renderComp(g, camera);
     }
 
     @Override
-    public void setComponent(GraphicsComponent gComp) {
+    public final void setComponent(final GraphicsComponent gComp) {
         if (!isCompValid(gComp)) {
             throw new IllegalArgumentException("GraphicsComponent has to be of the supported type");
         }
-        this.gComp = gComp;
+        this.gComp = Optional.ofNullable(gComp);
     }
 
     private Color getColorFromComponent(final GraphicsComponent gComp) {
-        Color color;
         switch (gComp.getColor()) {
-            case BLUE -> color = Color.BLUE;
-            case RED -> color = Color.RED;
-            case BLACK -> color = Color.BLACK;
-            case YELLOW -> color = Color.YELLOW;
-            default -> color = Color.BLACK;
+            case BLUE: return Color.BLUE;
+            case RED: return Color.RED;
+            case BLACK: return Color.BLACK;
+            case YELLOW: return Color.YELLOW;
+            default: return Color.BLACK;
         }
-        return color;
+    }
+
+    GraphicsComponent getGraphicsComponent() {
+        if (this.gComp.isEmpty()) {
+            throw new IllegalStateException("renderer doesn't have the reference to the GraphicsComponent it has to print");
+        }
+        return this.gComp.get();
     }
 
     abstract boolean isCompValid(GraphicsComponent gComp);

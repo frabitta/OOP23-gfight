@@ -11,12 +11,13 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewableCamera;
 import gfight.view.api.EngineView;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * An EngineView implementation using JSwing.
  */
-public class SwingView implements EngineView {
+public final class SwingView implements EngineView {
 
     private static final int WIDTH = 500;
     private static final int HEIGHT = 400;
@@ -34,7 +35,7 @@ public class SwingView implements EngineView {
     }
 
     @Override
-    public void initialize(ViewableCamera camera) {
+    public void initialize(final ViewableCamera camera) {
         frame = new JFrame("Geometry Fight");
         frame.setSize(WIDTH, HEIGHT);     //needs to be changed---------------
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
@@ -55,13 +56,14 @@ public class SwingView implements EngineView {
         });
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        canvas.requestFocusInWindow();
         frame.pack();
         frame.setVisible(true);
     }
 
     @Override
-    public void render(List<GraphicsComponent> gComponentsList) {
-        this.gComponentsList = gComponentsList;
+    public void render(final List<GraphicsComponent> gComponentsList) {
+        this.gComponentsList = Collections.unmodifiableList(gComponentsList);
         this.frame.repaint();
     }
 

@@ -4,23 +4,32 @@ import java.util.List;
 
 import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.view.api.GraphicsComponentRenderer;
 import gfight.view.impl.PolygonGraphicsRenderer;
 import gfight.view.impl.TextGraphicsRenderer;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
 
-public class GraphicsComponentsFactoryImpl implements GraphicsComponentsFactory{
+/**
+ * Implementation of a factory of GraphicsComponents.
+ */
+public class GraphicsComponentsFactoryImpl implements GraphicsComponentsFactory {
 
     @Override
-    public PolygonGraphicsComponent polygon(EngineColor color, List<Position2D> pos) {
-        return new PolygonGraphicsComponent(color, pos, new PolygonGraphicsRenderer());
+    public final PolygonGraphicsComponent polygon(final EngineColor color, final List<Position2D> pos) {
+        final GraphicsComponentRenderer renderer = new PolygonGraphicsRenderer();
+        final PolygonGraphicsComponent out = new PolygonGraphicsComponent(color, pos, renderer);
+        renderer.setComponent(out);
+        return out;
     }
 
     @Override
-    public TextGraphicsComponent text(EngineColor color, Position2D pos, int size, String text) {
-        TextGraphicsComponent ret = new TextGraphicsComponent(color, List.of(pos), new TextGraphicsRenderer());
-        ret.setSize(size);
-        ret.setText(text);
-        return ret;
+    public final TextGraphicsComponent text(final EngineColor color, final Position2D pos, final int size, final String text) {
+        final GraphicsComponentRenderer renderer = new TextGraphicsRenderer();
+        final TextGraphicsComponent out = new TextGraphicsComponent(color, List.of(pos), new TextGraphicsRenderer());
+        renderer.setComponent(out);
+        out.setSize(size);
+        out.setText(text);
+        return out;
     }
 
 }

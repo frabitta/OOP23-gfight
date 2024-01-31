@@ -7,7 +7,7 @@ import gfight.engine.graphics.api.GraphicsComponent;
 /**
  * Interface to create a world (model part of the application).
  */
-public interface World extends CameraMover{
+public interface World extends CameraMover {
     /**
      * Instantiate the world.
      */

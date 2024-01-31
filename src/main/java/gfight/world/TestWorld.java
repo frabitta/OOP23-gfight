@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  */
 public class TestWorld implements World {
 
-    private GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
+    final private GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
 
     private int counter;
     private TextGraphicsComponent counterGraph;
@@ -52,7 +52,7 @@ public class TestWorld implements World {
     }
 
     @Override
-    public void installCamera(MovableCamera camera) {
+    public void installCamera(final MovableCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Pair(counter,0));
     }

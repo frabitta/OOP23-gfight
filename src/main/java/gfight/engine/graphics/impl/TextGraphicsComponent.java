@@ -5,12 +5,15 @@ import java.util.List;
 import gfight.common.Position2D;
 import gfight.view.api.GraphicsComponentRenderer;
 
+/**
+ * GraphicsComponent that describes a Text.
+ */
 public class TextGraphicsComponent extends AbstractGraphicsComponent {
 
     private String text = "empty";
     private int size = 10;
 
-    TextGraphicsComponent(EngineColor color, List<Position2D> pos, GraphicsComponentRenderer renderer) {
+    TextGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer) {
         super(color, pos, renderer);
     }
 
@@ -29,10 +32,18 @@ public class TextGraphicsComponent extends AbstractGraphicsComponent {
         this.text = text;
     }
 
+    /**
+     * A setter of the font size.
+     * @param size
+     */
     public void setSize(final int size) {
         this.size = size;
     }
 
+    /**
+     * A getter of the font size.
+     * @return size of the font
+     */
     public int getSize() {
         return this.size;
     }

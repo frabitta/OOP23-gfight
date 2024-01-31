@@ -8,7 +8,7 @@ import gfight.engine.graphics.api.ViewableCamera;
 /**
  * A viewer for the engine.
  */
-public interface EngineView{
+public interface EngineView {
 
     /**
      * Initialize the view.

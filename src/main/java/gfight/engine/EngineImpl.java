@@ -11,7 +11,7 @@ import gfight.view.impl.SwingView;
 /**
  * Implementation of the game engine.
  */
-public class EngineImpl implements Engine {
+public final class EngineImpl implements Engine {
 
     private static final int FRAME_RATE = 60;
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
@@ -21,8 +21,8 @@ public class EngineImpl implements Engine {
 
     @Override
     public void initialize() {
-        Camera camera = new CameraImpl();
-        camera.moveTo(new Pair(40, 40));
+        final Camera camera = new CameraImpl();
+        camera.moveTo(new Pair(40, 40)); //---- adjust--------------------------------
 
         view = new SwingView(this);
         view.initialize(camera);
@@ -46,7 +46,6 @@ public class EngineImpl implements Engine {
         }
     }
 
-    /*Needs to be changed--------------------- */
     private void waitNextFrame(final long frameStartTime) {
         final long dt = System.currentTimeMillis() - frameStartTime;
         if (dt < FRAME_LENGHT) {

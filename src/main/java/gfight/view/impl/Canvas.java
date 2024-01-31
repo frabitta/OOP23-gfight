@@ -16,16 +16,17 @@ import java.util.List;
  * Canvas class for JSwing,
  * extends a JPanel to create a panel in which we can freely paint using a GraphicsRenderer to draw GraphicsComponents.
  */
-public class Canvas extends JPanel {
+public final class Canvas extends JPanel {
+    private static final long serialVersionUID = -4058048042685678594L;
 
     //private final int centerX;
     //private final int centerY;
-    private final SwingView scene;
+    private final transient SwingView scene;
+    private final transient ViewableCamera camera;
 
-    private final ViewableCamera camera;
-
-    Canvas(final int width, final int height, final SwingView scene, ViewableCamera camera) {
+    Canvas(final int width, final int height, final SwingView scene, final ViewableCamera camera) {
         this.scene = scene;
+        this.camera = camera;
         //this.centerX = width / 2;
         //this.centerY = height / 2;
 
@@ -33,14 +34,14 @@ public class Canvas extends JPanel {
         //this.addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
-        requestFocusInWindow(); //spotbugs  Overridable method requestFocusInWindow is called from constructor, sistema --------------
-
-        this.camera = camera;
     }
 
     @Override
     public void paint(final Graphics g) {
-        final Graphics2D g2 = (Graphics2D) g;   //Unchecked/unconfirmed cast da sistemare---------
+        if (!(g instanceof Graphics2D)) {
+            throw new IllegalArgumentException("Needs Graphics2D to render correctly");
+        }
+        final Graphics2D g2 = (Graphics2D) g;
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -50,7 +51,7 @@ public class Canvas extends JPanel {
         final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();
         gCompList.stream()
             .filter(comp -> comp instanceof RenderableGraphicComponent)
-            .map(comp -> (RenderableGraphicComponent)comp)
+            .map(comp -> (RenderableGraphicComponent) comp)
             .forEach(comp -> comp.getRenderer().render(g2, this.camera));
     }
 }

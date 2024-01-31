@@ -11,8 +11,8 @@ import gfight.view.api.GraphicsComponentRenderer;
  * Abstract class for a generic GraphicsComponent.
  */
 abstract class AbstractGraphicsComponent implements GraphicsComponent, RenderableGraphicComponent {
-    
-    final private GraphicsComponentRenderer renderer;
+
+    private final GraphicsComponentRenderer renderer;
 
     private EngineColor color;
     private List<Position2D> pos;
@@ -21,7 +21,6 @@ abstract class AbstractGraphicsComponent implements GraphicsComponent, Renderabl
         this.color = color;
         this.pos = pos;
         this.renderer = renderer;
-        this.renderer.setComponent(this);
     }
 
     @Override
