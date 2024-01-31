@@ -6,7 +6,6 @@ import java.util.Set;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 import java.util.LinkedHashSet;
-
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;

@@ -3,7 +3,7 @@ package gfight.world.api;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
 
-import gfight.view.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent;
 
 import java.util.Set;
 

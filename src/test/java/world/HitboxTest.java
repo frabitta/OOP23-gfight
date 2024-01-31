@@ -15,7 +15,7 @@ public class HitboxTest {
     /*
      * test 2 known polygons collision.
      */
-    //CHECKSTYLE: MagicNumber OFF
+    // CHECKSTYLE: MagicNumber OFF
     @Test
     void testBox() {
         HitboxImpl hitbox = new HitboxImpl();
@@ -24,7 +24,7 @@ public class HitboxTest {
         polygon1.add(new Coordinate(0, 2));
         polygon1.add(new Coordinate(2, 2));
         polygon1.add(new Coordinate(2, 0));
-        
+
         List<Coordinate> polygon2 = new ArrayList<>();
 
         polygon2.add(new Coordinate(1, 1));
