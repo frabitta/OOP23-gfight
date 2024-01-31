@@ -5,7 +5,8 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.view.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
-import gfight.world.api.Movement;
+import gfight.world.movement.api.Movement;
+
 
 public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity{
     private int health;
