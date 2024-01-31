@@ -7,12 +7,24 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
 import gfight.world.movement.api.Movement;
 
-
-public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
+/**
+ * This class implements the concept of ActiveEntity with movement and health.
+ */
+public final class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     private int health;
     private Optional<Movement> movement;
-    
-    public ActiveEntityImpl(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent, Optional<Movement> movement, int health) {
+
+    /**
+     * Constructor of ActiveEntityImpl.
+     * 
+     * @param vertexes
+     * @param position
+     * @param graphicsComponent
+     * @param movement
+     * @param health
+     */
+    public ActiveEntityImpl(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+            final Optional<Movement> movement, final int health) {
         super(vertexes, position, graphicsComponent, movement);
         this.health = health;
     }
@@ -23,24 +35,28 @@ public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     }
 
     @Override
-    public void setHealth(int health) {
+    public void setHealth(final int health) {
         this.health = health;
     }
 
+    /**
+     * This method performs the action of rotating.
+     */
     public void rotate() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rotate'");
     }
 
+    /**
+     * This method performs the action of rotating.
+     */
     public void shoot() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'shoot'");
+        // TODO
     }
 
     @Override
     protected void applyCollisions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyCollisions'");
+        // TODO
     }
-   
+
 }
