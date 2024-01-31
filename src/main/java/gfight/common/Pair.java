@@ -19,12 +19,12 @@ public class Pair implements Position2D {
     }
 
     @Override
-     public int getX() {
+    public final int getX() {
         return x;
     }
 
     @Override
-    public int getY() {
+    public final int getY() {
         return y;
     }
 

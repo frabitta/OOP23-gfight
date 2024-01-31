@@ -9,7 +9,7 @@ import java.util.LinkedHashSet;
 
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
-import gfight.view.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
 import gfight.world.api.Hitbox;
 

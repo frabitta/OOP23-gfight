@@ -1,7 +1,7 @@
-package gfight.view;
+package gfight.engine.graphics.api;
 
 import gfight.common.Position2D;
-import gfight.common.Rotation2D;
+import java.util.List;
 
 /**
  * A component to describe how an object should be visualized.
@@ -39,12 +39,7 @@ public interface GraphicsComponent {
     /**
      * @return the position in which to print the object.
      */
-    Position2D getPosition();
-
-    /**
-     * @return the rotation of the object.
-     */
-    Rotation2D getRotation();
+    List<Position2D> getPositions();
 
     /**
      * A setter for the color of the object.
@@ -56,12 +51,6 @@ public interface GraphicsComponent {
      * A setter for the position of the object.
      * @param pos
      */
-    void setPosition(Position2D pos);
-
-    /**
-     * A setter for the rotation of the object.
-     * @param rot
-     */
-    void setRotation(Rotation2D rot);
+    void setPositions(List<Position2D> pos);
 
 }
