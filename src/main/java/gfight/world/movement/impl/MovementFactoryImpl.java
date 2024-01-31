@@ -22,5 +22,10 @@ public class MovementFactoryImpl implements MovementFactory {
     public RandomMovement createRandomMovement() {
         return new RandomMovement();
     }
+
+    @Override
+    public Fixed createFixed() {
+        return new Fixed();
+    }
     
 }
