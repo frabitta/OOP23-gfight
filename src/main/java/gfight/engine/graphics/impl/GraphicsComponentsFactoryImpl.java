@@ -25,7 +25,7 @@ public class GraphicsComponentsFactoryImpl implements GraphicsComponentsFactory 
     @Override
     public final TextGraphicsComponent text(final EngineColor color, final Position2D pos, final int size, final String text) {
         final GraphicsComponentRenderer renderer = new TextGraphicsRenderer();
-        final TextGraphicsComponent out = new TextGraphicsComponent(color, List.of(pos), new TextGraphicsRenderer());
+        final TextGraphicsComponent out = new TextGraphicsComponent(color, List.of(pos), renderer);
         renderer.setComponent(out);
         out.setSize(size);
         out.setText(text);

@@ -6,7 +6,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
-import gfight.view.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.MovingEntity;
 import gfight.world.movement.api.Movement;
 

@@ -15,7 +15,7 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
 
     @Override
     public void render(final Graphics2D g, final ViewableCamera camera) {
-        g.setColor(getColorFromComponent(gComp.get()));
+        g.setColor(getColorFromComponent(getGraphicsComponent()));
         g.setStroke(new BasicStroke(4f));
 
         renderComp(g, camera);
