@@ -13,8 +13,13 @@ import gfight.world.api.MovingEntity;
  * @param <ME> is the entitiy that moves and causes the collision
  * @param <GE> is the other entity
  */
-public class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extends AbstractCollisionCommand<ME, GE> {
+public final class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extends AbstractCollisionCommand<ME, GE> {
 
+    /**
+     * 
+     * @param outercollider
+     * @param outercollided
+     */
     public SlideCommand(final ME outercollider, final GE outercollided) {
         super(outercollider, outercollided);
     }
