@@ -21,9 +21,10 @@ public interface MovingEntity extends CachedGameEntity {
      */
     void setDirection(Vector2D direction);
 
-    /**
-     * it update the data of the object following new position and the collisions.
-     */
+   /**
+    * it update the data of the object following new position and the collisions.
+    * @param deltaTime
+    */
     void updatePos(long deltaTime);
 
     /**

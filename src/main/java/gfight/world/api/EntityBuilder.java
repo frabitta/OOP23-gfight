@@ -8,15 +8,15 @@ import gfight.world.movement.api.Movement;
  */
 public interface EntityBuilder {
     /**
-     * Adds the movement and returns an EntityBuilder object.
+     * Adds the movement.
      * @param movement
-     * @return
+     * @return an EntityBuilder object
      */
     EntityBuilder addMovement(Movement movement);
 
     /**
-     * Returns an ActiveEntityImpl calling its constructor.
-     * @return
+     * 
+     * @return an ActiveEntityImpl calling its constructor
      * @throws IllegalStateException
      */
     ActiveEntityImpl build() throws IllegalStateException;

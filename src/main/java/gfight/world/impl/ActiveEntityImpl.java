@@ -12,7 +12,6 @@ import gfight.world.movement.api.Movement;
  */
 public final class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     private int health;
-    private Optional<Movement> movement;
 
     /**
      * Constructor of ActiveEntityImpl.

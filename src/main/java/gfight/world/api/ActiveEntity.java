@@ -4,8 +4,8 @@ package gfight.world.api;
  */
 public interface ActiveEntity extends MovingEntity {
     /**
-     * Returns health of the entity.
-     * @return
+     * 
+     * @return health of the entity
      */
     int getHealth();
 
