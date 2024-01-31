@@ -39,5 +39,5 @@ public interface GameTile {
      * @param position the position to check
      * @return true if position is inside this game tile, false otherwise
      */
-    boolean isWithin(Coordinate position);
+    boolean contains(Coordinate position);
 }

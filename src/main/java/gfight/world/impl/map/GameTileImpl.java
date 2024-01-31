@@ -38,7 +38,7 @@ public final class GameTileImpl implements GameTile {
     }
 
     @Override
-    public boolean isWithin(final Coordinate position) {
+    public boolean contains(final Coordinate position) {
         final var centerOffset = this.dimension / 2;
         return position.getX() <= this.centerPosition.getX() + centerOffset
                 && position.getX() >= this.centerPosition.getX() - centerOffset
