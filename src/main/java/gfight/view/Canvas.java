@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Canvas class for JSwing,

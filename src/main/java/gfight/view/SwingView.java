@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import gfight.engine.Engine;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * An EngineView implementation using JSwing.

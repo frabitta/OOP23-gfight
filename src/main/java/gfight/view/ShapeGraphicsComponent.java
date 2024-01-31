@@ -1,7 +1,6 @@
 package gfight.view;
 
 import gfight.common.Position2D;
-import gfight.common.Rotation2D;
 
 /**
  * A graphics component to represent geometric shapes.
@@ -35,9 +34,9 @@ public class ShapeGraphicsComponent extends AbstractGraphicsComponent {
      * @param width
      * @param height
      */
-    public ShapeGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot,
+    public ShapeGraphicsComponent(final EngineColor color, final Position2D pos,
     final ShapeType shapeType, final int width, final int height) {
-        super(color, pos, rot);
+        super(color, pos);
         this.shapeType = shapeType;
         this.width = width;
         this.height = height;

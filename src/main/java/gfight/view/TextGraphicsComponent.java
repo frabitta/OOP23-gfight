@@ -1,7 +1,6 @@
 package gfight.view;
 
 import gfight.common.Position2D;
-import gfight.common.Rotation2D;
 
 /**
  * GraphicsComponent for Text visualization.
@@ -17,8 +16,8 @@ public class TextGraphicsComponent extends AbstractGraphicsComponent {
      * @param rot
      * @param text
      */
-    public TextGraphicsComponent(final EngineColor color, final Position2D pos, final Rotation2D rot, final String text) {
-        super(color, pos, rot);
+    public TextGraphicsComponent(final EngineColor color, final Position2D pos, final String text) {
+        super(color, pos);
         this.text = text;
     }
 
