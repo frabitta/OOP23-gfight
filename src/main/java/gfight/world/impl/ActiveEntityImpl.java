@@ -18,11 +18,6 @@ public class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity{
     }
 
     @Override
-    public void setMovement(Optional<Movement> movement) {
-        this.movement = movement;
-    }
-
-    @Override
     public int getHealth() {
         return this.health;
     }

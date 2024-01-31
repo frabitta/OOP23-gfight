@@ -15,52 +15,68 @@ import gfight.world.api.Hitbox;
 
 import java.util.ArrayList;
 
-public class GameEntityImpl implements GameEntity {
+/**
+ * Implementation of Game Entity.
+ */
+public final class GameEntityImpl implements GameEntity {
     private final List<Coordinate> vertexes = new ArrayList<>();
     private Coordinate position;
-    private GraphicsComponent graphicsComponent; 
+    private final GraphicsComponent graphicsComponent;
     private Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
 
-    public GameEntityImpl(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent) {
+    /**
+     * Game Entity constructor that creates gameEntity with vertexes position and
+     * graphic component.
+     * 
+     * @param vertexes
+     * @param position
+     * @param graphicsComponent
+     */
+    public GameEntityImpl(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent) {
         this.graphicsComponent = graphicsComponent;
         this.position = position;
         vertexes.addAll(vertexes);
     }
-    
+
     @Override
     public Polygon getHitBox() {
         Hitbox hitbox = new HitboxImpl();
         return hitbox.getGeometry(vertexes);
     }
-    
+
     @Override
-    public void setPosition(Coordinate position) {
-        GeomOperator calculator = new GeomOperatorImpl();
-        Vector2D distance = calculator.distance(position, this.position);
+    public void setPosition(final Coordinate position) {
+        final GeomOperator calculator = new GeomOperatorImpl();
+        final Vector2D distance = calculator.distance(position, this.position);
         vertexes.stream().map(vetex -> calculator.sum(vetex, distance));
         this.position = new Coordinate(position);
     }
-    
+
     @Override
     public Coordinate getPosition() {
         return new Coordinate(position);
     }
-    
+
     @Override
-    public Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects) {
+    public Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
         final Hitbox hitbox = new HitboxImpl();
         final Polygon boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
-        .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
-        && !ignoredEntities.contains(a))
-        .forEach(entity -> collidedObjectes.add(entity));
+                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
+                        && !ignoredEntities.contains(a))
+                .forEach(entity -> collidedObjectes.add(entity));
         return collidedObjectes;
     }
 
     @Override
-    public void setIgnoredEntities(Set<GameEntity> ignoredEntities){
+    public void setIgnoredEntities(final Set<GameEntity> ignoredEntities) {
         this.ignoredEntities.clear();
         this.ignoredEntities.addAll(ignoredEntities);
+    }
+
+    @Override
+    public GraphicsComponent getGraphics() {
+        return graphicsComponent;
     }
 }

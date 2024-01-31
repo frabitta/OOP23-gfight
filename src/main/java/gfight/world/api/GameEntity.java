@@ -2,8 +2,14 @@ package gfight.world.api;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+
+import gfight.view.GraphicsComponent;
+
 import java.util.Set;
 
+/**
+ * An interface for any entity in the game.
+ */
 public interface GameEntity {
 
     /**
@@ -13,13 +19,15 @@ public interface GameEntity {
     Polygon getHitBox();
 
     /**
-     * set the position of the center of the Object
+     * Set the position of the center of the Object.
+     * 
      * @param position you want the object to be
      */
     void setPosition(Coordinate position);
 
     /**
-     * return where is the object
+     * Return where is the object.
+     * @return object position
      */
     Coordinate getPosition();
 
@@ -31,8 +39,15 @@ public interface GameEntity {
     Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects);
 
     /**
-     * Set ignoredEntities for the related entity
+     * Set ignoredEntities for the related entity.
+     * 
      * @param ignoredEntities
      */
     void setIgnoredEntities(Set<GameEntity> ignoredEntities);
+
+    /**
+     * 
+     * @return the graphic component of the Entity
+     */
+    GraphicsComponent getGraphics();
 }
