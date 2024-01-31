@@ -7,7 +7,7 @@ import org.locationtech.jts.geom.Coordinate;
 import gfight.view.GraphicsComponent;
 import gfight.world.api.EntityFactory;
 import gfight.world.api.GameEntity;
-import gfight.world.api.Movement;
+import gfight.world.movement.api.Movement;
 
 public class EntityFactoryImpl implements EntityFactory{
 

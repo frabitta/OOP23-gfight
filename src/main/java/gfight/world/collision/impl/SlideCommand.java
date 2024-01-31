@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.collision.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.locationtech.jts.geom.Coordinate;

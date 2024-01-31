@@ -5,8 +5,8 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
-import gfight.world.api.Movement;
 import gfight.world.api.MovingEntity;
+import gfight.world.movement.api.Movement;
 
 public abstract class BaseMovingEntity extends CachedGameEntityImpl implements MovingEntity {
     private Movement movement;
