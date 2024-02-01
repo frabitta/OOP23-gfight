@@ -20,6 +20,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     implementation("org.locationtech.jts:jts-core:1.19.0")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation("com.google.guava:guava:33.0.0-jre")
 }
 
 tasks.test {

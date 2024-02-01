@@ -20,6 +20,13 @@ public interface GameTile {
     }
 
     /**
+     * Get the dimension of the side of the tile.
+     * 
+     * @return the dimension of the side of the tile
+     */
+    double getDimension();
+
+    /**
      * Get the type of a game tile.
      * 
      * @return the type of the game tile
@@ -39,5 +46,16 @@ public interface GameTile {
      * @param position the position to check
      * @return true if position is inside this game tile, false otherwise
      */
-    boolean isWithin(Coordinate position);
+    boolean contains(Coordinate position);
+
+    /**
+     * Compares the specified object with this GameTile for equality.
+     * Returns {@code true} if the specified object is also a GameTile and has the
+     * same properties.
+     * 
+     * @param obj object to be compared for equality with this GameTile
+     * @return {@code true} if the specified object is equal to this GameTile
+     */
+    @Override
+    boolean equals(Object obj);
 }
