@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import gfight.engine.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.input.api.InputEventListener;
 import gfight.view.api.EngineView;
 
 import java.util.Collections;
@@ -22,16 +23,16 @@ public final class SwingView implements EngineView {
     private static final int WIDTH = 500;
     private static final int HEIGHT = 400;
 
-    private final Engine controller;
+    private final Engine engine;
     private JFrame frame;
     private List<GraphicsComponent> gComponentsList;
 
     /**
      * Constructor of the view.
-     * @param controller
+     * @param engine
      */
-    public SwingView(final Engine controller) {
-        this.controller = controller;
+    public SwingView(final Engine engine) {
+        this.engine = engine;
     }
 
     @Override
@@ -42,16 +43,22 @@ public final class SwingView implements EngineView {
         //frame.setResizable(false);
 
         final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
+        if (engine instanceof InputEventListener) {
+            final InputEventListener listener = (InputEventListener) engine;
+            canvas.setInputEventListener(listener);
+            canvas.setInputEventFactory(listener.getInputEventFactory());
+        }
+
         frame.getContentPane().add(canvas);
 
         frame.addWindowListener(new WindowAdapter() { //needs to be changed------------
             @Override
             public void windowClosing(final WindowEvent ev) {
-                System.exit(1);
+                System.exit(-1);
             }
             @Override
             public void windowClosed(final WindowEvent ev) {
-                System.exit(1);
+                System.exit(-1);
             }
         });
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -7,7 +7,9 @@ import gfight.common.Pair;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
+import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
+import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.TestWorld;
 import gfight.world.World;
 import gfight.view.api.EngineView;
@@ -73,6 +75,10 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private void processInput() {
+        while (!inputQueue.isEmpty()) {
+            var event = inputQueue.poll();
+            System.out.println(event.getType());
+        }
     }
 
     private boolean isAppRunning() {
@@ -82,6 +88,11 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void notifyInputEvent(InputEvent event) {
         inputQueue.add(event);
+    }
+
+    @Override
+    public InputEventFactory getInputEventFactory() {
+        return new InputEventFactoryImpl();
     }
 
 }
