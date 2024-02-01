@@ -28,7 +28,7 @@ public final class EngineImpl implements Engine {
         view.initialize(camera);
 
         world = new TestWorld();
-        world.instantiate();
+        world.initialize();
         world.installCamera(camera);
     }
 
