@@ -18,7 +18,7 @@ public final class GameTileImpl implements GameTile {
      * 
      * @param type      the type of the tile, see
      *                  {@link gfight.world.api.map.GameTile.TileType}
-     * @param position  the position of the center of the tile
+     * @param centerPosition  the position of the center of the tile
      * @param dimension the dimension of the side of the tile
      */
     public GameTileImpl(final GameTile.TileType type, final Coordinate centerPosition, final double dimension) {

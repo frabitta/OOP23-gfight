@@ -1,9 +1,10 @@
 package gfight.world.api.map;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.locationtech.jts.geom.Coordinate;
+
+import com.google.common.graph.Graph;
 
 /**
  * The map where the game takes place.
@@ -22,14 +23,14 @@ public interface GameMap {
      * 
      * @param position
      * @return the GameTile containing position
+     * @throws IllegalStateException if the given position is not inside the map
      */
     GameTile searchTile(Coordinate position);
 
     /**
      * Get the graph of the game tiles on the map.
      * 
-     * @return an immutable map which associates to every node
-     *         the set of the adjacents, thus creating a graph
+     * @return an immutable Graph of the GameTiles
      */
-    Map<Coordinate, Set<Coordinate>> getTilesGraph();
+    Graph<GameTile> getTileGraph();
 }
