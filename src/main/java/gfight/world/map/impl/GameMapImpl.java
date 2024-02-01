@@ -1,4 +1,4 @@
-package gfight.world.impl.map;
+package gfight.world.map.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +13,9 @@ import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
-import gfight.world.api.map.GameMap;
-import gfight.world.api.map.GameTile;
-import gfight.world.api.map.GameTile.TileType;
+import gfight.world.map.api.GameMap;
+import gfight.world.map.api.GameTile;
+import gfight.world.map.api.GameTile.TileType;
 
 /**
  * Standard implementation of a GameMap.

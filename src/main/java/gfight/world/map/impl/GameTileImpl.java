@@ -1,10 +1,10 @@
-package gfight.world.impl.map;
+package gfight.world.map.impl;
 
 import org.locationtech.jts.geom.Coordinate;
 
 import com.google.common.base.Objects;
 
-import gfight.world.api.map.GameTile;
+import gfight.world.map.api.GameTile;
 
 /**
  * Standard implementation of a GameTile.
@@ -19,7 +19,7 @@ public final class GameTileImpl implements GameTile {
      * Creates a new GameTile of the given type.
      * 
      * @param type           the type of the tile, see
-     *                       {@link gfight.world.api.map.GameTile.TileType}
+     *                       {@link gfight.world.map.api.GameTile.TileType}
      * @param centerPosition the position of the center of the tile
      * @param dimension      the dimension of the side of the tile
      */
