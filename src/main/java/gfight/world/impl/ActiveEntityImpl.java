@@ -5,15 +5,19 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
+import gfight.world.api.GameEntity;
+import gfight.world.api.MovingEntity;
+import gfight.world.collision.api.CollisionCommand;
+import gfight.world.collision.impl.SlideCommand;
 import gfight.world.movement.api.Movement;
 
 /**
- * This class implements the concept of ActiveEntity with movement and health.
+ * This class implements the concept of ActiveEntity with movement and health (Chest, Player and Enemies).
  */
-public final class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
+public abstract class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     private int health;
 
-    /**
+    /** 
      * Constructor of ActiveEntityImpl.
      * 
      * @param vertexes
@@ -22,7 +26,8 @@ public final class ActiveEntityImpl extends BaseMovingEntity implements ActiveEn
      * @param movement
      * @param health
      */
-    public ActiveEntityImpl(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+    public ActiveEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+            final GraphicsComponent graphicsComponent,
             final Optional<Movement> movement, final int health) {
         super(vertexes, position, graphicsComponent, movement);
         this.health = health;
@@ -38,24 +43,5 @@ public final class ActiveEntityImpl extends BaseMovingEntity implements ActiveEn
         this.health = health;
     }
 
-    /**
-     * This method performs the action of rotating.
-     */
-    public void rotate() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rotate'");
-    }
-
-    /**
-     * This method performs the action of rotating.
-     */
-    public void shoot() {
-        // TODO
-    }
-
-    @Override
-    protected void applyCollisions() {
-        // TODO
-    }
 
 }

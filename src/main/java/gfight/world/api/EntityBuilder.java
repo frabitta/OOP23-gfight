@@ -1,6 +1,5 @@
 package gfight.world.api;
 
-import gfight.world.impl.ActiveEntityImpl;
 import gfight.world.movement.api.Movement;
 
 /**
@@ -19,5 +18,5 @@ public interface EntityBuilder {
      * @return an ActiveEntityImpl calling its constructor
      * @throws IllegalStateException
      */
-    ActiveEntityImpl build() throws IllegalStateException;
+    ActiveEntity build() throws IllegalStateException;
 }
