@@ -9,9 +9,9 @@ import gfight.engine.graphics.api.GraphicsComponent;
  */
 public interface World extends CameraMover {
     /**
-     * Instantiate the world.
+     * Initializes the world.
      */
-    void instantiate();
+    void initialize();
 
     /**
      * Update the world.

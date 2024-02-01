@@ -25,7 +25,7 @@ public class TestWorld implements World {
     private MovableCamera camera;
 
     @Override
-    public void instantiate() {
+    public void initialize() {
         this.counter = 0;
         this.elements = List.<GraphicsComponent>of(
             factory.polygon(EngineColor.BLUE, List.of(
