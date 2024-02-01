@@ -2,6 +2,8 @@ package gfight.world.impl.map;
 
 import org.locationtech.jts.geom.Coordinate;
 
+import com.google.common.base.Objects;
+
 import gfight.world.api.map.GameTile;
 
 /**
@@ -16,15 +18,20 @@ public final class GameTileImpl implements GameTile {
     /**
      * Creates a new GameTile of the given type.
      * 
-     * @param type      the type of the tile, see
-     *                  {@link gfight.world.api.map.GameTile.TileType}
-     * @param centerPosition  the position of the center of the tile
-     * @param dimension the dimension of the side of the tile
+     * @param type           the type of the tile, see
+     *                       {@link gfight.world.api.map.GameTile.TileType}
+     * @param centerPosition the position of the center of the tile
+     * @param dimension      the dimension of the side of the tile
      */
     public GameTileImpl(final GameTile.TileType type, final Coordinate centerPosition, final double dimension) {
         this.type = type;
         this.centerPosition = centerPosition;
         this.dimension = dimension;
+    }
+
+    @Override
+    public double getDimension() {
+        return this.dimension;
     }
 
     @Override
@@ -44,5 +51,24 @@ public final class GameTileImpl implements GameTile {
                 && position.getX() >= this.centerPosition.getX() - centerOffset
                 && position.getY() <= this.centerPosition.getY() + centerOffset
                 && position.getY() >= this.centerPosition.getY() - centerOffset;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof GameTile)) {
+            return false;
+        }
+        final GameTile tile = (GameTile) obj;
+        return this.centerPosition.equals(tile.getPosition())
+                && this.dimension == tile.getDimension()
+                && this.type.equals(tile.getType());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this);
     }
 }
