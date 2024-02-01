@@ -14,7 +14,7 @@ import gfight.world.movement.api.Movement;
 public final class Player extends AbstractCharacter {
 
     /**
-     * Constructor for player
+     * Constructor for player.
      * @param vertexes
      * @param position
      * @param graphicsComponent

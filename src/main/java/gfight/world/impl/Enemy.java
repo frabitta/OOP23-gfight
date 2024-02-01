@@ -14,7 +14,7 @@ import gfight.world.movement.api.Movement;
 public final class Enemy extends AbstractCharacter {
 
     /**
-     * Constructor for enemies
+     * Constructor for enemies.
      * @param vertexes
      * @param position
      * @param graphicsComponent
