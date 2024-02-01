@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Implementation of Game Entity.
  */
 public final class GameEntityImpl implements GameEntity {
-    private final List<Coordinate> vertexes = new ArrayList<>();
+    private List<Coordinate> vertexes = new ArrayList<>();
     private Coordinate position;
     private final GraphicsComponent graphicsComponent;
     private Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
@@ -32,17 +32,19 @@ public final class GameEntityImpl implements GameEntity {
      * @param position
      * @param graphicsComponent
      */
-    public GameEntityImpl(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent) {
+    public GameEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+            final GraphicsComponent graphicsComponent) {
         this.graphicsComponent = graphicsComponent;
         this.position = position;
         vertexes.addAll(vertexes);
     }
+
     @Override
     public Polygon getHitBox() {
         Hitbox hitbox = new HitboxImpl();
         return hitbox.getGeometry(vertexes);
     }
-    
+
     @Override
     public void setPosition(final Coordinate position) {
         final GeomOperator calculator = new GeomOperatorImpl();
@@ -50,21 +52,21 @@ public final class GameEntityImpl implements GameEntity {
         vertexes.stream().map(vetex -> calculator.sum(vetex, distance));
         this.position = new Coordinate(position);
     }
-    
+
     @Override
     public Coordinate getPosition() {
         return new Coordinate(position);
     }
-    
+
     @Override
     public Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
         final Hitbox hitbox = new HitboxImpl();
         final Polygon boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
-        .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
-        && !ignoredEntities.contains(a))
-        .forEach(entity -> collidedObjectes.add(entity));
+                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
+                        && !ignoredEntities.contains(a))
+                .forEach(entity -> collidedObjectes.add(entity));
         return collidedObjectes;
     }
 
@@ -78,4 +80,15 @@ public final class GameEntityImpl implements GameEntity {
     public GraphicsComponent getGraphics() {
         return graphicsComponent;
     }
+
+    @Override
+    public List<Coordinate> getCoordinates() {
+        return List.copyOf(vertexes);
+    }
+
+    @Override
+    public void setCoordinates(List<Coordinate> vertexes) {
+        this.vertexes = vertexes;
+    }
+
 }

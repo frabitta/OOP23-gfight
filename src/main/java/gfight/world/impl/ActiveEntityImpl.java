@@ -5,10 +5,6 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
-import gfight.world.collision.api.CollisionCommand;
-import gfight.world.collision.impl.SlideCommand;
 import gfight.world.movement.api.Movement;
 
 /**

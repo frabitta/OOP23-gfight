@@ -8,10 +8,13 @@ import org.locationtech.jts.geom.Coordinate;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.movement.api.Movement;
 
-public class Enemy extends CharacterImpl{
+/**
+ * Class that represents the Enemy of the game.
+ */
+public final class Enemy extends AbstractCharacter{
 
-    public Enemy(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
-            Optional<Movement> movement, int health) {
+    public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+            final Optional<Movement> movement, final int health) {
         super(vertexes, position, graphicsComponent, movement, health);
         //TODO Auto-generated constructor stub
     }
