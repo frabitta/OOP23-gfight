@@ -1,11 +1,13 @@
 package gfight.world.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
+import org.locationtech.jts.geom.util.AffineTransformation;
 
 import gfight.world.api.Hitbox;
 
@@ -37,5 +39,17 @@ public final class HitboxImpl implements Hitbox {
         coordinates.add(new Coordinate(centre.getX() + halfSide, centre.getY() + halfSide));
         coordinates.add(new Coordinate(centre.getX() - halfSide, centre.getY() + halfSide));
         return getGeometry(coordinates);
+    }
+
+    @Override
+    public List<Coordinate> rotate(final List<Coordinate> polygon, final double theta) {
+        Polygon poligon = getGeometry(polygon);
+        AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
+        List<Coordinate> rotatedPolygon = Arrays.asList(rotation.transform(poligon).getCoordinates());
+        if(!rotatedPolygon.isEmpty()){
+            return new ArrayList<>(rotatedPolygon.subList(0, rotatedPolygon.size()-1));
+        }else{
+            return new ArrayList<>();
+        }
     }
 }
