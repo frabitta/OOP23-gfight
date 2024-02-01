@@ -1,8 +1,13 @@
 package gfight.engine;
 
+import java.util.Queue;
+import java.util.LinkedList;
+
 import gfight.common.Pair;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
+import gfight.engine.input.api.InputEvent;
+import gfight.engine.input.api.InputEventListener;
 import gfight.world.TestWorld;
 import gfight.world.World;
 import gfight.view.api.EngineView;
@@ -11,13 +16,15 @@ import gfight.view.impl.SwingView;
 /**
  * Implementation of the game engine.
  */
-public final class EngineImpl implements Engine {
+public final class EngineImpl implements Engine, InputEventListener {
 
     private static final int FRAME_RATE = 60;
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
 
     private EngineView view;
     private World world;
+
+    private Queue<InputEvent> inputQueue = new LinkedList<>();
 
     @Override
     public void initialize() {
@@ -70,6 +77,11 @@ public final class EngineImpl implements Engine {
 
     private boolean isAppRunning() {
         return true;
+    }
+
+    @Override
+    public void notifyInputEvent(InputEvent event) {
+        inputQueue.add(event);
     }
 
 }
