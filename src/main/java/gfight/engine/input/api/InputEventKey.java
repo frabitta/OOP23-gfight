@@ -9,5 +9,5 @@ public interface InputEventKey extends InputEvent {
      * Returns the key pressed on the keyboard.
      * @return char pressed
      */
-    char getKey();
+    int getKey();
 }
