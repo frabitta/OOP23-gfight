@@ -13,26 +13,33 @@ import gfight.world.movement.api.Movement;
 /**
  * Class that represents the concept of main character (Player, Enemies).
  */
-public abstract class AbstractCharacter extends ActiveEntityImpl implements Character{
+public abstract class AbstractCharacter extends ActiveEntityImpl implements Character {
 
-    public AbstractCharacter(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+    /**
+     * Constructor of abstract character.
+     * 
+     * @param vertexes
+     * @param position
+     * @param graphicsComponent
+     * @param movement
+     * @param health
+     */
+    public AbstractCharacter(final List<Coordinate> vertexes, final Coordinate position,
+            final GraphicsComponent graphicsComponent,
             final Optional<Movement> movement, final int health) {
         super(vertexes, position, graphicsComponent, movement, health);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
-    public void rotate(final double theta) {
+    public final void rotate(final double theta) {
         Hitbox rotation = new HitboxImpl();
         rotation.rotate(getCoordinates(), theta);
     }
 
     @Override
-    public void shoot() {
+    public final void shoot() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shoot'");
     }
-
-    
-    
 }

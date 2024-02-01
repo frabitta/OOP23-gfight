@@ -87,7 +87,7 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public void setCoordinates(List<Coordinate> vertexes) {
+    public void setCoordinates(final List<Coordinate> vertexes) {
         this.vertexes = vertexes;
     }
 

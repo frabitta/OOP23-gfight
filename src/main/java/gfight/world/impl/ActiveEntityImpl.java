@@ -30,12 +30,12 @@ public abstract class ActiveEntityImpl extends BaseMovingEntity implements Activ
     }
 
     @Override
-    public int getHealth() {
+    public final int getHealth() {
         return this.health;
     }
 
     @Override
-    public void setHealth(final int health) {
+    public final void setHealth(final int health) {
         this.health = health;
     }
 
