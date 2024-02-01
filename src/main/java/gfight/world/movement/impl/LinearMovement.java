@@ -2,6 +2,8 @@ package gfight.world.movement.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import gfight.world.api.MovingEntity;
+
 /**
  * An implementation of BaseMovement that returns a linear or linear accelerated Movement.
  */
@@ -28,7 +30,7 @@ public final class LinearMovement extends BaseMovement {
     }
 
     @Override
-    public void update() {
+    public void update(final MovingEntity agent) {
         if (accelleration != 1) {
             setDirection(new Vector2D(accelleration, getDirection()));
         }
