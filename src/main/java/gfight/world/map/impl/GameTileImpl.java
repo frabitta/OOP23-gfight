@@ -69,6 +69,6 @@ public final class GameTileImpl implements GameTile {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this);
+        return Objects.hashCode(getType(), getPosition(), getDimension());
     }
 }
