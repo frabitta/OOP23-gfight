@@ -75,10 +75,12 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private void processInput() {
-        while (!inputQueue.isEmpty()) {
+        world.processInput(inputQueue);
+        inputQueue.clear();
+        /*while (!inputQueue.isEmpty()) {
             var event = inputQueue.poll();
             System.out.println(event.getType());
-        }
+        }*/
     }
 
     private boolean isAppRunning() {
