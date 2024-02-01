@@ -8,10 +8,17 @@ import gfight.common.Position2D;
 public interface ViewableCamera {
 
     /**
-     * 
+     * Given a World-related position it returns the corrisponding Screen-related position. 
      * @param pos
-     * @return position relative to the camera.
+     * @return screen-related position.
      */
-    Position2D getRelativePosition(Position2D pos);
+    Position2D getScreenPosition(Position2D pos);
+
+    /**
+     * Given a Screen-related position it returns the corrisponding World-related position. 
+     * @param pos
+     * @return world-related position.
+     */
+    Position2D getWorldPosition(Position2D pos);
 
 }
