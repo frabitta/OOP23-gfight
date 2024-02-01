@@ -45,7 +45,7 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
     public final void updatePos(final long dt) {
         final double scalar = 0.0001;
         final GeomOperator calculator = new GeomOperatorImpl();
-        movement.get().update();
+        movement.get().update(this);
         applyCollisions();
         setPosition(calculator.sum(getPosition(), getDirection().scalarMultiply(scalar)));
     }

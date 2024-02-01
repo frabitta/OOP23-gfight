@@ -2,14 +2,18 @@ package gfight.world.movement.api;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
+import gfight.world.api.MovingEntity;
+
 /**
  * Interface for update direction based on the type of movement.
  */
 public interface Movement {
     /**
      * it updates the vector based on new information.
+     * 
+     * @param agent the object with this movement
      */
-    void update();
+    void update(MovingEntity agent);
 
     /**
      * 

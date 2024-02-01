@@ -36,4 +36,13 @@ public interface Hitbox {
      * @return poligono rappresentante il quadrato
      */
     Polygon getSquare(Coordinate centre, double side);
+
+    /**
+     * It rotates a list of vertex.
+     * 
+     * @param theta angle of rotation in radiants
+     * @param polygon original list of vertexes
+     * @return new modified list
+     */
+    List<Coordinate> rotate(List<Coordinate> polygon, double theta);
 }
