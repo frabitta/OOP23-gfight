@@ -19,6 +19,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -35,6 +37,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
 
     private Optional<InputEventListener> inputListener;
     private Optional<InputEventFactory> inputFactory;
+    private final Set<Integer> pressedKeys = new HashSet<>();
 
     Canvas(final int width, final int height, final SwingView scene, final ViewableCamera camera) {
         this.scene = scene;
@@ -103,17 +106,23 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     @Override
     public void keyPressed(KeyEvent e) {
         if (isInputAvailable()) {
-            this.inputListener.get().notifyInputEvent(
-                this.inputFactory.get().pressedKey(e.getKeyCode())
-            );
+            final int key = e.getKeyCode();
+            if (!pressedKeys.contains(key)) {
+                pressedKeys.add(key);
+                this.inputListener.get().notifyInputEvent(
+                    this.inputFactory.get().pressedKey(key)
+                );
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         if (isInputAvailable()) {
+            final int key = e.getKeyCode();
+            pressedKeys.remove(key);
             this.inputListener.get().notifyInputEvent(
-                this.inputFactory.get().releasedKey(e.getKeyCode())
+                this.inputFactory.get().releasedKey(key)
             );
         }
     }
