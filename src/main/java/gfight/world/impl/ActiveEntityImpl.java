@@ -26,7 +26,7 @@ public abstract class ActiveEntityImpl extends BaseMovingEntity implements Activ
     public ActiveEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
             final GraphicsComponent graphicsComponent,
             final Optional<Movement> movement, final int health) {
-        super(vertexes, position, graphicsComponent, movement);
+        super(vertexes, position, graphicsComponent);
         this.health = health;
     }
 

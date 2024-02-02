@@ -81,12 +81,12 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public List<Coordinate> getCoordinates() {
+    public final List<Coordinate> getCoordinates() {
         return originalEntity.getCoordinates();
     }
 
     @Override
-    public void setCoordinates(final List<Coordinate> vertexes) {
+    public final void setCoordinates(final List<Coordinate> vertexes) {
         originalEntity.setCoordinates(vertexes);
     }
 }

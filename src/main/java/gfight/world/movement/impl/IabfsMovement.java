@@ -10,14 +10,16 @@ import com.google.common.graph.Traverser;
 
 public class IabfsMovement extends BaseMovement {
     private final GameEntity target;
+    private final MovingEntity agent;
     private final GameMapImpl map = new GameMapImpl(10);
 
-    public IabfsMovement(final GameEntity target) {
+    public IabfsMovement(final GameEntity target, final MovingEntity agent) {
         this.target = target;
+        this.agent = agent;
     }
 
     @Override
-    public void update(final MovingEntity agent) {
+    public void update() {
         Coordinate coordinateTarget = agent.getPosition();
         Traverser.forGraph(map.getTileGraph())
                 .breadthFirst(map.searchTile(coordinateTarget))

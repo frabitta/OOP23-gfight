@@ -2,8 +2,6 @@ package gfight.world.movement.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import gfight.world.api.MovingEntity;
-
 /**
  * An implementation of Movemnt that can be used to give a fixed status on
  * object that can move on some situation.
@@ -18,7 +16,7 @@ public final class Fixed extends BaseMovement {
     }
 
     @Override
-    public void update(final MovingEntity agent) {
+    public void update() {
 
     }
 
