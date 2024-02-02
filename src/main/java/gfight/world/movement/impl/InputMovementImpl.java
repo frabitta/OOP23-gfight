@@ -20,7 +20,6 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
     @Override
     public void removeDirection(final Directions dir) {
         setDirection(getDirection().add(getInputDirection(dir).negate()));
-
     }
 
     private Vector2D getInputDirection(final Directions dir) {

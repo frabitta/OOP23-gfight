@@ -57,6 +57,8 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
     /**
      * foreach element in collision it sets the type of collision and execute the
      * command.
+     * 
+     * @param gameobjects that are present in the game to handle collisions
      */
-    protected abstract void applyCollisions(final Set<GameEntity> gameobjects);
+    protected abstract void applyCollisions(Set<GameEntity> gameobjects);
 }

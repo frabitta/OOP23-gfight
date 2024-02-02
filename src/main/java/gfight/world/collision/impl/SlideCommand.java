@@ -10,24 +10,24 @@ import gfight.world.api.MovingEntity;
  * This type of collision change the direction of the moving entity in order to
  * move away from the other entity.
  * 
- * @param <ME> is the entitiy that moves and causes the collision
- * @param <GE> is the other entity
+ * @param <M> is the entitiy that moves and causes the collision
+ * @param <G> is the other entity
  */
-public final class SlideCommand<ME extends MovingEntity, GE extends GameEntity> extends AbstractCollisionCommand<ME, GE> {
+public final class SlideCommand<M extends MovingEntity, G extends GameEntity> extends AbstractCollisionCommand<M, G> {
 
     /**
      * 
      * @param outercollider
      * @param outercollided
      */
-    public SlideCommand(final ME outercollider, final GE outercollided) {
+    public SlideCommand(final M outercollider, final G outercollided) {
         super(outercollider, outercollided);
     }
 
     @Override
     public void execute() {
-        GeomOperator operator = new GeomOperatorImpl();
-        Vector2D distance = operator.distance(collider().getPosition(), collided().getPosition());
+        final GeomOperator operator = new GeomOperatorImpl();
+        final Vector2D distance = operator.distance(collider().getPosition(), collided().getPosition());
         if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
             collider().setDirection(new Vector2D(-collider().getDirection().getX(), collider().getDirection().getY()));
         } else {

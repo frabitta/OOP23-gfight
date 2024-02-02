@@ -20,7 +20,7 @@ public final class GameHitboxesManagerImpl implements GameHitboxesManager {
 
     @Override
     public Map<GameEntity, Set<GameEntity>> getAllCollision(final Set<GameEntity> gameObjects) {
-        Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
+        final Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
         gameObjects.stream().forEach(entity -> collisionMap.put(entity, entity.getAllCollided(gameObjects)));
         return collisionMap;
     }

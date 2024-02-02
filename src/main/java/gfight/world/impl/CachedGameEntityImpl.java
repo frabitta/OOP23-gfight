@@ -19,8 +19,8 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     private Optional<Polygon> boundigBox;
 
     private Optional<Set<GameEntity>> collidedObjects;
-    private boolean needResHitbox = false;
-    private boolean needResCollided = false;
+    private boolean needResHitbox;
+    private boolean needResCollided;
 
     /**
      * Chached Game Entity constructor.
