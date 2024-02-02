@@ -32,8 +32,8 @@ public final class HitboxImpl implements Hitbox {
 
     @Override
     public Polygon getSquare(final Coordinate centre, final double side) {
-        double halfSide = side / 2.0;
-        List<Coordinate> coordinates = new ArrayList<>();
+        final double halfSide = side / 2.0;
+        final List<Coordinate> coordinates = new ArrayList<>();
         coordinates.add(new Coordinate(centre.getX() - halfSide, centre.getY() - halfSide));
         coordinates.add(new Coordinate(centre.getX() + halfSide, centre.getY() - halfSide));
         coordinates.add(new Coordinate(centre.getX() + halfSide, centre.getY() + halfSide));
@@ -43,9 +43,9 @@ public final class HitboxImpl implements Hitbox {
 
     @Override
     public List<Coordinate> rotate(final List<Coordinate> polygon, final double theta) {
-        Polygon poligon = getGeometry(polygon);
-        AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
-        List<Coordinate> rotatedPolygon = Arrays.asList(rotation.transform(poligon).getCoordinates());
+        final Polygon poligon = getGeometry(polygon);
+        final AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
+        final List<Coordinate> rotatedPolygon = Arrays.asList(rotation.transform(poligon).getCoordinates());
         if (!rotatedPolygon.isEmpty()) {
             return new ArrayList<>(rotatedPolygon.subList(0, rotatedPolygon.size() - 1));
         } else {

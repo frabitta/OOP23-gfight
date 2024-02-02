@@ -22,7 +22,7 @@ public final class GameEntityImpl implements GameEntity {
     private List<Coordinate> vertexes = new ArrayList<>();
     private Coordinate position;
     private final GraphicsComponent graphicsComponent;
-    private Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
+    private final Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
 
     /**
      * Game Entity constructor that creates gameEntity with vertexes position and
@@ -41,7 +41,7 @@ public final class GameEntityImpl implements GameEntity {
 
     @Override
     public Polygon getHitBox() {
-        Hitbox hitbox = new HitboxImpl();
+        final Hitbox hitbox = new HitboxImpl();
         return hitbox.getGeometry(vertexes);
     }
 

@@ -7,20 +7,20 @@ import gfight.world.collision.api.CollisionCommand;
 /**
  * Abstract class that implements Collision Command.
  * 
- * @param <ME> is the entitiy that moves and causes the collision
- * @param <GE> is the other entity
+ * @param <M> is the entitiy that moves and causes the collision
+ * @param <G> is the other entity
  */
-public abstract class AbstractCollisionCommand<ME extends MovingEntity, GE extends GameEntity>
-        implements CollisionCommand<ME, GE> {
-    private final ME collider;
-    private final GE collided;
+public abstract class AbstractCollisionCommand<M extends MovingEntity, G extends GameEntity>
+        implements CollisionCommand<M, G> {
+    private final M collider;
+    private final G collided;
 
     /**
      * 
      * @param collider
      * @param collided
      */
-    public AbstractCollisionCommand(final ME collider, final GE collided) {
+    public AbstractCollisionCommand(final M collider, final G collided) {
         this.collided = collided;
         this.collider = collider;
     }
@@ -29,7 +29,7 @@ public abstract class AbstractCollisionCommand<ME extends MovingEntity, GE exten
      * 
      * @return the collider
      */
-    protected ME collider() {
+    protected M collider() {
         return collider;
     }
 
@@ -37,7 +37,7 @@ public abstract class AbstractCollisionCommand<ME extends MovingEntity, GE exten
      * 
      * @return the collided
      */
-    protected GE collided() {
+    protected G collided() {
         return collided;
     }
 }
