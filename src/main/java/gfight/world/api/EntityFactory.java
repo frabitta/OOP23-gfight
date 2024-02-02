@@ -31,7 +31,7 @@ public interface EntityFactory {
 
         /**
          * 
-         * @param sideLength        of the figure
+         * @param sideLength        of the long side of the rectangle
          * @param position          the center of the obstacle
          * @param graphicsComponent color of the obstacle
          * @return a new Obstacle
