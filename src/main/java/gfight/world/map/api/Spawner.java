@@ -1,4 +1,4 @@
-package gfight.world.api.map;
+package gfight.world.map.api;
 
 import java.util.Set;
 

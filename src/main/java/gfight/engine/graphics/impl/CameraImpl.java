@@ -17,8 +17,13 @@ public class CameraImpl implements Camera {
     }
 
     @Override
-    public final Position2D getRelativePosition(final Position2D pos) {
+    public Position2D getScreenPosition(Position2D pos) {
         return new Pair(pos.getX() - position.getX(), pos.getY() - position.getY());
+    }
+
+    @Override
+    public Position2D getWorldPosition(Position2D pos) {
+        return new Pair(pos.getX() + position.getX(), pos.getY() + position.getY());
     }
 
 }

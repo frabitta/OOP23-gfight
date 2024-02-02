@@ -46,9 +46,9 @@ public final class HitboxImpl implements Hitbox {
         Polygon poligon = getGeometry(polygon);
         AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
         List<Coordinate> rotatedPolygon = Arrays.asList(rotation.transform(poligon).getCoordinates());
-        if(!rotatedPolygon.isEmpty()){
-            return new ArrayList<>(rotatedPolygon.subList(0, rotatedPolygon.size()-1));
-        }else{
+        if (!rotatedPolygon.isEmpty()) {
+            return new ArrayList<>(rotatedPolygon.subList(0, rotatedPolygon.size() - 1));
+        } else {
             return new ArrayList<>();
         }
     }

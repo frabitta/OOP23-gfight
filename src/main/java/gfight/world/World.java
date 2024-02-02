@@ -1,17 +1,19 @@
 package gfight.world;
 
 import java.util.List;
+import java.util.Queue;
 
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.engine.input.api.InputEvent;
 
 /**
  * Interface to create a world (model part of the application).
  */
 public interface World extends CameraMover {
     /**
-     * Instantiate the world.
+     * Initializes the world.
      */
-    void instantiate();
+    void initialize();
 
     /**
      * Update the world.
@@ -23,4 +25,10 @@ public interface World extends CameraMover {
      * @return list of the GraphicsComponents to render.
      */
     List<GraphicsComponent> getGraphicsComponents();
+
+    /**
+     * Process input events coming from the engine.
+     * @param inputEvents
+     */
+    void processInput(Queue<InputEvent> inputEvents);
 }

@@ -9,12 +9,23 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.movement.api.Movement;
 
-public class Enemy extends CharacterImpl{
+/**
+ * Class that represents the Enemy of the game.
+ */
+public final class Enemy extends AbstractCharacter {
 
-    public Enemy(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
-            Optional<Movement> movement, int health) {
+    /**
+     * Constructor for enemies.
+     * @param vertexes
+     * @param position
+     * @param graphicsComponent
+     * @param movement
+     * @param health
+     */
+    public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+            final Optional<Movement> movement, final int health) {
         super(vertexes, position, graphicsComponent, movement, health);
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -22,5 +33,5 @@ public class Enemy extends CharacterImpl{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'applyCollisions'");
     }
-    
+
 }

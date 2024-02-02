@@ -6,6 +6,7 @@ import org.locationtech.jts.geom.Polygon;
 import gfight.engine.graphics.api.GraphicsComponent;
 
 import java.util.Set;
+import java.util.List;
 
 /**
  * An interface for any entity in the game.
@@ -50,4 +51,16 @@ public interface GameEntity {
      * @return the graphic component of the Entity
      */
     GraphicsComponent getGraphics();
+
+    /**
+     * 
+     * @return the coordinates of the entity
+     */
+    List<Coordinate> getCoordinates();
+
+    /**
+     * Set the coordinates of the entity.
+     * @param vertexes
+     */
+    void setCoordinates(List<Coordinate> vertexes);
 }

@@ -21,7 +21,7 @@ public final class TextGraphicsRenderer extends AbstractGraphicsComponentRendere
     @Override
     void renderComp(final Graphics2D g, final ViewableCamera camera) {
         final TextGraphicsComponent gComp = (TextGraphicsComponent) getGraphicsComponent();
-        final Position2D printPos = camera.getRelativePosition(gComp.getPositions().get(0));
+        final Position2D printPos = camera.getScreenPosition(gComp.getPositions().get(0));
 
         g.setFont(new Font("Verdana", Font.PLAIN, gComp.getSize()));
         g.drawString(gComp.getText(), printPos.getX(), printPos.getY());

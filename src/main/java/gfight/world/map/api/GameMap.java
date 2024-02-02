@@ -1,30 +1,15 @@
-package gfight.world.api.map;
+package gfight.world.map.api;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import gfight.world.api.GameEntity;
+import com.google.common.graph.Graph;
 
 /**
  * The map where the game takes place.
  */
 public interface GameMap {
-
-    /**
-     * Get all the enemies on the map.
-     * 
-     * @return a set containing the enemies on the map
-     */
-    Set<GameEntity> getEnemies();
-
-    /**
-     * Get the player on the map.
-     * 
-     * @return the player entity
-     */
-    GameEntity getPlayer();
 
     /**
      * Get all the game tiles of which the map is composed.
@@ -38,14 +23,14 @@ public interface GameMap {
      * 
      * @param position
      * @return the GameTile containing position
+     * @throws IllegalStateException if the given position is not inside the map
      */
     GameTile searchTile(Coordinate position);
 
     /**
      * Get the graph of the game tiles on the map.
      * 
-     * @return an immutable map which associates to every node
-     *         the set of the adjacents, thus creating a graph
+     * @return an immutable Graph of the GameTiles
      */
-    Map<Coordinate, Set<Coordinate>> getTilesGraph();
+    Graph<GameTile> getTileGraph();
 }

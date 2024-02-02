@@ -1,6 +1,7 @@
 package gfight.world;
 
 import java.util.List;
+import java.util.Queue;
 
 import gfight.common.Pair;
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -9,6 +10,8 @@ import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.graphics.impl.TextGraphicsComponent;
+import gfight.engine.input.api.InputEvent;
+import gfight.engine.input.api.InputEventMouse;
 
 import java.util.stream.Stream;
 
@@ -25,7 +28,7 @@ public class TestWorld implements World {
     private MovableCamera camera;
 
     @Override
-    public void instantiate() {
+    public void initialize() {
         this.counter = 0;
         this.elements = List.<GraphicsComponent>of(
             factory.polygon(EngineColor.BLUE, List.of(
@@ -55,6 +58,16 @@ public class TestWorld implements World {
     public void installCamera(final MovableCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Pair(counter,0));
+    }
+
+    @Override
+    public void processInput(Queue<InputEvent> inputEvents) {
+        for (var event: inputEvents) {
+            if (event instanceof InputEventMouse) {
+                var mouseEv = (InputEventMouse) event;
+                counterGraph.setPositions(List.of(mouseEv.getPosition()));
+            }
+        }
     }
 
 }

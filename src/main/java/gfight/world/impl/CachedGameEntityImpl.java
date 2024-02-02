@@ -17,7 +17,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Polygon> boundigBox;
-    
+
     private Optional<Set<GameEntity>> collidedObjects;
     private boolean needResHitbox = false;
     private boolean needResCollided = false;
@@ -80,4 +80,13 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
         return originalEntity.getGraphics();
     }
 
+    @Override
+    public List<Coordinate> getCoordinates() {
+        return originalEntity.getCoordinates();
+    }
+
+    @Override
+    public void setCoordinates(final List<Coordinate> vertexes) {
+        originalEntity.setCoordinates(vertexes);
+    }
 }
