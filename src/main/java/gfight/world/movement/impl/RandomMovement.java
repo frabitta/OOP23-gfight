@@ -3,8 +3,6 @@ package gfight.world.movement.impl;
 import java.util.Random;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import gfight.world.api.MovingEntity;
-
 /**
  * An implementation of Movement that gives a random movement.
  */
@@ -27,7 +25,7 @@ public final class RandomMovement extends BaseMovement {
     }
 
     @Override
-    public void update(final MovingEntity agent) {
+    public void update() {
         if (counter > 0) {
             counter--;
         } else {

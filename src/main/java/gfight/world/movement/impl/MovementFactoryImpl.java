@@ -2,6 +2,7 @@ package gfight.world.movement.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import gfight.world.api.GameEntity;
+import gfight.world.api.MovingEntity;
 import gfight.world.movement.api.MovementFactory;
 
 /**
@@ -10,8 +11,8 @@ import gfight.world.movement.api.MovementFactory;
 public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
-    public IabfsMovement createIabfsMovement(final GameEntity target) {
-        return new IabfsMovement(target);
+    public IabfsMovement createIabfsMovement(final GameEntity target, final MovingEntity agent) {
+        return new IabfsMovement(target, agent);
     }
 
     @Override

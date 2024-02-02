@@ -7,7 +7,6 @@ import org.locationtech.jts.geom.Coordinate;
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.movement.api.Movement;
@@ -25,13 +24,10 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
      * @param vertexes
      * @param position
      * @param graphicsComponent
-     * @param movement
      */
     public BaseMovingEntity(final List<Coordinate> vertexes, final Coordinate position,
-            final GraphicsComponent graphicsComponent,
-            final Optional<Movement> movement) {
+            final GraphicsComponent graphicsComponent) {
         super(vertexes, position, graphicsComponent);
-        this.movement = movement;
     }
 
     @Override
@@ -48,9 +44,9 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
     public final void updatePos(final long dt, final Set<GameEntity> gameobjects) {
         final double scalar = 0.0001;
         final GeomOperator calculator = new GeomOperatorImpl();
-        movement.get().update(this);
+        movement.get().update();
         applyCollisions(gameobjects);
-        setPosition(calculator.sum(getPosition(), getDirection().scalarMultiply(scalar)));
+        setPosition(calculator.sum(getPosition(), getDirection().scalarMultiply(scalar * dt)));
     }
 
     @Override
