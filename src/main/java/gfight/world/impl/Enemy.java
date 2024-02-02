@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.locationtech.jts.geom.Coordinate;
-
+import java.util.Set;
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.world.api.CachedGameEntity;
 import gfight.world.movement.api.Movement;
 
 /**
@@ -28,7 +29,7 @@ public final class Enemy extends AbstractCharacter {
     }
 
     @Override
-    protected void applyCollisions() {
+    protected void applyCollisions(final Set<CachedGameEntity> gameobjects) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'applyCollisions'");
     }
