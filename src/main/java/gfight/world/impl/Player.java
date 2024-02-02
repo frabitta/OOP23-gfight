@@ -37,8 +37,12 @@ public final class Player extends AbstractCharacter {
 
     @Override
     protected void applyCollisions(final Set<GameEntity> gameobjects) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyCollisions'");
+        getAllCollided(gameobjects).stream().forEach(el -> {
+            if (el instanceof GameEntity) {
+                CollisionCommand coll = new SlideCommand<MovingEntity, GameEntity>(this, el);
+                coll.execute();
+            }
+        });
     }
 
 }
