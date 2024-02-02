@@ -1,14 +1,11 @@
 package gfight.world.impl;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Optional;
 
 import org.locationtech.jts.geom.Coordinate;
 import java.util.Set;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.collision.api.CollisionCommand;
@@ -31,7 +28,7 @@ public final class Player extends AbstractCharacter {
      */
     public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
             final Optional<Movement> movement, final int health) {
-        super(vertexes, position, graphicsComponent, movement, health);
+        super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
     }
 

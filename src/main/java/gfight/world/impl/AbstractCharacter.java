@@ -1,14 +1,12 @@
 package gfight.world.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.locationtech.jts.geom.Coordinate;
 
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
 import gfight.world.api.Hitbox;
-import gfight.world.movement.api.Movement;
 
 /**
  * Class that represents the concept of main character (Player, Enemies).
@@ -25,9 +23,8 @@ public abstract class AbstractCharacter extends ActiveEntityImpl implements Char
      * @param health
      */
     public AbstractCharacter(final List<Coordinate> vertexes, final Coordinate position,
-            final GraphicsComponent graphicsComponent,
-            final Optional<Movement> movement, final int health) {
-        super(vertexes, position, graphicsComponent, movement, health);
+            final GraphicsComponent graphicsComponent, final int health) {
+        super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
     }
 

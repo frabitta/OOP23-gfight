@@ -20,14 +20,14 @@ public interface EntityFactory {
         Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health);
 
         /**
-         * 
+         * @param target            of the enemy (chest or player)
          * @param sideLength        of the figure
          * @param position          the center of the enemy
          * @param graphicsComponent color of the enemy
          * @param health            life point of the enemy
          * @return a new Enemy
          */
-        Enemy createEnemy(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health);
+        Enemy createEnemy(GameEntity target, double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health);
 
         /**
          * 
