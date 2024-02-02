@@ -8,6 +8,7 @@ import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
+import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.movement.api.Movement;
 import java.util.Set;
@@ -44,7 +45,7 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
     }
 
     @Override
-    public final void updatePos(final long dt, final Set<CachedGameEntity> gameobjects) {
+    public final void updatePos(final long dt, final Set<GameEntity> gameobjects) {
         final double scalar = 0.0001;
         final GeomOperator calculator = new GeomOperatorImpl();
         movement.get().update(this);
@@ -61,5 +62,5 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
      * foreach element in collision it sets the type of collision and execute the
      * command.
      */
-    protected abstract void applyCollisions(final Set<CachedGameEntity> gameobjects);
+    protected abstract void applyCollisions(final Set<GameEntity> gameobjects);
 }

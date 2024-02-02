@@ -8,12 +8,13 @@ import gfight.world.api.ActiveEntity;
 import gfight.world.movement.api.Movement;
 
 /**
- * This class implements the concept of ActiveEntity with movement and health (Chest, Player and Enemies).
+ * This class implements the concept of ActiveEntity with movement and health
+ * (Chest, Player and Enemies).
  */
 public abstract class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
     private int health;
 
-    /** 
+    /**
      * Constructor of ActiveEntityImpl.
      * 
      * @param vertexes
@@ -38,6 +39,5 @@ public abstract class ActiveEntityImpl extends BaseMovingEntity implements Activ
     public final void setHealth(final int health) {
         this.health = health;
     }
-
 
 }
