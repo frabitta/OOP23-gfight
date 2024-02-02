@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.locationtech.jts.geom.Coordinate;
 
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.world.impl.Enemy;
+import gfight.world.impl.Player;
 import gfight.world.movement.api.Movement;
+import gfight.world.weapon.api.Projectile;
 
 public interface EntityFactory {
     /**
@@ -18,7 +21,7 @@ public interface EntityFactory {
      * @param health
      * @return a new Player
      */
-    GameEntity createPlayer(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
+    Player createPlayer(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
             Optional<Movement> movement, int health);
     /**
      * 
@@ -27,7 +30,7 @@ public interface EntityFactory {
      * @param graphicsComponent
      * @return a new Obstacle
      */
-    GameEntity createObstacle(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent);
+    CachedGameEntity createObstacle(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent);
 
     /**
      * 
@@ -38,11 +41,11 @@ public interface EntityFactory {
      * @param health
      * @return a new Enemy
      */
-    GameEntity createEnemy(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
+    Enemy createEnemy(List<Coordinate> vertexes, Coordinate position, GraphicsComponent graphicsComponent,
             Optional<Movement> movement, int health);
     /**
      * 
      * @return a new Projectile
      */
-    GameEntity createProjectile();
+    Projectile createProjectile();
 }
