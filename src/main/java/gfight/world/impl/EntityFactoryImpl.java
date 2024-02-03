@@ -18,12 +18,16 @@ import gfight.world.movement.impl.IabfsMovement;
 import gfight.world.movement.impl.InputMovementImpl;
 import gfight.world.weapon.api.Projectile;
 
+/**
+ * This class is a factory of enteties.
+ */
 public class EntityFactoryImpl implements EntityFactory {
     private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
 
     @Override
-    public Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent,
-            int health, InputMovement movement) {
+    public Player createPlayer(final double sideLength, final Coordinate position,
+            final GraphicsComponent graphicsComponent,
+            final int health, InputMovement movement) {
         movement = new InputMovementImpl();
         final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
         final Player player = new Player(vertexes, position, graphicsComponent, health);
@@ -32,8 +36,8 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public Enemy createEnemy(GameEntity target, double sideLength, Coordinate position,
-            GraphicsComponent graphicsComponent, int health) {
+    public Enemy createEnemy(final GameEntity target, final double sideLength, final Coordinate position,
+            final GraphicsComponent graphicsComponent, final int health) {
         final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
         final Enemy enemy = new Enemy(vertexes, position, graphicsComponent, health);
         final Optional<Movement> movement = Optional.ofNullable(new IabfsMovement(target, enemy));
@@ -42,8 +46,8 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public CachedGameEntity createObstacle(double sideLength, Coordinate position,
-            GraphicsComponent graphicsComponent) {
+    public CachedGameEntity createObstacle(final double sideLength, final Coordinate position,
+            final GraphicsComponent graphicsComponent) {
         final List<Coordinate> vertexes = vertexCalculator.square(sideLength, position);
         final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
         return obstacle;
@@ -56,9 +60,11 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public ActiveEntity createChest(double sideLength, Coordinate position, GraphicsComponent graphicsComponent,
-            int health) {
-        final List<Coordinate> vertexes = vertexCalculator.square(sideLength, position);
-        return null;
+    public ActiveEntity createChest(final double sideLength, final Coordinate position,
+            final GraphicsComponent graphicsComponent,
+            final int health) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createChest'");
     }
+
 }

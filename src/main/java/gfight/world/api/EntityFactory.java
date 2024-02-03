@@ -19,7 +19,8 @@ public interface EntityFactory {
          * @param movement          movement object that will be overwritten
          * @return a new Player
          */
-        Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health, InputMovement movement);
+        Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health,
+                        InputMovement movement);
 
         /**
          * @param target            of the enemy (chest or player)
@@ -29,7 +30,8 @@ public interface EntityFactory {
          * @param health            life point of the enemy
          * @return a new Enemy
          */
-        Enemy createEnemy(GameEntity target, double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health);
+        Enemy createEnemy(GameEntity target, double sideLength, Coordinate position,
+                        GraphicsComponent graphicsComponent, int health);
 
         /**
          * 
@@ -46,7 +48,7 @@ public interface EntityFactory {
          * @param position          the centre of the chest
          * @param graphicsComponent the color of the chest
          * @param health            life point of the chest
-         * @return
+         * @return a new Chest object
          */
         ActiveEntity createChest(double sideLength, Coordinate position, GraphicsComponent graphicsComponent,
                         int health);

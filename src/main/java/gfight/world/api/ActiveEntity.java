@@ -1,4 +1,5 @@
 package gfight.world.api;
+
 /**
  * Interface that represents the concept of ActiveEntity.
  */
@@ -10,9 +11,9 @@ public interface ActiveEntity extends MovingEntity {
     int getHealth();
 
     /**
-     * Set health of the entity.
-     * @param health
+     * 
+     * @param damage of the weapon
      */
-    void setHealth(int health);
+    void takeDamage(int damage);
 
 }

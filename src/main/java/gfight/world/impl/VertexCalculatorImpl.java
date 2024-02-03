@@ -27,13 +27,7 @@ public class VertexCalculatorImpl implements VertexCalculator {
         Coordinate topLeft = new Coordinate(position.x - halfSide, position.y + halfSide);
         Coordinate bottomRight = new Coordinate(position.x + halfSide, position.y - halfSide);
         Coordinate topRight = new Coordinate(position.x + halfSide, position.y + halfSide);
-        return List.of(bottomLeft, bottomRight, topLeft, topRight);
-    }
-
-    @Override
-    public List<Coordinate> rectangle(double longSideLength, double shortSideLenght, Coordinate position) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rectangle'");
+        return List.of(bottomLeft, topLeft, topRight, bottomRight);
     }
 
 }

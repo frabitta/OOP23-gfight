@@ -18,10 +18,10 @@ public final class Enemy extends AbstractCharacter {
     /**
      * Constructor for enemies.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
-     * @param health
+     * @param vertexes          of the shape
+     * @param position          the center of the enemy
+     * @param graphicsComponent the color of the enemy
+     * @param health            of the enemy
      */
     public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
             final int health) {

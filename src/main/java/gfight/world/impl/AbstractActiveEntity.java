@@ -15,10 +15,10 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     /**
      * Constructor of ActiveEntityImpl.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
-     * @param health
+     * @param vertexes          of the shape
+     * @param position          the center of the shape
+     * @param graphicsComponent the color of the shape
+     * @param health            of the entity
      */
     public AbstractActiveEntity(final List<Coordinate> vertexes, final Coordinate position,
             final GraphicsComponent graphicsComponent, final int health) {
@@ -32,7 +32,16 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     }
 
     @Override
-    public final void setHealth(final int health) {
+    public final void takeDamage(final int damage) {
+        this.setHealth(getHealth() - damage);
+    }
+
+    /**
+     * Set the life point of the entity
+     * 
+     * @param health the actual health of the entity
+     */
+    private final void setHealth(final int health) {
         this.health = health;
     }
 

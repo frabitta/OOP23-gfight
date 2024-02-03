@@ -20,10 +20,10 @@ public final class Player extends AbstractCharacter {
     /**
      * Constructor for player.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
-     * @param health
+     * @param vertexes of the shape
+     * @param position the center of the player
+     * @param graphicsComponent the color of the player
+     * @param health of the player
      */
     public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent, health);
