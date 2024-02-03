@@ -11,7 +11,6 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
 
     @Override
     public void update() {
-        System.err.println(inputVector);
         if (!inputVector.equals(new Vector2D(0, 0))) {
             setDirection(inputVector.normalize());
         } else {
@@ -21,7 +20,6 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
 
     @Override
     public void addDirection(final Directions dir) {
-        System.err.println(getInputDirection(dir));
         inputVector = inputVector.add(getInputDirection(dir));
     }
 
