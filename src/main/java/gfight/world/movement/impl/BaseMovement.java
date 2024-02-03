@@ -12,11 +12,11 @@ public abstract class BaseMovement implements Movement {
 
     @Override
     public final Vector2D getDirection() {
-        return new Vector2D(1, dirVector);
+        return dirVector;
     }
 
     @Override
     public final void setDirection(final Vector2D direction) {
-        dirVector = new Vector2D(1, direction);
+        dirVector = direction;
     }
 }
