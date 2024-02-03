@@ -8,6 +8,9 @@ import gfight.world.impl.Player;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 
+/**
+ * An interface that represents the concept of a factory of entities.
+ */
 public interface EntityFactory {
 
         /**

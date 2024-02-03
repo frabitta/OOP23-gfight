@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
 
+/**
+ * An interface with methods to calculate the vertexes of different shapes.
+ */
 public interface VertexCalculator {
     /**
-     * Calculate vertexes of an equilater triangle
+     * Calculate vertexes of an equilater triangle.
      * 
      * @param sideLength of the triangle
      * @param position   the centre of the triangle
@@ -15,7 +18,7 @@ public interface VertexCalculator {
     List<Coordinate> triangle(double sideLength, Coordinate position);
 
     /**
-     * Calculate vertexes of a square
+     * Calculate vertexes of a square.
      * 
      * @param sideLength of the square
      * @param position   the centre of the square

@@ -1,7 +1,6 @@
 package gfight.world.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.locationtech.jts.geom.Coordinate;
 import java.util.Set;
@@ -10,7 +9,6 @@ import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.collision.api.CollisionCommand;
 import gfight.world.collision.impl.SlideCommand;
-import gfight.world.movement.api.Movement;
 
 /**
  * Class that represents the Player of the game.
@@ -20,12 +18,13 @@ public final class Player extends AbstractCharacter {
     /**
      * Constructor for player.
      * 
-     * @param vertexes of the shape
-     * @param position the center of the player
+     * @param vertexes          of the shape
+     * @param position          the center of the player
      * @param graphicsComponent the color of the player
-     * @param health of the player
+     * @param health            of the player
      */
-    public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent, final int health) {
+    public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+            final int health) {
         super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
     }

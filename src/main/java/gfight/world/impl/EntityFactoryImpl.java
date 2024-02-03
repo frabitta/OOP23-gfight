@@ -25,7 +25,7 @@ public class EntityFactoryImpl implements EntityFactory {
     private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
 
     @Override
-    public Player createPlayer(final double sideLength, final Coordinate position,
+    public final Player createPlayer(final double sideLength, final Coordinate position,
             final GraphicsComponent graphicsComponent,
             final int health, InputMovement movement) {
         movement = new InputMovementImpl();
@@ -36,7 +36,7 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public Enemy createEnemy(final GameEntity target, final double sideLength, final Coordinate position,
+    public final Enemy createEnemy(final GameEntity target, final double sideLength, final Coordinate position,
             final GraphicsComponent graphicsComponent, final int health) {
         final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
         final Enemy enemy = new Enemy(vertexes, position, graphicsComponent, health);
@@ -46,7 +46,7 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public CachedGameEntity createObstacle(final double sideLength, final Coordinate position,
+    public final CachedGameEntity createObstacle(final double sideLength, final Coordinate position,
             final GraphicsComponent graphicsComponent) {
         final List<Coordinate> vertexes = vertexCalculator.square(sideLength, position);
         final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
@@ -54,13 +54,13 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public Projectile createProjectile() {
+    public final Projectile createProjectile() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createProjectile'");
     }
 
     @Override
-    public ActiveEntity createChest(final double sideLength, final Coordinate position,
+    public final ActiveEntity createChest(final double sideLength, final Coordinate position,
             final GraphicsComponent graphicsComponent,
             final int health) {
         // TODO Auto-generated method stub

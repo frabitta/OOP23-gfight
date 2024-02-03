@@ -37,11 +37,11 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     }
 
     /**
-     * Set the life point of the entity
+     * Set the life point of the entity.
      * 
      * @param health the actual health of the entity
      */
-    private final void setHealth(final int health) {
+    private void setHealth(final int health) {
         this.health = health;
     }
 
