@@ -1,8 +1,8 @@
 package gfight.world.map.impl;
 
-import org.locationtech.jts.geom.Coordinate;
+import java.util.Objects;
 
-import com.google.common.base.Objects;
+import org.locationtech.jts.geom.Coordinate;
 
 import gfight.common.Position2D;
 import gfight.world.map.api.GameTile;
@@ -70,6 +70,6 @@ public final class GameTileImpl implements GameTile {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getType(), getPosition(), getDimension());
+        return Objects.hash(getType(), getPosition(), getDimension());
     }
 }
