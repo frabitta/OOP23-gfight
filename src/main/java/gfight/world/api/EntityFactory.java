@@ -5,6 +5,7 @@ import org.locationtech.jts.geom.Coordinate;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.impl.Enemy;
 import gfight.world.impl.Player;
+import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 
 public interface EntityFactory {
@@ -15,9 +16,10 @@ public interface EntityFactory {
          * @param position          the center of the player
          * @param graphicsComponent color of the player
          * @param health            life point of the player
+         * @param movement          movement object that will be overwritten
          * @return a new Player
          */
-        Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health);
+        Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health, InputMovement movement);
 
         /**
          * @param target            of the enemy (chest or player)

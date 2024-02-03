@@ -11,7 +11,7 @@ import gfight.world.api.Hitbox;
 /**
  * Class that represents the concept of main character (Player, Enemies).
  */
-public abstract class AbstractCharacter extends ActiveEntityImpl implements Character {
+public abstract class AbstractCharacter extends AbstractActiveEntity implements Character {
 
     /**
      * Constructor of abstract character.
@@ -19,7 +19,6 @@ public abstract class AbstractCharacter extends ActiveEntityImpl implements Char
      * @param vertexes
      * @param position
      * @param graphicsComponent
-     * @param movement
      * @param health
      */
     public AbstractCharacter(final List<Coordinate> vertexes, final Coordinate position,

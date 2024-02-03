@@ -23,11 +23,9 @@ public final class Player extends AbstractCharacter {
      * @param vertexes
      * @param position
      * @param graphicsComponent
-     * @param movement
      * @param health
      */
-    public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
-            final Optional<Movement> movement, final int health) {
+    public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
     }

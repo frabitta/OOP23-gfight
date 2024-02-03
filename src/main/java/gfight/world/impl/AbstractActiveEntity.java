@@ -9,7 +9,7 @@ import gfight.world.api.ActiveEntity;
  * This class implements the concept of ActiveEntity with movement and health
  * (Chest, Player and Enemies).
  */
-public abstract class ActiveEntityImpl extends BaseMovingEntity implements ActiveEntity {
+public abstract class AbstractActiveEntity extends BaseMovingEntity implements ActiveEntity {
     private int health;
 
     /**
@@ -18,10 +18,9 @@ public abstract class ActiveEntityImpl extends BaseMovingEntity implements Activ
      * @param vertexes
      * @param position
      * @param graphicsComponent
-     * @param movement
      * @param health
      */
-    public ActiveEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+    public AbstractActiveEntity(final List<Coordinate> vertexes, final Coordinate position,
             final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent);
         this.health = health;

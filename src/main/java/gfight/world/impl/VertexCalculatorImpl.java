@@ -31,7 +31,7 @@ public class VertexCalculatorImpl implements VertexCalculator {
     }
 
     @Override
-    public List<Coordinate> rectangle(final double sideLength, final Coordinate position) {
+    public List<Coordinate> rectangle(double longSideLength, double shortSideLenght, Coordinate position) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rectangle'");
     }

@@ -27,6 +27,6 @@ public interface VertexCalculator {
      * @param position
      * @return a list with the vertexes of the rectangle
      */
-    List<Coordinate> rectangle(double sideLength, Coordinate position);
+    List<Coordinate> rectangle(double longSideLength, double shortSideLenght, Coordinate position);
     
 }

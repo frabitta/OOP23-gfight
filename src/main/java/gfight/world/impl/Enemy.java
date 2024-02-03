@@ -21,7 +21,6 @@ public final class Enemy extends AbstractCharacter {
      * @param vertexes
      * @param position
      * @param graphicsComponent
-     * @param movement
      * @param health
      */
     public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
