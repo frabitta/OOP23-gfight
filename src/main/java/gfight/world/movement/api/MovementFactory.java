@@ -51,4 +51,10 @@ public interface MovementFactory {
      * @return the Fixed Movement class object
      */
     Fixed createFixed();
+
+    /**
+     * 
+     * @return an InputBasedMovement
+     */
+    InputMovement createInput();
 }
