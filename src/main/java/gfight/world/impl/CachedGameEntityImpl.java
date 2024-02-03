@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
 import gfight.common.Position2D;
-import gfight.common.api.Hitbox;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
+import gfight.world.hitbox.api.Hitbox;
 
 /**
  * An implementation of the cached game entity.

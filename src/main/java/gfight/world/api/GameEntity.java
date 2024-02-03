@@ -1,8 +1,9 @@
 package gfight.world.api;
 
 import gfight.common.Position2D;
-import gfight.common.api.Hitbox;
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.world.hitbox.api.Hitbox;
+
 import java.util.Set;
 import java.util.List;
 

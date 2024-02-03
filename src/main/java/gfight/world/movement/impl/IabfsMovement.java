@@ -4,9 +4,6 @@ import gfight.common.Position2D;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.map.impl.GameMapImpl;
-
-import org.locationtech.jts.geom.Coordinate;
-
 import com.google.common.graph.Traverser;
 
 public class IabfsMovement extends BaseMovement {

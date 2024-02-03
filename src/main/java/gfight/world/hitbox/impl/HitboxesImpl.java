@@ -13,11 +13,10 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import gfight.common.Position2D;
-import gfight.common.api.Hitbox;
-import gfight.common.impl.HitboxImpl;
 import gfight.common.impl.Position2DImpl;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
+import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
 
 /**

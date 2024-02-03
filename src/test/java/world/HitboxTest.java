@@ -1,9 +1,9 @@
 package world;
 
 import gfight.common.Position2D;
-import gfight.common.impl.HitboxImpl;
 import gfight.common.impl.Position2DImpl;
 import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxImpl;
 import gfight.world.hitbox.impl.HitboxesImpl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

@@ -1,4 +1,4 @@
-package gfight.common.impl;
+package gfight.world.hitbox.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import gfight.common.Position2D;
-import gfight.common.api.Hitbox;
+import gfight.world.hitbox.api.Hitbox;
 
 public class HitboxImpl implements Hitbox {
 

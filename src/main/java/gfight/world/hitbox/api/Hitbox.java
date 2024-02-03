@@ -1,4 +1,4 @@
-package gfight.common.api;
+package gfight.world.hitbox.api;
 
 import java.util.List;
 

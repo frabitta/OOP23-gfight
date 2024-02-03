@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.LinkedHashSet;
 import gfight.common.Position2D;
 import gfight.common.api.GeomOperator;
-import gfight.common.api.Hitbox;
 import gfight.common.impl.GeomOperatorImpl;
-import gfight.common.impl.HitboxImpl;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
+import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxImpl;
 import gfight.world.hitbox.impl.HitboxesImpl;
 
 import java.util.ArrayList;
