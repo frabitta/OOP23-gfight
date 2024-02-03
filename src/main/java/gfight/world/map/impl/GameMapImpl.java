@@ -14,6 +14,7 @@ import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
+import gfight.common.Position2D;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.api.GameTile.TileType;
@@ -60,7 +61,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public GameTile searchTile(final Coordinate position) {
+    public GameTile searchTile(final Position2D position) {
         for (final var tile : this.tiles) {
             if (tile.contains(position)) {
                 return tile;

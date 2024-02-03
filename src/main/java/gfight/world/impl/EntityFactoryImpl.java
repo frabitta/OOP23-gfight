@@ -3,8 +3,7 @@ package gfight.world.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
 import gfight.world.api.CachedGameEntity;
@@ -25,20 +24,20 @@ public class EntityFactoryImpl implements EntityFactory {
     private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
 
     @Override
-    public final Player createPlayer(final double sideLength, final Coordinate position,
+    public final Player createPlayer(final double sideLength, final Position2D position,
             final GraphicsComponent graphicsComponent,
             final int health, InputMovement movement) {
         movement = new InputMovementImpl();
-        final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
+        final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
         final Player player = new Player(vertexes, position, graphicsComponent, health);
         player.setMovement(Optional.of(movement));
         return player;
     }
 
     @Override
-    public final Enemy createEnemy(final GameEntity target, final double sideLength, final Coordinate position,
+    public final Enemy createEnemy(final GameEntity target, final double sideLength, final Position2D position,
             final GraphicsComponent graphicsComponent, final int health) {
-        final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
+        final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
         final Enemy enemy = new Enemy(vertexes, position, graphicsComponent, health);
         final Optional<Movement> movement = Optional.ofNullable(new IabfsMovement(target, enemy));
         enemy.setMovement(movement);
@@ -46,9 +45,9 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public final CachedGameEntity createObstacle(final double sideLength, final Coordinate position,
+    public final CachedGameEntity createObstacle(final double sideLength, final Position2D position,
             final GraphicsComponent graphicsComponent) {
-        final List<Coordinate> vertexes = vertexCalculator.square(sideLength, position);
+        final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
         final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
         return obstacle;
     }
@@ -60,7 +59,7 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public final ActiveEntity createChest(final double sideLength, final Coordinate position,
+    public final ActiveEntity createChest(final double sideLength, final Position2D position,
             final GraphicsComponent graphicsComponent,
             final int health) {
         // TODO Auto-generated method stub

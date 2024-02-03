@@ -3,7 +3,6 @@ package gfight.world.api;
 import java.util.Optional;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import java.util.Set;
-
 import gfight.world.movement.api.Movement;
 
 /**

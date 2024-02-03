@@ -3,7 +3,7 @@ package gfight.world.impl;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.locationtech.jts.geom.Coordinate;
+import gfight.common.Position2D;
 import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -25,7 +25,7 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
      * @param position
      * @param graphicsComponent
      */
-    public BaseMovingEntity(final List<Coordinate> vertexes, final Coordinate position,
+    public BaseMovingEntity(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
         super(vertexes, position, graphicsComponent);
     }

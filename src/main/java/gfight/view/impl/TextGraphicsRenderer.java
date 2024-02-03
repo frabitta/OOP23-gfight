@@ -24,7 +24,7 @@ public final class TextGraphicsRenderer extends AbstractGraphicsComponentRendere
         final Position2D printPos = camera.getScreenPosition(gComp.getPositions().get(0));
 
         g.setFont(new Font("Verdana", Font.PLAIN, gComp.getSize()));
-        g.drawString(gComp.getText(), printPos.getX(), printPos.getY());
+        g.drawString(gComp.getText(), Math.round(printPos.getX()), Math.round(printPos.getY()));
     }
 
 }

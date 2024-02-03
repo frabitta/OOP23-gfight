@@ -2,7 +2,7 @@ package gfight.world.api;
 
 import java.util.List;
 
-import org.locationtech.jts.geom.Coordinate;
+import gfight.common.Position2D;
 
 /**
  * An interface with methods to calculate the vertexes of different shapes.
@@ -15,7 +15,7 @@ public interface VertexCalculator {
      * @param position   the centre of the triangle
      * @return a list with the vertexes of the triangle
      */
-    List<Coordinate> triangle(double sideLength, Coordinate position);
+    List<Position2D> triangle(double sideLength, Position2D position);
 
     /**
      * Calculate vertexes of a square.
@@ -24,6 +24,6 @@ public interface VertexCalculator {
      * @param position   the centre of the square
      * @return a list with the vertexes of the square
      */
-    List<Coordinate> square(double sideLength, Coordinate position);
+    List<Position2D> square(double sideLength, Position2D position);
 
 }

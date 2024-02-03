@@ -8,10 +8,10 @@ public interface Position2D {
     /**
      * @return x
      */
-    int getX();
+    double getX();
 
     /**
      * @return y
      */
-    int getY();
+    double getY();
 }

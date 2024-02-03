@@ -1,8 +1,7 @@
 package gfight.common.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.Position2D;
 import gfight.common.api.GeomOperator;
 
 /**
@@ -10,12 +9,12 @@ import gfight.common.api.GeomOperator;
  */
 public final class GeomOperatorImpl implements GeomOperator {
     @Override
-    public Coordinate sum(final Coordinate start, final Vector2D vector) {
-        return new Coordinate(start.x + vector.getX(), start.y + vector.getY());
+    public Position2D sum(final Position2D start, final Vector2D vector) {
+        return new Position2DImpl(start.getX() + vector.getX(), start.getY() + vector.getY());
     }
 
     @Override
-    public Vector2D distance(final Coordinate point1, final Coordinate point2) {
-        return new Vector2D(point1.x - point2.x, point1.y - point2.y);
+    public Vector2D distance(final Position2D point1, final Position2D point2) {
+        return new Vector2D(point1.getX() - point2.getX(), point1.getY() - point2.getY());
     }
 }

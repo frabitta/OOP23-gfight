@@ -1,5 +1,6 @@
 package gfight.world.movement.impl;
 
+import gfight.common.Position2D;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.map.impl.GameMapImpl;
@@ -20,7 +21,7 @@ public class IabfsMovement extends BaseMovement {
 
     @Override
     public void update() {
-        Coordinate coordinateTarget = agent.getPosition();
+        Position2D coordinateTarget = agent.getPosition();
         Traverser.forGraph(map.getTileGraph())
                 .breadthFirst(map.searchTile(coordinateTarget))
                 .forEach(x -> System.out.println(x));
