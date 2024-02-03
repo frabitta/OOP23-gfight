@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
@@ -26,13 +25,6 @@ import gfight.world.hitbox.api.Hitboxes;
  */
 public final class HitboxesImpl implements Hitboxes {
 
-    @Override
-    public Polygon getGeometry(final List<Coordinate> vertexes) {
-        final GeometryFactory factory = new GeometryFactory();
-        final List<Coordinate> polygon = new ArrayList<>(vertexes);
-        polygon.add(polygon.get(0));
-        return factory.createPolygon(polygon.toArray(new Coordinate[0]));
-    }
 
     @Override
     public boolean isColliding(final Hitbox collider, final Hitbox coollided) {

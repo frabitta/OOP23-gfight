@@ -1,8 +1,5 @@
 package gfight.world.hitbox.api;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
-
 import gfight.common.Position2D;
 import gfight.common.api.Hitbox;
 import gfight.world.api.CachedGameEntity;
@@ -16,13 +13,6 @@ import java.util.Set;
  * An interface that can be used to perform operations on Hitboxes.
  */
 public interface Hitboxes {
-    /**
-     * Creates the polygon of the hitbox of the elements in the game.
-     * 
-     * @param vertexes of the polygon
-     * @return polygon geometry itself
-     */
-    Polygon getGeometry(List<Coordinate> vertexes);
 
     /**
      * A class that calulates if a Polygon is colliding with another object
