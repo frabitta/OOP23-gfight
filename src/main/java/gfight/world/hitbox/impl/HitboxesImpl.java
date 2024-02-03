@@ -9,7 +9,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import gfight.common.Position2D;
@@ -38,7 +37,7 @@ public final class HitboxesImpl implements Hitboxes {
         }
         Hitbox hitbox = new HitboxImpl(polygon);
         AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
-        Coordinate[] rotatedCoordinates = rotation.transform((Polygon) hitbox).getCoordinates();
+        Coordinate[] rotatedCoordinates = rotation.transform(hitbox.getPolygonalHitbox()).getCoordinates();
         return Arrays.stream(rotatedCoordinates)
                 .map(coordinate -> new Position2DImpl(coordinate.getX(), coordinate.getY()))
                 .collect(Collectors.toList());
