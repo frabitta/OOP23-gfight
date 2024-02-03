@@ -14,7 +14,7 @@ import gfight.world.api.VertexCalculator;
 import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.Movement;
-import gfight.world.movement.impl.IabfsMovement;
+import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.InputMovementImpl;
 import gfight.world.weapon.api.Projectile;
 
@@ -40,7 +40,7 @@ public class EntityFactoryImpl implements EntityFactory {
             final GraphicsComponent graphicsComponent, final int health) {
         final List<Coordinate> vertexes = vertexCalculator.triangle(sideLength, position);
         final Enemy enemy = new Enemy(vertexes, position, graphicsComponent, health);
-        final Optional<Movement> movement = Optional.ofNullable(new IabfsMovement(target, enemy));
+        final Optional<Movement> movement = Optional.ofNullable(new BfsMovement(target, enemy));
         enemy.setMovement(movement);
         return enemy;
     }

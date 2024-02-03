@@ -8,12 +8,12 @@ import org.locationtech.jts.geom.Coordinate;
 
 import com.google.common.graph.Traverser;
 
-public class IabfsMovement extends BaseMovement {
+public class BfsMovement extends BaseMovement {
     private final GameEntity target;
     private final MovingEntity agent;
     private final GameMapImpl map = new GameMapImpl(10);
 
-    public IabfsMovement(final GameEntity target, final MovingEntity agent) {
+    public BfsMovement(final GameEntity target, final MovingEntity agent) {
         this.target = target;
         this.agent = agent;
     }
