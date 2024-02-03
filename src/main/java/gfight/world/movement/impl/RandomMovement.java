@@ -21,7 +21,9 @@ public final class RandomMovement extends BaseMovement {
     private void updateCounter() {
         final Random rand = new Random();
         counter = rand.nextInt(MAXVAL - MINVAL) + MINVAL;
-        setDirection(new Vector2D(1.0 * (rand.nextInt(3) - 1), 1.0 * (rand.nextInt(3) - 1)));
+        double x = rand.nextDouble() * 2 - 1;
+        double y = rand.nextDouble() * 2 - 1;
+        setDirection(new Vector2D(x, y).normalize());
     }
 
     @Override
