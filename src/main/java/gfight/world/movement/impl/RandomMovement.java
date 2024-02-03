@@ -23,7 +23,11 @@ public final class RandomMovement extends BaseMovement {
         counter = rand.nextInt(MAXVAL - MINVAL) + MINVAL;
         double x = rand.nextDouble() * 2 - 1;
         double y = rand.nextDouble() * 2 - 1;
-        setDirection(new Vector2D(x, y).normalize());
+        if (x != 0.0 && y != 0.0) {
+            setDirection(new Vector2D(x, y).normalize());
+        } else {
+            setDirection(new Vector2D(0, 0));
+        }
     }
 
     @Override
