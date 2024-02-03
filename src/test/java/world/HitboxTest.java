@@ -1,7 +1,10 @@
 package world;
 
 import org.locationtech.jts.geom.Coordinate;
-import gfight.world.impl.HitboxImpl;
+
+import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxesImpl;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -18,7 +21,7 @@ public class HitboxTest {
     // CHECKSTYLE: MagicNumber OFF
     @Test
     void testBox() {
-        HitboxImpl hitbox = new HitboxImpl();
+        Hitboxes hitbox = new HitboxesImpl();
         List<Coordinate> polygon1 = new ArrayList<>();
         polygon1.add(new Coordinate(0, 0));
         polygon1.add(new Coordinate(0, 2));

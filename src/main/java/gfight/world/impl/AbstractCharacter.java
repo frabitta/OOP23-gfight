@@ -6,7 +6,8 @@ import org.locationtech.jts.geom.Coordinate;
 
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
-import gfight.world.api.Hitbox;
+import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxesImpl;
 
 /**
  * Class that represents the concept of main character (Player, Enemies).
@@ -29,7 +30,7 @@ public abstract class AbstractCharacter extends AbstractActiveEntity implements 
 
     @Override
     public final void rotate(final double theta) {
-        Hitbox rotation = new HitboxImpl();
+        Hitboxes rotation = new HitboxesImpl();
         rotation.rotate(getCoordinates(), theta);
     }
 

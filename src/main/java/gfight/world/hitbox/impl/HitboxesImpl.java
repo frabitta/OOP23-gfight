@@ -1,20 +1,26 @@
-package gfight.world.impl;
+package gfight.world.hitbox.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 
-import gfight.world.api.Hitbox;
+import gfight.world.api.CachedGameEntity;
+import gfight.world.api.GameEntity;
+import gfight.world.hitbox.api.Hitboxes;
 
 /**
  * An implementation of Hitbox Interface.
  */
-public final class HitboxImpl implements Hitbox {
+public final class HitboxesImpl implements Hitboxes {
 
     @Override
     public Polygon getGeometry(final List<Coordinate> vertexes) {
@@ -51,5 +57,17 @@ public final class HitboxImpl implements Hitbox {
         } else {
             return new ArrayList<>();
         }
+    }
+    
+    @Override
+    public void freeHitboxes(final Set<CachedGameEntity> gaemobjects) {
+        gaemobjects.stream().forEach(CachedGameEntity::reset);
+    }
+
+    @Override
+    public Map<GameEntity, Set<GameEntity>> getAllCollision(final Set<GameEntity> gameObjects) {
+        final Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
+        gameObjects.stream().forEach(entity -> collisionMap.put(entity, entity.getAllCollided(gameObjects)));
+        return collisionMap;
     }
 }

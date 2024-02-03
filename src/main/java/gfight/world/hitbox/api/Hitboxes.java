@@ -1,13 +1,19 @@
-package gfight.world.api;
+package gfight.world.hitbox.api;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Polygon;
+
+import gfight.world.api.CachedGameEntity;
+import gfight.world.api.GameEntity;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * An interface that creates poligon and can be used to calculate collision.
+ * An interface that can be used to perform operations on Hitboxes.
  */
-public interface Hitbox {
+public interface Hitboxes {
     /**
      * Creates the polygon of the hitbox of the elements in the game.
      * 
@@ -40,9 +46,24 @@ public interface Hitbox {
     /**
      * It rotates a list of vertex.
      * 
-     * @param theta angle of rotation in radiants
+     * @param theta   angle of rotation in radiants
      * @param polygon original list of vertexes
      * @return new modified list
      */
     List<Coordinate> rotate(List<Coordinate> polygon, double theta);
+
+    /**
+     * it signals to all onjects that hitboxes needs to be recalculated.
+     * 
+     * @param gameobjects all object you want to calculate updated hitboxes
+     */
+    void freeHitboxes(Set<CachedGameEntity> gameobjects);
+
+    /**
+     * it crreates a graph of all the collision of gameobjects.
+     * 
+     * @param gameObjects you want to calculate collision
+     * @return Graph of the colisions
+     */
+    Map<GameEntity, Set<GameEntity>> getAllCollision(Set<GameEntity> gameObjects);
 }

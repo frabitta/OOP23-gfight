@@ -11,7 +11,8 @@ import gfight.common.api.GeomOperator;
 import gfight.common.impl.GeomOperatorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
-import gfight.world.api.Hitbox;
+import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxesImpl;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public final class GameEntityImpl implements GameEntity {
 
     @Override
     public Polygon getHitBox() {
-        final Hitbox hitbox = new HitboxImpl();
+        final Hitboxes hitbox = new HitboxesImpl();
         return hitbox.getGeometry(vertexes);
     }
 
@@ -60,7 +61,7 @@ public final class GameEntityImpl implements GameEntity {
 
     @Override
     public Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
-        final Hitbox hitbox = new HitboxImpl();
+        final Hitboxes hitbox = new HitboxesImpl();
         final Polygon boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
