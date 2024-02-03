@@ -2,7 +2,6 @@ package gfight.world.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.locationtech.jts.geom.Coordinate;
 
@@ -12,6 +11,7 @@ import gfight.world.api.CachedGameEntity;
 import gfight.world.api.EntityFactory;
 import gfight.world.api.GameEntity;
 import gfight.world.api.VertexCalculator;
+import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.Movement;
 import gfight.world.movement.impl.IabfsMovement;
@@ -45,7 +45,8 @@ public class EntityFactoryImpl implements EntityFactory {
     public CachedGameEntity createObstacle(double sideLength, Coordinate position,
             GraphicsComponent graphicsComponent) {
         final List<Coordinate> vertexes = vertexCalculator.square(sideLength, position);
-        return null;
+        final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
+        return obstacle;
     }
 
     @Override
