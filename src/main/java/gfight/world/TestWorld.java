@@ -1,7 +1,6 @@
 package gfight.world;
 
 import java.util.List;
-import java.util.Queue;
 
 import gfight.common.Pair;
 import gfight.engine.graphics.api.GraphicsComponent;
