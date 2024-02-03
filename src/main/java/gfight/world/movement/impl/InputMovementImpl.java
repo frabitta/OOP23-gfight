@@ -7,19 +7,21 @@ import gfight.world.movement.api.InputMovement;
  * Implementation of InputMovement.
  */
 public final class InputMovementImpl extends BaseMovement implements InputMovement {
+    private final Vector2D inputVector = new Vector2D(0, 0);
 
     @Override
     public void update() {
+        setDirection(inputVector.normalize());
     }
 
     @Override
     public void addDirection(final Directions dir) {
-        setDirection(getDirection().add(getInputDirection(dir)));
+        inputVector.add(getInputDirection(dir));
     }
 
     @Override
     public void removeDirection(final Directions dir) {
-        setDirection(getDirection().add(getInputDirection(dir).negate()));
+        inputVector.add(getInputDirection(dir).negate());
     }
 
     private Vector2D getInputDirection(final Directions dir) {
