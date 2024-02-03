@@ -28,7 +28,7 @@ public interface World extends CameraMover {
 
     /**
      * Process input events coming from the engine.
-     * @param inputEvents
+     * @param event the event that needs to be processed
      */
-    void processInput(Queue<InputEvent> inputEvents);
+    void processInput(InputEvent event);
 }

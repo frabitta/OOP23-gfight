@@ -61,12 +61,10 @@ public class TestWorld implements World {
     }
 
     @Override
-    public void processInput(Queue<InputEvent> inputEvents) {
-        for (var event: inputEvents) {
-            if (event instanceof InputEventMouse) {
-                var mouseEv = (InputEventMouse) event;
-                counterGraph.setPositions(List.of(mouseEv.getPosition()));
-            }
+    public void processInput(InputEvent event) {
+        if (event instanceof InputEventMouse) {
+            var mouseEv = (InputEventMouse) event;
+            counterGraph.setPositions(List.of(mouseEv.getPosition()));
         }
     }
 
