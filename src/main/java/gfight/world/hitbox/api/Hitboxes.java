@@ -1,8 +1,6 @@
 package gfight.world.hitbox.api;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
-
+import gfight.common.Position2D;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 
@@ -14,13 +12,6 @@ import java.util.Set;
  * An interface that can be used to perform operations on Hitboxes.
  */
 public interface Hitboxes {
-    /**
-     * Creates the polygon of the hitbox of the elements in the game.
-     * 
-     * @param vertexes of the polygon
-     * @return polygon geometry itself
-     */
-    Polygon getGeometry(List<Coordinate> vertexes);
 
     /**
      * A class that calulates if a Polygon is colliding with another object
@@ -31,17 +22,7 @@ public interface Hitboxes {
      * @param coollided is the object that can be hitted
      * @return if the collision happens
      */
-    boolean isColliding(Polygon collider, Polygon coollided);
-
-    /**
-     * Crea un poligono rappresentante un quadrato dato il centro e la lunghezza del
-     * lato.
-     * 
-     * @param centre centro del quadrato
-     * @param side   lunghezza del lato
-     * @return poligono rappresentante il quadrato
-     */
-    Polygon getSquare(Coordinate centre, double side);
+    boolean isColliding(Hitbox collider, Hitbox coollided);
 
     /**
      * It rotates a list of vertex.
@@ -50,7 +31,7 @@ public interface Hitboxes {
      * @param polygon original list of vertexes
      * @return new modified list
      */
-    List<Coordinate> rotate(List<Coordinate> polygon, double theta);
+    List<Position2D> rotate(List<Position2D> polygon, double theta);
 
     /**
      * it signals to all onjects that hitboxes needs to be recalculated.

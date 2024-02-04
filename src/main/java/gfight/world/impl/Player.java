@@ -2,8 +2,9 @@ package gfight.world.impl;
 
 import java.util.List;
 
-import org.locationtech.jts.geom.Coordinate;
 import java.util.Set;
+
+import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
@@ -23,7 +24,7 @@ public final class Player extends AbstractCharacter {
      * @param graphicsComponent the color of the player
      * @param health            of the player
      */
-    public Player(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+    public Player(final List<Position2D> vertexes, final Position2D position, final GraphicsComponent graphicsComponent,
             final int health) {
         super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub

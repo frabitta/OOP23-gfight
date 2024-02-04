@@ -1,7 +1,6 @@
 package gfight.world.api;
 
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.impl.Enemy;
 import gfight.world.impl.Player;
@@ -22,7 +21,7 @@ public interface EntityFactory {
          * @param movement          movement object that will be overwritten
          * @return a new Player
          */
-        Player createPlayer(double sideLength, Coordinate position, GraphicsComponent graphicsComponent, int health,
+        Player createPlayer(double sideLength, Position2D position, GraphicsComponent graphicsComponent, int health,
                         InputMovement movement);
 
         /**
@@ -33,7 +32,7 @@ public interface EntityFactory {
          * @param health            life point of the enemy
          * @return a new Enemy
          */
-        Enemy createEnemy(GameEntity target, double sideLength, Coordinate position,
+        Enemy createEnemy(GameEntity target, double sideLength, Position2D position,
                         GraphicsComponent graphicsComponent, int health);
 
         /**
@@ -43,7 +42,7 @@ public interface EntityFactory {
          * @param graphicsComponent color of the obstacle
          * @return a new Obstacle
          */
-        CachedGameEntity createObstacle(double sideLength, Coordinate position, GraphicsComponent graphicsComponent);
+        CachedGameEntity createObstacle(double sideLength, Position2D position, GraphicsComponent graphicsComponent);
 
         /**
          * 
@@ -53,7 +52,7 @@ public interface EntityFactory {
          * @param health            life point of the chest
          * @return a new Chest object
          */
-        ActiveEntity createChest(double sideLength, Coordinate position, GraphicsComponent graphicsComponent,
+        ActiveEntity createChest(double sideLength, Position2D position, GraphicsComponent graphicsComponent,
                         int health);
 
         Projectile createProjectile();

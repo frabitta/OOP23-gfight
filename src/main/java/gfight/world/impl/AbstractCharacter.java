@@ -2,8 +2,7 @@ package gfight.world.impl;
 
 import java.util.List;
 
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
 import gfight.world.hitbox.api.Hitboxes;
@@ -22,7 +21,7 @@ public abstract class AbstractCharacter extends AbstractActiveEntity implements 
      * @param graphicsComponent
      * @param health
      */
-    public AbstractCharacter(final List<Coordinate> vertexes, final Coordinate position,
+    public AbstractCharacter(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
@@ -31,7 +30,7 @@ public abstract class AbstractCharacter extends AbstractActiveEntity implements 
     @Override
     public final void rotate(final double theta) {
         Hitboxes rotation = new HitboxesImpl();
-        rotation.rotate(getCoordinates(), theta);
+        rotation.rotate(getPosition2Ds(), theta);
     }
 
     @Override

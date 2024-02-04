@@ -3,7 +3,7 @@ package gfight.world.impl;
 import java.util.List;
 import java.util.Set;
 
-import org.locationtech.jts.geom.Coordinate;
+import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
@@ -23,7 +23,7 @@ public final class Enemy extends AbstractCharacter {
      * @param graphicsComponent the color of the enemy
      * @param health            of the enemy
      */
-    public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
+    public Enemy(final List<Position2D> vertexes, final Position2D position, final GraphicsComponent graphicsComponent,
             final int health) {
         super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub

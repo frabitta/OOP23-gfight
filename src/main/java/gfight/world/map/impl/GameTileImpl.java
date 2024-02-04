@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.locationtech.jts.geom.Coordinate;
 
+import gfight.common.Position2D;
 import gfight.world.map.api.GameTile;
 
 /**
@@ -45,7 +46,7 @@ public final class GameTileImpl implements GameTile {
     }
 
     @Override
-    public boolean contains(final Coordinate position) {
+    public boolean contains(final Position2D position) {
         final var centerOffset = this.dimension / 2;
         return position.getX() <= this.centerPosition.getX() + centerOffset
                 && position.getX() >= this.centerPosition.getX() - centerOffset
