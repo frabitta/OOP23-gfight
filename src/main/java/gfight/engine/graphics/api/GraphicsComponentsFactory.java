@@ -2,7 +2,7 @@ package gfight.engine.graphics.api;
 
 import java.util.List;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.engine.graphics.impl.PolygonGraphicsComponent;
 import gfight.engine.graphics.impl.TextGraphicsComponent;

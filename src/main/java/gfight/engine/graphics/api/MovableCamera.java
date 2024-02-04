@@ -1,6 +1,6 @@
 package gfight.engine.graphics.api;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 
 /**
  * Interface of a camera that's able to move in space.

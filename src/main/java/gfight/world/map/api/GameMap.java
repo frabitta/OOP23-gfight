@@ -2,9 +2,9 @@ package gfight.world.map.api;
 
 import java.util.Set;
 
-import org.locationtech.jts.geom.Coordinate;
-
 import com.google.common.graph.Graph;
+
+import gfight.common.api.Position2D;
 
 /**
  * The map where the game takes place.
@@ -25,7 +25,7 @@ public interface GameMap {
      * @return the GameTile containing position
      * @throws IllegalStateException if the given position is not inside the map
      */
-    GameTile searchTile(Coordinate position);
+    GameTile searchTile(Position2D position);
 
     /**
      * Get the graph of the game tiles on the map.

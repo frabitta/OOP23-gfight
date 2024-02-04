@@ -2,11 +2,11 @@ package gfight.engine.graphics.impl;
 
 import java.util.List;
 
-import gfight.common.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.view.api.GraphicsComponentRenderer;
 import gfight.view.impl.PolygonGraphicsRenderer;
 import gfight.view.impl.TextGraphicsRenderer;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
 
 /**

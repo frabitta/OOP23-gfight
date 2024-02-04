@@ -8,12 +8,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import org.locationtech.jts.geom.Coordinate;
-
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
+import gfight.common.api.Position2D;
+import gfight.common.impl.Position2DImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.api.GameTile.TileType;
@@ -46,7 +46,7 @@ public final class GameMapImpl implements GameMap {
             for (double j = 0; j < dimension; j++) {
                 final GameTile tile = new GameTileImpl(
                         TileType.EMPTY,
-                        new Coordinate(i + (TILE_DIM / 2), j + (TILE_DIM / 2)),
+                        new Position2DImpl(i + (TILE_DIM / 2), j + (TILE_DIM / 2)),
                         TILE_DIM);
                 this.tiles.add(tile);
                 this.tileList.get((int) i).add((int) j, tile);
@@ -60,7 +60,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public GameTile searchTile(final Coordinate position) {
+    public GameTile searchTile(final Position2D position) {
         for (final var tile : this.tiles) {
             if (tile.contains(position)) {
                 return tile;

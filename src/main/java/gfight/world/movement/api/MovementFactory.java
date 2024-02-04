@@ -1,7 +1,6 @@
 package gfight.world.movement.api;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-
+import gfight.common.api.Vect;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.movement.impl.BfsMovement;
@@ -29,7 +28,7 @@ public interface MovementFactory {
      * @param direction
      * @return the Linear Movement Class object
      */
-    LinearMovement createLinearMovement(Vector2D direction);
+    LinearMovement createLinearMovement(Vect direction);
 
     /**
      * Creates Linear movement with an acceleration.
@@ -38,7 +37,7 @@ public interface MovementFactory {
      * @param accelleration
      * @return the Linear Movement Class object
      */
-    LinearMovement createLinearMovement(double accelleration, Vector2D direction);
+    LinearMovement createLinearMovement(double accelleration, Vect direction);
 
     /**
      * 

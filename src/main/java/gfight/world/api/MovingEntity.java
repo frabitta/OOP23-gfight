@@ -1,9 +1,9 @@
 package gfight.world.api;
 
 import java.util.Optional;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import java.util.Set;
 
+import gfight.common.api.Vect;
 import gfight.world.movement.api.Movement;
 
 /**
@@ -14,13 +14,13 @@ public interface MovingEntity extends CachedGameEntity {
      * 
      * @return the actual direction of the object.
      */
-    Vector2D getDirection();
+    Vect getDirection();
 
     /**
      * it imposes the direction to the object.
      * @param direction
      */
-    void setDirection(Vector2D direction);
+    void setDirection(Vect direction);
 
    /**
     * it update the data of the object following new position and the collisions.

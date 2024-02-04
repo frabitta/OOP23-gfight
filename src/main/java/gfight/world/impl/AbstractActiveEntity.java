@@ -1,7 +1,8 @@
 package gfight.world.impl;
 
 import java.util.List;
-import org.locationtech.jts.geom.Coordinate;
+
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.ActiveEntity;
 
@@ -20,7 +21,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
      * @param graphicsComponent the color of the shape
      * @param health            of the entity
      */
-    public AbstractActiveEntity(final List<Coordinate> vertexes, final Coordinate position,
+    public AbstractActiveEntity(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent);
         this.health = health;

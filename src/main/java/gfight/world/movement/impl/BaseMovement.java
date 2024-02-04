@@ -1,22 +1,21 @@
 package gfight.world.movement.impl;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-
+import gfight.common.api.Vect;
 import gfight.world.movement.api.Movement;
 
 /**
  * An abstract implementation of Movement interface.
  */
 public abstract class BaseMovement implements Movement {
-    private Vector2D dirVector;
+    private Vect dirVector;
 
     @Override
-    public final Vector2D getDirection() {
+    public final Vect getDirection() {
         return dirVector;
     }
 
     @Override
-    public final void setDirection(final Vector2D direction) {
+    public final void setDirection(final Vect direction) {
         dirVector = direction;
     }
 }

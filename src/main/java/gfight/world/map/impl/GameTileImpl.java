@@ -1,9 +1,8 @@
 package gfight.world.map.impl;
 
-import org.locationtech.jts.geom.Coordinate;
+import java.util.Objects;
 
-import com.google.common.base.Objects;
-
+import gfight.common.api.Position2D;
 import gfight.world.map.api.GameTile;
 
 /**
@@ -12,7 +11,7 @@ import gfight.world.map.api.GameTile;
 public final class GameTileImpl implements GameTile {
 
     private final GameTile.TileType type;
-    private final Coordinate centerPosition;
+    private final Position2D centerPosition;
     private final double dimension;
 
     /**
@@ -23,7 +22,7 @@ public final class GameTileImpl implements GameTile {
      * @param centerPosition the position of the center of the tile
      * @param dimension      the dimension of the side of the tile
      */
-    public GameTileImpl(final GameTile.TileType type, final Coordinate centerPosition, final double dimension) {
+    public GameTileImpl(final GameTile.TileType type, final Position2D centerPosition, final double dimension) {
         this.type = type;
         this.centerPosition = centerPosition;
         this.dimension = dimension;
@@ -40,12 +39,12 @@ public final class GameTileImpl implements GameTile {
     }
 
     @Override
-    public Coordinate getPosition() {
+    public Position2D getPosition() {
         return this.centerPosition;
     }
 
     @Override
-    public boolean contains(final Coordinate position) {
+    public boolean contains(final Position2D position) {
         final var centerOffset = this.dimension / 2;
         return position.getX() <= this.centerPosition.getX() + centerOffset
                 && position.getX() >= this.centerPosition.getX() - centerOffset
@@ -69,6 +68,6 @@ public final class GameTileImpl implements GameTile {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getType(), getPosition(), getDimension());
+        return Objects.hash(getType(), getPosition(), getDimension());
     }
 }

@@ -1,8 +1,7 @@
 package gfight.world.collision.impl;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import gfight.common.api.GeomOperator;
-import gfight.common.impl.GeomOperatorImpl;
+import gfight.common.api.Vect;
+import gfight.common.impl.VectorImpl;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 
@@ -26,12 +25,13 @@ public final class SlideCommand<M extends MovingEntity, G extends GameEntity> ex
 
     @Override
     public void execute() {
-        final GeomOperator operator = new GeomOperatorImpl();
-        final Vector2D distance = operator.distance(collider().getPosition(), collided().getPosition());
+        final Vect distance = new VectorImpl(collider().getPosition(), collided().getPosition());
         if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
-            collider().setDirection(new Vector2D(-collider().getDirection().getX(), collider().getDirection().getY()));
+            collider()
+                    .setDirection(new VectorImpl(-collider().getDirection().getX(), collider().getDirection().getY()));
         } else {
-            collider().setDirection(new Vector2D(collider().getDirection().getX(), -collider().getDirection().getY()));
+            collider()
+                    .setDirection(new VectorImpl(collider().getDirection().getX(), -collider().getDirection().getY()));
         }
     }
 

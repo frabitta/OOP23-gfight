@@ -2,8 +2,8 @@ package gfight.world.impl;
 
 import java.util.List;
 
-import org.locationtech.jts.geom.Coordinate;
-
+import gfight.common.api.Position2D;
+import gfight.common.impl.Position2DImpl;
 import gfight.world.api.VertexCalculator;
 
 /**
@@ -12,21 +12,21 @@ import gfight.world.api.VertexCalculator;
 public class VertexCalculatorImpl implements VertexCalculator {
 
     @Override
-    public final List<Coordinate> triangle(final double sideLength, final Coordinate position) {
+    public final List<Position2D> triangle(final double sideLength, final Position2D position) {
         double factor = (sideLength * Math.sqrt(3)) / 2;
-        Coordinate firstPoint = new Coordinate(position.x + sideLength / 2, position.y + factor);
-        Coordinate secondPoint = new Coordinate(position.x - sideLength / 2, position.y + factor);
-        Coordinate thirdPoint = new Coordinate(position.x, position.y - factor);
+        Position2D firstPoint = new Position2DImpl(position.getX() + sideLength / 2, position.getY() + factor);
+        Position2D secondPoint = new Position2DImpl(position.getX() - sideLength / 2, position.getY() + factor);
+        Position2D thirdPoint = new Position2DImpl(position.getX(), position.getY() - factor);
         return List.of(firstPoint, secondPoint, thirdPoint);
     }
 
     @Override
-    public final List<Coordinate> square(final double sideLength, final Coordinate position) {
+    public final List<Position2D> square(final double sideLength, final Position2D position) {
         double halfSide = sideLength / 2;
-        Coordinate bottomLeft = new Coordinate(position.x - halfSide, position.y - halfSide);
-        Coordinate topLeft = new Coordinate(position.x - halfSide, position.y + halfSide);
-        Coordinate bottomRight = new Coordinate(position.x + halfSide, position.y - halfSide);
-        Coordinate topRight = new Coordinate(position.x + halfSide, position.y + halfSide);
+        Position2D bottomLeft = new Position2DImpl(position.getX() - halfSide, position.getY() - halfSide);
+        Position2D topLeft = new Position2DImpl(position.getX() - halfSide, position.getY() + halfSide);
+        Position2D bottomRight = new Position2DImpl(position.getX() + halfSide, position.getY() - halfSide);
+        Position2D topRight = new Position2DImpl(position.getX() + halfSide, position.getY() + halfSide);
         return List.of(bottomLeft, topLeft, topRight, bottomRight);
     }
 
