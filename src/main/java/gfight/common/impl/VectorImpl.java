@@ -5,26 +5,54 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import gfight.common.Position2D;
 import gfight.common.api.Vect;
 
-public class VectorImpl extends Vector2D implements Vect {
+/**
+ * Implementation of the interface.
+ */
+public final class VectorImpl extends Vector2D implements Vect {
 
-    public VectorImpl(double x, double y) {
+    /**
+     * Constructs a new VectorImpl with the specified x and y components.
+     *
+     * @param x The x-component.
+     * @param y The y-component.
+     */
+    public VectorImpl(final double x, final double y) {
         super(x, y);
     }
 
-    public VectorImpl(double a, Vect vect) {
-        super(a, (Vector2D) vect);
+    /**
+     * Constructs a new VectorImpl by scaling the vector.
+     *
+     * @param a    The scalar by which to scale the vector.
+     * @param vect The vector to be scaled.
+     */
+    public VectorImpl(final double a, final Vect vect) {
+        super(a * vect.getX(), a * vect.getY());
     }
 
-    public VectorImpl(Position2D a, Position2D b) {
+    /**
+     * Constructs a new VectorImpl representing the vector from position {@code b}
+     * to position {@code a}.
+     *
+     * @param a The end position.
+     * @param b The start position.
+     */
+    public VectorImpl(final Position2D a, Position2D b) {
         super(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
-    public VectorImpl(Vector2D vector) {
+    /**
+     * Constructs a new VectorImpl by copying the coordinates from the provided
+     * vector.
+     *
+     * @param vector The Vector2D to copy coordinates from.
+     */
+    public VectorImpl(final Vector2D vector) {
         super(vector.getX(), vector.getY());
     }
 
     @Override
-    public Vect sum(Vect vector) {
+    public Vect sum(final Vect vector) {
         if (vector instanceof VectorImpl) {
             return new VectorImpl(add((Vector2D) vector));
         } else {
@@ -33,10 +61,10 @@ public class VectorImpl extends Vector2D implements Vect {
     }
 
     @Override
-    public Vect scale(double value) {
+    public Vect scale(final double value) {
         return new VectorImpl(scalarMultiply(value));
     }
-
+   
     @Override
     public Vect revert() {
         return new VectorImpl(negate());
