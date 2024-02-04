@@ -30,7 +30,7 @@ public class EntityFactoryImpl implements EntityFactory {
     public final Player createPlayer(final double sideLength, final Position2D position,
             final int health, final InputMovement movement) {
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW, vertexes);
+        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.RED, vertexes);
         final Player player = new Player(vertexes, position, graphicsComponent, health);
         player.setMovement(Optional.of(movement));
         return player;
