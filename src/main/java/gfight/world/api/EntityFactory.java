@@ -1,11 +1,13 @@
 package gfight.world.api;
 
 import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.impl.Enemy;
 import gfight.world.impl.Player;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
+import gfight.world.weapon.api.Team;
 
 /**
  * An interface that represents the concept of a factory of entities.
@@ -55,5 +57,12 @@ public interface EntityFactory {
         ActiveEntity createChest(double sideLength, Position2D position, GraphicsComponent graphicsComponent,
                         int health);
 
-        Projectile createProjectile();
+        /**
+         * Creates a new Projectile.
+         * @param team Team of the projectile
+         * @param position spawning position
+         * @param direction direction to face
+         * @return Projectile generated
+         */
+        Projectile createProjectile(Team team, Position2D position, Vect direction);
 }
