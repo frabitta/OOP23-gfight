@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
-import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
@@ -69,14 +68,11 @@ public class EntityFactoryImpl implements EntityFactory {
         throw new UnsupportedOperationException("Unimplemented method 'createChest'");
     }
 
+    static final double PROJECTILE_SIZE = 10;
+
     @Override
     public Projectile createProjectile(Team team, Position2D position, Vect direction) {
-        List<Position2D> vertexes = List.of(
-            position.sum(new VectorImpl(-5, -5)),
-            position.sum(new VectorImpl(+5, -5)),
-            position.sum(new VectorImpl(+5, +5)),
-            position.sum(new VectorImpl(-5, +5))
-        );
+        List<Position2D> vertexes = vertexCalculator.square(PROJECTILE_SIZE, position);
         GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(team==Team.ENEMY ? EngineColor.RED : EngineColor.BLUE, vertexes);
         Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
         return new ProjectileImpl(vertexes, position, gComp, team, movement);
