@@ -17,7 +17,6 @@ import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.Movement;
 import gfight.world.movement.impl.BfsMovement;
-import gfight.world.movement.impl.InputMovementImpl;
 import gfight.world.weapon.api.Projectile;
 
 /**
@@ -29,8 +28,7 @@ public class EntityFactoryImpl implements EntityFactory {
 
     @Override
     public final Player createPlayer(final double sideLength, final Position2D position,
-            final int health, InputMovement movement) {
-        movement = new InputMovementImpl();
+            final int health, final InputMovement movement) {
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
         PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW, vertexes);
         final Player player = new Player(vertexes, position, graphicsComponent, health);
