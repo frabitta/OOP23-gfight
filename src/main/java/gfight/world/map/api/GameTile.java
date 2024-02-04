@@ -1,7 +1,5 @@
 package gfight.world.map.api;
 
-import org.locationtech.jts.geom.Coordinate;
-
 import gfight.common.api.Position2D;
 
 /**
@@ -40,7 +38,7 @@ public interface GameTile {
      * 
      * @return the position of the tile
      */
-    Coordinate getPosition();
+    Position2D getPosition();
 
     /**
      * Check if a given position is inside the game tile or not.

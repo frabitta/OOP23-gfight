@@ -2,8 +2,6 @@ package gfight.world.map.impl;
 
 import java.util.Objects;
 
-import org.locationtech.jts.geom.Coordinate;
-
 import gfight.common.api.Position2D;
 import gfight.world.map.api.GameTile;
 
@@ -13,7 +11,7 @@ import gfight.world.map.api.GameTile;
 public final class GameTileImpl implements GameTile {
 
     private final GameTile.TileType type;
-    private final Coordinate centerPosition;
+    private final Position2D centerPosition;
     private final double dimension;
 
     /**
@@ -24,7 +22,7 @@ public final class GameTileImpl implements GameTile {
      * @param centerPosition the position of the center of the tile
      * @param dimension      the dimension of the side of the tile
      */
-    public GameTileImpl(final GameTile.TileType type, final Coordinate centerPosition, final double dimension) {
+    public GameTileImpl(final GameTile.TileType type, final Position2D centerPosition, final double dimension) {
         this.type = type;
         this.centerPosition = centerPosition;
         this.dimension = dimension;
@@ -41,7 +39,7 @@ public final class GameTileImpl implements GameTile {
     }
 
     @Override
-    public Coordinate getPosition() {
+    public Position2D getPosition() {
         return this.centerPosition;
     }
 
