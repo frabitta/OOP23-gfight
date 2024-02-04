@@ -26,12 +26,16 @@ public final class SlideCommand<M extends MovingEntity, G extends GameEntity> ex
     @Override
     public void execute() {
         final Vect distance = new VectorImpl(collider().getPosition(), collided().getPosition());
-        if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
-            collider()
-                    .setDirection(new VectorImpl(-collider().getDirection().getX(), collider().getDirection().getY()));
-        } else {
-            collider()
-                    .setDirection(new VectorImpl(collider().getDirection().getX(), -collider().getDirection().getY()));
+        if (Math.abs(distance.getX() - distance.getY()) > 0.1) {
+            if (Math.abs(distance.getX()) > Math.abs(distance.getY())) {
+                collider()
+                        .setDirection(
+                                new VectorImpl(-collider().getDirection().getX(), collider().getDirection().getY()));
+            } else {
+                collider()
+                        .setDirection(
+                                new VectorImpl(collider().getDirection().getX(), -collider().getDirection().getY()));
+            }
         }
     }
 
