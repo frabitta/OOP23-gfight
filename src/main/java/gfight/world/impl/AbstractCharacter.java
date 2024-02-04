@@ -5,6 +5,7 @@ import java.util.List;
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
+import gfight.world.weapon.api.Weapon;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
 
@@ -12,7 +13,7 @@ import gfight.world.hitbox.impl.HitboxesImpl;
  * Class that represents the concept of main character (Player, Enemies).
  */
 public abstract class AbstractCharacter extends AbstractActiveEntity implements Character {
-
+    private Weapon weapon;
     /**
      * Constructor of abstract character.
      * 
@@ -34,7 +35,12 @@ public abstract class AbstractCharacter extends AbstractActiveEntity implements 
     }
 
     @Override
-    public final void shoot() {
+    public final void setWeapon(final Weapon weapon){
+        this.weapon = weapon;
+    }
+
+    @Override
+    public final void makeDamage() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shoot'");
     }
