@@ -1,22 +1,20 @@
 package gfight.world.movement.impl;
 
+import gfight.common.api.Position2D;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
-import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.impl.GameMapImpl;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.locationtech.jts.geom.Coordinate;
-
-import com.google.common.graph.Traverser;
 
 public class BfsMovement extends BaseMovement {
     private final GameEntity target;
     private final MovingEntity agent;
-    private final GameMap map = new GameMapImpl(50);
+    private final GameMapImpl map = new GameMapImpl(10);
 
     public BfsMovement(final GameEntity target, final MovingEntity agent) {
         this.target = target;
@@ -25,20 +23,12 @@ public class BfsMovement extends BaseMovement {
 
     @Override
     public void update() {
-        Coordinate coordinateTarget = agent.getPosition();
-        Iterable<GameTile> nodes = Traverser.forGraph(map.getTileGraph())
-                .breadthFirst(map.searchTile(coordinateTarget));
-        
-        
-        
-                
+
     }
 
-    private List<GameTile> findPath(){
-        List<GameTile> path = new ArrayList<>();
-        Coordinate startNode = agent.getPosition();
-        return null;
-        
+    private void bfs() {
+        Position2D start = agent.getPosition();
+
     }
 
 }
