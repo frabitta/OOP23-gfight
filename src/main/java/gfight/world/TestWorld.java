@@ -2,7 +2,7 @@ package gfight.world;
 
 import java.util.List;
 
-import gfight.common.Pair;
+import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
 import gfight.engine.graphics.api.MovableCamera;
@@ -31,13 +31,13 @@ public class TestWorld implements World {
         this.counter = 0;
         this.elements = List.<GraphicsComponent>of(
             factory.polygon(EngineColor.BLUE, List.of(
-                new Pair(10, 10), new Pair(20, 15), new Pair(10, 20)
+                new Position2DImpl(10, 10), new Position2DImpl(20, 15), new Position2DImpl(10, 20)
             )),
             factory.polygon(EngineColor.YELLOW, List.of(
-                new Pair(50, 25), new Pair(60, 20), new Pair(60, 30)
+                new Position2DImpl(50, 25), new Position2DImpl(60, 20), new Position2DImpl(60, 30)
             ))
         );
-        counterGraph = factory.text(EngineColor.BLACK, new Pair(100, 130), 25, "0");
+        counterGraph = factory.text(EngineColor.BLACK, new Position2DImpl(100, 130), 25, "0");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TestWorld implements World {
     @Override
     public void installCamera(final MovableCamera camera) {
         this.camera = camera;
-        this.camera.moveTo(new Pair(counter,0));
+        this.camera.moveTo(new Position2DImpl(counter,0));
     }
 
     @Override

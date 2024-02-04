@@ -2,6 +2,8 @@ package gfight.world.map.api;
 
 import org.locationtech.jts.geom.Coordinate;
 
+import gfight.common.api.Position2D;
+
 /**
  * A game tile representing a portion of the map.
  */
@@ -46,7 +48,7 @@ public interface GameTile {
      * @param position the position to check
      * @return true if position is inside this game tile, false otherwise
      */
-    boolean contains(Coordinate position);
+    boolean contains(Position2D position);
 
     /**
      * Compares the specified object with this GameTile for equality.

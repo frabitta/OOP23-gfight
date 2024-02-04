@@ -2,7 +2,7 @@ package gfight.engine.graphics.impl;
 
 import java.util.List;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.view.api.GraphicsComponentRenderer;
 
 /**

@@ -1,17 +1,19 @@
 package gfight.world.impl;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
 import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
 
-import gfight.common.api.GeomOperator;
-import gfight.common.impl.GeomOperatorImpl;
+import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
+import gfight.common.impl.Position2DImpl;
+import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
-import gfight.world.api.Hitbox;
+import gfight.world.hitbox.api.Hitbox;
+import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxImpl;
+import gfight.world.hitbox.impl.HitboxesImpl;
 
 import java.util.ArrayList;
 
@@ -19,8 +21,8 @@ import java.util.ArrayList;
  * Implementation of Game Entity.
  */
 public final class GameEntityImpl implements GameEntity {
-    private List<Coordinate> vertexes = new ArrayList<>();
-    private Coordinate position;
+    private List<Position2D> vertexes = new ArrayList<>();
+    private Position2D position;
     private final GraphicsComponent graphicsComponent;
     private final Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
 
@@ -32,7 +34,7 @@ public final class GameEntityImpl implements GameEntity {
      * @param position
      * @param graphicsComponent
      */
-    public GameEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+    public GameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
         this.graphicsComponent = graphicsComponent;
         this.position = position;
@@ -40,28 +42,26 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public Polygon getHitBox() {
-        final Hitbox hitbox = new HitboxImpl();
-        return hitbox.getGeometry(vertexes);
+    public Hitbox getHitBox() {
+        return new HitboxImpl(vertexes);
     }
 
     @Override
-    public void setPosition(final Coordinate position) {
-        final GeomOperator calculator = new GeomOperatorImpl();
-        final Vector2D distance = calculator.distance(position, this.position);
-        vertexes.stream().map(vetex -> calculator.sum(vetex, distance));
-        this.position = new Coordinate(position);
+    public void setPosition(final Position2D position) {
+        final Vect distance = new VectorImpl(position, this.position);
+        vertexes.stream().map(vertex -> vertex.sum(distance));
+        this.position = new Position2DImpl(position);
     }
 
     @Override
-    public Coordinate getPosition() {
-        return new Coordinate(position);
+    public Position2D getPosition() {
+        return new Position2DImpl(position);
     }
 
     @Override
     public Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
-        final Hitbox hitbox = new HitboxImpl();
-        final Polygon boundingBox = this.getHitBox();
+        final Hitboxes hitbox = new HitboxesImpl();
+        final Hitbox boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
                 .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
@@ -82,13 +82,12 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public List<Coordinate> getCoordinates() {
+    public List<Position2D> getPosition2Ds() {
         return List.copyOf(vertexes);
     }
 
     @Override
-    public void setCoordinates(final List<Coordinate> vertexes) {
+    public void setCoordinates(final List<Position2D> vertexes) {
         this.vertexes = vertexes;
     }
-
 }

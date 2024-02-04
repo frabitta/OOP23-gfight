@@ -2,7 +2,7 @@ package gfight.view.impl;
 
 import javax.swing.JPanel;
 
-import gfight.common.Pair;
+import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.RenderableGraphicComponent;
 import gfight.engine.graphics.api.ViewableCamera;
@@ -89,7 +89,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    this.camera.getWorldPosition(new Pair(e.getX(), e.getY()))
+                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                 )
             );
         }
@@ -136,7 +136,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    this.camera.getWorldPosition(new Pair(e.getX(), e.getY()))
+                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                 )
             );
         }

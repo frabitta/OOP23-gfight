@@ -1,7 +1,8 @@
 package gfight.engine.graphics.api;
 
-import gfight.common.Position2D;
 import java.util.List;
+
+import gfight.common.api.Position2D;
 
 /**
  * A component to describe how an object should be visualized.

@@ -2,18 +2,13 @@ package gfight.world.impl;
 
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
-import java.util.Optional;
 
-import org.locationtech.jts.geom.Coordinate;
-import java.util.Set;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.collision.api.CollisionCommand;
 import gfight.world.collision.impl.SlideCommand;
-import gfight.world.movement.api.Movement;
 
 /**
  * Class that represents the Enemy of the game.
@@ -23,15 +18,14 @@ public final class Enemy extends AbstractCharacter {
     /**
      * Constructor for enemies.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
-     * @param movement
-     * @param health
+     * @param vertexes          of the shape
+     * @param position          the center of the enemy
+     * @param graphicsComponent the color of the enemy
+     * @param health            of the enemy
      */
-    public Enemy(final List<Coordinate> vertexes, final Coordinate position, final GraphicsComponent graphicsComponent,
-            final Optional<Movement> movement, final int health) {
-        super(vertexes, position, graphicsComponent, movement, health);
+    public Enemy(final List<Position2D> vertexes, final Position2D position, final GraphicsComponent graphicsComponent,
+            final int health) {
+        super(vertexes, position, graphicsComponent, health);
         // TODO Auto-generated constructor stub
     }
 

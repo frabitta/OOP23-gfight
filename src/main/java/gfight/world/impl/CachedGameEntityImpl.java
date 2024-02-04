@@ -3,12 +3,13 @@ package gfight.world.impl;
 import java.util.Optional;
 import java.util.List;
 import java.util.Set;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Polygon;
 import java.util.LinkedHashSet;
+
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
+import gfight.world.hitbox.api.Hitbox;
 
 /**
  * An implementation of the cached game entity.
@@ -16,7 +17,7 @@ import gfight.world.api.GameEntity;
 public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
-    private Optional<Polygon> boundigBox;
+    private Optional<Hitbox> boundigBox;
 
     private Optional<Set<GameEntity>> collidedObjects;
     private boolean needResHitbox;
@@ -29,7 +30,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
      * @param position
      * @param graphicsComponent
      */
-    public CachedGameEntityImpl(final List<Coordinate> vertexes, final Coordinate position,
+    public CachedGameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
         originalEntity = new GameEntityImpl(vertexes, position, graphicsComponent);
         boundigBox = Optional.empty();
@@ -37,7 +38,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final Polygon getHitBox() {
+    public final Hitbox getHitBox() {
         if (needResHitbox || boundigBox.isEmpty()) {
             needResHitbox = false;
             boundigBox = Optional.of(originalEntity.getHitBox());
@@ -61,12 +62,12 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final void setPosition(final Coordinate position) {
+    public final void setPosition(final Position2D position) {
         originalEntity.setPosition(position);
     }
 
     @Override
-    public final Coordinate getPosition() {
+    public final Position2D getPosition() {
         return originalEntity.getPosition();
     }
 
@@ -81,12 +82,12 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final List<Coordinate> getCoordinates() {
-        return originalEntity.getCoordinates();
+    public final List<Position2D> getPosition2Ds() {
+        return originalEntity.getPosition2Ds();
     }
 
     @Override
-    public final void setCoordinates(final List<Coordinate> vertexes) {
+    public final void setCoordinates(final List<Position2D> vertexes) {
         originalEntity.setCoordinates(vertexes);
     }
 }

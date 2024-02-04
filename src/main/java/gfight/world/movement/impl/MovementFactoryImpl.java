@@ -1,6 +1,6 @@
 package gfight.world.movement.impl;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import gfight.common.api.Vect;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.movement.api.InputMovement;
@@ -17,7 +17,7 @@ public final class MovementFactoryImpl implements MovementFactory {
     }
 
     @Override
-    public LinearMovement createLinearMovement(final Vector2D direction) {
+    public LinearMovement createLinearMovement(final Vect direction) {
         return new LinearMovement(direction);
     }
 
@@ -32,7 +32,7 @@ public final class MovementFactoryImpl implements MovementFactory {
     }
 
     @Override
-    public LinearMovement createLinearMovement(final double accelleration, final Vector2D direction) {
+    public LinearMovement createLinearMovement(final double accelleration, final Vect direction) {
         return new LinearMovement(accelleration, direction);
     }
 
