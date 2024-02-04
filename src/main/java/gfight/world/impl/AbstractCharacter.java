@@ -7,12 +7,13 @@ import org.locationtech.jts.geom.Coordinate;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
 import gfight.world.api.Hitbox;
+import gfight.world.weapon.api.Weapon;
 
 /**
  * Class that represents the concept of main character (Player, Enemies).
  */
 public abstract class AbstractCharacter extends AbstractActiveEntity implements Character {
-
+    private Weapon weapon;
     /**
      * Constructor of abstract character.
      * 
@@ -34,7 +35,12 @@ public abstract class AbstractCharacter extends AbstractActiveEntity implements 
     }
 
     @Override
-    public final void shoot() {
+    public final void setWeapon(final Weapon weapon){
+        this.weapon = weapon;
+    }
+
+    @Override
+    public final void makeDamage() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shoot'");
     }
