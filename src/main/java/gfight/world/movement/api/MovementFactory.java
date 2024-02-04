@@ -3,7 +3,7 @@ package gfight.world.movement.api;
 import gfight.common.api.Vect;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
-import gfight.world.movement.impl.IabfsMovement;
+import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.LinearMovement;
 import gfight.world.movement.impl.RandomMovement;
 import gfight.world.movement.impl.Fixed;
@@ -20,7 +20,7 @@ public interface MovementFactory {
      * @param aget is the entity with the movement
      * @return the AI BFS based movement object
      */
-    IabfsMovement createIabfsMovement(GameEntity target, MovingEntity agent);
+    BfsMovement createIabfsMovement(GameEntity target, MovingEntity agent);
 
     /**
      * Creates Linear movement.
