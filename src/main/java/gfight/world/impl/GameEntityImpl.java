@@ -3,6 +3,7 @@ package gfight.world.impl;
 import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
@@ -38,7 +39,7 @@ public final class GameEntityImpl implements GameEntity {
             final GraphicsComponent graphicsComponent) {
         this.graphicsComponent = graphicsComponent;
         this.position = position;
-        vertexes.addAll(vertexes);
+        this.vertexes.addAll(vertexes);
     }
 
     @Override
