@@ -49,7 +49,7 @@ public final class GameEntityImpl implements GameEntity {
     @Override
     public void setPosition(final Position2D position) {
         final Vect distance = new VectorImpl(position, this.position);
-        vertexes.stream().map(vertex -> vertex.sum(distance));
+        vertexes = vertexes.stream().map(vertex -> vertex.sum(distance)).toList();
         this.position = new Position2DImpl(position);
     }
 
