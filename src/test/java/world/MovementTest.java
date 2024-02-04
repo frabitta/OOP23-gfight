@@ -43,12 +43,12 @@ class MovementTest {
         inputMovement.addDirection(InputMovement.Directions.EST);
         inputMovement.update();
 
-        assertEquals(new VectorImpl(1, 1).normalize(), inputMovement.getDirection(),
+        assertEquals(new VectorImpl(1, 1).norm(), inputMovement.getDirection(),
                 "Initial direction should be (1, 1)");
 
         inputMovement.update();
 
-        assertEquals(new VectorImpl(1, 1).normalize(), inputMovement.getDirection(),
+        assertEquals(new VectorImpl(1, 1).norm(), inputMovement.getDirection(),
                 "Direction should still be (1, 1) after update");
 
         inputMovement.removeDirection(InputMovement.Directions.NORD);

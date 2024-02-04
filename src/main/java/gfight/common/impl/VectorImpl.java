@@ -19,24 +19,32 @@ public class VectorImpl extends Vector2D implements Vect {
         super(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
+    public VectorImpl(Vector2D vector) {
+        super(vector.getX(), vector.getY());
+    }
+
     @Override
-    public Vect add(Vect vector) {
-        return (Vect) add(vector);
+    public Vect sum(Vect vector) {
+        if (vector instanceof VectorImpl) {
+            return new VectorImpl(add((Vector2D) vector));
+        } else {
+            throw new IllegalArgumentException("Incompatible type for sum operation");
+        }
     }
 
     @Override
     public Vect scale(double value) {
-        return (Vect) scalarMultiply(value);
+        return new VectorImpl(scalarMultiply(value));
     }
 
     @Override
     public Vect revert() {
-        return (Vect) negate();
+        return new VectorImpl(negate());
     }
 
     @Override
     public Vect norm() {
-        return (Vect) normalize();
+        return new VectorImpl(normalize());
     }
 
 }
