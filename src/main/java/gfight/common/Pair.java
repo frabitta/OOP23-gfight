@@ -1,5 +1,7 @@
 package gfight.common;
 
+import gfight.common.api.Vect;
+
 /**
  * Pair class of two integers.
  */
@@ -26,6 +28,12 @@ public class Pair implements Position2D {
     @Override
     public final double getY() {
         return y;
+    }
+
+    @Override
+    public Position2D sum(Vect a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sum'");
     }
 
 }

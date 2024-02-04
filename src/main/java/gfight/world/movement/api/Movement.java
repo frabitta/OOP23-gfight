@@ -1,6 +1,6 @@
 package gfight.world.movement.api;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import gfight.common.api.Vect;
 
 /**
  * Interface for update direction based on the type of movement.
@@ -15,12 +15,12 @@ public interface Movement {
      * 
      * @return the direction vector.
      */
-    Vector2D getDirection();
+    Vect getDirection();
 
     /**
      * it set the direction of the direction vector.
      * 
      * @param direction you want to set
      */
-    void setDirection(Vector2D direction);
+    void setDirection(Vect direction);
 }

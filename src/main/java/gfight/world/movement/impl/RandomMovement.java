@@ -1,7 +1,7 @@
 package gfight.world.movement.impl;
 
 import java.util.Random;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
+import gfight.common.impl.VectorImpl;
 
 /**
  * An implementation of Movement that gives a random movement.
@@ -24,9 +24,9 @@ public final class RandomMovement extends BaseMovement {
         double x = rand.nextDouble() * 2 - 1;
         double y = rand.nextDouble() * 2 - 1;
         if (x != 0.0 && y != 0.0) {
-            setDirection(new Vector2D(x, y).normalize());
+            setDirection(new VectorImpl(x, y).revert());
         } else {
-            setDirection(new Vector2D(0, 0));
+            setDirection(new VectorImpl(0, 0));
         }
     }
 
