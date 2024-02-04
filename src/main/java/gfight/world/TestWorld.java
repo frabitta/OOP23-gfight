@@ -1,8 +1,10 @@
 package gfight.world;
 
+import java.util.Collections;
 import java.util.List;
 
 import gfight.common.impl.Position2DImpl;
+import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
 import gfight.engine.graphics.api.MovableCamera;
@@ -11,6 +13,9 @@ import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.graphics.impl.TextGraphicsComponent;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventMouse;
+import gfight.world.api.MovingEntity;
+import gfight.world.impl.EntityFactoryImpl;
+import gfight.world.weapon.api.Team;
 
 import java.util.stream.Stream;
 
@@ -25,6 +30,8 @@ public class TestWorld implements World {
     private TextGraphicsComponent counterGraph;
     private List<GraphicsComponent> elements;
     private MovableCamera camera;
+
+    private MovingEntity projectile = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(0, 100), new VectorImpl(+1, 0));
 
     @Override
     public void initialize() {
@@ -45,6 +52,7 @@ public class TestWorld implements World {
         this.counter++;
         counterGraph.setText(String.valueOf(counter));
 
+        projectile.updatePos(deltaTime, Collections.emptySet());
        // this.camera.moveTo(new Pair(counter,0));
     }
 

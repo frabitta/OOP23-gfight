@@ -31,7 +31,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void initialize() {
         final Camera camera = new CameraImpl();
-        camera.moveTo(new Position2DImpl(40, 40)); //---- adjust--------------------------------
+        camera.moveTo(new Position2DImpl(0, 0)); //---- adjust--------------------------------
 
         view = new SwingView(this);
         view.initialize(camera);
@@ -48,6 +48,7 @@ public final class EngineImpl implements Engine, InputEventListener {
             final long frameStartTime = System.currentTimeMillis();
             final long deltaTime = frameStartTime - prevFrameStartTime;
             processInput();
+            System.out.println(deltaTime);
             update(deltaTime);
             render();
             waitNextFrame(frameStartTime);
