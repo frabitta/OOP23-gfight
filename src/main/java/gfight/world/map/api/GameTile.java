@@ -2,7 +2,7 @@ package gfight.world.map.api;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 
 /**
  * A game tile representing a portion of the map.

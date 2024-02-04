@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import gfight.common.Position2D;
+
+import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;

@@ -1,6 +1,6 @@
 package gfight.engine.input.impl;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEvent.Type;

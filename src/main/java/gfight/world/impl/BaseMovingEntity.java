@@ -2,7 +2,8 @@ package gfight.world.impl;
 
 import java.util.List;
 import java.util.Optional;
-import gfight.common.Position2D;
+
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;

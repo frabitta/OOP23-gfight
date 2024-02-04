@@ -14,7 +14,7 @@ import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.api.GameTile.TileType;

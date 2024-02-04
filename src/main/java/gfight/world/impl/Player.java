@@ -4,7 +4,7 @@ import java.util.List;
 
 import java.util.Set;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;

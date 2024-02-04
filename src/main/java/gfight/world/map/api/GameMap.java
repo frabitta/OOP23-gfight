@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.google.common.graph.Graph;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 
 /**
  * The map where the game takes place.

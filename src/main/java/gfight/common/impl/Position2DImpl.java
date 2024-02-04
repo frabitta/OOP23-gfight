@@ -2,7 +2,7 @@ package gfight.common.impl;
 
 import org.locationtech.jts.geom.Coordinate;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 
 /**

@@ -7,7 +7,8 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
-import gfight.common.Position2D;
+
+import gfight.common.api.Position2D;
 import gfight.world.hitbox.api.Hitbox;
 
 public class HitboxImpl implements Hitbox {

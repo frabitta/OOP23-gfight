@@ -2,7 +2,7 @@ package gfight.world.impl;
 
 import java.util.List;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.api.Character;
 import gfight.world.hitbox.api.Hitboxes;

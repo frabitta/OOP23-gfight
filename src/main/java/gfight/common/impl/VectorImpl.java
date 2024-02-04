@@ -2,7 +2,7 @@ package gfight.common.impl;
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 
 /**

@@ -1,7 +1,7 @@
 package gfight.engine.graphics.impl;
 
 import gfight.common.Pair;
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.Camera;
 
 /**

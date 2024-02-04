@@ -1,6 +1,4 @@
-package gfight.common;
-
-import gfight.common.api.Vect;
+package gfight.common.api;
 
 /**
  * Interface to store 2D positions.

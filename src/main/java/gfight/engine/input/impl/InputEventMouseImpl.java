@@ -2,7 +2,7 @@ package gfight.engine.input.impl;
 
 import java.util.Objects;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.engine.input.api.InputEventMouse;
 
 public class InputEventMouseImpl extends AbstractInputEvent implements InputEventMouse {

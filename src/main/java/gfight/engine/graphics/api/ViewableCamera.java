@@ -1,6 +1,6 @@
 package gfight.engine.graphics.api;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 
 /**
  * Interface of a Camera that gives world points in relation to its position.

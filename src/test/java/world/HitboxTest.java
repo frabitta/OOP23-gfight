@@ -1,6 +1,6 @@
 package world;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxImpl;

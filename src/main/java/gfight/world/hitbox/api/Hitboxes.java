@@ -1,6 +1,6 @@
 package gfight.world.hitbox.api;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 import gfight.world.api.CachedGameEntity;
 import gfight.world.api.GameEntity;
 

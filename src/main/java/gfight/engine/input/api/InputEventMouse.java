@@ -1,6 +1,6 @@
 package gfight.engine.input.api;
 
-import gfight.common.Position2D;
+import gfight.common.api.Position2D;
 
 /**
  * Input event to describe events from the mouse.

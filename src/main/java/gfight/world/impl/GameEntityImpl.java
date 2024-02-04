@@ -3,7 +3,8 @@ package gfight.world.impl;
 import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
-import gfight.common.Position2D;
+
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;

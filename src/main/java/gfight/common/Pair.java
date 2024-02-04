@@ -1,5 +1,6 @@
 package gfight.common;
 
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 
 /**
