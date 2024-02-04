@@ -1,5 +1,7 @@
 package gfight.world.api;
 
+import gfight.world.weapon.api.Weapon;
+
 public interface Character extends ActiveEntity {
     /**
      * Perform the action of rotating.
@@ -9,8 +11,14 @@ public interface Character extends ActiveEntity {
     void rotate(double theta);
 
     /**
-     * Perform the action of shooting.
+     * Perform the action of makingDamage.
      */
-    void shoot();
+    void makeDamage();
+
+    /**
+     * Set the weapon of the entity
+     * @param weapon
+     */
+    void setWeapon(Weapon weapon);
 
 }

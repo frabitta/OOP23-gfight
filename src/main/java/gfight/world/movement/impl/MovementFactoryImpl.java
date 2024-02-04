@@ -12,8 +12,8 @@ import gfight.world.movement.api.MovementFactory;
 public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
-    public IabfsMovement createIabfsMovement(final GameEntity target, final MovingEntity agent) {
-        return new IabfsMovement(target, agent);
+    public BfsMovement createIabfsMovement(final GameEntity target, final MovingEntity agent) {
+        return new BfsMovement(target, agent);
     }
 
     @Override

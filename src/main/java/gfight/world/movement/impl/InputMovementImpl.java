@@ -12,21 +12,21 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
 
     @Override
     public void update() {
-        if (!inputVector.equals(new VectorImpl(0, 0))) {
-            setDirection(inputVector.norm());
+        if (!this.inputVector.equals(new VectorImpl(0, 0))) {
+            this.setDirection(this.inputVector.norm());
         } else {
-            setDirection(inputVector);
+            this.setDirection(this.inputVector);
         }
     }
 
     @Override
     public void addDirection(final Directions dir) {
-        inputVector = inputVector.sum(getInputDirection(dir));
+        this.inputVector = this.inputVector.sum(getInputDirection(dir));
     }
 
     @Override
     public void removeDirection(final Directions dir) {
-        inputVector = inputVector.sum(getInputDirection(dir).revert());
+        this.inputVector = this.inputVector.sum(getInputDirection(dir).revert());
     }
 
     private Vect getInputDirection(final Directions dir) {

@@ -38,7 +38,7 @@ public final class GameEntityImpl implements GameEntity {
             final GraphicsComponent graphicsComponent) {
         this.graphicsComponent = graphicsComponent;
         this.position = position;
-        vertexes.addAll(vertexes);
+        this.vertexes.addAll(vertexes);
     }
 
     @Override
@@ -49,7 +49,7 @@ public final class GameEntityImpl implements GameEntity {
     @Override
     public void setPosition(final Position2D position) {
         final Vect distance = new VectorImpl(position, this.position);
-        vertexes.stream().map(vertex -> vertex.sum(distance));
+        this.vertexes = this.vertexes.stream().map(vertex -> vertex.sum(distance)).toList();
         this.position = new Position2DImpl(position);
     }
 

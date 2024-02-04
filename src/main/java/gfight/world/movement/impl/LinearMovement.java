@@ -14,7 +14,7 @@ public final class LinearMovement extends BaseMovement {
      * @param direction of the vector
      */
     public LinearMovement(final Vect direction) {
-        setDirection(direction);
+        this.setDirection(direction);
         accelleration = 1;
     }
 
@@ -24,14 +24,14 @@ public final class LinearMovement extends BaseMovement {
      * @param direction of the vector
      */
     public LinearMovement(final double accelleration, final Vect direction) {
-        setDirection(direction);
+        this.setDirection(direction);
         this.accelleration = accelleration;
     }
 
     @Override
     public void update() {
         if (accelleration != 1) {
-            setDirection(new VectorImpl(accelleration, getDirection()));
+            this.setDirection(new VectorImpl(accelleration, getDirection()));
         }
     }
 
