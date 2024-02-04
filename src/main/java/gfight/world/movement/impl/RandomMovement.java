@@ -15,12 +15,12 @@ public final class RandomMovement extends BaseMovement {
      * Random Movement constructor.
      */
     public RandomMovement() {
-        updateCounter();
+        this.updateCounter();
     }
 
     private void updateCounter() {
         final Random rand = new Random();
-        counter = rand.nextInt(MAXVAL - MINVAL) + MINVAL;
+        this.counter = rand.nextInt(MAXVAL - MINVAL) + MINVAL;
         double x = rand.nextDouble() * 2 - 1;
         double y = rand.nextDouble() * 2 - 1;
         if (x != 0.0 && y != 0.0) {
@@ -32,8 +32,8 @@ public final class RandomMovement extends BaseMovement {
 
     @Override
     public void update() {
-        if (counter > 0) {
-            counter--;
+        if (this.counter > 0) {
+            this.counter--;
         } else {
             updateCounter();
         }

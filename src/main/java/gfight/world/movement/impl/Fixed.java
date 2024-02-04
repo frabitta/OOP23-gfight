@@ -12,7 +12,7 @@ public final class Fixed extends BaseMovement {
      * Fixed class constructor.
      */
     public Fixed() {
-        setDirection(new VectorImpl(0, 0));
+        this.setDirection(new VectorImpl(0, 0));
     }
 
     @Override
