@@ -3,7 +3,7 @@ package gfight.engine;
 import java.util.Queue;
 import java.util.LinkedList;
 
-import gfight.common.Pair;
+import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
@@ -31,7 +31,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void initialize() {
         final Camera camera = new CameraImpl();
-        camera.moveTo(new Pair(40, 40)); //---- adjust--------------------------------
+        camera.moveTo(new Position2DImpl(40, 40)); //---- adjust--------------------------------
 
         view = new SwingView(this);
         view.initialize(camera);
