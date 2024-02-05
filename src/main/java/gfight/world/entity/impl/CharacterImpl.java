@@ -19,7 +19,7 @@ import gfight.world.hitbox.impl.HitboxesImpl;
 /**
  * Class that represents the concept of main character (Player, Enemies).
  */
-public class CharacterImpl extends AbstractActiveEntity implements Character {
+public final class CharacterImpl extends AbstractActiveEntity implements Character {
     private Weapon weapon;
     private Vect pointingDirection = new VectorImpl(0, 0);
     private CharacterType role;
@@ -27,30 +27,31 @@ public class CharacterImpl extends AbstractActiveEntity implements Character {
     /**
      * Constructor of abstract character.
      * 
-     * @param vertexes of the shape
-     * @param position the centre of the character
+     * @param vertexes          of the shape
+     * @param position          the centre of the character
      * @param graphicsComponent the color of the character
-     * @param health life point of the character
+     * @param health            life point of the character
+     * @param role              the type of the character (ENEMY or PLAYER)
      */
     public CharacterImpl(final List<Position2D> vertexes, final Position2D position,
-            final GraphicsComponent graphicsComponent, final int health, CharacterType role) {
+            final GraphicsComponent graphicsComponent, final int health, final CharacterType role) {
         super(vertexes, position, graphicsComponent, health);
         this.role = role;
     }
 
     @Override
-    public final void rotate(final double theta) {
+    public void rotate(final double theta) {
         Hitboxes rotation = new HitboxesImpl();
         rotation.rotate(getPosition2Ds(), theta);
     }
 
     @Override
-    public final void setWeapon(final Weapon weapon) {
+    public void setWeapon(final Weapon weapon) {
         this.weapon = weapon;
     }
 
     @Override
-    public final void makeDamage() {
+    public void makeDamage() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'shoot'");
     }
@@ -61,7 +62,7 @@ public class CharacterImpl extends AbstractActiveEntity implements Character {
     }
 
     @Override
-    public void setPointingDirection(Vect pointingDirection) {
+    public void setPointingDirection(final Vect pointingDirection) {
         this.pointingDirection = pointingDirection;
     }
 
@@ -71,7 +72,7 @@ public class CharacterImpl extends AbstractActiveEntity implements Character {
     }
 
     @Override
-    protected void applyCollisions(Set<GameEntity> gameobjects) {
+    protected void applyCollisions(final Set<GameEntity> gameobjects) {
         getAllCollided(gameobjects).stream().forEach(el -> {
             if (el instanceof GameEntity) {
                 CollisionCommand coll = new SlideCommand<MovingEntity, GameEntity>(this, el);

@@ -3,6 +3,9 @@ package gfight.world.entity.api;
 import gfight.common.api.Vect;
 import gfight.world.weapon.api.Weapon;
 
+/**
+ * This interface represent the concept of Character (Enemies and Player).
+ */
 public interface Character extends ActiveEntity {
     /**
      * Enum representing the types of characters in the game.
@@ -17,7 +20,6 @@ public interface Character extends ActiveEntity {
          * Represents an enemy character.
          */
         ENEMY
-
     }
 
     /**

@@ -17,15 +17,15 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
 /**
- * Class that represents the movement of the enemiess
+ * Class that represents the movement of the enemies.
  */
-public class BfsMovement extends BaseMovement {
+public final class BfsMovement extends BaseMovement {
     private final GameEntity target;
     private final MovingEntity agent;
     private final GameMap map;
 
     /**
-     * Constructor of bfs movement
+     * Constructor of bfs movement.
      * 
      * @param agent the enemy
      * @param target that the enemy needs to reach (Chest of Player)
@@ -50,10 +50,8 @@ public class BfsMovement extends BaseMovement {
      */
     private List<Position2D> getPathFromBfs() {
         Position2D startNode = agent.getPosition();
-        Position2D targetNode = target.getPosition();
-        
+        Position2D targetNode = target.getPosition();        
         BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
-
         List<Position2D> shortestPath = Optional
                 .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
                 .map(path -> path.getVertexList().stream().map(GameTile::getPosition).collect(Collectors.toList()))

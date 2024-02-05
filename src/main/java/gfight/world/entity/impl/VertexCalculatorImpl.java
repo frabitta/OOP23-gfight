@@ -9,7 +9,7 @@ import gfight.world.entity.api.VertexCalculator;
 /**
  * This class contais the methods to calculate the vertexes of different shapes.
  */
-public class VertexCalculatorImpl implements VertexCalculator {
+public final class VertexCalculatorImpl implements VertexCalculator {
 
     @Override
     public final List<Position2D> triangle(final double sideLength, final Position2D position) {
@@ -31,7 +31,7 @@ public class VertexCalculatorImpl implements VertexCalculator {
     }
 
     @Override
-    public List<Position2D> rectangle(double width, double height, Position2D position) {
+    public List<Position2D> rectangle(final double width, final double height, final Position2D position) {
         double halfWidth = width / 2;
         double halfHeight = height / 2;
         Position2D bottomLeft = new Position2DImpl(position.getX() - halfWidth, position.getY() - halfHeight);
