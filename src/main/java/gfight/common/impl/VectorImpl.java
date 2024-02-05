@@ -37,7 +37,7 @@ public final class VectorImpl extends Vector2D implements Vect {
      * @param a The end position.
      * @param b The start position.
      */
-    public VectorImpl(final Position2D a, Position2D b) {
+    public VectorImpl(final Position2D a, final Position2D b) {
         super(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
