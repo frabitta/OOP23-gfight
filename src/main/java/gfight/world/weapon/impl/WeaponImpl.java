@@ -1,8 +1,8 @@
 package gfight.world.weapon.impl;
 
-import gfight.world.api.ActiveEntity;
-import gfight.world.api.EntityFactory;
-import gfight.world.impl.EntityFactoryImpl;
+import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.EntityFactory;
+import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Team;
 import gfight.world.weapon.api.Weapon;

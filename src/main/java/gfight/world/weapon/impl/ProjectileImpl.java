@@ -6,9 +6,9 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.ActiveEntity;
-import gfight.world.api.GameEntity;
-import gfight.world.impl.BaseMovingEntity;
+import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.impl.BaseMovingEntity;
 import gfight.world.movement.api.Movement;
 import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Team;

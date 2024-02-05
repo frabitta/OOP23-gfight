@@ -1,6 +1,7 @@
 package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
 import gfight.world.map.api.GameMap;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
