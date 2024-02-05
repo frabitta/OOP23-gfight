@@ -5,7 +5,7 @@ import gfight.world.entity.api.MovingEntity;
 /**
  * Interface of a projectile.
  */
-public interface Projectile extends MovingEntity{
+public interface Projectile extends MovingEntity {
 
     /**
      * Sets the damage of the projectile.

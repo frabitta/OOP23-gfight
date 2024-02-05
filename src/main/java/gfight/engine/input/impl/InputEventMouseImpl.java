@@ -5,22 +5,28 @@ import java.util.Objects;
 import gfight.common.api.Position2D;
 import gfight.engine.input.api.InputEventMouse;
 
+/**
+ * Implementation of InputEvent to describe the mouse position.
+ */
 public class InputEventMouseImpl extends AbstractInputEvent implements InputEventMouse {
 
     private final Position2D position;
 
-    InputEventMouseImpl(Type type, Position2D position) {
+    InputEventMouseImpl(final Type type, final Position2D position) {
         super(type);
         this.position = position;
     }
 
     @Override
-    public Position2D getPosition() {
+    public final Position2D getPosition() {
         return this.position;
     }
 
+    /**
+     * Equals if of the same class, type and same position. 
+     */
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -31,8 +37,11 @@ public class InputEventMouseImpl extends AbstractInputEvent implements InputEven
         return false;
     }
 
+    /**
+     * Generates hashCode using type and position.
+     */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return Objects.hash(super.hashCode(), this.getPosition());
     }
 }

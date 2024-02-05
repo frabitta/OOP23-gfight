@@ -31,19 +31,19 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
 
     @Override
     public final Vect getDirection() {
-        return movement.get().getDirection();
+        return this.movement.get().getDirection();
     }
 
     @Override
     public final void setDirection(final Vect direction) {
-        movement.get().setDirection(direction);
+        this.movement.get().setDirection(direction);
     }
 
     @Override
     public final void updatePos(final long dt, final Set<GameEntity> gameobjects) {
-        final double scalar = 0.0001;
-        if (movement.isPresent()) {
-            movement.get().update();
+        final double scalar = 0.1;
+        if (this.movement.isPresent()) {
+            this.movement.get().update();
             applyCollisions(gameobjects);
             setPosition(getPosition().sum(getDirection().scale(scalar * dt)));
             getGraphics().setPositions(getPosition2Ds());

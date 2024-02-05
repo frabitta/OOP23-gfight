@@ -54,4 +54,14 @@ public interface Vect extends Vector<Euclidean2D> {
      * @return the lenght of the y of the vector.
      */
     double getY();
+
+    /**
+     * Computes the dot product between this vector and another vector.
+     *
+     * @param a The vector with which to compute the dot product.
+     * @return The resul of the dot product.
+     * @throws IllegalArgumentException If the provided vector is not of the same
+     *                                  type.
+     */
+    double dotProduct(Vect a);
 }

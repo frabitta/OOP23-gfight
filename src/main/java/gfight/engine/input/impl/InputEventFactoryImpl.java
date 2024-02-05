@@ -5,21 +5,29 @@ import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEvent.Type;
 
-public class InputEventFactoryImpl implements InputEventFactory{
+/**
+ * Implementation of a factory of InputEvents.
+ */
+public class InputEventFactoryImpl implements InputEventFactory {
 
     @Override
-    public InputEvent pressedKey(int key) {
+    public final InputEvent pressedKey(final int key) {
         return new InputEventKeyImpl(Type.PRESSED, key);
     }
 
     @Override
-    public InputEvent releasedKey(int key) {
+    public final InputEvent releasedKey(final int key) {
         return new InputEventKeyImpl(Type.RELEASED, key);
     }
 
     @Override
-    public InputEvent mouseDownAtPosition(Position2D position) {
-        return new InputEventMouseImpl(Type.HOLDING, position);
+    public final InputEvent mouseDownAtPosition(final Position2D position) {
+        return new InputEventMouseImpl(Type.MOUSE_DOWN, position);
+    }
+
+    @Override
+    public final InputEvent mouseUpAtPosition(final Position2D position) {
+        return new InputEventMouseImpl(Type.MOUSE_DOWN, position);
     }
 
 }

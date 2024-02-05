@@ -33,8 +33,8 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     public CachedGameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
         originalEntity = new GameEntityImpl(vertexes, position, graphicsComponent);
-        boundigBox = Optional.empty();
-        collidedObjects = Optional.empty();
+        this.boundigBox = Optional.empty();
+        this.collidedObjects = Optional.empty();
     }
 
     @Override

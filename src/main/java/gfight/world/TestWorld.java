@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  */
 public class TestWorld implements World {
 
-    final private GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
+    private final GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
 
     private int counter;
     private TextGraphicsComponent counterGraph;
@@ -45,7 +45,7 @@ public class TestWorld implements World {
         this.counter++;
         counterGraph.setText(String.valueOf(counter));
 
-       // this.camera.moveTo(new Pair(counter,0));
+        //this.camera.moveTo(new Position2DImpl(0, this.counter));
     }
 
     @Override
@@ -56,13 +56,13 @@ public class TestWorld implements World {
     @Override
     public void installCamera(final MovableCamera camera) {
         this.camera = camera;
-        this.camera.moveTo(new Position2DImpl(counter,0));
+        this.camera.moveTo(new Position2DImpl(0, 0));
     }
 
     @Override
-    public void processInput(InputEvent event) {
+    public void processInput(final InputEvent event) {
         if (event instanceof InputEventMouse) {
-            var mouseEv = (InputEventMouse) event;
+            final var mouseEv = (InputEventMouse) event;
             counterGraph.setPositions(List.of(mouseEv.getPosition()));
         }
     }
