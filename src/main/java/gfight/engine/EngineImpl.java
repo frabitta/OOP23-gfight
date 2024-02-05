@@ -1,6 +1,7 @@
 package gfight.engine;
 
 import java.util.Queue;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import gfight.common.impl.Position2DImpl;
@@ -27,18 +28,21 @@ public final class EngineImpl implements Engine, InputEventListener {
     private World world;
 
     private Queue<InputEvent> inputQueue = new LinkedList<>();
+    private Queue<InputEvent> bufferInputQueue = new LinkedList<>();
+
+    private boolean mutex = false;
 
     @Override
     public void initialize() {
         final Camera camera = new CameraImpl();
-        camera.moveTo(new Position2DImpl(0, 0)); //---- adjust--------------------------------
-
-        view = new SwingView(this);
-        view.initialize(camera);
+        camera.moveTo(new Position2DImpl(0, 0));
 
         world = new TestWorld();
         world.initialize();
         world.installCamera(camera);
+
+        view = new SwingView(this);
+        view.initialize(camera);
     }
 
     @Override
@@ -75,10 +79,14 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private void processInput() {
-        for (var event: inputQueue) {
+        mutex = true;
+        var frameInputSequence = Collections.unmodifiableList(inputQueue.stream().toList());
+        inputQueue.clear();
+        mutex = false;
+
+        for (var event: frameInputSequence) {
             world.processInput(event);
         }
-        inputQueue.clear();
     }
 
     private boolean isAppRunning() {
@@ -87,7 +95,15 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void notifyInputEvent(InputEvent event) {
-        inputQueue.add(event);
+        if (!mutex) {
+            if (!bufferInputQueue.isEmpty()) {
+                inputQueue.addAll(bufferInputQueue);
+                bufferInputQueue.clear();
+            }
+            inputQueue.add(event);
+        } else {
+            bufferInputQueue.add(event);
+        }
     }
 
     @Override
