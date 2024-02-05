@@ -36,7 +36,7 @@ public class WorldImpl implements World {
         this.keyMapper = new MovementFactoryImpl().createInput();
 
         // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
-        // this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
+        this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
     }
 
     @Override
