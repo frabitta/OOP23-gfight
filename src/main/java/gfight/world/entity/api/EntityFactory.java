@@ -1,6 +1,7 @@
 package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
+import gfight.world.map.api.GameMap;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 
@@ -24,9 +25,10 @@ public interface EntityFactory {
          * @param sideLength of the figure
          * @param position   the center of the enemy
          * @param health     life point of the enemy
+         * @param map        the map of the game
          * @return a new Enemy
          */
-        Character createEnemy(GameEntity target, double sideLength, Position2D position, int health);
+        Character createEnemy(GameEntity target, double sideLength, Position2D position, int health, GameMap map);
 
         /**
          * 

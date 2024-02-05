@@ -23,10 +23,21 @@ public class VertexCalculatorImpl implements VertexCalculator {
     @Override
     public final List<Position2D> square(final double sideLength, final Position2D position) {
         double halfSide = sideLength / 2;
-        Position2D bottomLeft = new Position2DImpl(position.getX() - halfSide, position.getY() - halfSide);
-        Position2D topLeft = new Position2DImpl(position.getX() - halfSide, position.getY() + halfSide);
-        Position2D bottomRight = new Position2DImpl(position.getX() + halfSide, position.getY() - halfSide);
-        Position2D topRight = new Position2DImpl(position.getX() + halfSide, position.getY() + halfSide);
+        Position2D bottomLeft = new Position2DImpl(position.getY() - halfSide, position.getX() - halfSide);
+        Position2D topLeft = new Position2DImpl(position.getY() + halfSide, position.getX() - halfSide);
+        Position2D bottomRight = new Position2DImpl(position.getY() - halfSide, position.getX() + halfSide);
+        Position2D topRight = new Position2DImpl(position.getY() + halfSide, position.getX() + halfSide);
+        return List.of(bottomLeft, topLeft, topRight, bottomRight);
+    }
+
+    @Override
+    public List<Position2D> rectangle(double width, double height, Position2D position) {
+        double halfWidth = width / 2;
+        double halfHeight = height / 2;
+        Position2D bottomLeft = new Position2DImpl(position.getY() - halfHeight, position.getX() - halfWidth);
+        Position2D topLeft = new Position2DImpl(position.getY() + halfHeight, position.getX() - halfWidth);
+        Position2D topRight = new Position2DImpl(position.getY() + halfHeight, position.getX() + halfWidth);
+        Position2D bottomRight = new Position2DImpl(position.getY() - halfHeight, position.getX() + halfWidth);
         return List.of(bottomLeft, topLeft, topRight, bottomRight);
     }
 

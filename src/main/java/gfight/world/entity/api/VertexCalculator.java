@@ -26,4 +26,13 @@ public interface VertexCalculator {
      */
     List<Position2D> square(double sideLength, Position2D position);
 
+    /**
+     * 
+     * @param width of the rectangle
+     * @param height of the rectangle
+     * @param position the center of the rectangle
+     * @return a list with the vertexes of the triangle
+     */
+    List<Position2D> rectangle(double width, double height, Position2D position);
+
 }

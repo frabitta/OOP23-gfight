@@ -3,6 +3,7 @@ package gfight.world.movement.impl;
 import gfight.common.api.Vect;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
+import gfight.world.map.api.GameMap;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.MovementFactory;
 
@@ -12,8 +13,8 @@ import gfight.world.movement.api.MovementFactory;
 public final class MovementFactoryImpl implements MovementFactory {
 
     @Override
-    public BfsMovement createIabfsMovement(final GameEntity target, final MovingEntity agent) {
-        return new BfsMovement(target, agent);
+    public BfsMovement createIabfsMovement(final GameEntity target, final MovingEntity agent, final GameMap map) {
+        return new BfsMovement(agent, target, map);
     }
 
     @Override

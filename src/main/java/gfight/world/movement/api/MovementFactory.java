@@ -3,6 +3,7 @@ package gfight.world.movement.api;
 import gfight.common.api.Vect;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
+import gfight.world.map.api.GameMap;
 import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.LinearMovement;
 import gfight.world.movement.impl.RandomMovement;
@@ -17,10 +18,11 @@ public interface MovementFactory {
      * Creates the AI BFS based movement.
      * 
      * @param target is the entity that you want to reach
-     * @param aget is the entity with the movement
+     * @param aget   is the entity with the movement
+     * @param map    the map of the game
      * @return the AI BFS based movement object
      */
-    BfsMovement createIabfsMovement(GameEntity target, MovingEntity agent);
+    BfsMovement createIabfsMovement(GameEntity target, MovingEntity agent, GameMap map);
 
     /**
      * Creates Linear movement.

@@ -15,6 +15,7 @@ import gfight.world.entity.api.EntityFactory;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.VertexCalculator;
 import gfight.world.entity.api.Character.CharacterType;
+import gfight.world.map.api.GameMap;
 import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.Movement;
@@ -40,11 +41,11 @@ public class EntityFactoryImpl implements EntityFactory {
 
     @Override
     public final Character createEnemy(final GameEntity target, final double sideLength, final Position2D position,
-            final int health) {
+            final int health, final GameMap map) {
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
         PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLUE, vertexes);
         final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health, CharacterType.ENEMY);
-        final Optional<Movement> movement = Optional.ofNullable(new BfsMovement(target, enemy));
+        final Optional<Movement> movement = Optional.ofNullable(new BfsMovement(enemy, target, map));
         enemy.setMovement(movement);
         return enemy;
     }
