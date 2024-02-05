@@ -24,11 +24,11 @@ public final class PolygonGraphicsRenderer extends AbstractGraphicsComponentRend
         g.fillPolygon(
                 pointList.stream()
                         .map(pos -> camera.getScreenPosition(pos))
-                        .mapToInt(p -> (int) Math.round(p.getY()))
+                        .mapToInt(p -> (int) Math.round(p.getX()))
                         .toArray(),
                 pointList.stream()
                         .map(pos -> camera.getScreenPosition(pos))
-                        .mapToInt(p -> (int) Math.round(p.getX()))
+                        .mapToInt(p -> (int) Math.round(p.getY()))
                         .toArray(),
                 pointList.size());
     }

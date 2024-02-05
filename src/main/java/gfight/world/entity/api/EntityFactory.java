@@ -1,9 +1,7 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
-import gfight.common.api.Vect;
-import gfight.world.impl.Enemy;
-import gfight.world.impl.Player;
+import gfight.world.map.api.GameMap;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Team;
@@ -21,16 +19,17 @@ public interface EntityFactory {
          * @param movement   movement object that will be overwritten
          * @return a new Player
          */
-        Player createPlayer(double sideLength, Position2D position, int health, InputMovement movement);
+        Character createPlayer(double sideLength, Position2D position, int health, InputMovement movement);
 
         /**
          * @param target     of the enemy (chest or player)
          * @param sideLength of the figure
          * @param position   the center of the enemy
          * @param health     life point of the enemy
+         * @param map        the map of the game
          * @return a new Enemy
          */
-        Enemy createEnemy(GameEntity target, double sideLength, Position2D position, int health);
+        Character createEnemy(GameEntity target, double sideLength, Position2D position, int health, GameMap map);
 
         /**
          * 

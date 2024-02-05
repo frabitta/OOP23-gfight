@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 import java.util.List;
 
@@ -25,5 +25,14 @@ public interface VertexCalculator {
      * @return a list with the vertexes of the square
      */
     List<Position2D> square(double sideLength, Position2D position);
+
+    /**
+     * 
+     * @param width of the rectangle
+     * @param height of the rectangle
+     * @param position the center of the rectangle
+     * @return a list with the vertexes of the triangle
+     */
+    List<Position2D> rectangle(double width, double height, Position2D position);
 
 }

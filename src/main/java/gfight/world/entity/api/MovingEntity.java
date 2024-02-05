@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 import java.util.Optional;
 import java.util.Set;

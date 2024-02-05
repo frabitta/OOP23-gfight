@@ -2,8 +2,8 @@ package gfight.world.collision.impl;
 
 import gfight.common.api.Vect;
 import gfight.common.impl.VectorImpl;
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.MovingEntity;
 
 /**
  * This type of collision change the direction of the moving entity in order to
