@@ -2,7 +2,8 @@ package gfight.world.map.api;
 
 import java.util.Set;
 
-import com.google.common.graph.Graph;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
 
 import gfight.common.api.Position2D;
 
@@ -32,5 +33,5 @@ public interface GameMap {
      * 
      * @return an immutable Graph of the GameTiles
      */
-    Graph<GameTile> getTileGraph();
+    Graph<GameTile, DefaultEdge> getTileGraph();
 }
