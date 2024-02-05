@@ -36,7 +36,7 @@ public interface GameEntity {
      * @param gameObjects are all the objects to be tested
      * @return all the objects in collision with this
      */
-    Set<GameEntity> getAllCollided(Set<GameEntity> gameObjects);
+    Set<GameEntity> getAllCollided(Set<? extends GameEntity> gameObjects);
 
     /**
      * Set ignoredEntities for the related entity.

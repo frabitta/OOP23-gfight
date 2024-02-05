@@ -59,7 +59,7 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
+    public Set<GameEntity> getAllCollided(final Set<? extends GameEntity> gameObjects) {
         final Hitboxes hitbox = new HitboxesImpl();
         final Hitbox boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();

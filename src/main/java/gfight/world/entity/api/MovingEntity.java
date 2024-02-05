@@ -27,7 +27,7 @@ public interface MovingEntity extends CachedGameEntity {
     * @param deltaTime
     * @param gameobjects all games object to aplly collisions
     */
-    void updatePos(long deltaTime, Set<GameEntity> gameobjects);
+    void updatePos(long deltaTime, Set<? extends GameEntity> gameobjects);
 
     /**
      * Set the movement of the entity.
