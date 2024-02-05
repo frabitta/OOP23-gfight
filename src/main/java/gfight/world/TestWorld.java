@@ -10,13 +10,12 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventMouse;
-import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.Character;
 import gfight.world.entity.api.EntityFactory;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.movement.api.InputMovement;
-import gfight.world.weapon.api.Team;
 import gfight.world.weapon.api.Weapon;
 import gfight.world.weapon.impl.WeaponImpl;
 
@@ -30,7 +29,7 @@ public class TestWorld implements World {
     private Set<MovingEntity> entities = new HashSet<>();
     private MovableCamera camera;
     private Weapon gun = new WeaponImpl(200);
-    private ActiveEntity player = factory.createPlayer(30, new Position2DImpl(50, 100), 10, new InputMovement() {
+    private Character player = factory.createPlayer(30, new Position2DImpl(50, 100), 10, new InputMovement() {
 
         @Override
         public void update() {
@@ -63,7 +62,7 @@ public class TestWorld implements World {
 
     @Override
     public void initialize() {
-        gun.setTeam(Team.ENEMY);
+        gun.setTeam(Character.CharacterType.ENEMY);
         gun.setParentEntity(player);
     }
 

@@ -1,10 +1,9 @@
 package gfight.world.weapon.impl;
 
-import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.Character;
 import gfight.world.entity.api.EntityFactory;
 import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.weapon.api.Projectile;
-import gfight.world.weapon.api.Team;
 import gfight.world.weapon.api.Weapon;
 
 /**
@@ -16,8 +15,8 @@ public class WeaponImpl implements Weapon {
     private final EntityFactory projectileFactory = new EntityFactoryImpl();
     private final long reloadTime;
 
-    private ActiveEntity parent;
-    private Team team;
+    private Character parent;
+    private Character.CharacterType team;
     private long lastShootTime;
 
     public WeaponImpl(final long reloadTime) {
@@ -26,12 +25,12 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public final void setParentEntity(final ActiveEntity parent) {
+    public final void setParentEntity(final Character parent) {
         this.parent = parent;
     }
 
     @Override
-    public final void setTeam(final Team team) {
+    public final void setTeam(final Character.CharacterType team) {
         this.team = team;
     }
 
@@ -43,7 +42,7 @@ public class WeaponImpl implements Weapon {
         this.lastShootTime = System.currentTimeMillis();
         // - change direction in facingDirection
         // - change factory from wich to generate (needs to be the one connected to the entityManager)
-        return projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getDirection());
+        return projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getPointedDirection());
     }
 
     private boolean reloaded() {

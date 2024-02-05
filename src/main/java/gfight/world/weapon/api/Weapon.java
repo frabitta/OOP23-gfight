@@ -1,6 +1,6 @@
 package gfight.world.weapon.api;
 
-import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.Character;
 
 /**
  * Interface of a generic Weapon.
@@ -11,7 +11,7 @@ public interface Weapon {
      * Sets the entity in possesion of the weapon.
      * @param parent
      */
-    void setParentEntity(ActiveEntity parent);
+    void setParentEntity(Character parent);
 
     /**
      * Lets the weapon perform the attack.
@@ -23,5 +23,5 @@ public interface Weapon {
      * This is here in order to prevent "Friendly Fire".
      * @param team
      */
-    void setTeam(Team team);
+    void setTeam(Character.CharacterType team);
 }

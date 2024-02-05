@@ -24,7 +24,6 @@ import gfight.world.movement.api.Movement;
 import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
 import gfight.world.weapon.api.Projectile;
-import gfight.world.weapon.api.Team;
 import gfight.world.weapon.impl.ProjectileImpl;
 
 /**
@@ -75,9 +74,9 @@ public class EntityFactoryImpl implements EntityFactory {
     static final double PROJECTILE_SIZE = 10;
 
     @Override
-    public Projectile createProjectile(Team team, Position2D position, Vect direction) {
+    public Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction) {
         List<Position2D> vertexes = vertexCalculator.square(PROJECTILE_SIZE, position);
-        GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(team==Team.ENEMY ? EngineColor.RED : EngineColor.BLUE, vertexes);
+        GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(team==Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE, vertexes);
         Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
         return new ProjectileImpl(vertexes, position, gComp, team, movement);
     }

@@ -5,7 +5,6 @@ import gfight.common.api.Vect;
 import gfight.world.map.api.GameMap;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
-import gfight.world.weapon.api.Team;
 
 /**
  * An interface that represents the concept of a factory of entities.
@@ -56,5 +55,5 @@ public interface EntityFactory {
          * @param direction direction to face
          * @return Projectile generated
          */
-        Projectile createProjectile(Team team, Position2D position, Vect direction);
+        Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction);
 }

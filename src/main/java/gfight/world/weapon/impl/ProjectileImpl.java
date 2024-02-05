@@ -6,12 +6,11 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.entity.api.ActiveEntity;
 import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.Character;
 import gfight.world.entity.impl.BaseMovingEntity;
 import gfight.world.movement.api.Movement;
 import gfight.world.weapon.api.Projectile;
-import gfight.world.weapon.api.Team;
 
 /**
  * Implementation of a simple projectile.
@@ -20,7 +19,7 @@ import gfight.world.weapon.api.Team;
 public class ProjectileImpl extends BaseMovingEntity implements Projectile {
 
     private int damage;
-    private final Team team;
+    private final Character.CharacterType team;
 
     /**
      * Constructor of a simple projectile.
@@ -34,7 +33,7 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
         final List<Position2D> vertexes,
         final Position2D position,
         final GraphicsComponent gComp,
-        final Team team,
+        final Character.CharacterType team,
         final Movement movement
         ) {
         super(vertexes, position, gComp);
@@ -50,11 +49,11 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
     @Override
     protected final void applyCollisions(final Set<GameEntity> gameobjects) {
         for (final var entity: gameobjects) {
-            if (entity instanceof ActiveEntity) {
-                final var activeEntity = (ActiveEntity) entity;
-                // - verify team:
-            //  if (activeEntity.getTeam()!=this.team) {
-                activeEntity.takeDamage(damage);
+            if (entity instanceof Character) {
+                final var character = (Character) entity;
+                if (character.getType()!=this.team) {
+                    character.takeDamage(damage);
+                }
             }
             // - if obstacle destroy the object
         }
