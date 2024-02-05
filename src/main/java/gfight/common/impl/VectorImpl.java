@@ -75,4 +75,13 @@ public final class VectorImpl extends Vector2D implements Vect {
         return new VectorImpl(normalize());
     }
 
+    @Override
+    public double dotProduct(Vect a) {
+        if (a instanceof VectorImpl) {
+            return this.dotProduct((Vector2D) a);
+        } else {
+            throw new IllegalArgumentException("Incompatible type for dotProduct operation");
+        }
+    }
+
 }
