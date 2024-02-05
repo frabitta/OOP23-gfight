@@ -14,8 +14,8 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
-import gfight.world.api.CachedGameEntity;
-import gfight.world.api.GameEntity;
+import gfight.world.entity.api.CachedGameEntity;
+import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
 

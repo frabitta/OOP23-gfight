@@ -1,10 +1,10 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.ActiveEntity;
+import gfight.world.entity.api.ActiveEntity;
 
 /**
  * This class implements the concept of ActiveEntity with movement and health

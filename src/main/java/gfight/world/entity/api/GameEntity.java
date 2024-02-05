@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
