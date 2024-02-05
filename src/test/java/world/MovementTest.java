@@ -39,8 +39,8 @@ class MovementTest {
         MovementFactory movementFactory = new MovementFactoryImpl();
         InputMovement inputMovement = movementFactory.createInput();
 
-        inputMovement.addDirection(InputMovement.Directions.NORTH);
-        inputMovement.addDirection(InputMovement.Directions.EAST);
+        inputMovement.addDirection(InputMovement.Directions.SOUTH);
+        inputMovement.addDirection(InputMovement.Directions.WEST);
         inputMovement.update();
 
         assertEquals(new VectorImpl(-1, 1).norm(), inputMovement.getDirection(),
@@ -51,7 +51,7 @@ class MovementTest {
         assertEquals(new VectorImpl(-1, 1).norm(), inputMovement.getDirection(),
                 "Direction should still be (-1, 1) after update");
 
-        inputMovement.removeDirection(InputMovement.Directions.NORTH);
+        inputMovement.removeDirection(InputMovement.Directions.WEST);
         inputMovement.update();
 
         assertEquals(new VectorImpl(0, 1), inputMovement.getDirection(),

@@ -53,7 +53,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final Set<GameEntity> getAllCollided(final Set<GameEntity> gameObjects) {
+    public final Set<GameEntity> getAllCollided(final Set<? extends GameEntity> gameObjects) {
         if (needResCollided || collidedObjects.isEmpty()) {
             needResCollided = false;
             collidedObjects = Optional.of(originalEntity.getAllCollided(gameObjects));

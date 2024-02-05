@@ -40,7 +40,7 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
     }
 
     @Override
-    public final void updatePos(final long dt, final Set<GameEntity> gameobjects) {
+    public final void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         final double scalar = 0.1;
         if (this.movement.isPresent()) {
             this.movement.get().update();
@@ -61,5 +61,5 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
      * 
      * @param gameobjects that are present in the game to handle collisions
      */
-    protected abstract void applyCollisions(Set<GameEntity> gameobjects);
+    protected abstract void applyCollisions(Set<? extends GameEntity> gameobjects);
 }
