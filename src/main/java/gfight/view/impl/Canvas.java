@@ -30,13 +30,11 @@ import java.util.Optional;
 public final class Canvas extends JPanel implements KeyListener, MouseMotionListener, MouseListener {
     private static final long serialVersionUID = -4058048042685678594L;
 
-    //private final int centerX;
-    //private final int centerY;
     private final transient SwingView scene;
     private final transient ViewableCamera camera;
 
-    private Optional<InputEventListener> inputListener;
-    private Optional<InputEventFactory> inputFactory;
+    private transient Optional<InputEventListener> inputListener;
+    private transient Optional<InputEventFactory> inputFactory;
     private final Set<Integer> pressedKeys = new HashSet<>();
 
     Canvas(final int width, final int height, final SwingView scene, final ViewableCamera camera) {
@@ -72,11 +70,11 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
             .forEach(comp -> comp.getRenderer().render(g2, this.camera));
     }
 
-    void setInputEventListener(InputEventListener inputListener) {
+    void setInputEventListener(final InputEventListener inputListener) {
         this.inputListener = Optional.ofNullable(inputListener);
     }
 
-    void setInputEventFactory(InputEventFactory inputFactory) {
+    void setInputEventFactory(final InputEventFactory inputFactory) {
         this.inputFactory = Optional.ofNullable(inputFactory);
     }
 
@@ -85,7 +83,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(final MouseEvent e) {
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
@@ -96,15 +94,22 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     }
 
     @Override
-    public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(final MouseEvent e) {
+        if (isInputAvailable()) {
+            this.inputListener.get().notifyInputEvent(
+                this.inputFactory.get().mouseUpAtPosition(
+                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                )
+            );
+        }
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+    public void keyTyped(final KeyEvent e) {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(final KeyEvent e) {
         if (isInputAvailable()) {
             final int key = e.getKeyCode();
             if (!pressedKeys.contains(key)) {
@@ -117,7 +122,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(final KeyEvent e) {
         if (isInputAvailable()) {
             final int key = e.getKeyCode();
             pressedKeys.remove(key);
@@ -128,11 +133,11 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(final MouseEvent e) {
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
@@ -143,14 +148,21 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(final MouseEvent e) {
+        if (isInputAvailable()) {
+            this.inputListener.get().notifyInputEvent(
+                this.inputFactory.get().mouseUpAtPosition(
+                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                )
+            );
+        }
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(final MouseEvent e) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(final MouseEvent e) {
     }
 }
