@@ -12,15 +12,18 @@ public abstract class AbstractInputEvent implements InputEvent {
 
     private final Type type;
 
-    AbstractInputEvent(Type type) {
+    AbstractInputEvent(final Type type) {
         this.type = type;
     }
 
     @Override
-    public Type getType() {
+    public final Type getType() {
         return this.type;
     }
 
+    /**
+     * Redefine your own and remember to call this with super() to check. 
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -33,6 +36,9 @@ public abstract class AbstractInputEvent implements InputEvent {
         return false;
     }
 
+    /**
+     * Redefine your own and remember to call this with super() to check. 
+     */
     @Override
     public int hashCode() {
         return Objects.hashCode(type);

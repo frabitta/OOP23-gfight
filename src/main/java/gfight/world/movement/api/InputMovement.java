@@ -24,20 +24,20 @@ public interface InputMovement extends Movement {
      */
     enum Directions {
         /**
-         * nord direction.
+         * north direction.
          */
-        NORD,
+        NORTH,
         /**
          * south direction.
          */
         SOUTH,
         /**
-         * ovest direction.
+         * west direction.
          */
-        OVEST,
+        WEST,
         /**
-         * est direction.
+         * east direction.
          */
-        EST
+        EAST
     }
 }

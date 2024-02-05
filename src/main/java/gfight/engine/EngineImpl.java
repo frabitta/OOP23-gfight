@@ -27,10 +27,10 @@ public final class EngineImpl implements Engine, InputEventListener {
     private EngineView view;
     private World world;
 
-    private Queue<InputEvent> inputQueue = new LinkedList<>();
-    private Queue<InputEvent> bufferInputQueue = new LinkedList<>();
+    private final Queue<InputEvent> inputQueue = new LinkedList<>();
+    private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
 
-    private boolean mutex = false;
+    private boolean mutex;
 
     @Override
     public void initialize() {
@@ -80,11 +80,10 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private void processInput() {
         mutex = true;
-        var frameInputSequence = Collections.unmodifiableList(inputQueue.stream().toList());
+        final var frameInputSequence = Collections.unmodifiableList(inputQueue.stream().toList());
         inputQueue.clear();
         mutex = false;
-
-        for (var event: frameInputSequence) {
+        for (final var event: frameInputSequence) {
             world.processInput(event);
         }
     }
@@ -94,7 +93,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     @Override
-    public void notifyInputEvent(InputEvent event) {
+    public void notifyInputEvent(final InputEvent event) {
         if (!mutex) {
             if (!bufferInputQueue.isEmpty()) {
                 inputQueue.addAll(bufferInputQueue);

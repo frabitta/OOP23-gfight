@@ -24,7 +24,7 @@ import java.util.stream.Stream;
  */
 public class TestWorld implements World {
 
-    final private GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
+    private final GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
 
     private int counter;
     private TextGraphicsComponent counterGraph;
@@ -52,8 +52,6 @@ public class TestWorld implements World {
         this.counter++;
         counterGraph.setText(String.valueOf(counter));
         projectileTesting.updatePos(deltaTime, Collections.emptySet());
-        //System.out.println(projectileTesting.getPosition());
-       // this.camera.moveTo(new Pair(counter,0));
     }
 
     @Override
@@ -67,9 +65,9 @@ public class TestWorld implements World {
     }
 
     @Override
-    public void processInput(InputEvent event) {
+    public void processInput(final InputEvent event) {
         if (event instanceof InputEventMouse) {
-            var mouseEv = (InputEventMouse) event;
+            final var mouseEv = (InputEventMouse) event;
             counterGraph.setPositions(List.of(mouseEv.getPosition()));
         }
     }

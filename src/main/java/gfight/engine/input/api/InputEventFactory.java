@@ -22,9 +22,16 @@ public interface InputEventFactory {
     InputEvent releasedKey(int key);
 
     /**
-     * Returns a new InputEvent that describes the mouse clicked at a certain position.
-     * @param key
+     * Returns a new InputEvent that describes the mouse at a certain position with a button pressed.
+     * @param position
      * @return InputEvent describing the pressed key
      */
     InputEvent mouseDownAtPosition(Position2D position);
+
+    /**
+     * Returns a new InputEvent that describes the mouse at a certain position without any button pressed.
+     * @param position
+     * @return InputEvent describing the pressed key
+     */
+    InputEvent mouseUpAtPosition(Position2D position);
 }

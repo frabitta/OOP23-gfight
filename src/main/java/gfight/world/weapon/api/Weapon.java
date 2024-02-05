@@ -8,6 +8,13 @@ import gfight.world.api.ActiveEntity;
 public interface Weapon {
 
     /**
+     * Enum that describes the two possible teams in the game.
+     */
+    enum Team {
+        PLAYER, ENEMY
+    }
+
+    /**
      * Sets the entity in possesion of the weapon.
      * @param parent
      */

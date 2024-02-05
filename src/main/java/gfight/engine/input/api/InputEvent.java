@@ -9,12 +9,14 @@ public interface InputEvent {
      * Type of input event.
      */
     enum Type {
-        /** Started pressing the "button"*/
+        /** Started pressing the "button".*/
         PRESSED,
-        /** Holding the "button" pressed */
-        HOLDING,
-        /** Released the "button" */
-        RELEASED
+        /** Released the "button".*/
+        RELEASED,
+        /** Holding the mouse button pressed.*/
+        MOUSE_DOWN,
+        /** Mouse button is not pressed.*/
+        MOUSE_UP
     }
 
     /**
