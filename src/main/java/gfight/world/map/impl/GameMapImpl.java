@@ -8,7 +8,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-import com.google.common.graph.Graph;
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
+import org.jgrapht.graph.guava.MutableGraphAdapter;
+
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 
@@ -27,7 +31,7 @@ public final class GameMapImpl implements GameMap {
     private final Set<GameTile> tiles;
     private final List<List<GameTile>> tileList;
     private final int dimension;
-    private Optional<Graph<GameTile>> tileGraph;
+    private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
 
     /**
      * Creates a game map with the given dimension.
@@ -70,7 +74,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
-    public Graph<GameTile> getTileGraph() {
+    public Graph<GameTile, DefaultEdge> getTileGraph() {
         if (!this.tileGraph.isPresent()) {
             buildGraph();
         }
@@ -79,6 +83,8 @@ public final class GameMapImpl implements GameMap {
 
     private void buildGraph() {
         final MutableGraph<GameTile> g = GraphBuilder.undirected().build();
+        final MutableGraphAdapter<GameTile> adapter = new MutableGraphAdapter<>(g);
+        final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<GameTile, DefaultEdge>(DefaultEdge.class);
         final var freeCondition = GameTile.TileType.EMPTY;
         // row
         for (int i = 0; i < dimension; i++) {
@@ -89,21 +95,25 @@ public final class GameMapImpl implements GameMap {
                 // NORTH
                 if (i > 0 && this.tileList.get(i - 1).get(j).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i - 1).get(j)));
+                    g2.addEdge(tile, this.tileList.get(i - 1).get(j));
                 }
                 // SOUTH
                 if (i < (dimension - 1) && this.tileList.get(i + 1).get(j).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i + 1).get(j)));
+                    g2.addEdge(tile, this.tileList.get(i + 1).get(j));
                 }
                 // WEST
                 if (j > 0 && this.tileList.get(i).get(j - 1).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j - 1)));
+                    g2.addEdge(tile, this.tileList.get(i).get(j - 1));
                 }
                 // EAST
                 if (j < (dimension - 1) && this.tileList.get(i).get(j + 1).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j + 1)));
+                    g2.addEdge(tile, this.tileList.get(i).get(j - 1));
                 }
             }
         }
-        this.tileGraph = Optional.of(g);
+        this.tileGraph = Optional.of(g2);
     }
 }

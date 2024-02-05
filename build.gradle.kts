@@ -22,7 +22,7 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("com.google.guava:guava:33.0.0-jre")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
-
+    implementation("org.jgrapht:jgrapht-guava:1.5.2")
 }
 
 tasks.test {
