@@ -31,7 +31,7 @@ public class TestWorld implements World {
     private List<GraphicsComponent> elements;
     private MovableCamera camera;
 
-    private MovingEntity projectileTesting = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(100,0), new VectorImpl(0, 1));
+    private MovingEntity projectileTesting = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(100,0), new VectorImpl(0, 100));
 
     @Override
     public void initialize() {
@@ -52,7 +52,7 @@ public class TestWorld implements World {
         this.counter++;
         counterGraph.setText(String.valueOf(counter));
         projectileTesting.updatePos(deltaTime, Collections.emptySet());
-        System.out.println(projectileTesting.getPosition());
+        //System.out.println(projectileTesting.getPosition());
        // this.camera.moveTo(new Pair(counter,0));
     }
 

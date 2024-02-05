@@ -35,14 +35,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void initialize() {
         final Camera camera = new CameraImpl();
-<<<<<<< HEAD
         camera.moveTo(new Position2DImpl(0, 0));
-=======
-        camera.moveTo(new Position2DImpl(0, 0)); //---- adjust--------------------------------
-
-        view = new SwingView(this);
-        view.initialize(camera);
->>>>>>> main
 
         world = new TestWorld();
         world.initialize();
