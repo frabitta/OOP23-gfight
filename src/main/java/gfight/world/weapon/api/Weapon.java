@@ -16,7 +16,7 @@ public interface Weapon {
     /**
      * Lets the weapon perform the attack.
      */
-    void shoot();
+    Projectile shoot();
 
     /**
      * Sets the team of the weapon.

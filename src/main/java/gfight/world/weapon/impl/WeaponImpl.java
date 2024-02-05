@@ -3,6 +3,7 @@ package gfight.world.weapon.impl;
 import gfight.world.api.ActiveEntity;
 import gfight.world.api.EntityFactory;
 import gfight.world.impl.EntityFactoryImpl;
+import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Team;
 import gfight.world.weapon.api.Weapon;
 
@@ -19,7 +20,7 @@ public class WeaponImpl implements Weapon {
     private Team team;
     private long lastShootTime;
 
-    WeaponImpl(final long reloadTime) {
+    public WeaponImpl(final long reloadTime) {
         this.reloadTime = reloadTime;
         this.lastShootTime = System.currentTimeMillis();
     }
@@ -35,14 +36,14 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public final void shoot() {
+    public final Projectile shoot() {
         if (!reloaded()) {
-            return;
+            return null;
         }
         this.lastShootTime = System.currentTimeMillis();
         // - change direction in facingDirection
         // - change factory from wich to generate (needs to be the one connected to the entityManager)
-        projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getDirection());
+        return projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getDirection());
     }
 
     private boolean reloaded() {

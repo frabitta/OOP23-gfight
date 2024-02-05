@@ -1,62 +1,83 @@
 package gfight.world;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.GraphicsComponentsFactory;
 import gfight.engine.graphics.api.MovableCamera;
-import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
-import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
-import gfight.engine.graphics.impl.TextGraphicsComponent;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventMouse;
+import gfight.world.api.ActiveEntity;
+import gfight.world.api.EntityFactory;
+import gfight.world.api.GameEntity;
 import gfight.world.api.MovingEntity;
 import gfight.world.impl.EntityFactoryImpl;
+import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Team;
-
-import java.util.stream.Stream;
+import gfight.world.weapon.api.Weapon;
+import gfight.world.weapon.impl.WeaponImpl;
 
 /**
  * A test implementation of the World interface.
  */
 public class TestWorld implements World {
 
-    private final GraphicsComponentsFactory factory = new GraphicsComponentsFactoryImpl();
+    private final EntityFactory factory = new EntityFactoryImpl();
 
-    private int counter;
-    private TextGraphicsComponent counterGraph;
-    private List<GraphicsComponent> elements;
+    private Set<MovingEntity> entities = new HashSet<>();
     private MovableCamera camera;
+    private Weapon gun = new WeaponImpl(200);
+    private ActiveEntity player = factory.createPlayer(30, new Position2DImpl(50, 100), 10, new InputMovement() {
 
-    private final MovingEntity projectileTesting = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(100,0), new VectorImpl(0, 100));
+        @Override
+        public void update() {
+        }
+
+        @Override
+        public Vect getDirection() {
+            return new VectorImpl(1, 0);
+        }
+
+        @Override
+        public void setDirection(Vect direction) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'setDirection'");
+        }
+
+        @Override
+        public void addDirection(Directions dir) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'addDirection'");
+        }
+
+        @Override
+        public void removeDirection(Directions dir) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'removeDirection'");
+        }
+        
+    });
 
     @Override
     public void initialize() {
-        this.counter = 0;
-        this.elements = List.<GraphicsComponent>of(
-            factory.polygon(EngineColor.BLUE, List.of(
-                new Position2DImpl(10, 10), new Position2DImpl(20, 15), new Position2DImpl(10, 20)
-            )),
-            factory.polygon(EngineColor.YELLOW, List.of(
-                new Position2DImpl(50, 25), new Position2DImpl(60, 20), new Position2DImpl(60, 30)
-            ))
-        );
-        counterGraph = factory.text(EngineColor.BLACK, new Position2DImpl(100, 130), 25, "0");
+        gun.setTeam(Team.ENEMY);
+        gun.setParentEntity(player);
     }
 
     @Override
     public void update(final long deltaTime) {
-        this.counter++;
-        counterGraph.setText(String.valueOf(counter));
-        projectileTesting.updatePos(deltaTime, Collections.emptySet());
+        entities.stream().forEach(en -> en.updatePos(deltaTime, entities.stream().map(movEn -> (GameEntity) movEn).collect(Collectors.toSet())));
+        if (entities.size() > 50) {
+            entities.clear();
+        }
     }
 
     @Override
     public List<GraphicsComponent> getGraphicsComponents() {
-        return Stream.concat(this.elements.stream(), Stream.of(counterGraph, projectileTesting.getGraphics())).toList();
+        return entities.stream().map(el -> el.getGraphics()).toList();
     }
 
     @Override
@@ -68,7 +89,12 @@ public class TestWorld implements World {
     public void processInput(final InputEvent event) {
         if (event instanceof InputEventMouse) {
             final var mouseEv = (InputEventMouse) event;
-            counterGraph.setPositions(List.of(mouseEv.getPosition()));
+            if (mouseEv.getType() == InputEvent.Type.MOUSE_DOWN) {
+                var proj = gun.shoot();
+                if (Optional.ofNullable(proj).isPresent()) {
+                    entities.add(proj);
+                }
+            }
         }
     }
 
