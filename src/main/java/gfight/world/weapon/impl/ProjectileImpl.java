@@ -55,7 +55,8 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
                     character.takeDamage(damage);
                 }
             }
-            // - destroy the object
+            // - destroy the object if on contact
+            // - need to find a way to prevent a forever existing projectile (world closed by walls?)
         }
     }
 }

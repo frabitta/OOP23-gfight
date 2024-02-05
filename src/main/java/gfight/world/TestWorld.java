@@ -1,7 +1,9 @@
 package gfight.world;
 
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
+
+import com.google.common.collect.Streams;
 
 import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
@@ -63,6 +65,7 @@ public class TestWorld implements World {
     @Override
     public void initialize() {
         gun.setParentEntity(player);
+        player.setPointingDirection(new VectorImpl(+10, 0));
     }
 
     @Override
@@ -75,7 +78,7 @@ public class TestWorld implements World {
 
     @Override
     public List<GraphicsComponent> getGraphicsComponents() {
-        return entities.stream().map(el -> el.getGraphics()).toList();
+        return Streams.concat(Stream.of(player.getGraphics()),entities.stream().map(el -> el.getGraphics())).toList();
     }
 
     @Override
