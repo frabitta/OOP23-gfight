@@ -18,10 +18,4 @@ public interface Weapon {
      */
     Projectile shoot();
 
-    /**
-     * Sets the team of the weapon.
-     * This is here in order to prevent "Friendly Fire".
-     * @param team
-     */
-    void setTeam(Character.CharacterType team);
 }

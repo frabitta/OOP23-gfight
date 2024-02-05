@@ -16,7 +16,6 @@ public class WeaponImpl implements Weapon {
     private final long reloadTime;
 
     private Character parent;
-    private Character.CharacterType team;
     private long lastShootTime;
 
     public WeaponImpl(final long reloadTime) {
@@ -30,19 +29,15 @@ public class WeaponImpl implements Weapon {
     }
 
     @Override
-    public final void setTeam(final Character.CharacterType team) {
-        this.team = team;
-    }
-
-    @Override
     public final Projectile shoot() {
         if (!reloaded()) {
             return null;
         }
         this.lastShootTime = System.currentTimeMillis();
-        // - change direction in facingDirection
-        // - change factory from wich to generate (needs to be the one connected to the entityManager)
-        return projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getPointedDirection());
+        // - change factory from wich to generate
+        // (needs to be the one connected to the entityManager)
+        // get it from the parent
+        return projectileFactory.createProjectile(this.parent.getType(), this.parent.getPosition(), this.parent.getPointedDirection());
     }
 
     private boolean reloaded() {

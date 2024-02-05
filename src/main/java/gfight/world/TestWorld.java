@@ -62,7 +62,6 @@ public class TestWorld implements World {
 
     @Override
     public void initialize() {
-        gun.setTeam(Character.CharacterType.ENEMY);
         gun.setParentEntity(player);
     }
 

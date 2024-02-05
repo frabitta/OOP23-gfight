@@ -55,7 +55,7 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
                     character.takeDamage(damage);
                 }
             }
-            // - if obstacle destroy the object
+            // - destroy the object
         }
     }
 }
