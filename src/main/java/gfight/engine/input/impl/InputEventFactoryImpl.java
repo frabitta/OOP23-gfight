@@ -27,7 +27,7 @@ public class InputEventFactoryImpl implements InputEventFactory {
 
     @Override
     public final InputEvent mouseUpAtPosition(final Position2D position) {
-        return new InputEventMouseImpl(Type.MOUSE_DOWN, position);
+        return new InputEventMouseImpl(Type.MOUSE_UP, position);
     }
 
 }
