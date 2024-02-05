@@ -6,33 +6,36 @@ import gfight.world.impl.EntityFactoryImpl;
 import gfight.world.weapon.api.Team;
 import gfight.world.weapon.api.Weapon;
 
+/**
+ * Simple implementation of a gun.
+ * It shoots projectiles if it has passed enough time since the last shoot.
+ */
 public class WeaponImpl implements Weapon {
 
     private final EntityFactory projectileFactory = new EntityFactoryImpl();
+    private final long reloadTime;
 
     private ActiveEntity parent;
     private Team team;
-
     private long lastShootTime;
-    private long reloadTime = 0;
 
-    WeaponImpl(long reloadTime) {
+    WeaponImpl(final long reloadTime) {
         this.reloadTime = reloadTime;
         this.lastShootTime = System.currentTimeMillis();
     }
 
     @Override
-    public void setParentEntity(ActiveEntity parent) {
+    public final void setParentEntity(final ActiveEntity parent) {
         this.parent = parent;
     }
 
     @Override
-    public void setTeam(Team team) {
+    public final void setTeam(final Team team) {
         this.team = team;
     }
 
     @Override
-    public void shoot() {
+    public final void shoot() {
         if (!reloaded()) {
             return;
         }

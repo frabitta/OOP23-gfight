@@ -31,7 +31,7 @@ public class TestWorld implements World {
     private List<GraphicsComponent> elements;
     private MovableCamera camera;
 
-    private MovingEntity projectileTesting = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(100,0), new VectorImpl(0, 100));
+    private final MovingEntity projectileTesting = new EntityFactoryImpl().createProjectile(Team.ENEMY, new Position2DImpl(100,0), new VectorImpl(0, 100));
 
     @Override
     public void initialize() {
