@@ -8,7 +8,6 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventKey;
-import gfight.engine.input.api.InputEventMouse;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -21,7 +20,6 @@ import gfight.world.map.api.GameMap;
 import gfight.world.map.impl.GameMapImpl;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
-import gfight.world.weapon.impl.WeaponImpl;
 
 public class WorldImpl implements World {
 
@@ -30,8 +28,6 @@ public class WorldImpl implements World {
     private GameMap map;
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
-    private Character player;
-    //private Character testEnemy;
 
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
@@ -40,11 +36,7 @@ public class WorldImpl implements World {
         this.keyMapper = new MovementFactoryImpl().createInput();
 
         // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
-        this.player = this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
-        var gun = new WeaponImpl(200, entityManager);
-        gun.setParentEntity(this.player);
-        this.player.setWeapon(gun);
-        //this.testEnemy = this.entityManager.createEnemy(player, 15, new Position2DImpl(500, 500), 300, null);
+        this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
     }
 
     @Override
@@ -65,7 +57,6 @@ public class WorldImpl implements World {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
             }
         }
-        //System.out.println(this.testEnemy.getHealth());
     }
 
     @Override
@@ -77,13 +68,6 @@ public class WorldImpl implements World {
     public void processInput(final InputEvent event) {
         if (event instanceof InputEventKey) {
             manageKey((InputEventKey) event);
-        } else {
-            if (event instanceof InputEventMouse) {
-                var mouseEv = (InputEventMouse) event;
-                if (mouseEv.getType() == InputEvent.Type.MOUSE_DOWN) {
-                    this.player.makeDamage();
-                }
-            }
         }
     }
 

@@ -1,94 +1,106 @@
 package gfight.world;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.Optional;
 
-import com.google.common.collect.Streams;
-
-import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
-import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.input.api.InputEvent;
+import gfight.engine.input.api.InputEventKey;
 import gfight.engine.input.api.InputEventMouse;
+import gfight.world.api.EntityManager;
 import gfight.world.entity.api.Character;
-import gfight.world.entity.api.EntityFactory;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.entity.impl.EntityFactoryImpl;
+import gfight.world.hitbox.api.Hitboxes;
+import gfight.world.hitbox.impl.HitboxesImpl;
+import gfight.world.impl.EntityManagerImpl;
+import gfight.world.map.api.GameMap;
+import gfight.world.map.impl.GameMapImpl;
 import gfight.world.movement.api.InputMovement;
+import gfight.world.movement.impl.MovementFactoryImpl;
 import gfight.world.weapon.api.Weapon;
 import gfight.world.weapon.impl.WeaponImpl;
 
-/**
- * A test implementation of the World interface.
- */
 public class TestWorld implements World {
 
-    private final EntityFactory factory = new EntityFactoryImpl();
-
-    private Set<MovingEntity> entities = new HashSet<>();
     private MovableCamera camera;
-    private Weapon gun = new WeaponImpl(200,factory);
-    private Character player = factory.createPlayer(30, new Position2DImpl(50, 100), 10, new InputMovement() {
+    private EntityManager entityManager;
+    private GameMap map;
+    private InputMovement keyMapper;
+    private Hitboxes hitboxManager;
+    private Character player;
+    //private Character testEnemy;
 
-        @Override
-        public void update() {
-        }
+    public TestWorld() {
+        this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
+        this.hitboxManager = new HitboxesImpl();
+        this.map = new GameMapImpl(10);
+        this.keyMapper = new MovementFactoryImpl().createInput();
 
-        @Override
-        public Vect getDirection() {
-            return new VectorImpl(1, 0);
-        }
-
-        @Override
-        public void setDirection(Vect direction) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'setDirection'");
-        }
-
-        @Override
-        public void addDirection(Directions dir) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'addDirection'");
-        }
-
-        @Override
-        public void removeDirection(Directions dir) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'removeDirection'");
-        }
-        
-    });
-
-    @Override
-    public void initialize() {
-        gun.setParentEntity(player);
-        player.setPointingDirection(new VectorImpl(+10, 0));
-    }
-
-    @Override
-    public void update(final long deltaTime) {
-        entities.stream().forEach(en -> en.updatePos(deltaTime, entities.stream().map(movEn -> (GameEntity) movEn).collect(Collectors.toSet())));
-        if (entities.size() > 50) {
-            entities.clear();
-        }
-    }
-
-    @Override
-    public List<GraphicsComponent> getGraphicsComponents() {
-        return Streams.concat(Stream.of(player.getGraphics()),entities.stream().map(el -> el.getGraphics())).toList();
+        // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
+        this.player = this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
+        Weapon gun = new WeaponImpl(200, entityManager);
+        gun.setParentEntity(this.player);
+        this.player.setWeapon(gun);
+        //this.testEnemy = this.entityManager.createEnemy(player, 15, new Position2DImpl(500, 500), 300, null);
     }
 
     @Override
     public void installCamera(final MovableCamera camera) {
         this.camera = camera;
+        this.camera.moveTo(new Position2DImpl(0, 0));
+    }
+
+    @Override
+    public void initialize() {
+    }
+
+    @Override
+    public void update(final long deltaTime) {
+        this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        for (final var entity : this.entityManager.getEntities()) {
+            if (entity instanceof MovingEntity) {
+                ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
+            }
+        }
+        //System.out.println(this.testEnemy.getHealth());
+    }
+
+    @Override
+    public List<GraphicsComponent> getGraphicsComponents() {
+        return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
     }
 
     @Override
     public void processInput(final InputEvent event) {
-        
+        if (event instanceof InputEventKey) {
+            manageKey((InputEventKey) event);
+        } else if (event instanceof InputEventMouse) {
+            var mouseEv = (InputEventMouse) event;
+            if (mouseEv.getType() == InputEvent.Type.MOUSE_DOWN) {
+                this.player.makeDamage();
+            }
+        }
     }
 
+    private void manageKey(final InputEventKey key) {
+        final var direction = Optional.ofNullable(switch (key.getKey()) {
+            case 87 -> InputMovement.Directions.NORTH;
+            case 83 -> InputMovement.Directions.SOUTH;
+            case 65 -> InputMovement.Directions.WEST;
+            case 68 -> InputMovement.Directions.EAST;
+            default -> null;
+        });
+        if (direction.isPresent()) {
+            if (key.getType() == InputEvent.Type.PRESSED) {
+                this.keyMapper.addDirection(direction.get());
+            }
+            if (key.getType() == InputEvent.Type.RELEASED) {
+                this.keyMapper.removeDirection(direction.get());
+            }
+        }
+    }
 }
