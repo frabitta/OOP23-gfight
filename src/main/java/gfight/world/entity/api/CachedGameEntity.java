@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 /**
  * An interface for Game Entity that saves in memory hitbox and list of

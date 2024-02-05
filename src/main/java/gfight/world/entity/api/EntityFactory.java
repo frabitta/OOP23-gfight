@@ -1,8 +1,8 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
-import gfight.world.impl.Enemy;
-import gfight.world.impl.Player;
+import gfight.world.entity.impl.Enemy;
+import gfight.world.entity.impl.Player;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 

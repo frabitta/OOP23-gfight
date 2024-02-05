@@ -1,10 +1,10 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
-import gfight.world.api.VertexCalculator;
+import gfight.world.entity.api.VertexCalculator;
 
 /**
  * This class contais the methods to calculate the vertexes of different shapes.

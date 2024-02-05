@@ -1,8 +1,8 @@
 package gfight.world.movement.api;
 
 import gfight.common.api.Vect;
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.MovingEntity;
 import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.LinearMovement;
 import gfight.world.movement.impl.RandomMovement;

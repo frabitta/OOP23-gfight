@@ -1,8 +1,8 @@
 package gfight.world.movement.impl;
 
 import gfight.common.api.Position2D;
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.MovingEntity;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.impl.GameMapImpl;
 import org.jgrapht.Graph;

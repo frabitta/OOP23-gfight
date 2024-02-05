@@ -1,6 +1,6 @@
 package gfight.world.weapon.api;
 
-import gfight.world.api.MovingEntity;
+import gfight.world.entity.api.MovingEntity;
 
 /**
  * Interface of a projectile.

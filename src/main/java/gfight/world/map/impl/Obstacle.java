@@ -4,7 +4,7 @@ import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.impl.CachedGameEntityImpl;
+import gfight.world.entity.impl.CachedGameEntityImpl;
 
 public class Obstacle extends CachedGameEntityImpl {
 

@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.Optional;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.LinkedHashSet;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.CachedGameEntity;
-import gfight.world.api.GameEntity;
+import gfight.world.entity.api.CachedGameEntity;
+import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
 
 /**

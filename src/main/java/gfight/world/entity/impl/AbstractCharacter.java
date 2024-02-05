@@ -1,11 +1,11 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.Character;
 import gfight.world.weapon.api.Weapon;
+import gfight.world.entity.api.Character;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
 

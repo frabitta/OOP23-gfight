@@ -2,7 +2,7 @@ package gfight.world.map.api;
 
 import java.util.Set;
 
-import gfight.world.api.GameEntity;
+import gfight.world.entity.api.GameEntity;
 
 /**
  * A spawner which spawns enemies on the map.

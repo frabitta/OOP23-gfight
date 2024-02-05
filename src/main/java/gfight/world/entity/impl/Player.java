@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
 import gfight.world.collision.api.CollisionCommand;
 import gfight.world.collision.impl.SlideCommand;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.MovingEntity;
 
 /**
  * Class that represents the Player of the game.

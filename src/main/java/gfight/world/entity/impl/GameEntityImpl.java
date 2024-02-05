@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 import java.util.Set;
@@ -9,7 +9,7 @@ import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.world.api.GameEntity;
+import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxImpl;

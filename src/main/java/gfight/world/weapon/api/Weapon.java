@@ -1,6 +1,6 @@
 package gfight.world.weapon.api;
 
-import gfight.world.api.ActiveEntity;
+import gfight.world.entity.api.ActiveEntity;
 
 /**
  * Interface of a generic Weapon.

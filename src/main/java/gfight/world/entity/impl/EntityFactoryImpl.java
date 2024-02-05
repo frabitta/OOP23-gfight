@@ -1,4 +1,4 @@
-package gfight.world.impl;
+package gfight.world.entity.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,11 +8,11 @@ import gfight.engine.graphics.api.GraphicsComponentsFactory;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.graphics.impl.PolygonGraphicsComponent;
-import gfight.world.api.ActiveEntity;
-import gfight.world.api.CachedGameEntity;
-import gfight.world.api.EntityFactory;
-import gfight.world.api.GameEntity;
-import gfight.world.api.VertexCalculator;
+import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.CachedGameEntity;
+import gfight.world.entity.api.EntityFactory;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.VertexCalculator;
 import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.api.Movement;

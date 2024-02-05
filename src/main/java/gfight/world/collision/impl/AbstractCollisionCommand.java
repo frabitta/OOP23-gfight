@@ -1,8 +1,8 @@
 package gfight.world.collision.impl;
 
-import gfight.world.api.GameEntity;
-import gfight.world.api.MovingEntity;
 import gfight.world.collision.api.CollisionCommand;
+import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.MovingEntity;
 
 /**
  * Abstract class that implements Collision Command.

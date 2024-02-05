@@ -1,8 +1,8 @@
 package gfight.world.hitbox.api;
 
 import gfight.common.api.Position2D;
-import gfight.world.api.CachedGameEntity;
-import gfight.world.api.GameEntity;
+import gfight.world.entity.api.CachedGameEntity;
+import gfight.world.entity.api.GameEntity;
 
 import java.util.List;
 import java.util.Map;

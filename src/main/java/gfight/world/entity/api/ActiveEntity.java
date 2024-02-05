@@ -1,4 +1,4 @@
-package gfight.world.api;
+package gfight.world.entity.api;
 
 /**
  * Interface that represents the concept of ActiveEntity.
