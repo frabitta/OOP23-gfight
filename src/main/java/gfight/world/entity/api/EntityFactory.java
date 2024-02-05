@@ -1,8 +1,6 @@
 package gfight.world.entity.api;
 
 import gfight.common.api.Position2D;
-import gfight.world.entity.impl.Enemy;
-import gfight.world.entity.impl.Player;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.weapon.api.Projectile;
 
@@ -19,7 +17,7 @@ public interface EntityFactory {
          * @param movement   movement object that will be overwritten
          * @return a new Player
          */
-        Player createPlayer(double sideLength, Position2D position, int health, InputMovement movement);
+        Character createPlayer(double sideLength, Position2D position, int health, InputMovement movement);
 
         /**
          * @param target     of the enemy (chest or player)
@@ -28,7 +26,7 @@ public interface EntityFactory {
          * @param health     life point of the enemy
          * @return a new Enemy
          */
-        Enemy createEnemy(GameEntity target, double sideLength, Position2D position, int health);
+        Character createEnemy(GameEntity target, double sideLength, Position2D position, int health);
 
         /**
          * 
