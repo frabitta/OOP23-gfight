@@ -37,12 +37,8 @@ public class WeaponImpl implements Weapon {
             return;
         }
         this.lastShootTime = System.currentTimeMillis();
-        //-- instantiate the projectile
-        // will need:
-        // - position
-        // - direction
-        // - projectile tipe to shoot
-        // - give the projectile to the world to track and update it
+        // - change direction in facingDirection
+        // - change factory from wich to generate (needs to be the one connected to the entityManager)
         projectileFactory.createProjectile(this.team, this.parent.getPosition(), this.parent.getDirection());
     }
 

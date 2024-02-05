@@ -34,9 +34,10 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
         for (var entity: gameobjects) {
             if (entity instanceof ActiveEntity) {
                 var activeEntity = ((ActiveEntity)entity);
-                // - verifica il team di appartenenza
+                // - verify team
                 activeEntity.takeDamage(damage);
             }
+            // - if obstacle destroy the object
         }
     }
 
