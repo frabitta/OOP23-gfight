@@ -30,7 +30,7 @@ public class TestWorld implements World {
 
     private Set<MovingEntity> entities = new HashSet<>();
     private MovableCamera camera;
-    private Weapon gun = new WeaponImpl(200);
+    private Weapon gun = new WeaponImpl(200,factory);
     private Character player = factory.createPlayer(30, new Position2DImpl(50, 100), 10, new InputMovement() {
 
         @Override
@@ -88,15 +88,7 @@ public class TestWorld implements World {
 
     @Override
     public void processInput(final InputEvent event) {
-        if (event instanceof InputEventMouse) {
-            final var mouseEv = (InputEventMouse) event;
-            if (mouseEv.getType() == InputEvent.Type.MOUSE_DOWN) {
-                var proj = gun.shoot();
-                if (Optional.ofNullable(proj).isPresent()) {
-                    entities.add(proj);
-                }
-            }
-        }
+        
     }
 
 }

@@ -2,6 +2,7 @@ package gfight.world.entity.impl;
 
 import java.util.List;
 import java.util.Set;
+import java.util.Optional;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
@@ -20,7 +21,7 @@ import gfight.world.hitbox.impl.HitboxesImpl;
  * Class that represents the concept of main character (Player, Enemies).
  */
 public final class CharacterImpl extends AbstractActiveEntity implements Character {
-    private Weapon weapon;
+    private Optional<Weapon> weapon;
     private Vect pointingDirection = new VectorImpl(0, 0);
     private CharacterType role;
 
@@ -47,13 +48,14 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
 
     @Override
     public void setWeapon(final Weapon weapon) {
-        this.weapon = weapon;
+        this.weapon = Optional.ofNullable(weapon);
     }
 
     @Override
     public void makeDamage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'shoot'");
+        if (this.weapon.isPresent()) {
+            this.weapon.get().shoot();
+        }
     }
 
     @Override
@@ -75,7 +77,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         getAllCollided(gameobjects).stream().forEach(el -> {
             if (el instanceof GameEntity) {
-                CollisionCommand coll = new SlideCommand<MovingEntity, GameEntity>(this, el);
+                CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
                 coll.execute();
             }
         });
