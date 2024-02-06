@@ -13,7 +13,6 @@ import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.TestWorld;
 import gfight.world.World;
-import gfight.world.WorldImpl;
 import gfight.view.api.EngineView;
 import gfight.view.impl.SwingView;
 
