@@ -71,5 +71,5 @@ public interface Vect extends Vector<Euclidean2D> {
      * @param v1 input vector.
      * @return the angle between the vectors.
      */
-    double angle(Vect v1);
+    double anglecalc(Vect v1);
 }

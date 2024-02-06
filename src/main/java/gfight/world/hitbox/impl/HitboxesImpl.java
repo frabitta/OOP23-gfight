@@ -59,7 +59,7 @@ public final class HitboxesImpl implements Hitboxes {
     public List<Position2D> rotateTo(final List<Position2D> polygon, final Vect pointingDir, final Position2D center,
             final Position2D target) {
         final Vect distance = new VectorImpl(target, center);
-        double rotation = pointingDir.angle(distance);
+        double rotation = pointingDir.anglecalc(distance);
         rotation = rotation > Math.PI ? -rotation : rotation;
         return rotate(polygon, rotation, center);
     }
