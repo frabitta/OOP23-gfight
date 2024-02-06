@@ -29,7 +29,7 @@ import gfight.world.movement.impl.MovementFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
-    private static final int MAP_DIM = 20;
+    private static final int MAP_DIM = 21;
 
     private MovableCamera camera;
     private EntityManager entityManager;

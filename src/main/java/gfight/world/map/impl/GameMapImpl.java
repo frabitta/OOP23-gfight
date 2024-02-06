@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import org.jgrapht.Graph;
@@ -45,8 +46,15 @@ public final class GameMapImpl implements GameMap {
      * @param y the y coordinate
      * @return the real position
      */
-    private Position2D realPosition(final double x, final double y) {
+    private Position2D realPosition(final int x, final int y) {
         return new Position2DImpl((x * TILE_DIM) + (TILE_DIM / 2), (y * TILE_DIM) + (TILE_DIM / 2));
+    }
+
+    private void defaultScatteredObstacles() {
+        this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, this.dimension / 4));
+        this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, 3 * this.dimension / 4));
+        this.factory.createObstacle(TILE_DIM, realPosition(3 * this.dimension / 4, this.dimension / 4));
+        this.factory.createObstacle(TILE_DIM, realPosition(3 * this.dimension / 4, 3 * this.dimension / 4));
     }
 
     /**
@@ -64,8 +72,8 @@ public final class GameMapImpl implements GameMap {
             this.tileList.add(i, new ArrayList<>(dimension));
         }
         this.tileGraph = Optional.empty();
-        for (double i = 0; i < dimension; i++) {
-            for (double j = 0; j < dimension; j++) {
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
                 if (i == 0 || i == dimension - 1 || j == 0 || j == dimension - 1) {
                     this.factory.createObstacle(TILE_DIM, realPosition(i, j));
                     final GameTile tile = new GameTileImpl(
@@ -84,6 +92,7 @@ public final class GameMapImpl implements GameMap {
                 }
             }
         }
+        defaultScatteredObstacles();
     }
 
     @Override
