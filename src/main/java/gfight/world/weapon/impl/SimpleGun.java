@@ -8,7 +8,7 @@ import gfight.world.weapon.api.Weapon;
  * Simple implementation of a gun.
  * It shoots projectiles if it has passed enough time since the last shoot.
  */
-public class WeaponImpl implements Weapon {
+public class SimpleGun implements Weapon {
 
     private final EntityFactory projectileFactory;
     private final long reloadTime;
@@ -16,7 +16,7 @@ public class WeaponImpl implements Weapon {
     private Character parent;
     private long lastShootTime;
 
-    public WeaponImpl(final long reloadTime, EntityFactory projectileFactory) {
+    public SimpleGun(final long reloadTime, EntityFactory projectileFactory) {
         this.reloadTime = reloadTime;
         this.projectileFactory = projectileFactory;
         this.lastShootTime = System.currentTimeMillis();

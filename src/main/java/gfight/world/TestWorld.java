@@ -22,7 +22,7 @@ import gfight.world.map.impl.GameMapImpl;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
 import gfight.world.weapon.api.Weapon;
-import gfight.world.weapon.impl.WeaponImpl;
+import gfight.world.weapon.impl.SimpleGun;
 
 public class TestWorld implements World {
 
@@ -42,7 +42,7 @@ public class TestWorld implements World {
 
         // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
         this.player = this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
-        Weapon gun = new WeaponImpl(200, entityManager);
+        Weapon gun = new SimpleGun(200, entityManager);
         gun.setParentEntity(this.player);
         this.player.setWeapon(gun);
         //this.testEnemy = this.entityManager.createEnemy(player, 15, new Position2DImpl(500, 500), 300, null);
