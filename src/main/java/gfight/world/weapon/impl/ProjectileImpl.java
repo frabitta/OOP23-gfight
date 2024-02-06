@@ -8,7 +8,7 @@ import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.Character;
-import gfight.world.entity.impl.BaseMovingEntity;
+import gfight.world.entity.impl.AbstractActiveEntity;
 import gfight.world.movement.api.Movement;
 import gfight.world.weapon.api.Projectile;
 
@@ -16,7 +16,10 @@ import gfight.world.weapon.api.Projectile;
  * Implementation of a simple projectile.
  * It damages the ActiveEntities that come in touch with it and are of the opponent team.
  */
-public class ProjectileImpl extends BaseMovingEntity implements Projectile {
+public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
+
+    private static final int ALIVE_HEALTH = 1;
+    private static final int DEAD_HEALTH = -1;
 
     private int damage;
     private final Character.CharacterType team;
@@ -36,7 +39,7 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
         final Character.CharacterType team,
         final Movement movement
         ) {
-        super(vertexes, position, gComp);
+        super(vertexes, position, gComp, ALIVE_HEALTH);
         this.setMovement(Optional.ofNullable(movement));
         this.team = team;
     }
@@ -48,12 +51,14 @@ public class ProjectileImpl extends BaseMovingEntity implements Projectile {
 
     @Override
     protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
-        getAllCollided(gameobjects).stream()
+        var projCollided = getAllCollided(gameobjects).stream()
             .filter(entity -> entity instanceof Character)
             .map(entity -> (Character) entity)
             .filter(entity -> entity.getType() != this.team)
-            .forEach(ch -> ch.takeDamage(this.damage));
-        // - destroy the object if on contact
-        // - need to find a way to prevent a forever existing projectile (world closed by walls?)
+            .peek(ch -> ch.takeDamage(this.damage))
+            .findAny();
+        if (projCollided.isPresent()) {
+            this.setHealth(DEAD_HEALTH);
+        }
     }
 }

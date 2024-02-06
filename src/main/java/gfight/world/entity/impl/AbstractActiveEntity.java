@@ -42,7 +42,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
      * 
      * @param health the actual health of the entity
      */
-    private void setHealth(final int health) {
+    protected void setHealth(final int health) {
         this.health = health;
     }
 
