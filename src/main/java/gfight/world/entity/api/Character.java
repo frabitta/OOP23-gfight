@@ -1,5 +1,6 @@
 package gfight.world.entity.api;
 
+import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.world.weapon.api.Weapon;
 
@@ -23,11 +24,11 @@ public interface Character extends ActiveEntity {
     }
 
     /**
-     * Perform the action of rotating.
+     * Perform the action of pointing to the given target.
      * 
-     * @param theta the angle of rotation
+     * @param target the target position to point to
      */
-    void rotate(double theta);
+    void pointTo(Position2D target);
 
     /**
      * Perform the action of makingDamage.
