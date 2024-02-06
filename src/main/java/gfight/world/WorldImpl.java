@@ -29,6 +29,7 @@ import gfight.world.movement.impl.MovementFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
+    private static final int MAP_DIM = 20;
 
     private MovableCamera camera;
     private EntityManager entityManager;
@@ -44,7 +45,7 @@ public class WorldImpl implements World {
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(10);
+        this.map = new GameMapImpl(MAP_DIM, this.entityManager);
         this.keyMapper = new MovementFactoryImpl().createInput();
 
         // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità

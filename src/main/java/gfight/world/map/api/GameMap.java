@@ -6,7 +6,6 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 
 import gfight.common.api.Position2D;
-import gfight.world.map.impl.Obstacle;
 
 /**
  * The map where the game takes place.
@@ -19,13 +18,6 @@ public interface GameMap {
      * @return a set containing all the game tiles of the map
      */
     Set<GameTile> getGameTiles();
-
-    /**
-     * Get all the obstacles present in the map.
-     * 
-     * @return a set containing all the obstacles in the map
-     */
-    Set<Obstacle> getObstacles();
 
     /**
      * Get the GameTile which contains the given position.
