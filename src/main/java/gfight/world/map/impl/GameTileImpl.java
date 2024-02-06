@@ -70,4 +70,9 @@ public final class GameTileImpl implements GameTile {
     public int hashCode() {
         return Objects.hash(getType(), getPosition(), getDimension());
     }
+
+    @Override
+    public String toString(){
+        return this.centerPosition.toString();
+    }
 }
