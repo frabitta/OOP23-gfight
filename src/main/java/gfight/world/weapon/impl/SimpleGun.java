@@ -19,7 +19,20 @@ public class SimpleGun implements Weapon {
     private Character parent;
     private long lastShootTime;
 
-    public SimpleGun(final long reloadTime, final long shootSpeed, final double projectileSize, final int damage, EntityFactory projectileFactory) {
+    /**
+     * Constructor of a gun.
+     * @param reloadTime        Time between each shoot
+     * @param shootSpeed        Speed of the projectile
+     * @param projectileSize    Size of the projectile
+     * @param damage            Damage of the projectile
+     * @param projectileFactory The generator of the projectile
+     */
+    public SimpleGun(
+        final long reloadTime,
+        final long shootSpeed,
+        final double projectileSize,
+        final int damage,
+        final EntityFactory projectileFactory) {
         this.reloadTime = reloadTime;
         this.shootSpeed = shootSpeed;
         this.projectileSize = projectileSize;

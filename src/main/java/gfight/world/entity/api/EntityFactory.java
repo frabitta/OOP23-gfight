@@ -57,5 +57,10 @@ public interface EntityFactory {
          * @param damage                the damage that the projectile makes
          * @return a new Projectile
          */
-        Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction, double projectileSize, int damage);
+        Projectile createProjectile(
+                Character.CharacterType team,
+                Position2D position,
+                Vect direction,
+                double projectileSize,
+                int damage);
 }

@@ -70,10 +70,17 @@ public class EntityFactoryImpl implements EntityFactory {
     }
 
     @Override
-    public Projectile createProjectile(final Character.CharacterType team, final Position2D position, final Vect direction, final double projectileSize, final int damage) {
-        List<Position2D> vertexes = vertexCalculator.square(projectileSize, position);
-        GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(team==Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE, vertexes);
-        Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
+    public Projectile createProjectile(
+        final Character.CharacterType team,
+        final Position2D position,
+        final Vect direction,
+        final double projectileSize,
+        final int damage) {
+        final List<Position2D> vertexes = vertexCalculator.square(projectileSize, position);
+        final GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(
+            team == Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE,
+            vertexes);
+        final Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
         return new ProjectileImpl(vertexes, position, gComp, team, movement, damage);
     }
 

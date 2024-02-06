@@ -19,18 +19,19 @@ import gfight.world.weapon.api.Projectile;
 public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     private static final int ALIVE_HEALTH = 1;
-    
+
     private int damage;
-    private boolean collided = false;
+    private boolean collided;
     private final Character.CharacterType team;
 
     /**
      * Constructor of a simple projectile.
-     * @param vertexes vertexes of the projectile
-     * @param position central position
-     * @param gComp GraphicsComponent of the projectile
-     * @param team Team who shoot the projectile
-     * @param movement Movement of the projectile
+     * @param vertexes  vertexes of the projectile
+     * @param position  central position
+     * @param gComp     GraphicsComponent of the projectile
+     * @param team      Team who shoot the projectile
+     * @param movement  Movement of the projectile
+     * @param damage    Damage of the projectile
      */
     public ProjectileImpl(
         final List<Position2D> vertexes,
@@ -53,7 +54,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     @Override
     protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
-        var projCollided = getAllCollided(gameobjects).stream()
+        final var projCollided = getAllCollided(gameobjects).stream()
             .filter(entity -> entity instanceof Character)
             .map(entity -> (Character) entity)
             .filter(entity -> entity.getType() != this.team)
@@ -65,7 +66,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     }
 
     @Override
-    public boolean isAlive() {
+    public final boolean isAlive() {
         return !this.collided;
     }
 }
