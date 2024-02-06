@@ -37,6 +37,11 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         this.setHealth(getHealth() - damage);
     }
 
+    @Override
+    public boolean isAlive() {
+        return this.getHealth() > 0;
+    }
+
     /**
      * Set the life point of the entity.
      * 
