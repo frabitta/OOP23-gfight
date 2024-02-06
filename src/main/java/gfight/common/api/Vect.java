@@ -64,4 +64,13 @@ public interface Vect extends Vector<Euclidean2D> {
      *                                  type.
      */
     double dotProduct(Vect a);
+
+    /**
+     * Computes the angle between 2 vector2.
+     * 
+     * @param v1 first vector.
+     * @param v2 second vector.
+     * @return the angle between the vectors.
+     */
+    double angle(Vect v1, Vect v2);
 }

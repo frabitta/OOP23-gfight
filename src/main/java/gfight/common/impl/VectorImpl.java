@@ -64,7 +64,7 @@ public final class VectorImpl extends Vector2D implements Vect {
     public Vect scale(final double value) {
         return new VectorImpl(scalarMultiply(value));
     }
-   
+
     @Override
     public Vect revert() {
         return new VectorImpl(negate());
@@ -81,6 +81,15 @@ public final class VectorImpl extends Vector2D implements Vect {
             return this.dotProduct((Vector2D) a);
         } else {
             throw new IllegalArgumentException("Incompatible type for dotProduct operation");
+        }
+    }
+
+    @Override
+    public double angle(Vect v1, Vect v2) {
+        if (v1 instanceof VectorImpl && v2 instanceof VectorImpl) {
+            return Vector2D.angle((VectorImpl) v1, (VectorImpl) v2);
+        } else {
+            throw new IllegalArgumentException("Incompatible type for angle calculation");
         }
     }
 
