@@ -86,6 +86,9 @@ public final class GameMapImpl implements GameMap {
         final MutableGraphAdapter<GameTile> adapter = new MutableGraphAdapter<>(g);
         final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<GameTile, DefaultEdge>(DefaultEdge.class);
         final var freeCondition = GameTile.TileType.EMPTY;
+        for (final var tile : this.tiles) {
+            g2.addVertex(tile);
+        }
         // row
         for (int i = 0; i < dimension; i++) {
             // col
@@ -95,22 +98,22 @@ public final class GameMapImpl implements GameMap {
                 // NORTH
                 if (i > 0 && this.tileList.get(i - 1).get(j).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i - 1).get(j)));
-                    g2.addEdge(tile, this.tileList.get(i - 1).get(j));
+                    g2.addEdge(tile, this.tileList.get(j).get(i - 1));
                 }
                 // SOUTH
                 if (i < (dimension - 1) && this.tileList.get(i + 1).get(j).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i + 1).get(j)));
-                    g2.addEdge(tile, this.tileList.get(i + 1).get(j));
+                    g2.addEdge(tile, this.tileList.get(j).get(i + 1));
                 }
                 // WEST
                 if (j > 0 && this.tileList.get(i).get(j - 1).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j - 1)));
-                    g2.addEdge(tile, this.tileList.get(i).get(j - 1));
+                    g2.addEdge(tile, this.tileList.get(j - 1).get(i));
                 }
                 // EAST
                 if (j < (dimension - 1) && this.tileList.get(i).get(j + 1).getType().equals(freeCondition)) {
                     g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j + 1)));
-                    g2.addEdge(tile, this.tileList.get(i).get(j - 1));
+                    g2.addEdge(tile, this.tileList.get(j + 1).get(i));
                 }
             }
         }

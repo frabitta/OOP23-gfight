@@ -3,6 +3,7 @@ package gfight.world;
 import java.util.List;
 import java.util.Optional;
 
+import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
@@ -33,6 +34,7 @@ public class WorldImpl implements World {
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
     private Character testPlayer;
+    private Position2D pointingPosition;
 
     /**
      * Creates a new instance of a World.
@@ -44,7 +46,10 @@ public class WorldImpl implements World {
         this.keyMapper = new MovementFactoryImpl().createInput();
 
         // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità
-        this.testPlayer = this.entityManager.createPlayer(25, new Position2DImpl(250, 250), 0, keyMapper);
+        this.testPlayer = this.entityManager.createPlayer(25, new Position2DImpl(450, 250), 0, keyMapper);
+
+        pointingPosition = this.testPlayer.getPosition();
+        // this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
     }
 
     @Override
@@ -60,6 +65,7 @@ public class WorldImpl implements World {
     @Override
     public final void update(final long deltaTime) {
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        this.testPlayer.pointTo(this.pointingPosition);
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
@@ -100,6 +106,10 @@ public class WorldImpl implements World {
     }
 
     private void managePointer(final InputEventMouse pointer) {
-        this.testPlayer.pointTo(pointer.getPosition());
+        this.pointingPosition = pointer.getPosition();
+        if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
+            this.entityManager.createObstacle(20, pointer.getPosition());
+            // add here to spawn test projectiles
+        }
     }
 }
