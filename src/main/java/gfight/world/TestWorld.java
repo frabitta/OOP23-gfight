@@ -7,6 +7,9 @@ import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
+import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
+import gfight.engine.graphics.impl.StatusBarGraphicsComponent;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventKey;
 import gfight.engine.input.api.InputEventMouse;
@@ -24,6 +27,8 @@ import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
 import gfight.world.weapon.impl.WeaponFactoryImpl;
 
+import java.util.stream.Stream;
+
 /**
  * Implementation of a World controlling the execution of the game.
  */
@@ -36,6 +41,7 @@ public class TestWorld implements World {
     private Hitboxes hitboxManager;
     private Character testPlayer;
     private Position2D pointingPosition;
+    private StatusBarGraphicsComponent statusBarTest;
 
     /**
      * Creates a new instance of a World.
@@ -52,6 +58,8 @@ public class TestWorld implements World {
         // we need to balance the reloadTime and the shootSpeed
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
         //this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
+        statusBarTest = new GraphicsComponentsFactoryImpl().statusBar(EngineColor.BLACK, EngineColor.RED, new Position2DImpl(100, 100), 100, 20);
+        statusBarTest.setStatus(70);
     }
 
     @Override
@@ -77,7 +85,8 @@ public class TestWorld implements World {
 
     @Override
     public final List<GraphicsComponent> getGraphicsComponents() {
-        return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
+        return Stream.concat(Stream.of(statusBarTest), this.entityManager.getEntities().stream().map(GameEntity::getGraphics)).toList();
+        //return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
     }
 
     @Override

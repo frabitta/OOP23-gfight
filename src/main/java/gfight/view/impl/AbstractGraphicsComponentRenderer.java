@@ -6,6 +6,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.engine.graphics.api.ViewableCamera;
 import gfight.view.api.GraphicsComponentRenderer;
 
@@ -30,7 +31,11 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
     }
 
     private Color getColorFromComponent(final GraphicsComponent gComp) {
-        switch (gComp.getColor()) {
+        return translateEngineColor(gComp.getColor());
+    }
+
+    protected Color translateEngineColor(EngineColor color) {
+        switch (color) {
             case BLUE: return Color.BLUE;
             case RED: return Color.RED;
             case BLACK: return Color.BLACK;

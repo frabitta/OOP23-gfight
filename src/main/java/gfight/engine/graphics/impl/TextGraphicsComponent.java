@@ -8,7 +8,7 @@ import gfight.view.api.GraphicsComponentRenderer;
 /**
  * GraphicsComponent that describes a Text.
  */
-public class TextGraphicsComponent extends AbstractGraphicsComponent {
+public class TextGraphicsComponent extends AbstractSinglePositionGraphicsComponent {
 
     private String text = "empty";
     private int size = 10;

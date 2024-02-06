@@ -5,6 +5,7 @@ import java.util.List;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
 import gfight.view.api.GraphicsComponentRenderer;
 import gfight.view.impl.PolygonGraphicsRenderer;
+import gfight.view.impl.StatusBarGraphicsRenderer;
 import gfight.view.impl.TextGraphicsRenderer;
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
@@ -29,6 +30,16 @@ public class GraphicsComponentsFactoryImpl implements GraphicsComponentsFactory 
         renderer.setComponent(out);
         out.setSize(size);
         out.setText(text);
+        return out;
+    }
+
+    @Override
+    public StatusBarGraphicsComponent statusBar(final EngineColor bgColor, final EngineColor statusColor, final Position2D pos, final int base, final int height) {
+        final GraphicsComponentRenderer renderer = new StatusBarGraphicsRenderer();
+        final StatusBarGraphicsComponent out = new StatusBarGraphicsComponent(bgColor, statusColor, List.of(pos), renderer);
+        renderer.setComponent(out);
+        out.setBase(base);
+        out.setHeight(height);
         return out;
     }
 
