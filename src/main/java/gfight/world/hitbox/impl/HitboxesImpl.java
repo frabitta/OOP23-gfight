@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
-
 import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
+import gfight.common.impl.VectorImpl;
 import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
@@ -23,7 +23,6 @@ import gfight.world.hitbox.api.Hitboxes;
  * An implementation of Hitbox Interface.
  */
 public final class HitboxesImpl implements Hitboxes {
-
 
     @Override
     public boolean isColliding(final Hitbox collider, final Hitbox coollided) {
@@ -54,5 +53,12 @@ public final class HitboxesImpl implements Hitboxes {
         final Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
         gameObjects.stream().forEach(entity -> collisionMap.put(entity, entity.getAllCollided(gameObjects)));
         return collisionMap;
+    }
+
+    @Override
+    public List<Position2D> rotateTo(final List<Position2D> polygon, final Vect pointingDir, final Position2D center, final Position2D target) {
+        final Vect distance = new VectorImpl(target, center);
+        double rotation = pointingDir.angle(distance);
+        return rotate(polygon, rotation, center);
     }
 }

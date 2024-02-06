@@ -85,9 +85,9 @@ public final class VectorImpl extends Vector2D implements Vect {
     }
 
     @Override
-    public double angle(Vect v1, Vect v2) {
-        if (v1 instanceof VectorImpl && v2 instanceof VectorImpl) {
-            return Vector2D.angle((VectorImpl) v1, (VectorImpl) v2);
+    public double angle(Vect v1) {
+        if (v1 instanceof VectorImpl) {
+            return Vector2D.angle(this, (VectorImpl) v1);
         } else {
             throw new IllegalArgumentException("Incompatible type for angle calculation");
         }
