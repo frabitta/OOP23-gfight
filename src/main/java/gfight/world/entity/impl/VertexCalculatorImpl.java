@@ -12,7 +12,7 @@ import gfight.world.entity.api.VertexCalculator;
 public final class VertexCalculatorImpl implements VertexCalculator {
 
     @Override
-    public final List<Position2D> triangle(final double sideLength, final Position2D position) {
+    public List<Position2D> triangle(final double sideLength, final Position2D position) {
         double factor = (sideLength * Math.sqrt(3)) / 3;
         Position2D firstPoint = new Position2DImpl(position.getX(), position.getY() - factor);
         Position2D secondPoint = new Position2DImpl(position.getX() + sideLength / 2, position.getY() + factor / 2);
@@ -21,7 +21,7 @@ public final class VertexCalculatorImpl implements VertexCalculator {
     }
 
     @Override
-    public final List<Position2D> square(final double sideLength, final Position2D position) {
+    public List<Position2D> square(final double sideLength, final Position2D position) {
         double halfSide = sideLength / 2;
         Position2D bottomLeft = new Position2DImpl(position.getX() - halfSide, position.getY() - halfSide);
         Position2D topLeft = new Position2DImpl(position.getX() - halfSide, position.getY() + halfSide);
