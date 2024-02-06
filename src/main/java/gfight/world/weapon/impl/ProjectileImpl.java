@@ -19,9 +19,9 @@ import gfight.world.weapon.api.Projectile;
 public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     private static final int ALIVE_HEALTH = 1;
-    private static final int DEAD_HEALTH = -1;
-
+    
     private int damage;
+    private boolean collided;
     private final Character.CharacterType team;
 
     /**
@@ -58,7 +58,12 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
             .peek(ch -> ch.takeDamage(this.damage))
             .findAny();
         if (projCollided.isPresent()) {
-            this.setHealth(DEAD_HEALTH);
+            this.collided = true;
         }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.collided;
     }
 }

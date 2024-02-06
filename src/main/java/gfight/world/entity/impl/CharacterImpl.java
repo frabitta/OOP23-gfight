@@ -50,6 +50,9 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     @Override
     public void setWeapon(final Weapon weapon) {
         this.weapon = Optional.ofNullable(weapon);
+        if (this.weapon.isPresent()) {
+            this.weapon.get().setParentEntity(this);
+        }
     }
 
     @Override

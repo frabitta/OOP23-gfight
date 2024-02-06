@@ -3,6 +3,7 @@ package gfight.world;
 import java.util.List;
 import java.util.Optional;
 
+import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
@@ -23,6 +24,9 @@ import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
 import gfight.world.weapon.impl.WeaponFactoryImpl;
 
+/**
+ * Implementation of a World controlling the execution of the game.
+ */
 public class TestWorld implements World {
 
     private MovableCamera camera;
@@ -30,23 +34,28 @@ public class TestWorld implements World {
     private GameMap map;
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
-    private Character player;
-    //private Character testEnemy;
+    private Character testPlayer;
+    private Position2D pointingPosition;
 
+    /**
+     * Creates a new instance of a World.
+     */
     public TestWorld() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
         this.map = new GameMapImpl(10);
         this.keyMapper = new MovementFactoryImpl().createInput();
 
-        // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
-        this.player = this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
-        new WeaponFactoryImpl().simpleGun(200, entityManager, player);
-        //this.testEnemy = this.entityManager.createEnemy(player, 15, new Position2DImpl(500, 500), 300, null);
+        // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità
+        this.testPlayer = this.entityManager.createPlayer(25, new Position2DImpl(450, 250), 0, keyMapper);
+        pointingPosition = this.testPlayer.getPosition();
+        // we need to balance the reloadTime and the shootSpeed
+        new WeaponFactoryImpl().simpleGunPairing(100, 2, entityManager, testPlayer);
+        //this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
     }
 
     @Override
-    public void installCamera(final MovableCamera camera) {
+    public final void installCamera(final MovableCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
     }
@@ -56,30 +65,27 @@ public class TestWorld implements World {
     }
 
     @Override
-    public void update(final long deltaTime) {
+    public final void update(final long deltaTime) {
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        this.testPlayer.pointTo(this.pointingPosition);
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
             }
         }
-        //System.out.println(this.testEnemy.getHealth());
     }
 
     @Override
-    public List<GraphicsComponent> getGraphicsComponents() {
+    public final List<GraphicsComponent> getGraphicsComponents() {
         return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
     }
 
     @Override
-    public void processInput(final InputEvent event) {
+    public final void processInput(final InputEvent event) {
         if (event instanceof InputEventKey) {
             manageKey((InputEventKey) event);
         } else if (event instanceof InputEventMouse) {
-            var mouseEv = (InputEventMouse) event;
-            if (mouseEv.getType() == InputEvent.Type.MOUSE_DOWN) {
-                this.player.makeDamage();
-            }
+            managePointer((InputEventMouse) event);
         }
     }
 
@@ -98,6 +104,13 @@ public class TestWorld implements World {
             if (key.getType() == InputEvent.Type.RELEASED) {
                 this.keyMapper.removeDirection(direction.get());
             }
+        }
+    }
+
+    private void managePointer(final InputEventMouse pointer) {
+        this.pointingPosition = pointer.getPosition();
+        if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
+            this.testPlayer.makeDamage();
         }
     }
 }

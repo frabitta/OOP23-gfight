@@ -12,12 +12,14 @@ public class SimpleGun implements Weapon {
 
     private final EntityFactory projectileFactory;
     private final long reloadTime;
+    private final long shootSpeed;
 
     private Character parent;
     private long lastShootTime;
 
-    public SimpleGun(final long reloadTime, EntityFactory projectileFactory) {
+    public SimpleGun(final long reloadTime, final long shootSpeed, EntityFactory projectileFactory) {
         this.reloadTime = reloadTime;
+        this.shootSpeed = shootSpeed;
         this.projectileFactory = projectileFactory;
         this.lastShootTime = System.currentTimeMillis();
     }
@@ -31,7 +33,7 @@ public class SimpleGun implements Weapon {
     public final void shoot() {
         if (reloaded()) {
             this.lastShootTime = System.currentTimeMillis();
-            this.projectileFactory.createProjectile(this.parent.getType(), this.parent.getPosition(), this.parent.getPointedDirection());
+            this.projectileFactory.createProjectile(this.parent.getType(), this.parent.getPosition(), this.parent.getPointedDirection().norm().scale(shootSpeed));
         }
     }
 

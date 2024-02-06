@@ -4,16 +4,34 @@ import gfight.world.entity.api.EntityFactory;
 import gfight.world.entity.api.Character;
 
 /**
- * Factory of weapon types.
+ * Factory of weapon types, and other utilities.
  */
 public interface WeaponFactory {
 
     /**
+     * Pairs a weapon with a character.
+     * @param weapon    Weapon to give to the character.
+     * @param character Character that has to hold the gun.
+     */
+    void pair(Weapon weapon, Character character);
+
+    /**
      * Returns a gun that shoot projectiles.
      * @param reloadTime        Time between each shoot.
+     * @param shootSpeed        Speed of the shooted projectile.
      * @param projectileFactory Factory of entities (needed to generate projectiles).
-     * @param parent            The Character holding the gun.
      * @return Weapon of type SimpleGun
      */
-    Weapon simpleGun(final long reloadTime, EntityFactory projectileFactory, Character parent);
+    Weapon simpleGun(long reloadTime, long shootSpeed, EntityFactory projectileFactory);
+
+    /**
+     * Returns a gun that shoot projectiles and pairs it with the Character.
+     * @param reloadTime        Time between each shoot.
+     * @param shootSpeed        Speed of the shooted projectile.
+     * @param projectileFactory Factory of entities (needed to generate projectiles).
+     * @param character            The Character holding the gun.
+     * @return Weapon of type SimpleGun
+     */
+    Weapon simpleGunPairing(long reloadTime, long shootSpeed, EntityFactory projectileFactory, Character character);
+
 }

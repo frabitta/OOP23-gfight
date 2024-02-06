@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
-import gfight.common.impl.VectorImpl;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.ActiveEntity;
 import gfight.world.entity.api.CachedGameEntity;
@@ -71,7 +70,7 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction) {
-        final Projectile projectile = this.factory.createProjectile(team, position, new VectorImpl(10, 0));
+        final Projectile projectile = this.factory.createProjectile(team, position, direction);
         this.otherEntities.add(projectile);
         return projectile;
     }

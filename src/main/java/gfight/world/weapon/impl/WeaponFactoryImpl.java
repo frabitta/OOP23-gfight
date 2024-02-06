@@ -8,10 +8,19 @@ import gfight.world.entity.api.Character;
 public class WeaponFactoryImpl implements WeaponFactory {
 
     @Override
-    public Weapon simpleGun(long reloadTime, EntityFactory projectileFactory, Character parent) {
-        Weapon gun = new SimpleGun(reloadTime, projectileFactory);
-        gun.setParentEntity(parent);
-        parent.setWeapon(gun);
+    public void pair(final Weapon weapon, final Character character) {
+        character.setWeapon(weapon);
+    }
+    
+    @Override
+    public Weapon simpleGun(final long reloadTime, final long shootSpeed, EntityFactory projectileFactory) {
+        return new SimpleGun(reloadTime, shootSpeed, projectileFactory);
+    }
+
+    @Override
+    public Weapon simpleGunPairing(final long reloadTime, final long shootSpeed, EntityFactory projectileFactory, final Character character) {
+        Weapon gun = simpleGun(reloadTime, shootSpeed, projectileFactory);
+        pair(gun, character);
         return gun;
     }
 
