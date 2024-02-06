@@ -12,6 +12,7 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.guava.MutableGraphAdapter;
+import org.locationtech.jts.geom.Position;
 
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
@@ -22,6 +23,7 @@ import gfight.world.entity.api.EntityFactory;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.api.GameTile.TileType;
+import gfight.world.movement.api.InputMovement;
 
 /**
  * Standard implementation of a GameMap.
@@ -36,14 +38,22 @@ public final class GameMapImpl implements GameMap {
     private final EntityFactory factory;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
 
-    private double rescale(final double x) {
-        return (x * TILE_DIM) + (TILE_DIM / 2);
+    /**
+     * Utility method to convert tile grid coordinates to real game position.
+     * 
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return the real position
+     */
+    private Position2D realPosition(final double x, final double y) {
+        return new Position2DImpl((x * TILE_DIM) + (TILE_DIM / 2), (y * TILE_DIM) + (TILE_DIM / 2));
     }
 
     /**
      * Creates a game map with the given dimension.
      * 
      * @param dimension the number of tiles a side of the map is composed by
+     * @param factory   the entity factory allowing for obstacle creation
      */
     public GameMapImpl(final int dimension, final EntityFactory factory) {
         this.dimension = dimension;
@@ -57,17 +67,17 @@ public final class GameMapImpl implements GameMap {
         for (double i = 0; i < dimension; i++) {
             for (double j = 0; j < dimension; j++) {
                 if (i == 0 || i == dimension - 1 || j == 0 || j == dimension - 1) {
-                    this.factory.createObstacle(TILE_DIM, new Position2DImpl(rescale(i), rescale(j)));
+                    this.factory.createObstacle(TILE_DIM, realPosition(i, j));
                     final GameTile tile = new GameTileImpl(
                             TileType.OBSTACLE,
-                            new Position2DImpl(rescale(i), rescale(j)),
+                            realPosition(i, j),
                             TILE_DIM);
                     this.tiles.add(tile);
                     this.tileList.get((int) i).add((int) j, tile);
                 } else {
                     final GameTile tile = new GameTileImpl(
                             TileType.EMPTY,
-                            new Position2DImpl(rescale(i), rescale(j)),
+                            realPosition(i, j),
                             TILE_DIM);
                     this.tiles.add(tile);
                     this.tileList.get((int) i).add((int) j, tile);
@@ -79,6 +89,11 @@ public final class GameMapImpl implements GameMap {
     @Override
     public Set<GameTile> getGameTiles() {
         return Collections.unmodifiableSet(this.tiles);
+    }
+
+    @Override
+    public Position2D getPlayerSpawn() {
+        return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2));
     }
 
     @Override
