@@ -14,7 +14,6 @@ import gfight.view.api.EngineView;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * An EngineView implementation using JSwing.
