@@ -32,12 +32,12 @@ public final class HitboxesImpl implements Hitboxes {
     }
 
     @Override
-    public List<Position2D> rotate(final List<Position2D> polygon, final double theta) {
+    public List<Position2D> rotate(final List<Position2D> polygon, final double theta, final Position2D center) {
         if (polygon.isEmpty()) {
             return new ArrayList<>();
         }
         Hitbox hitbox = new HitboxImpl(polygon);
-        AffineTransformation rotation = AffineTransformation.rotationInstance(theta);
+        AffineTransformation rotation = AffineTransformation.rotationInstance(theta, center.getX(), center.getY());
         Coordinate[] rotatedCoordinates = rotation.transform(hitbox.getPolygonalHitbox()).getCoordinates();
         return Arrays.stream(rotatedCoordinates)
                 .map(coordinate -> new Position2DImpl(coordinate.getX(), coordinate.getY()))

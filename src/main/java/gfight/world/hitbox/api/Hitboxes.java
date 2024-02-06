@@ -31,7 +31,7 @@ public interface Hitboxes {
      * @param polygon original list of vertexes
      * @return new modified list
      */
-    List<Position2D> rotate(List<Position2D> polygon, double theta);
+    List<Position2D> rotate(List<Position2D> polygon, double theta, Position2D center);
 
     /**
      * it signals to all onjects that hitboxes needs to be recalculated.

@@ -42,7 +42,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     @Override
     public void rotate(final double theta) {
         Hitboxes rotation = new HitboxesImpl();
-        rotation.rotate(getPosition2Ds(), theta);
+        setCoordinates(rotation.rotate(getPosition2Ds(), theta, getPosition()));
     }
 
     @Override
