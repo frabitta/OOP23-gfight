@@ -40,8 +40,8 @@ public final class BfsMovement extends BaseMovement {
     @Override
     public void update() {
         List<Position2D> path = getPathFromBfs();
-        Vect newDirection = new VectorImpl(agent.getPosition(), path.get(0));
-        agent.setDirection(newDirection);
+        Vect newDirection = new VectorImpl(agent.getPosition(), path.get(0)).norm();
+        this.setDirection(newDirection);
     }
 
     /**
