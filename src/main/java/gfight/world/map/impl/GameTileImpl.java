@@ -72,7 +72,7 @@ public final class GameTileImpl implements GameTile {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.centerPosition.toString();
     }
 }

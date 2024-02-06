@@ -27,8 +27,10 @@ import gfight.world.map.api.GameTile.TileType;
  */
 public final class GameMapImpl implements GameMap {
 
-    private static final int TILE_DIM = 1;
+    private static final int TILE_DIM = 40;
+
     private final Set<GameTile> tiles;
+    private final Set<Obstacle> obstacles;
     private final List<List<GameTile>> tileList;
     private final int dimension;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
@@ -41,6 +43,7 @@ public final class GameMapImpl implements GameMap {
     public GameMapImpl(final int dimension) {
         this.dimension = dimension;
         this.tiles = new HashSet<>(TILE_DIM);
+        this.obstacles = new HashSet<>();
         this.tileList = new ArrayList<>(dimension);
         for (int i = 0; i < dimension; i++) {
             this.tileList.add(i, new ArrayList<>(dimension));
@@ -64,6 +67,11 @@ public final class GameMapImpl implements GameMap {
     }
 
     @Override
+    public Set<Obstacle> getObstacles() {
+        return Collections.unmodifiableSet(this.obstacles);
+    }
+
+    @Override
     public GameTile searchTile(final Position2D position) {
         for (final var tile : this.tiles) {
             if (tile.contains(position)) {
@@ -84,7 +92,7 @@ public final class GameMapImpl implements GameMap {
     private void buildGraph() {
         final MutableGraph<GameTile> g = GraphBuilder.undirected().build();
         final MutableGraphAdapter<GameTile> adapter = new MutableGraphAdapter<>(g);
-        final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<GameTile, DefaultEdge>(DefaultEdge.class);
+        final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<>(DefaultEdge.class);
         final var freeCondition = GameTile.TileType.EMPTY;
         for (final var tile : this.tiles) {
             g2.addVertex(tile);
