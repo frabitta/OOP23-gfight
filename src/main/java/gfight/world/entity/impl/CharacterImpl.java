@@ -21,7 +21,7 @@ import gfight.world.hitbox.impl.HitboxesImpl;
  */
 public final class CharacterImpl extends AbstractActiveEntity implements Character {
     private Weapon weapon;
-    private Vect pointingDirection = new VectorImpl(getPosition2Ds().get(2), getPosition());
+    private Vect pointingDirection = new VectorImpl(getPosition2Ds().get(0), getPosition());
     private CharacterType role;
 
     /**
