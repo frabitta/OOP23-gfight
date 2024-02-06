@@ -14,6 +14,7 @@ import gfight.view.api.EngineView;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * An EngineView implementation using JSwing.
@@ -25,7 +26,7 @@ public final class SwingView implements EngineView {
 
     private final Engine engine;
     private JFrame frame;
-    private List<GraphicsComponent> gComponentsList;
+    private List<GraphicsComponent> gComponentsList = Collections.emptyList();
 
     /**
      * Constructor of the view.
@@ -75,7 +76,7 @@ public final class SwingView implements EngineView {
     }
 
     List<GraphicsComponent> getGraphicsComponents() {
-        return gComponentsList;
+        return this.gComponentsList;
     }
 
 }
