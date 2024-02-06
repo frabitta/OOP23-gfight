@@ -11,6 +11,7 @@ import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.impl.InputEventFactoryImpl;
+import gfight.world.TestWorld;
 import gfight.world.World;
 import gfight.world.WorldImpl;
 import gfight.view.api.EngineView;
@@ -37,7 +38,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         final Camera camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
 
-        world = new WorldImpl();
+        world = new TestWorld();
         world.initialize();
         world.installCamera(camera);
 
