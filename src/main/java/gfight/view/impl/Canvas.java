@@ -62,7 +62,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2.clearRect(0, 0, this.getWidth(), this.getHeight());
 
-        //final GraphicsRenderer renderer = new SwingGraphicsRenderer(g2,this.camera);
         final List<GraphicsComponent> gCompList = scene.getGraphicsComponents();
         gCompList.stream()
             .filter(comp -> comp instanceof RenderableGraphicComponent)

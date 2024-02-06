@@ -16,4 +16,10 @@ public interface ActiveEntity extends MovingEntity {
      */
     void takeDamage(int damage);
 
+    /**
+     * 
+     * @return true if the enity is alive, false otherwise
+     */
+    boolean isAlive();
+
 }

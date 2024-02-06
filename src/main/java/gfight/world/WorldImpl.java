@@ -3,11 +3,13 @@ package gfight.world;
 import java.util.List;
 import java.util.Optional;
 
+import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventKey;
+import gfight.engine.input.api.InputEventMouse;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -21,6 +23,9 @@ import gfight.world.map.impl.GameMapImpl;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
 
+/**
+ * Implementation of a World controlling the execution of the game.
+ */
 public class WorldImpl implements World {
 
     private MovableCamera camera;
@@ -28,19 +33,27 @@ public class WorldImpl implements World {
     private GameMap map;
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
+    private Character testPlayer;
+    private Position2D pointingPosition;
 
+    /**
+     * Creates a new instance of a World.
+     */
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
         this.map = new GameMapImpl(10);
         this.keyMapper = new MovementFactoryImpl().createInput();
 
-        // seguite questo esempio se volete creare entità di prova, basta 1 riga per entità
-        this.entityManager.createPlayer(15, new Position2DImpl(250, 250), 0, keyMapper);
+        // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità
+        this.testPlayer = this.entityManager.createPlayer(25, new Position2DImpl(450, 250), 0, keyMapper);
+
+        pointingPosition = this.testPlayer.getPosition();
+        // this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
     }
 
     @Override
-    public void installCamera(final MovableCamera camera) {
+    public final void installCamera(final MovableCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
     }
@@ -50,8 +63,9 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public void update(final long deltaTime) {
+    public final void update(final long deltaTime) {
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        this.testPlayer.pointTo(this.pointingPosition);
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
@@ -60,14 +74,16 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public List<GraphicsComponent> getGraphicsComponents() {
+    public final List<GraphicsComponent> getGraphicsComponents() {
         return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
     }
 
     @Override
-    public void processInput(final InputEvent event) {
+    public final void processInput(final InputEvent event) {
         if (event instanceof InputEventKey) {
             manageKey((InputEventKey) event);
+        } else if (event instanceof InputEventMouse) {
+            managePointer((InputEventMouse) event);
         }
     }
 
@@ -86,6 +102,14 @@ public class WorldImpl implements World {
             if (key.getType() == InputEvent.Type.RELEASED) {
                 this.keyMapper.removeDirection(direction.get());
             }
+        }
+    }
+
+    private void managePointer(final InputEventMouse pointer) {
+        this.pointingPosition = pointer.getPosition();
+        if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
+            this.entityManager.createObstacle(20, pointer.getPosition());
+            // add here to spawn test projectiles
         }
     }
 }

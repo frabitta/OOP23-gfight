@@ -30,21 +30,12 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
     }
 
     private Vect getInputDirection(final Directions dir) {
-        switch (dir) {
-            case SOUTH:
-                return new VectorImpl(0, 1);
-
-            case NORTH:
-                return new VectorImpl(0, -1);
-
-            case EAST:
-                return new VectorImpl(1, 0);
-
-            case WEST:
-                return new VectorImpl(-1, 0);
-
-            default:
-                return new VectorImpl(0, 0);
-        }
+        return switch (dir) {
+            case SOUTH -> new VectorImpl(0, 1);
+            case NORTH -> new VectorImpl(0, -1);
+            case EAST -> new VectorImpl(1, 0);
+            case WEST -> new VectorImpl(-1, 0);
+            default -> new VectorImpl(0, 0);
+        };
     }
 }

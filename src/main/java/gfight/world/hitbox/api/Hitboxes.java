@@ -1,6 +1,7 @@
 package gfight.world.hitbox.api;
 
 import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
 import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.GameEntity;
 
@@ -25,13 +26,24 @@ public interface Hitboxes {
     boolean isColliding(Hitbox collider, Hitbox coollided);
 
     /**
-     * It rotates a list of vertex.
+     * Returns the rotated list of vertex.
      * 
      * @param theta   angle of rotation in radiants
      * @param polygon original list of vertexes
      * @return new modified list
      */
-    List<Position2D> rotate(List<Position2D> polygon, double theta);
+    List<Position2D> rotate(List<Position2D> polygon, double theta, Position2D center);
+
+    /**
+     * Returns the rotated list of vertexes in order to point in the target.
+     * 
+     * @param polygon     original list of vertexes.
+     * @param pointingDir original pointing direction of the polygon.
+     * @param center      center of the polygon.
+     * @param target      target of the rotation.
+     * @return the rotated list.
+     */
+    List<Position2D> rotateTo(List<Position2D> polygon, Vect pointingDir, Position2D center, Position2D target);
 
     /**
      * it signals to all onjects that hitboxes needs to be recalculated.

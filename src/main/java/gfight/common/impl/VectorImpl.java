@@ -37,7 +37,7 @@ public final class VectorImpl extends Vector2D implements Vect {
      * @param a The end position.
      * @param b The start position.
      */
-    public VectorImpl(final Position2D a, Position2D b) {
+    public VectorImpl(final Position2D a, final Position2D b) {
         super(a.getX() - b.getX(), a.getY() - b.getY());
     }
 
@@ -64,7 +64,7 @@ public final class VectorImpl extends Vector2D implements Vect {
     public Vect scale(final double value) {
         return new VectorImpl(scalarMultiply(value));
     }
-   
+
     @Override
     public Vect revert() {
         return new VectorImpl(negate());
@@ -82,6 +82,18 @@ public final class VectorImpl extends Vector2D implements Vect {
         } else {
             throw new IllegalArgumentException("Incompatible type for dotProduct operation");
         }
+    }
+
+    @Override
+    public double anglecalc(Vect v1) {
+        if ((v1.getX() != 0 || v1.getY() != 0) && (this.getX() != 0 || this.getY() != 0)) {
+            if (v1 instanceof VectorImpl) {
+                return Vector2D.angle(this, (VectorImpl) v1);
+            } else {
+                throw new IllegalArgumentException("Incompatible type for angle calculation");
+            }
+        }
+        return 0;
     }
 
 }

@@ -21,8 +21,8 @@ import gfight.world.hitbox.impl.HitboxesImpl;
  * Class that represents the concept of main character (Player, Enemies).
  */
 public final class CharacterImpl extends AbstractActiveEntity implements Character {
-    private Optional<Weapon> weapon;
-    private Vect pointingDirection = new VectorImpl(0, 0);
+    private Optional<Weapon> weapon = Optional.empty();
+    private Vect pointingDirection = new VectorImpl(getPosition2Ds().get(0), getPosition());
     private CharacterType role;
 
     /**
@@ -41,9 +41,10 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     }
 
     @Override
-    public void rotate(final double theta) {
-        Hitboxes rotation = new HitboxesImpl();
-        rotation.rotate(getPosition2Ds(), theta);
+    public void pointTo(final Position2D target) {
+        final Hitboxes rotation = new HitboxesImpl();
+        setCoordinates(rotation.rotateTo(getPosition2Ds(), this.pointingDirection, getPosition(), target));
+        this.pointingDirection = new VectorImpl(getPosition2Ds().get(2), getPosition());
     }
 
     @Override
