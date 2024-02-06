@@ -21,7 +21,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     private static final int ALIVE_HEALTH = 1;
     
     private int damage;
-    private boolean collided;
+    private boolean collided = false;
     private final Character.CharacterType team;
 
     /**
@@ -64,6 +64,6 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     @Override
     public boolean isAlive() {
-        return this.collided;
+        return !this.collided;
     }
 }
