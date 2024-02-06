@@ -75,7 +75,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         getAllCollided(gameobjects).stream().forEach(el -> {
             if (el instanceof GameEntity) {
-                CollisionCommand coll = new SlideCommand<MovingEntity, GameEntity>(this, el);
+                CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
                 coll.execute();
             }
         });
