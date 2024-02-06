@@ -62,8 +62,6 @@ public class EntityFactoryImpl implements EntityFactory {
         return obstacle;
     }
 
-    
-
     @Override
     public final ActiveEntity createChest(final double sideLength, final Position2D position,
             final int health) {
@@ -71,14 +69,12 @@ public class EntityFactoryImpl implements EntityFactory {
         throw new UnsupportedOperationException("Unimplemented method 'createChest'");
     }
 
-    static final double PROJECTILE_SIZE = 10;
-
     @Override
-    public Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction) {
-        List<Position2D> vertexes = vertexCalculator.square(PROJECTILE_SIZE, position);
+    public Projectile createProjectile(final Character.CharacterType team, final Position2D position, final Vect direction, final double projectileSize, final int damage) {
+        List<Position2D> vertexes = vertexCalculator.square(projectileSize, position);
         GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(team==Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE, vertexes);
         Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
-        return new ProjectileImpl(vertexes, position, gComp, team, movement);
+        return new ProjectileImpl(vertexes, position, gComp, team, movement, damage);
     }
 
 }

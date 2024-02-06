@@ -13,17 +13,22 @@ public class SimpleGun implements Weapon {
     private final EntityFactory projectileFactory;
     private final long reloadTime;
     private final long shootSpeed;
+    private final double projectileSize;
+    private final int damage;
 
     private Character parent;
     private long lastShootTime;
 
-    public SimpleGun(final long reloadTime, final long shootSpeed, EntityFactory projectileFactory) {
+    public SimpleGun(final long reloadTime, final long shootSpeed, final double projectileSize, final int damage, EntityFactory projectileFactory) {
         this.reloadTime = reloadTime;
         this.shootSpeed = shootSpeed;
+        this.projectileSize = projectileSize;
+        this.damage = damage;
         this.projectileFactory = projectileFactory;
         this.lastShootTime = System.currentTimeMillis();
     }
 
+    //  may expose internal representation by storing an externally mutable object into SimpleGun.parent
     @Override
     public final void setParentEntity(final Character parent) {
         this.parent = parent;
@@ -33,7 +38,13 @@ public class SimpleGun implements Weapon {
     public final void shoot() {
         if (reloaded()) {
             this.lastShootTime = System.currentTimeMillis();
-            this.projectileFactory.createProjectile(this.parent.getType(), this.parent.getPosition(), this.parent.getPointedDirection().norm().scale(shootSpeed));
+            this.projectileFactory.createProjectile(
+                this.parent.getType(),
+                this.parent.getPosition(),
+                this.parent.getPointedDirection().norm().scale(shootSpeed),
+                this.projectileSize,
+                this.damage
+            );
         }
     }
 

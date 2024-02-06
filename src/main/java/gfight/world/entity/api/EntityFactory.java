@@ -50,10 +50,12 @@ public interface EntityFactory {
 
         /**
          * Creates a new Projectile.
-         * @param team          Team of the projectile
-         * @param position      spawning position
-         * @param direction     direction to face
-         * @return              Projectile generated
+         * @param team                  Team of the projectile
+         * @param position              spawning position
+         * @param direction             direction to face
+         * @param projectileSize        the size of the generated projectile
+         * @param damage                the damage that the projectile makes
+         * @return a new Projectile
          */
-        Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction);
+        Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction, double projectileSize, int damage);
 }

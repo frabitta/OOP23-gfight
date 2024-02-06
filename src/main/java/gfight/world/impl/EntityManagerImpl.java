@@ -69,8 +69,8 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public Projectile createProjectile(Character.CharacterType team, Position2D position, Vect direction) {
-        final Projectile projectile = this.factory.createProjectile(team, position, direction);
+    public Projectile createProjectile(final Character.CharacterType team, final Position2D position, final Vect direction, final double projectileSize, final int damage) {
+        final Projectile projectile = this.factory.createProjectile(team, position, direction, projectileSize, damage);
         this.otherEntities.add(projectile);
         return projectile;
     }

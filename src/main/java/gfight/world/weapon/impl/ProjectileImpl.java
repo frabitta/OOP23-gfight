@@ -37,11 +37,13 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
         final Position2D position,
         final GraphicsComponent gComp,
         final Character.CharacterType team,
-        final Movement movement
+        final Movement movement,
+        final int damage
         ) {
         super(vertexes, position, gComp, ALIVE_HEALTH);
         this.setMovement(Optional.ofNullable(movement));
         this.team = team;
+        this.damage = damage;
     }
 
     @Override

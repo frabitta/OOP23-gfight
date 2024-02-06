@@ -50,7 +50,7 @@ public class TestWorld implements World {
         this.testPlayer = this.entityManager.createPlayer(25, new Position2DImpl(450, 250), 0, keyMapper);
         pointingPosition = this.testPlayer.getPosition();
         // we need to balance the reloadTime and the shootSpeed
-        new WeaponFactoryImpl().simpleGunPairing(100, 2, entityManager, testPlayer);
+        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
         //this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
     }
 

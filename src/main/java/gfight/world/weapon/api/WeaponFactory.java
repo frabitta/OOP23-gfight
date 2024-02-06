@@ -22,7 +22,7 @@ public interface WeaponFactory {
      * @param projectileFactory Factory of entities (needed to generate projectiles).
      * @return Weapon of type SimpleGun
      */
-    Weapon simpleGun(long reloadTime, long shootSpeed, EntityFactory projectileFactory);
+    Weapon simpleGun(long reloadTime, long shootSpeed, double projectileSize, int damage, EntityFactory projectileFactory);
 
     /**
      * Returns a gun that shoot projectiles and pairs it with the Character.
@@ -32,6 +32,6 @@ public interface WeaponFactory {
      * @param character            The Character holding the gun.
      * @return Weapon of type SimpleGun
      */
-    Weapon simpleGunPairing(long reloadTime, long shootSpeed, EntityFactory projectileFactory, Character character);
+    Weapon simpleGunPairing(long reloadTime, long shootSpeed, double projectileSize, int damage, EntityFactory projectileFactory, Character character);
 
 }
