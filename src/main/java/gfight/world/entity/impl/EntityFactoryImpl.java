@@ -67,7 +67,7 @@ public class EntityFactoryImpl implements EntityFactory {
     @Override
     public final ActiveEntity createChest(final double sideLength, final Position2D position, final int health) {
         final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
-        final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW, vertexes);
+        final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW, vertexes, GraphicType.WORLD);
         return new Chest(vertexes, position, graphicsComponent, health);
     }
 
