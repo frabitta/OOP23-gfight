@@ -20,17 +20,17 @@ public final class PolygonGraphicsRenderer extends AbstractGraphicsComponentRend
 
     @Override
     void renderComp(final Graphics2D g, final ViewableCamera camera) {
-        final List<Position2D> pointList = getGraphicsComponent().getPositions();
+        final var gComp = getGraphicsComponent();
+        final List<Position2D> pointList = camera.getScreenPositions(gComp.getPositions(),gComp.getType());
+
         g.fillPolygon(
-                pointList.stream()
-                        .map(pos -> camera.getScreenPosition(pos,getGraphicsComponent().getType()))
-                        .mapToInt(p -> (int) Math.round(p.getX()))
-                        .toArray(),
-                pointList.stream()
-                        .map(pos -> camera.getScreenPosition(pos,getGraphicsComponent().getType()))
-                        .mapToInt(p -> (int) Math.round(p.getY()))
-                        .toArray(),
-                pointList.size());
+            pointList.stream()
+                    .mapToInt(p -> (int) Math.round(p.getX()))
+                    .toArray(),
+            pointList.stream()
+                    .mapToInt(p -> (int) Math.round(p.getY()))
+                    .toArray(),
+            pointList.size());
     }
 
 }
