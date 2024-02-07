@@ -50,4 +50,10 @@ public interface ViewableCamera {
      */
     double getVertOffset();
 
+    /**
+     * Returns the ratio of resizing of the components.
+     * @return double of ratio.
+     */
+    double getSizeRatio();
+
 }

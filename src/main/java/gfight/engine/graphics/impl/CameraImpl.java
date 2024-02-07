@@ -88,4 +88,9 @@ public class CameraImpl implements Camera {
         return this.offsetY;
     }
 
+    @Override
+    public double getSizeRatio() {
+        return this.sizeRatio;
+    }
+
 }
