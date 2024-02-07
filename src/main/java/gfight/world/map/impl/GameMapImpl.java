@@ -44,7 +44,7 @@ public final class GameMapImpl implements GameMap {
      * @return the real position
      */
     private Position2D realPosition(final int x, final int y) {
-        return new Position2DImpl((x * TILE_DIM) + (TILE_DIM / 2), (y * TILE_DIM) + (TILE_DIM / 2));
+        return new Position2DImpl(x * TILE_DIM + TILE_DIM / 2, y * TILE_DIM + TILE_DIM / 2);
     }
 
     /**
@@ -92,6 +92,7 @@ public final class GameMapImpl implements GameMap {
                 }
             }
         }
+        this.factory.createChest(TILE_DIM, realPosition(this.dimension / 2, this.dimension / 2), 0);
         defaultScatteredObstacles();
     }
 
@@ -102,7 +103,7 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Position2D getPlayerSpawn() {
-        return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2));
+        return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2 - 2));
     }
 
     @Override
