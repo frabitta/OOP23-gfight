@@ -26,6 +26,7 @@ public final class SwingView implements EngineView {
     private final Engine engine;
     private JFrame frame;
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
+    private ViewableCamera camera;
 
     /**
      * Constructor of the view.
@@ -37,6 +38,7 @@ public final class SwingView implements EngineView {
 
     @Override
     public void initialize(final ViewableCamera camera) {
+        this.camera = camera;
         frame = new JFrame("Geometry Fight");
         frame.setSize(WIDTH, HEIGHT);     //needs to be changed---------------
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
@@ -70,6 +72,7 @@ public final class SwingView implements EngineView {
 
     @Override
     public void render(final List<GraphicsComponent> gComponentsList) {
+        this.camera.setScreenDimension(frame.getSize().getWidth(), frame.getSize().getHeight());
         this.gComponentsList = Collections.unmodifiableList(gComponentsList);
         this.frame.repaint();
     }

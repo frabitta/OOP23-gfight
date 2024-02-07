@@ -31,4 +31,23 @@ public interface ViewableCamera {
      */
     Position2D getWorldPosition(Position2D pos);
 
+    /**
+     * Gives the camera the dimensions of the window.
+     * @param width lenght of the window in pixels
+     * @param height height of the window in pixels
+     */
+    void setScreenDimension(double width, double height);
+
+    /**
+     * Returns the horizontal offset of the image.
+     * @return double of pixels offest
+     */
+    double getHoriOffset();
+
+    /**
+     * Returns the vertical offset of the image.
+     * @return double of pixels offest
+     */
+    double getVertOffset();
+
 }
