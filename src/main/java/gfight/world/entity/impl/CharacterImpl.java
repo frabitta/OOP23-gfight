@@ -22,7 +22,7 @@ import gfight.world.hitbox.impl.HitboxesImpl;
  */
 public final class CharacterImpl extends AbstractActiveEntity implements Character {
     private Optional<Weapon> weapon = Optional.empty();
-    private Vect pointingDirection = new VectorImpl(getPosition2Ds().get(0), getPosition());
+    private Vect pointingDirection = new VectorImpl(getPosition(), getPosition2Ds().get(0));
     private CharacterType role;
 
     /**
@@ -44,7 +44,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     public void pointTo(final Position2D target) {
         final Hitboxes rotation = new HitboxesImpl();
         setCoordinates(rotation.rotateTo(getPosition2Ds(), this.pointingDirection, getPosition(), target));
-        this.pointingDirection = new VectorImpl(getPosition2Ds().get(2), getPosition());
+        this.pointingDirection = new VectorImpl(getPosition(), getPosition2Ds().get(2));
     }
 
     @Override

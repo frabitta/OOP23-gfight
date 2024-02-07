@@ -25,7 +25,7 @@ public final class PushAwayCommand<M extends MovingEntity, G extends GameEntity>
 
     @Override
     public void execute() {
-        final Vect distance = new VectorImpl(collider().getPosition(), collided().getPosition());
+        final Vect distance = new VectorImpl(collided().getPosition(), collider().getPosition());
         if (collider().getDirection().dotProduct(distance) < 0) {
             collider().setDirection(distance.revert());
         }
