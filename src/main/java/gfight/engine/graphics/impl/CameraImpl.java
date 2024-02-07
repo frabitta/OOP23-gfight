@@ -4,6 +4,7 @@ import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.Camera;
+import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 
 /**
  * Implementation of a simple camera.
@@ -18,15 +19,15 @@ public class CameraImpl implements Camera {
     }
 
     @Override
-    public final Position2D getScreenPosition(final Position2D pos) {
-        return pos.sum(new VectorImpl(-cameraPos.getX(), -cameraPos.getY()));
-        //return new Position2DImpl(pos.getX() - position.getX(), pos.getY() - position.getY());
-    }
-
-    @Override
     public final Position2D getWorldPosition(final Position2D pos) {
         return pos.sum(new VectorImpl(cameraPos.getX(), cameraPos.getY()));
         //return new Position2DImpl(pos.getX() + position.getX(), pos.getY() + position.getY());
+    }
+
+    @Override
+    public Position2D getScreenPosition(Position2D pos, GraphicType type) {
+        return pos.sum(new VectorImpl(-cameraPos.getX(), -cameraPos.getY()));
+        //return new Position2DImpl(pos.getX() - position.getX(), pos.getY() - position.getY());
     }
 
 }

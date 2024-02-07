@@ -10,8 +10,12 @@ import gfight.view.api.GraphicsComponentRenderer;
  */
 public class PolygonGraphicsComponent extends AbstractGraphicsComponent {
 
-    PolygonGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer) {
-        super(color, pos, renderer);
+    PolygonGraphicsComponent(
+        final EngineColor color,
+        final List<Position2D> pos,
+        final GraphicsComponentRenderer renderer,
+        final GraphicType type) {
+        super(color, pos, renderer, type);
     }
 
 }

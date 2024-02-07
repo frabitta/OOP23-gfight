@@ -15,8 +15,13 @@ public class StatusBarGraphicsComponent extends AbstractSinglePositionGraphicsCo
     private int status;
     private EngineColor statusColor;
 
-    StatusBarGraphicsComponent(EngineColor bgColor, EngineColor statusColor, List<Position2D> pos, GraphicsComponentRenderer renderer) {
-        super(bgColor, pos, renderer);
+    StatusBarGraphicsComponent(
+        final EngineColor bgColor,
+        final EngineColor statusColor,
+        final List<Position2D> pos,
+        final GraphicsComponentRenderer renderer,
+        final GraphicType type) {
+        super(bgColor, pos, renderer, type);
         this.statusColor = statusColor;
     }
 

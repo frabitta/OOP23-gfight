@@ -33,6 +33,20 @@ public interface GraphicsComponent {
     }
 
     /**
+     * Type of graphic component.
+     */
+    enum GraphicType {
+        /**
+         * The component is part of the world.
+         */
+        WORLD,
+        /**
+         * The component is part of the HUD.
+         */
+        HUD
+    }
+
+    /**
      * @return the color of the object.
      */
     EngineColor getColor();
@@ -53,5 +67,11 @@ public interface GraphicsComponent {
      * @param pos
      */
     void setPositions(List<Position2D> pos);
+
+    /**
+     * Returns the type of graphics component.
+     * @return type of the GraphicsComponent
+     */
+    GraphicType getType();
 
 }

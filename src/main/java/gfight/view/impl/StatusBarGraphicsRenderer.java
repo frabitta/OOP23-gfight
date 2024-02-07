@@ -17,7 +17,7 @@ public class StatusBarGraphicsRenderer extends AbstractGraphicsComponentRenderer
     @Override
     void renderComp(Graphics2D g, ViewableCamera camera) {
         final StatusBarGraphicsComponent gComp = (StatusBarGraphicsComponent) getGraphicsComponent();
-        final Position2D pos = camera.getScreenPosition(gComp.getPositions().get(0));
+        final Position2D pos = camera.getScreenPosition(gComp.getPositions().get(0), gComp.getType());
         g.fillRect((int) pos.getX(), (int) pos.getY(), gComp.getBase(), gComp.getHeight());
         g.setColor(translateEngineColor(gComp.getStatusColor()));
         g.fillRect((int) pos.getX(), (int) pos.getY(), (int) (gComp.getBase() * gComp.getPercentage()), gComp.getHeight());

@@ -7,10 +7,12 @@ import gfight.view.api.GraphicsComponentRenderer;
 
 abstract public class AbstractSinglePositionGraphicsComponent extends AbstractGraphicsComponent{
 
-    AbstractSinglePositionGraphicsComponent(EngineColor color, List<Position2D> pos,
-            GraphicsComponentRenderer renderer) {
-        super(color, pos, renderer);
-        //TODO Auto-generated constructor stub
+    AbstractSinglePositionGraphicsComponent(
+            final EngineColor color,
+            final List<Position2D> pos,
+            final GraphicsComponentRenderer renderer,
+            final GraphicType type) {
+        super(color, pos, renderer, type);
     }
 
     @Override

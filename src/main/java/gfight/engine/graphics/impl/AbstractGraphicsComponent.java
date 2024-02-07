@@ -17,10 +17,13 @@ abstract class AbstractGraphicsComponent implements GraphicsComponent, Renderabl
     private EngineColor color;
     private List<Position2D> pos;
 
-    AbstractGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer) {
+    private GraphicType type;
+
+    AbstractGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer, final GraphicType type) {
         this.color = color;
         this.pos = pos;
         this.renderer = renderer;
+        this.type = type;
     }
 
     @Override
@@ -46,6 +49,11 @@ abstract class AbstractGraphicsComponent implements GraphicsComponent, Renderabl
     @Override
     public GraphicsComponentRenderer getRenderer() {
         return this.renderer;
+    }
+
+    @Override
+    public GraphicType getType() {
+        return this.type;
     }
 
 }

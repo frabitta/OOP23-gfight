@@ -23,11 +23,11 @@ public final class PolygonGraphicsRenderer extends AbstractGraphicsComponentRend
         final List<Position2D> pointList = getGraphicsComponent().getPositions();
         g.fillPolygon(
                 pointList.stream()
-                        .map(pos -> camera.getScreenPosition(pos))
+                        .map(pos -> camera.getScreenPosition(pos,getGraphicsComponent().getType()))
                         .mapToInt(p -> (int) Math.round(p.getX()))
                         .toArray(),
                 pointList.stream()
-                        .map(pos -> camera.getScreenPosition(pos))
+                        .map(pos -> camera.getScreenPosition(pos,getGraphicsComponent().getType()))
                         .mapToInt(p -> (int) Math.round(p.getY()))
                         .toArray(),
                 pointList.size());

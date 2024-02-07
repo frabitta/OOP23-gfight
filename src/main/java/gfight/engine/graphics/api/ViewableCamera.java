@@ -1,6 +1,7 @@
 package gfight.engine.graphics.api;
 
 import gfight.common.api.Position2D;
+import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 
 /**
  * Interface of a Camera that gives world points in relation to its position.
@@ -8,11 +9,11 @@ import gfight.common.api.Position2D;
 public interface ViewableCamera {
 
     /**
-     * Given a World-related position it returns the corrisponding Screen-related position. 
+     * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
      * @param pos
      * @return screen-related position.
      */
-    Position2D getScreenPosition(Position2D pos);
+    Position2D getScreenPosition(Position2D pos, GraphicType type);
 
     /**
      * Given a Screen-related position it returns the corrisponding World-related position. 

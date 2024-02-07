@@ -13,8 +13,8 @@ public class TextGraphicsComponent extends AbstractSinglePositionGraphicsCompone
     private String text = "empty";
     private int size = 10;
 
-    TextGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer) {
-        super(color, pos, renderer);
+    TextGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer, final GraphicType type) {
+        super(color, pos, renderer, type);
     }
 
     /**

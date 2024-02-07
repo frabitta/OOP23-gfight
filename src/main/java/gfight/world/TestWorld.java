@@ -8,6 +8,7 @@ import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.MovableCamera;
 import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.graphics.impl.StatusBarGraphicsComponent;
 import gfight.engine.input.api.InputEvent;
@@ -58,7 +59,7 @@ public class TestWorld implements World {
         // we need to balance the reloadTime and the shootSpeed
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
         //this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
-        statusBarTest = new GraphicsComponentsFactoryImpl().statusBar(EngineColor.BLACK, EngineColor.RED, new Position2DImpl(100, 100), 100, 20);
+        statusBarTest = new GraphicsComponentsFactoryImpl().statusBar(EngineColor.BLACK, EngineColor.RED, new Position2DImpl(100, 100), 100, 20, GraphicType.WORLD);
         statusBarTest.setStatus(70);
     }
 
