@@ -34,11 +34,11 @@ public final class VectorImpl extends Vector2D implements Vect {
      * Constructs a new VectorImpl representing the vector from position {@code b}
      * to position {@code a}.
      *
-     * @param a The end position.
-     * @param b The start position.
+     * @param a The start position.
+     * @param b The end position.
      */
     public VectorImpl(final Position2D a, final Position2D b) {
-        super(a.getX() - b.getX(), a.getY() - b.getY());
+        super(b.getX() - a.getX(), b.getY() - a.getY());
     }
 
     /**

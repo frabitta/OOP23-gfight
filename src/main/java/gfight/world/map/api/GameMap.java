@@ -20,6 +20,13 @@ public interface GameMap {
     Set<GameTile> getGameTiles();
 
     /**
+     * Return the position where the player needs to spawn.
+     * 
+     * @return the player spawning location
+     */
+    Position2D getPlayerSpawn();
+
+    /**
      * Get the GameTile which contains the given position.
      * 
      * @param position

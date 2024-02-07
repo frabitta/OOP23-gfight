@@ -59,7 +59,7 @@ public class TestWorldImpl implements World {
     public void initialize() {
         this.movement = movementFactory.createInput();
         this.movement2 = movementFactory.createInput();
-        this.map = new GameMapImpl(10);
+        //this.map = new GameMapImpl(10);
         final List<Position2D> square = List.of(new Position2DImpl(0, 0), new Position2DImpl(0, 20),
                 new Position2DImpl(20, 20), new Position2DImpl(20, -20));
         final List<Position2D> triangleCalculated = this.vertexCalculator.triangle(15, new Position2DImpl(50, 50));

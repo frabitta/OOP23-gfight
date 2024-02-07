@@ -20,8 +20,8 @@ import java.util.List;
  */
 public final class SwingView implements EngineView {
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 400;
+    private static final int WIDTH = 856;
+    private static final int HEIGHT = 879;
 
     private final Engine engine;
     private JFrame frame;
