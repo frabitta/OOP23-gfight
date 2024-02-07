@@ -6,14 +6,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 import java.util.Set;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.graph.guava.MutableGraphAdapter;
-import org.locationtech.jts.geom.Position;
 
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
@@ -24,7 +22,6 @@ import gfight.world.entity.api.EntityFactory;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 import gfight.world.map.api.GameTile.TileType;
-import gfight.world.movement.api.InputMovement;
 
 /**
  * Standard implementation of a GameMap.
@@ -50,6 +47,9 @@ public final class GameMapImpl implements GameMap {
         return new Position2DImpl((x * TILE_DIM) + (TILE_DIM / 2), (y * TILE_DIM) + (TILE_DIM / 2));
     }
 
+    /**
+     * Creates default obstacles inside the map, one for each diagonal direction.
+     */
     private void defaultScatteredObstacles() {
         this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, this.dimension / 4));
         this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, 3 * this.dimension / 4));
@@ -65,7 +65,7 @@ public final class GameMapImpl implements GameMap {
      */
     public GameMapImpl(final int dimension, final EntityFactory factory) {
         this.dimension = dimension;
-        this.tiles = new HashSet<>(TILE_DIM);
+        this.tiles = new HashSet<>(dimension);
         this.tileList = new ArrayList<>(dimension);
         this.factory = factory;
         for (int i = 0; i < dimension; i++) {
@@ -131,32 +131,32 @@ public final class GameMapImpl implements GameMap {
         for (final var tile : this.tiles) {
             g2.addVertex(tile);
         }
-        // col
+        // col (x)
         for (int i = 0; i < dimension; i++) {
-            // row
+            // row (y)
             for (int j = 0; j < dimension; j++) {
                 final var tile = this.tileList.get(i).get(j);
                 Objects.requireNonNull(tile);
                 if (tile.getType().equals(freeCondition)) {
                     // NORTH
-                    if (i > 0 && this.tileList.get(i - 1).get(j).getType().equals(freeCondition)) {
+                    if (j > 0 && this.tileList.get(i).get(j - 1).getType().equals(freeCondition)) {
                         g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i - 1).get(j)));
-                        g2.addEdge(tile, this.tileList.get(j).get(i - 1));
+                        g2.addEdge(tile, this.tileList.get(i).get(j - 1));
                     }
                     // SOUTH
-                    if (i < (dimension - 1) && this.tileList.get(i + 1).get(j).getType().equals(freeCondition)) {
+                    if (j < (dimension - 1) && this.tileList.get(i).get(j + 1).getType().equals(freeCondition)) {
                         g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i + 1).get(j)));
-                        g2.addEdge(tile, this.tileList.get(j).get(i + 1));
+                        g2.addEdge(tile, this.tileList.get(i).get(j + 1));
                     }
                     // WEST
-                    if (j > 0 && this.tileList.get(i).get(j - 1).getType().equals(freeCondition)) {
+                    if (i > 0 && this.tileList.get(i - 1).get(j).getType().equals(freeCondition)) {
                         g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j - 1)));
-                        g2.addEdge(tile, this.tileList.get(j - 1).get(i));
+                        g2.addEdge(tile, this.tileList.get(i - 1).get(j));
                     }
                     // EAST
-                    if (j < (dimension - 1) && this.tileList.get(i).get(j + 1).getType().equals(freeCondition)) {
+                    if (i < (dimension - 1) && this.tileList.get(i + 1).get(j).getType().equals(freeCondition)) {
                         g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j + 1)));
-                        g2.addEdge(tile, this.tileList.get(j + 1).get(i));
+                        g2.addEdge(tile, this.tileList.get(i + 1).get(j));
                     }
                 }
             }

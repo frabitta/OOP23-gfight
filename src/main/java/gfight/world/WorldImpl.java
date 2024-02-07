@@ -52,7 +52,7 @@ public class WorldImpl implements World {
         this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 0, keyMapper);
 
         pointingPosition = this.testPlayer.getPosition();
-        // this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
+        this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 0, map);
     }
 
     @Override
