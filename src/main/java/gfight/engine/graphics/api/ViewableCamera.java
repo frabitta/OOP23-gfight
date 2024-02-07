@@ -1,5 +1,7 @@
 package gfight.engine.graphics.api;
 
+import java.util.List;
+
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 
@@ -14,6 +16,13 @@ public interface ViewableCamera {
      * @return screen-related position.
      */
     Position2D getScreenPosition(Position2D pos, GraphicType type);
+
+    /**
+     * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
+     * @param pos   List of position
+     * @return list of screen-related positions.
+     */
+    List<Position2D> getScreenPositions(List<Position2D> pos, GraphicType type);
 
     /**
      * Given a Screen-related position it returns the corrisponding World-related position. 
