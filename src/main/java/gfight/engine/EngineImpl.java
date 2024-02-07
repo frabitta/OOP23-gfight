@@ -13,7 +13,6 @@ import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.TestWorld;
 import gfight.world.World;
-import gfight.world.WorldImpl;
 import gfight.view.api.EngineView;
 import gfight.view.impl.SwingView;
 
@@ -32,6 +31,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
 
     private boolean mutex;
+    private boolean engineAlive = true;
 
     @Override
     public void initialize() {
@@ -66,7 +66,7 @@ public final class EngineImpl implements Engine, InputEventListener {
             try {
                 Thread.sleep(FRAME_LENGHT - dt);
             } catch (InterruptedException e) {
-                System.exit(1);
+                terminate();
             }
         }
     }
@@ -90,7 +90,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private boolean isAppRunning() {
-        return true;
+        return this.engineAlive;
     }
 
     @Override
@@ -109,6 +109,11 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public InputEventFactory getInputEventFactory() {
         return new InputEventFactoryImpl();
+    }
+
+    @Override
+    public void terminate() {
+        this.engineAlive = false;
     }
 
 }

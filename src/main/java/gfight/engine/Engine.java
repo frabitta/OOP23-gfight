@@ -14,4 +14,9 @@ public interface Engine {
      * starts the main loop of the application.
      */
     void mainLoop();
+
+    /**
+     * terminate engine.
+     */
+    void terminate();
 }

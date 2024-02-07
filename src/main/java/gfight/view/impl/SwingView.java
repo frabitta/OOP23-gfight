@@ -54,11 +54,11 @@ public final class SwingView implements EngineView {
         frame.addWindowListener(new WindowAdapter() { //needs to be changed------------
             @Override
             public void windowClosing(final WindowEvent ev) {
-                System.exit(-1);
+                engine.terminate();
             }
             @Override
             public void windowClosed(final WindowEvent ev) {
-                System.exit(-1);
+                engine.terminate();
             }
         });
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
