@@ -83,10 +83,10 @@ public class WorldImpl implements World {
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
             if (this.currentLevel % 5 == 0) {
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.NORMAL).forEach(Spawner::disable);
+                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
                 this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
             } else {
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.NORMAL).forEach(Spawner::enable);
+                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
                 this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
             }
             newLevel();
@@ -145,7 +145,8 @@ public class WorldImpl implements World {
         for (final var entry : this.map.getSpawnersPositions().entrySet()) {
             this.spawners.add(switch (entry.getValue()) {
                 case BOSS -> spawnerFactory.createBoss(entry.getKey(), testPlayer);
-                case NORMAL -> spawnerFactory.createScalar(entry.getKey(), testPlayer);
+                case SCALAR -> spawnerFactory.createScalar(entry.getKey(), testPlayer);
+                case LINEAR -> spawnerFactory.createLinear(entry.getKey(), testPlayer);
             });
         }
     }

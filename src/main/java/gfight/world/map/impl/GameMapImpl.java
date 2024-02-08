@@ -52,10 +52,10 @@ public final class GameMapImpl implements GameMap {
         this.tiles.get(3 * this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
         this.spawnersPositions.put(
                 new Position2DImpl(realPosition(this.dimension / 4, this.dimension / 2)),
-                Spawner.SpawnerType.NORMAL);
+                Spawner.SpawnerType.LINEAR);
         this.spawnersPositions.put(
                 new Position2DImpl(realPosition(3 * this.dimension / 4, this.dimension / 2)),
-                Spawner.SpawnerType.NORMAL);
+                Spawner.SpawnerType.SCALAR);
         this.spawnersPositions.put(
                 new Position2DImpl(realPosition(this.dimension / 2, 3 * this.dimension / 4)),
                 Spawner.SpawnerType.BOSS);

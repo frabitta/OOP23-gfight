@@ -12,11 +12,18 @@ public interface Spawner {
      */
     enum SpawnerType {
         /**
-         * The spawner spawns normal enemies.
+         * Spawn normal enemies,
+         * which stats are always the same.
          */
-        NORMAL,
+        LINEAR,
         /**
-         * The spawner spawns bosses.
+         * Spawns normal enemies,
+         * which stats are determined by current level.
+         */
+        SCALAR,
+        /**
+         * Spawns bosses,
+         * which stats are determined by current level.
          */
         BOSS
     }

@@ -31,13 +31,14 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
         this.map = map;
     }
 
-    private Spawner create(final Position2D position, final ActiveEntity target, final int dim, final int health,
-            final Spawner.SpawnerType type) {
+    private Spawner create(final Position2D position, final ActiveEntity target, final int dim, final int initialHealth,
+            final Spawner.SpawnerType type, final double statsMultiplier) {
         return new AbstractSpawner(position, type) {
             @Override
             public void spawn() {
                 if (this.isEnabled()) {
-                    entityFactory.createEnemy(target, dim, position, currentLevel * health, map);
+                    final double health = initialHealth + (initialHealth * (currentLevel - 1) * statsMultiplier);
+                    entityFactory.createEnemy(target, dim, position, (int) health, map);
                 }
                 currentLevel++;
             }
@@ -46,24 +47,16 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
 
     @Override
     public Spawner createLinear(final Position2D position, final ActiveEntity target) {
-        return new AbstractSpawner(position, Spawner.SpawnerType.NORMAL) {
-            @Override
-            public void spawn() {
-                if (this.isEnabled()) {
-                    entityFactory.createEnemy(target, ENEMY_DIM, position, INITIAL_ENEMY_HEALTH, map);
-                }
-                currentLevel++;
-            }
-        };
+        return create(position, target, ENEMY_DIM, INITIAL_ENEMY_HEALTH, Spawner.SpawnerType.LINEAR, 0);
     }
 
     @Override
     public Spawner createScalar(final Position2D position, final ActiveEntity target) {
-        return create(position, target, ENEMY_DIM, INITIAL_ENEMY_HEALTH, Spawner.SpawnerType.NORMAL);
+        return create(position, target, ENEMY_DIM, INITIAL_ENEMY_HEALTH, Spawner.SpawnerType.SCALAR, 0.5);
     }
 
     @Override
     public Spawner createBoss(final Position2D position, final ActiveEntity target) {
-        return create(position, target, BOSS_DIM, INITIAL_BOSS_HEALTH, Spawner.SpawnerType.BOSS);
+        return create(position, target, BOSS_DIM, INITIAL_BOSS_HEALTH, Spawner.SpawnerType.BOSS, 0.5);
     }
 }
