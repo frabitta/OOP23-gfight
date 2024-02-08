@@ -27,9 +27,9 @@ public final class BfsMovement extends BaseMovement {
     /**
      * Constructor of bfs movement.
      * 
-     * @param agent the enemy
+     * @param agent  the enemy
      * @param target that the enemy needs to reach (Chest of Player)
-     * @param map of the game
+     * @param map    of the game
      */
     public BfsMovement(final MovingEntity agent, final GameEntity target, final GameMap map) {
         this.target = target;
@@ -40,8 +40,12 @@ public final class BfsMovement extends BaseMovement {
     @Override
     public void update() {
         List<Position2D> path = getPathFromBfs();
-        Vect newDirection = new VectorImpl(path.get(0), agent.getPosition()).norm();
-        this.setDirection(newDirection);
+        if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
+            Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm();
+            setDirection(newDirection);
+        } else {
+            setDirection(new VectorImpl(0, 0));
+        }
     }
 
     /**
@@ -50,14 +54,12 @@ public final class BfsMovement extends BaseMovement {
      */
     private List<Position2D> getPathFromBfs() {
         Position2D startNode = agent.getPosition();
-        Position2D targetNode = target.getPosition();        
+        Position2D targetNode = target.getPosition();
         BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
         List<Position2D> shortestPath = Optional
                 .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
                 .map(path -> path.getVertexList().stream().map(GameTile::getPosition).collect(Collectors.toList()))
                 .orElseThrow(NoSuchElementException::new);
         return shortestPath;
-
     }
-
 }
