@@ -10,6 +10,7 @@ import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.weapon.api.Weapon;
 import gfight.world.collision.api.CollisionCommand;
+import gfight.world.collision.impl.PushAwayCommand;
 import gfight.world.collision.impl.SlideCommand;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -80,7 +81,11 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     @Override
     protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         getAllCollided(gameobjects).stream().forEach(el -> {
-            if (el instanceof GameEntity) {
+            if (el instanceof Character) {
+                CollisionCommand<Character, Character> coll = new PushAwayCommand<>(this,
+                        (Character) el);
+                coll.execute();
+            } else if (el instanceof GameEntity) {
                 CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
                 coll.execute();
             }

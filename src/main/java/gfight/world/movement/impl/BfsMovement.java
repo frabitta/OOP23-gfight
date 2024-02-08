@@ -40,11 +40,11 @@ public final class BfsMovement extends BaseMovement {
     @Override
     public void update() {
         List<Position2D> path = getPathFromBfs();
-        if (agent.getPosition() != target.getPosition()) {
+        if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
             Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm();
             setDirection(newDirection);
-        }else{
-            setDirection(new VectorImpl(0,0));
+        } else {
+            setDirection(new VectorImpl(0, 0));
         }
     }
 
@@ -61,7 +61,5 @@ public final class BfsMovement extends BaseMovement {
                 .map(path -> path.getVertexList().stream().map(GameTile::getPosition).collect(Collectors.toList()))
                 .orElseThrow(NoSuchElementException::new);
         return shortestPath;
-
     }
-
 }

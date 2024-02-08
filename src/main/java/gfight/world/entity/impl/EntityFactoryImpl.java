@@ -39,7 +39,8 @@ public class EntityFactoryImpl implements EntityFactory {
     public final Character createPlayer(final double sideLength, final Position2D position,
             final int health, final InputMovement movement) {
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.RED, vertexes, GraphicType.WORLD);
+        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.RED, vertexes,
+                GraphicType.WORLD);
         final Character player = new CharacterImpl(vertexes, position, graphicsComponent, health, CharacterType.PLAYER);
         player.setMovement(Optional.of(movement));
         return player;
@@ -49,7 +50,8 @@ public class EntityFactoryImpl implements EntityFactory {
     public final Character createEnemy(final GameEntity target, final double sideLength, final Position2D position,
             final int health, final GameMap map) {
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLUE, vertexes, GraphicType.WORLD);
+        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLUE, vertexes,
+                GraphicType.WORLD);
         final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health, CharacterType.ENEMY);
         final Optional<Movement> movement = Optional.ofNullable(new BfsMovement(enemy, target, map));
         enemy.setMovement(movement);
@@ -59,7 +61,8 @@ public class EntityFactoryImpl implements EntityFactory {
     @Override
     public final CachedGameEntity createObstacle(final double sideLength, final Position2D position) {
         final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
-        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLACK, vertexes, GraphicType.WORLD);
+        PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLACK, vertexes,
+                GraphicType.WORLD);
         final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
         return obstacle;
     }
@@ -67,22 +70,23 @@ public class EntityFactoryImpl implements EntityFactory {
     @Override
     public final ActiveEntity createChest(final double sideLength, final Position2D position, final int health) {
         final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
-        final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW, vertexes, GraphicType.WORLD);
+        final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.YELLOW,
+                vertexes, GraphicType.WORLD);
         return new Chest(vertexes, position, graphicsComponent, health);
     }
 
     @Override
     public Projectile createProjectile(
-        final Character.CharacterType team,
-        final Position2D position,
-        final Vect direction,
-        final double projectileSize,
-        final int damage) {
+            final Character.CharacterType team,
+            final Position2D position,
+            final Vect direction,
+            final double projectileSize,
+            final int damage) {
         final List<Position2D> vertexes = vertexCalculator.square(projectileSize, position);
         final GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(
-            team == Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE,
-            vertexes,
-            GraphicType.WORLD);
+                team == Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE,
+                vertexes,
+                GraphicType.WORLD);
         final Movement movement = new MovementFactoryImpl().createLinearMovement(direction);
         return new ProjectileImpl(vertexes, position, gComp, team, movement, damage);
     }
