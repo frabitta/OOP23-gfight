@@ -81,7 +81,14 @@ public class WorldImpl implements World {
             }
         }
         this.entityManager.clean();
-        if(this.entityManager.isClear()){
+        if (this.entityManager.isClear()) {
+            if (this.currentLevel % 5 == 0) {
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.NORMAL).forEach(Spawner::disable);
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
+            } else {
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.NORMAL).forEach(Spawner::enable);
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
+            }
             newLevel();
         }
     }
@@ -135,12 +142,15 @@ public class WorldImpl implements World {
         this.currentLevel = 1;
         final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
         this.spawners = new HashSet<>();
-        for(final var pos : this.map.getSpawnersPositions()){
-            this.spawners.add(spawnerFactory.createLinear(pos, testPlayer));
+        for (final var entry : this.map.getSpawnersPositions().entrySet()) {
+            this.spawners.add(switch (entry.getValue()) {
+                case BOSS -> spawnerFactory.createBoss(entry.getKey(), testPlayer);
+                case NORMAL -> spawnerFactory.createScalar(entry.getKey(), testPlayer);
+            });
         }
     }
 
-    private void newLevel(){
+    private void newLevel() {
         this.spawners.stream().forEach(Spawner::spawn);
         this.currentLevel++;
     }

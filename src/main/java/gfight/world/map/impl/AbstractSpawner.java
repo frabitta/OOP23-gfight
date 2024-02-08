@@ -8,6 +8,7 @@ import gfight.world.map.api.Spawner;
  */
 public abstract class AbstractSpawner implements Spawner {
 
+    private final SpawnerType type;
     private final Position2D position;
     private boolean isEnabled;
     protected int currentLevel;
@@ -17,14 +18,20 @@ public abstract class AbstractSpawner implements Spawner {
      * 
      * @param position the position of the spawner
      */
-    public AbstractSpawner(final Position2D position) {
+    public AbstractSpawner(final Position2D position, final SpawnerType type) {
         this.position = position;
+        this.type = type;
         this.currentLevel = 0;
         this.isEnabled = true;
     }
 
     public void spawn() {
         this.currentLevel++;
+    }
+
+    @Override
+    public SpawnerType getType() {
+        return this.type;
     }
 
     @Override

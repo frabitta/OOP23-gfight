@@ -13,7 +13,9 @@ import gfight.world.map.api.SpawnerFactory;
 public class SpawnerFactoryImpl implements SpawnerFactory {
 
     private static final int ENEMY_DIM = 25;
-    private static final int DEFAULT_HEALTH = 5;
+    private static final int BOSS_DIM = 50;
+    private static final int INITIAL_ENEMY_HEALTH = 5;
+    private static final int INITIAL_BOSS_HEALTH = 30;
 
     private final EntityFactory entityFactory;
     private final GameMap map;
@@ -31,10 +33,12 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
 
     @Override
     public Spawner createLinear(final Position2D position, final ActiveEntity target) {
-        return new AbstractSpawner(position) {
+        return new AbstractSpawner(position, Spawner.SpawnerType.NORMAL) {
             @Override
             public void spawn() {
-                entityFactory.createEnemy(target, ENEMY_DIM, position, DEFAULT_HEALTH, map);
+                if (this.isEnabled()) {
+                    entityFactory.createEnemy(target, ENEMY_DIM, position, INITIAL_ENEMY_HEALTH, map);
+                }
                 super.spawn();
             }
         };
@@ -42,10 +46,13 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
 
     @Override
     public Spawner createScalar(final Position2D position, final ActiveEntity target) {
-        return new AbstractSpawner(position) {
+        return new AbstractSpawner(position, Spawner.SpawnerType.NORMAL) {
             @Override
             public void spawn() {
-                entityFactory.createEnemy(target, ENEMY_DIM, position, DEFAULT_HEALTH * this.currentLevel, map);
+                if (this.isEnabled()) {
+                    entityFactory.createEnemy(target, ENEMY_DIM, position, INITIAL_ENEMY_HEALTH * this.currentLevel,
+                            map);
+                }
                 super.spawn();
             }
         };
@@ -53,10 +60,12 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
 
     @Override
     public Spawner createBoss(final Position2D position, final ActiveEntity target) {
-        // TODO
-        return new AbstractSpawner(position) {
+        return new AbstractSpawner(position, Spawner.SpawnerType.BOSS) {
             @Override
             public void spawn() {
+                if (this.isEnabled()) {
+                    entityFactory.createEnemy(target, BOSS_DIM, position, INITIAL_BOSS_HEALTH * this.currentLevel, map);
+                }
                 super.spawn();
             }
         };

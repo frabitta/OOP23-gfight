@@ -8,11 +8,32 @@ import gfight.common.api.Position2D;
 public interface Spawner {
 
     /**
+     * Defines the type of the spawner.
+     */
+    enum SpawnerType {
+        /**
+         * The spawner spawns normal enemies.
+         */
+        NORMAL,
+        /**
+         * The spawner spawns bosses.
+         */
+        BOSS
+    }
+
+    /**
      * Spawns enemies on the map.
      * The spawner will spawn enemies only if {@code isEnabled()}
      * returns {@code true}.
      */
     void spawn();
+
+    /**
+     * Returns the type of the spawner.
+     * 
+     * @return the type of the spawner
+     */
+    SpawnerType getType();
 
     /**
      * Returns the position of the spawner in the map.

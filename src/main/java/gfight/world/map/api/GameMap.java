@@ -1,5 +1,6 @@
 package gfight.world.map.api;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.jgrapht.Graph;
@@ -29,18 +30,19 @@ public interface GameMap {
     Position2D getChestPosition();
 
     /**
-     * Returns the positin of the obstacles in the map.
+     * Returns the positions of the obstacles in the map.
      * 
-     * @return the position of the obstacles
+     * @return a set of the positions of the obstacles
      */
     Set<Position2D> getObstaclesPositions();
 
     /**
-     * Returns the positions of all the spawners of the map.
+     * Returns the positions of all the spawners of the map,
+     * each associated with its type.
      * 
-     * @return a set of the positions of the spawners in the map
+     * @return a map of the positions of the spawners with their type
      */
-    Set<Position2D> getSpawnersPositions();
+    Map<Position2D, Spawner.SpawnerType> getSpawnersPositions();
 
     /**
      * Returns the GameTile which contains the given position.
