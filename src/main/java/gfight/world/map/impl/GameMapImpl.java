@@ -1,6 +1,8 @@
 package gfight.world.map.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,6 +24,7 @@ import gfight.world.map.api.GameTile.TileType;
  */
 public final class GameMapImpl implements GameMap {
 
+    private final Set<Position2D> spawnersPositions;
     private final List<List<GameTile>> tiles;
     private final int dimension;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
@@ -40,11 +43,13 @@ public final class GameMapImpl implements GameMap {
     /**
      * Creates default obstacles inside the map, one for each diagonal direction.
      */
-    private void defaultScatteredObstacles() {
+    private void defaultScatter() {
         this.tiles.get(this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
         this.tiles.get(this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
         this.tiles.get(3 * this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
         this.tiles.get(3 * this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
+        this.spawnersPositions.add(new Position2DImpl(realPosition(this.dimension / 4, this.dimension / 2)));
+        this.spawnersPositions.add(new Position2DImpl(realPosition(3 * this.dimension / 4, this.dimension / 2)));
     }
 
     /**
@@ -53,6 +58,7 @@ public final class GameMapImpl implements GameMap {
      * @param dimension the number of tiles a side of the map is composed by
      */
     public GameMapImpl(final int dimension) {
+        this.spawnersPositions = new HashSet<>();
         this.dimension = dimension;
         this.tiles = new ArrayList<>(dimension);
         for (int i = 0; i < dimension; i++) {
@@ -71,7 +77,7 @@ public final class GameMapImpl implements GameMap {
                 this.tiles.get(i).add(j, tile);
             }
         }
-        defaultScatteredObstacles();
+        defaultScatter();
         this.tiles.get(this.dimension / 2).get(this.dimension / 2).setType(TileType.CHEST);
     }
 
@@ -100,9 +106,7 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Set<Position2D> getSpawnersPositions() {
-        // TODO
-        throw new UnsupportedOperationException("Spawners not implemented yet");
-        // return Collections.unmodifiableSet(this.spawners);
+        return Collections.unmodifiableSet(this.spawnersPositions);
     }
 
     @Override

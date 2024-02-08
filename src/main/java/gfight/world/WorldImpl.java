@@ -1,7 +1,9 @@
 package gfight.world;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
@@ -19,9 +21,13 @@ import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
 import gfight.world.impl.EntityManagerImpl;
 import gfight.world.map.api.GameMap;
+import gfight.world.map.api.Spawner;
+import gfight.world.map.api.SpawnerFactory;
 import gfight.world.map.impl.GameMapImpl;
+import gfight.world.map.impl.SpawnerFactoryImpl;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
+import gfight.world.weapon.impl.WeaponFactoryImpl;
 
 /**
  * Implementation of a World controlling the execution of the game.
@@ -30,14 +36,18 @@ public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
     private static final int MAP_DIM = 21;
+    private static final int CHEST_HEALTH = 150;
 
     private MovableCamera camera;
     private EntityManager entityManager;
     private GameMap map;
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
+
+    private Set<Spawner> spawners;
     private Character testPlayer;
     private Position2D pointingPosition;
+    private int currentLevel;
 
     /**
      * Creates a new instance of a World.
@@ -48,7 +58,7 @@ public class WorldImpl implements World {
         this.map = new GameMapImpl(MAP_DIM);
         this.keyMapper = new MovementFactoryImpl().createInput();
         loadMap();
-        this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 20, map);
+        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
     }
 
     @Override
@@ -71,6 +81,9 @@ public class WorldImpl implements World {
             }
         }
         this.entityManager.clean();
+        if(this.entityManager.isClear()){
+            newLevel();
+        }
     }
 
     @Override
@@ -108,15 +121,27 @@ public class WorldImpl implements World {
     private void managePointer(final InputEventMouse pointer) {
         this.pointingPosition = pointer.getPosition();
         if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
-            // add here to make player shoot
+            this.testPlayer.makeDamage();
         }
     }
 
-    private void loadMap(){
-        for(final var pos : this.map.getObstaclesPositions()){
+    private void loadMap() {
+        for (final var pos : this.map.getObstaclesPositions()) {
             this.entityManager.createObstacle(GameMap.TILE_DIM, pos);
         }
+        this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
         this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
         this.pointingPosition = new Position2DImpl(this.testPlayer.getPosition().getX(), 0);
+        this.currentLevel = 1;
+        final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
+        this.spawners = new HashSet<>();
+        for(final var pos : this.map.getSpawnersPositions()){
+            this.spawners.add(spawnerFactory.createLinear(pos, testPlayer));
+        }
+    }
+
+    private void newLevel(){
+        this.spawners.stream().forEach(Spawner::spawn);
+        this.currentLevel++;
     }
 }
