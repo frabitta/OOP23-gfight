@@ -23,8 +23,8 @@ import gfight.world.weapon.api.Projectile;
 public class EntityManagerImpl implements EntityManager {
 
     private final EntityFactory factory;
-    private final Set<CachedGameEntity> otherEntities;
-    private final Set<CachedGameEntity> enemies;
+    private Set<CachedGameEntity> otherEntities;
+    private Set<CachedGameEntity> enemies;
 
     /**
      * Creates a new decorator for an entity factory
@@ -70,11 +70,11 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public Projectile createProjectile(
-        final Character.CharacterType team,
-        final Position2D position,
-        final Vect direction,
-        final double projectileSize,
-        final int damage) {
+            final Character.CharacterType team,
+            final Position2D position,
+            final Vect direction,
+            final double projectileSize,
+            final int damage) {
         final Projectile projectile = this.factory.createProjectile(team, position, direction, projectileSize, damage);
         this.otherEntities.add(projectile);
         return projectile;
@@ -88,5 +88,16 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public boolean isClear() {
         return this.enemies.isEmpty();
+    }
+
+    @Override
+    public void clean() {
+        this.otherEntities = this.otherEntities.stream()
+                .filter(e -> !(e instanceof ActiveEntity)
+                        || (e instanceof ActiveEntity && ((ActiveEntity) e).isAlive()))
+                .collect(Collectors.toSet());
+        this.enemies = this.enemies.stream()
+                .filter(e -> ((ActiveEntity) e).isAlive())
+                .collect(Collectors.toSet());
     }
 }

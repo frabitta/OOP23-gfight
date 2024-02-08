@@ -92,7 +92,7 @@ public final class GameMapImpl implements GameMap {
                 }
             }
         }
-        this.factory.createChest(TILE_DIM, realPosition(this.dimension / 2, this.dimension / 2), 0);
+        this.factory.createChest(TILE_DIM, realPosition(this.dimension / 2, this.dimension / 2), 50);
         defaultScatteredObstacles();
     }
 

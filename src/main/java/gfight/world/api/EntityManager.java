@@ -23,4 +23,11 @@ public interface EntityManager extends EntityFactory {
      * @return {@code true} if all enemies are dead, {@code false} otherwise
      */
     boolean isClear();
+
+    /**
+     * Eliminates every dead entity from the game.
+     * Entities will stay alive is their method {@code isAlive()}
+     * returns {@code true}.
+     */
+    void clean();
 }
