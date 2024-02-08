@@ -12,12 +12,7 @@ import gfight.common.api.Position2D;
  */
 public interface GameMap {
 
-    /**
-     * Returns all the game tiles of which the map is composed.
-     * 
-     * @return a set containing all the game tiles of the map
-     */
-    Set<GameTile> getGameTiles();
+    public static final int TILE_DIM = 40;
 
     /**
      * Returns the position where the player needs to spawn.
@@ -27,11 +22,25 @@ public interface GameMap {
     Position2D getPlayerSpawn();
 
     /**
-     * Returns all the spawners of the map.
+     * Returns the position of the chest in the map:
      * 
-     * @return a set of the spawners in the map
+     * @return the position of the chest
      */
-    Set<Spawner> getSpawners();
+    Position2D getChestPosition();
+
+    /**
+     * Returns the positin of the obstacles in the map.
+     * 
+     * @return the position of the obstacles
+     */
+    Set<Position2D> getObstaclesPositions();
+
+    /**
+     * Returns the positions of all the spawners of the map.
+     * 
+     * @return a set of the positions of the spawners in the map
+     */
+    Set<Position2D> getSpawnersPositions();
 
     /**
      * Returns the GameTile which contains the given position.

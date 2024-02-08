@@ -1,6 +1,6 @@
 package gfight.world.map.impl;
 
-import gfight.world.entity.api.EntityFactory;
+import gfight.common.api.Position2D;
 import gfight.world.map.api.Spawner;
 
 /**
@@ -8,24 +8,28 @@ import gfight.world.map.api.Spawner;
  */
 public abstract class AbstractSpawner implements Spawner {
 
-    protected final EntityFactory factory;
-
+    private final Position2D position;
     private boolean isEnabled;
     protected int currentLevel;
 
     /**
      * Creates a new abstract Spawner which spawning criteria is not defined.
      * 
-     * @param factory the entity factory for spawning enemies
+     * @param position the position of the spawner
      */
-    public AbstractSpawner(final EntityFactory factory) {
-        this.factory = factory;
+    public AbstractSpawner(final Position2D position) {
+        this.position = position;
         this.currentLevel = 0;
         this.isEnabled = true;
     }
 
-    public void spawn(){
+    public void spawn() {
         this.currentLevel++;
+    }
+
+    @Override
+    public Position2D getPosition() {
+        return this.position;
     }
 
     @Override

@@ -45,13 +45,9 @@ public class WorldImpl implements World {
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(MAP_DIM, this.entityManager);
+        this.map = new GameMapImpl(MAP_DIM);
         this.keyMapper = new MovementFactoryImpl().createInput();
-
-        // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità
-        this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
-
-        pointingPosition = this.testPlayer.getPosition();
+        loadMap();
         this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 20, map);
     }
 
@@ -112,8 +108,15 @@ public class WorldImpl implements World {
     private void managePointer(final InputEventMouse pointer) {
         this.pointingPosition = pointer.getPosition();
         if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
-            this.entityManager.createObstacle(20, pointer.getPosition());
-            // add here to spawn test projectiles
+            // add here to make player shoot
         }
+    }
+
+    private void loadMap(){
+        for(final var pos : this.map.getObstaclesPositions()){
+            this.entityManager.createObstacle(GameMap.TILE_DIM, pos);
+        }
+        this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
+        this.pointingPosition = new Position2DImpl(this.testPlayer.getPosition().getX(), 0);
     }
 }

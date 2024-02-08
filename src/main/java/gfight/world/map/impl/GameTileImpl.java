@@ -10,7 +10,7 @@ import gfight.world.map.api.GameTile;
  */
 public final class GameTileImpl implements GameTile {
 
-    private final GameTile.TileType type;
+    private GameTile.TileType type;
     private final Position2D centerPosition;
     private final double dimension;
 
@@ -36,6 +36,11 @@ public final class GameTileImpl implements GameTile {
     @Override
     public TileType getType() {
         return this.type;
+    }
+
+    @Override
+    public void setType(final TileType type) {
+        this.type = type;
     }
 
     @Override

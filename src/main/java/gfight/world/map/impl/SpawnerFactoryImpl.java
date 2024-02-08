@@ -1,6 +1,8 @@
 package gfight.world.map.impl;
 
+import gfight.common.api.Position2D;
 import gfight.world.entity.api.EntityFactory;
+import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;
 
@@ -10,20 +12,34 @@ import gfight.world.map.api.SpawnerFactory;
 public class SpawnerFactoryImpl implements SpawnerFactory {
 
     private final EntityFactory entityFactory;
+    private final GameMap map;
 
     /**
      * Creates a new SpawnerFactory.
      * 
-     * @param factory the entity factory for spawning enemies
+     * @param entityFactory the entity factory for spawning enemies
+     * @param map           the game map to spawn enemies on
      */
-    public SpawnerFactoryImpl(final EntityFactory entityFactory) {
+    public SpawnerFactoryImpl(final EntityFactory entityFactory, final GameMap map) {
         this.entityFactory = entityFactory;
+        this.map = map;
     }
 
     @Override
-    public Spawner createLinear() {
+    public Spawner createLinear(final Position2D position) {
+        return new AbstractSpawner(position) {
+            @Override
+            public void spawn() {
+                entityFactory.createEnemy(null, currentLevel, position, this.currentLevel, map);
+                super.spawn();
+            }
+        };
+    }
+
+    @Override
+    public Spawner createScalar(final Position2D position) {
         // TODO
-        return new AbstractSpawner(this.entityFactory) {
+        return new AbstractSpawner(position) {
             @Override
             public void spawn() {
                 super.spawn();
@@ -32,20 +48,9 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
     }
 
     @Override
-    public Spawner createScalar() {
+    public Spawner createBoss(final Position2D position) {
         // TODO
-        return new AbstractSpawner(this.entityFactory) {
-            @Override
-            public void spawn() {
-                super.spawn();
-            }
-        };
-    }
-
-    @Override
-    public Spawner createBoss() {
-        // TODO
-        return new AbstractSpawner(this.entityFactory) {
+        return new AbstractSpawner(position) {
             @Override
             public void spawn() {
                 super.spawn();
