@@ -8,40 +8,46 @@ import gfight.common.api.Position2D;
 public interface GameTile {
 
     /**
-     * Defines whether the game tile is empty, a spawner or an obstacle (e.g. wall).
+     * Defines whether the game tile is empty, a chest or an obstacle.
      */
     enum TileType {
         /** The tile is empty. */
         EMPTY,
         /** The tile contains an obstacle. */
         OBSTACLE,
-        /** The tile is a spawner. */
-        SPAWNER
+        /** The tile is a chest. */
+        CHEST
     }
 
     /**
-     * Get the dimension of the side of the tile.
+     * Gets the dimension of the side of the tile.
      * 
      * @return the dimension of the side of the tile
      */
     double getDimension();
 
     /**
-     * Get the type of a game tile.
+     * Gets the type of a game tile.
      * 
      * @return the type of the game tile
      */
     TileType getType();
 
     /**
-     * Get the position of the center of the tile.
+     * Sets the new type of the tile.
+     * Usefull when you don't want enemies to cross it to reach the player.
+     */
+    void setType(TileType type);
+
+    /**
+     * Gets the position of the center of the tile.
      * 
      * @return the position of the tile
      */
     Position2D getPosition();
 
     /**
-     * Check if a given position is inside the game tile or not.
+     * Checks if a given position is inside the game tile or not.
      * 
      * @param position the position to check
      * @return true if position is inside this game tile, false otherwise

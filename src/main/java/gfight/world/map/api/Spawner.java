@@ -1,8 +1,6 @@
 package gfight.world.map.api;
 
-import java.util.Set;
-
-import gfight.world.entity.api.GameEntity;
+import gfight.common.api.Position2D;
 
 /**
  * A spawner which spawns enemies on the map.
@@ -10,27 +8,61 @@ import gfight.world.entity.api.GameEntity;
 public interface Spawner {
 
     /**
-     * Spawn enemies on the map. The spawner will spawn enemies only if it's enabled.
-     * 
-     * @return a set containing the enemies just spawned,
-     *         empty if the spawner is disabled
+     * Defines the type of the spawner.
      */
-    Set<GameEntity> spawnEnemies();
+    enum SpawnerType {
+        /**
+         * Spawn normal enemies,
+         * which stats are always the same.
+         */
+        LINEAR,
+        /**
+         * Spawns normal enemies,
+         * which stats are determined by current level.
+         */
+        SCALAR,
+        /**
+         * Spawns bosses,
+         * which stats are determined by current level.
+         */
+        BOSS
+    }
 
     /**
-     * Check whether the spawner is enabled or not.
+     * Spawns enemies on the map.
+     * The spawner will spawn enemies only if {@code isEnabled()}
+     * returns {@code true}.
+     */
+    void spawn();
+
+    /**
+     * Returns the type of the spawner.
+     * 
+     * @return the type of the spawner
+     */
+    SpawnerType getType();
+
+    /**
+     * Returns the position of the spawner in the map.
+     * 
+     * @return the position of the spawner
+     */
+    Position2D getPosition();
+
+    /**
+     * Checks whether the spawner is enabled or not.
      * 
      * @return a boolean describing if the spawner is enabled or disabled
      */
     boolean isEnabled();
 
     /**
-     * Enable the spawner.
+     * Enables the spawner.
      */
     void enable();
 
     /**
-     * Disable the spawner.
+     * Disables the spawner.
      */
     void disable();
 }

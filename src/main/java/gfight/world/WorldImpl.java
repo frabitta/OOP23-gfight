@@ -1,7 +1,9 @@
 package gfight.world;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
@@ -19,9 +21,13 @@ import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
 import gfight.world.impl.EntityManagerImpl;
 import gfight.world.map.api.GameMap;
+import gfight.world.map.api.Spawner;
+import gfight.world.map.api.SpawnerFactory;
 import gfight.world.map.impl.GameMapImpl;
+import gfight.world.map.impl.SpawnerFactoryImpl;
 import gfight.world.movement.api.InputMovement;
 import gfight.world.movement.impl.MovementFactoryImpl;
+import gfight.world.weapon.impl.WeaponFactoryImpl;
 
 /**
  * Implementation of a World controlling the execution of the game.
@@ -30,14 +36,18 @@ public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
     private static final int MAP_DIM = 21;
+    private static final int CHEST_HEALTH = 150;
 
     private MovableCamera camera;
     private EntityManager entityManager;
     private GameMap map;
     private InputMovement keyMapper;
     private Hitboxes hitboxManager;
+
+    private Set<Spawner> spawners;
     private Character testPlayer;
     private Position2D pointingPosition;
+    private int currentLevel;
 
     /**
      * Creates a new instance of a World.
@@ -45,14 +55,10 @@ public class WorldImpl implements World {
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(MAP_DIM, this.entityManager);
+        this.map = new GameMapImpl(MAP_DIM);
         this.keyMapper = new MovementFactoryImpl().createInput();
-
-        // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità
-        this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
-
-        pointingPosition = this.testPlayer.getPosition();
-        this.entityManager.createEnemy(testPlayer, 15, new Position2DImpl(50, 250), 20, map);
+        loadMap();
+        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
     }
 
     @Override
@@ -75,6 +81,16 @@ public class WorldImpl implements World {
             }
         }
         this.entityManager.clean();
+        if (this.entityManager.isClear()) {
+            if (this.currentLevel % 5 == 0) {
+                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
+            } else {
+                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
+                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
+            }
+            newLevel();
+        }
     }
 
     @Override
@@ -112,8 +128,31 @@ public class WorldImpl implements World {
     private void managePointer(final InputEventMouse pointer) {
         this.pointingPosition = pointer.getPosition();
         if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
-            this.entityManager.createObstacle(20, pointer.getPosition());
-            // add here to spawn test projectiles
+            this.testPlayer.makeDamage();
         }
+    }
+
+    private void loadMap() {
+        for (final var pos : this.map.getObstaclesPositions()) {
+            this.entityManager.createObstacle(GameMap.TILE_DIM, pos);
+        }
+        this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
+        this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
+        this.pointingPosition = new Position2DImpl(this.testPlayer.getPosition().getX(), 0);
+        this.currentLevel = 1;
+        final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
+        this.spawners = new HashSet<>();
+        for (final var entry : this.map.getSpawnersPositions().entrySet()) {
+            this.spawners.add(switch (entry.getValue()) {
+                case BOSS -> spawnerFactory.createBoss(entry.getKey(), testPlayer);
+                case SCALAR -> spawnerFactory.createScalar(entry.getKey(), testPlayer);
+                case LINEAR -> spawnerFactory.createLinear(entry.getKey(), testPlayer);
+            });
+        }
+    }
+
+    private void newLevel() {
+        this.spawners.stream().forEach(Spawner::spawn);
+        this.currentLevel++;
     }
 }

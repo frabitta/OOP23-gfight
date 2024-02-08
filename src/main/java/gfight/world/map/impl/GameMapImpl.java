@@ -2,25 +2,23 @@ package gfight.world.map.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.graph.guava.MutableGraphAdapter;
-
-import com.google.common.graph.GraphBuilder;
-import com.google.common.graph.MutableGraph;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
-import gfight.world.entity.api.EntityFactory;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
+import gfight.world.map.api.Spawner;
 import gfight.world.map.api.GameTile.TileType;
 
 /**
@@ -28,12 +26,9 @@ import gfight.world.map.api.GameTile.TileType;
  */
 public final class GameMapImpl implements GameMap {
 
-    private static final int TILE_DIM = 40;
-
-    private final Set<GameTile> tiles;
-    private final List<List<GameTile>> tileList;
+    private final Map<Position2D, Spawner.SpawnerType> spawnersPositions;
+    private final List<List<GameTile>> tiles;
     private final int dimension;
-    private final EntityFactory factory;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
 
     /**
@@ -50,55 +45,59 @@ public final class GameMapImpl implements GameMap {
     /**
      * Creates default obstacles inside the map, one for each diagonal direction.
      */
-    private void defaultScatteredObstacles() {
-        this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, this.dimension / 4));
-        this.factory.createObstacle(TILE_DIM, realPosition(this.dimension / 4, 3 * this.dimension / 4));
-        this.factory.createObstacle(TILE_DIM, realPosition(3 * this.dimension / 4, this.dimension / 4));
-        this.factory.createObstacle(TILE_DIM, realPosition(3 * this.dimension / 4, 3 * this.dimension / 4));
+    private void defaultScatter() {
+        this.tiles.get(this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(3 * this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(3 * this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
+        this.spawnersPositions.put(
+                new Position2DImpl(realPosition(this.dimension / 4, this.dimension / 2)),
+                Spawner.SpawnerType.LINEAR);
+        this.spawnersPositions.put(
+                new Position2DImpl(realPosition(3 * this.dimension / 4, this.dimension / 2)),
+                Spawner.SpawnerType.SCALAR);
+        this.spawnersPositions.put(
+                new Position2DImpl(realPosition(this.dimension / 2, 3 * this.dimension / 4)),
+                Spawner.SpawnerType.BOSS);
     }
 
     /**
      * Creates a game map with the given dimension.
      * 
      * @param dimension the number of tiles a side of the map is composed by
-     * @param factory   the entity factory allowing for obstacle creation
      */
-    public GameMapImpl(final int dimension, final EntityFactory factory) {
+    public GameMapImpl(final int dimension) {
+        this.spawnersPositions = new HashMap<>();
         this.dimension = dimension;
-        this.tiles = new HashSet<>(dimension);
-        this.tileList = new ArrayList<>(dimension);
-        this.factory = factory;
+        this.tiles = new ArrayList<>(dimension);
         for (int i = 0; i < dimension; i++) {
-            this.tileList.add(i, new ArrayList<>(dimension));
+            this.tiles.add(i, new ArrayList<>(dimension));
         }
         this.tileGraph = Optional.empty();
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
+                final GameTile tile = new GameTileImpl(
+                        TileType.EMPTY,
+                        realPosition(i, j),
+                        TILE_DIM);
                 if (i == 0 || i == dimension - 1 || j == 0 || j == dimension - 1) {
-                    this.factory.createObstacle(TILE_DIM, realPosition(i, j));
-                    final GameTile tile = new GameTileImpl(
-                            TileType.OBSTACLE,
-                            realPosition(i, j),
-                            TILE_DIM);
-                    this.tiles.add(tile);
-                    this.tileList.get((int) i).add((int) j, tile);
-                } else {
-                    final GameTile tile = new GameTileImpl(
-                            TileType.EMPTY,
-                            realPosition(i, j),
-                            TILE_DIM);
-                    this.tiles.add(tile);
-                    this.tileList.get((int) i).add((int) j, tile);
+                    tile.setType(TileType.OBSTACLE);
                 }
+                this.tiles.get(i).add(j, tile);
             }
         }
-        this.factory.createChest(TILE_DIM, realPosition(this.dimension / 2, this.dimension / 2), 50);
-        defaultScatteredObstacles();
+        defaultScatter();
+        this.tiles.get(this.dimension / 2).get(this.dimension / 2).setType(TileType.CHEST);
     }
 
     @Override
-    public Set<GameTile> getGameTiles() {
-        return Collections.unmodifiableSet(this.tiles);
+    public Position2D getChestPosition() {
+        return this.tiles.stream()
+                .flatMap(List::stream)
+                .filter(t -> t.getType() == GameTile.TileType.CHEST)
+                .findFirst()
+                .get()
+                .getPosition();
     }
 
     @Override
@@ -106,11 +105,26 @@ public final class GameMapImpl implements GameMap {
         return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2 - 2));
     }
 
+    public Set<Position2D> getObstaclesPositions() {
+        return this.tiles.stream()
+                .flatMap(List::stream)
+                .filter(t -> t.getType() == GameTile.TileType.OBSTACLE)
+                .map(GameTile::getPosition)
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Map<Position2D, Spawner.SpawnerType> getSpawnersPositions() {
+        return Collections.unmodifiableMap(this.spawnersPositions);
+    }
+
     @Override
     public GameTile searchTile(final Position2D position) {
-        for (final var tile : this.tiles) {
-            if (tile.contains(position)) {
-                return tile;
+        for (final var col : this.tiles) {
+            for (final var tile : col) {
+                if (tile.contains(position)) {
+                    return tile;
+                }
             }
         }
         throw new IllegalStateException("Entity at position " + position + " is not inside the map");
@@ -125,39 +139,35 @@ public final class GameMapImpl implements GameMap {
     }
 
     private void buildGraph() {
-        final MutableGraph<GameTile> g = GraphBuilder.undirected().build();
-        final MutableGraphAdapter<GameTile> adapter = new MutableGraphAdapter<>(g);
         final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<>(DefaultEdge.class);
         final var freeCondition = GameTile.TileType.EMPTY;
-        for (final var tile : this.tiles) {
-            g2.addVertex(tile);
+        for (final var col : this.tiles) {
+            for (final var tile : col) {
+                g2.addVertex(tile);
+            }
         }
         // col (x)
         for (int i = 0; i < dimension; i++) {
             // row (y)
             for (int j = 0; j < dimension; j++) {
-                final var tile = this.tileList.get(i).get(j);
+                final var tile = this.tiles.get(i).get(j);
                 Objects.requireNonNull(tile);
                 if (tile.getType().equals(freeCondition)) {
                     // NORTH
-                    if (j > 0 && this.tileList.get(i).get(j - 1).getType().equals(freeCondition)) {
-                        g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i - 1).get(j)));
-                        g2.addEdge(tile, this.tileList.get(i).get(j - 1));
+                    if (j > 0 && this.tiles.get(i).get(j - 1).getType().equals(freeCondition)) {
+                        g2.addEdge(tile, this.tiles.get(i).get(j - 1));
                     }
                     // SOUTH
-                    if (j < (dimension - 1) && this.tileList.get(i).get(j + 1).getType().equals(freeCondition)) {
-                        g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i + 1).get(j)));
-                        g2.addEdge(tile, this.tileList.get(i).get(j + 1));
+                    if (j < (dimension - 1) && this.tiles.get(i).get(j + 1).getType().equals(freeCondition)) {
+                        g2.addEdge(tile, this.tiles.get(i).get(j + 1));
                     }
                     // WEST
-                    if (i > 0 && this.tileList.get(i - 1).get(j).getType().equals(freeCondition)) {
-                        g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j - 1)));
-                        g2.addEdge(tile, this.tileList.get(i - 1).get(j));
+                    if (i > 0 && this.tiles.get(i - 1).get(j).getType().equals(freeCondition)) {
+                        g2.addEdge(tile, this.tiles.get(i - 1).get(j));
                     }
                     // EAST
-                    if (i < (dimension - 1) && this.tileList.get(i + 1).get(j).getType().equals(freeCondition)) {
-                        g.putEdge(tile, Objects.requireNonNull(this.tileList.get(i).get(j + 1)));
-                        g2.addEdge(tile, this.tileList.get(i + 1).get(j));
+                    if (i < (dimension - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
+                        g2.addEdge(tile, this.tiles.get(i + 1).get(j));
                     }
                 }
             }
