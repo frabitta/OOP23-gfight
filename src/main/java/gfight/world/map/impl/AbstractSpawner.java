@@ -25,10 +25,6 @@ public abstract class AbstractSpawner implements Spawner {
         this.isEnabled = true;
     }
 
-    public void spawn() {
-        this.currentLevel++;
-    }
-
     @Override
     public SpawnerType getType() {
         return this.type;
