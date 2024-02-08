@@ -93,8 +93,7 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public void clean() {
         this.otherEntities = this.otherEntities.stream()
-                .filter(e -> !(e instanceof ActiveEntity)
-                        || (e instanceof ActiveEntity && ((ActiveEntity) e).isAlive()))
+                .filter(e -> !(e instanceof ActiveEntity) || ((ActiveEntity) e).isAlive())
                 .collect(Collectors.toSet());
         this.enemies = this.enemies.stream()
                 .filter(e -> ((ActiveEntity) e).isAlive())
