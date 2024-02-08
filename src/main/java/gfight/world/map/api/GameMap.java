@@ -13,30 +13,37 @@ import gfight.common.api.Position2D;
 public interface GameMap {
 
     /**
-     * Get all the game tiles of which the map is composed.
+     * Returns all the game tiles of which the map is composed.
      * 
      * @return a set containing all the game tiles of the map
      */
     Set<GameTile> getGameTiles();
 
     /**
-     * Return the position where the player needs to spawn.
+     * Returns the position where the player needs to spawn.
      * 
      * @return the player spawning location
      */
     Position2D getPlayerSpawn();
 
     /**
-     * Get the GameTile which contains the given position.
+     * Returns all the spawners of the map.
+     * 
+     * @return a set of the spawners in the map
+     */
+    Set<Spawner> getSpawners();
+
+    /**
+     * Returns the GameTile which contains the given position.
      * 
      * @param position
-     * @return the GameTile containing position
+     * @return the GameTile containing {@code position}
      * @throws IllegalStateException if the given position is not inside the map
      */
     GameTile searchTile(Position2D position);
 
     /**
-     * Get the graph of the game tiles on the map.
+     * Returns the graph of the game tiles on the map.
      * 
      * @return an immutable Graph of the GameTiles
      */

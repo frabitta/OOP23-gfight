@@ -21,6 +21,7 @@ import gfight.common.impl.Position2DImpl;
 import gfight.world.entity.api.EntityFactory;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
+import gfight.world.map.api.Spawner;
 import gfight.world.map.api.GameTile.TileType;
 
 /**
@@ -30,6 +31,7 @@ public final class GameMapImpl implements GameMap {
 
     private static final int TILE_DIM = 40;
 
+    private final Set<Spawner> spawners;
     private final Set<GameTile> tiles;
     private final List<List<GameTile>> tileList;
     private final int dimension;
@@ -64,6 +66,7 @@ public final class GameMapImpl implements GameMap {
      * @param factory   the entity factory allowing for obstacle creation
      */
     public GameMapImpl(final int dimension, final EntityFactory factory) {
+        this.spawners = new HashSet<>();
         this.dimension = dimension;
         this.tiles = new HashSet<>(dimension);
         this.tileList = new ArrayList<>(dimension);
@@ -104,6 +107,11 @@ public final class GameMapImpl implements GameMap {
     @Override
     public Position2D getPlayerSpawn() {
         return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2 - 2));
+    }
+
+    @Override
+    public Set<Spawner> getSpawners() {
+        return Collections.unmodifiableSet(this.spawners);
     }
 
     @Override
