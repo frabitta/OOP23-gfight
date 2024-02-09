@@ -64,9 +64,11 @@ public final class GameEntityImpl implements GameEntity {
         final Hitbox boundingBox = this.getHitBox();
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
+                .filter(a -> !a.getPosition().equals(this.getPosition()))
                 .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
                         && !ignoredEntities.contains(a))
-                .forEach(entity -> collidedObjectes.add(entity));
+                .forEach(entity -> {collidedObjectes.add(entity);
+                    System.out.println(entity.getPosition());});
         return collidedObjectes;
     }
 
