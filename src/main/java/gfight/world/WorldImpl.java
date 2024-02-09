@@ -45,9 +45,10 @@ public class WorldImpl implements World {
     private Hitboxes hitboxManager;
 
     private Set<Spawner> spawners;
+    private int currentLevel;
     private Character testPlayer;
     private Position2D pointingPosition;
-    private int currentLevel;
+    private boolean isPlayerFiring;
 
     /**
      * Creates a new instance of a World.
@@ -73,6 +74,9 @@ public class WorldImpl implements World {
 
     @Override
     public final void update(final long deltaTime) {
+        if(this.isPlayerFiring){
+            this.testPlayer.makeDamage();
+        }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
         this.testPlayer.pointTo(this.pointingPosition);
         for (final var entity : this.entityManager.getEntities()) {
@@ -127,8 +131,10 @@ public class WorldImpl implements World {
 
     private void managePointer(final InputEventMouse pointer) {
         this.pointingPosition = pointer.getPosition();
-        if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
-            this.testPlayer.makeDamage();
+        if (pointer.getType().equals(InputEvent.Type.MOUSE_UP)) {
+            this.isPlayerFiring = false;
+        } else if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
+            this.isPlayerFiring = true;
         }
     }
 
