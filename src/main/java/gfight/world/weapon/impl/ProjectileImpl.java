@@ -9,6 +9,7 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.impl.AbstractActiveEntity;
+import gfight.world.map.impl.Chest;
 import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.Movement;
 import gfight.world.weapon.api.Projectile;
@@ -57,7 +58,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         final var collidedObjects = getAllCollided(gameobjects);
         final boolean collidedWithObstacle = collidedObjects.stream()
-            .filter(obj -> obj instanceof Obstacle)
+            .filter(obj -> obj instanceof Obstacle || obj instanceof Chest)
             .findAny().isPresent();
         this.collided = collidedWithObstacle;
         if (!this.collided) {

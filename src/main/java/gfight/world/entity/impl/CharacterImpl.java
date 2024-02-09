@@ -8,6 +8,7 @@ import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Weapon;
 import gfight.world.collision.api.CollisionCommand;
 import gfight.world.collision.impl.PushAwayCommand;
@@ -85,6 +86,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
                 CollisionCommand<Character, Character> coll = new PushAwayCommand<>(this,
                         (Character) el);
                 coll.execute();
+            } else if (el instanceof Projectile) {
             } else if (el instanceof GameEntity) {
                 CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
                 coll.execute();
