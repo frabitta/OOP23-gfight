@@ -12,7 +12,8 @@ import gfight.world.entity.api.MovingEntity;
  * @param <M> is the entitiy that moves and causes the collision
  * @param <G> is the other entity
  */
-public final class PushAwayCommand<M extends MovingEntity, G extends GameEntity> extends AbstractCollisionCommand<M, G> {
+public final class PushAwayCommand<M extends MovingEntity, G extends GameEntity>
+        extends AbstractCollisionCommand<M, G> {
 
     /**
      * 
@@ -26,8 +27,6 @@ public final class PushAwayCommand<M extends MovingEntity, G extends GameEntity>
     @Override
     public void execute() {
         final Vect distance = new VectorImpl(collided().getPosition(), collider().getPosition());
-        if (collider().getDirection().dotProduct(distance) < 0) {
-            collider().setDirection(distance.revert());
-        }
+        collider().setDirection(distance.norm());
     }
 }

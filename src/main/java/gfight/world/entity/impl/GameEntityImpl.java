@@ -65,10 +65,9 @@ public final class GameEntityImpl implements GameEntity {
         final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
         gameObjects.stream()
                 .filter(a -> !a.getPosition().equals(this.getPosition()))
-                .filter(a -> !a.equals(this) && hitbox.isColliding(boundingBox, a.getHitBox())
-                        && !ignoredEntities.contains(a))
-                .forEach(entity -> {collidedObjectes.add(entity);
-                    System.out.println(entity.getPosition());});
+                .filter(a -> !a.equals(this) && !ignoredEntities.contains(a)
+                        && hitbox.isColliding(boundingBox, a.getHitBox()))
+                .forEach(collidedObjectes::add);
         return collidedObjectes;
     }
 
