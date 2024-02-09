@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.RenderableGraphicComponent;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 
@@ -32,13 +32,13 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     private static final long serialVersionUID = -4058048042685678594L;
 
     private final transient SwingView scene;
-    private final transient ViewableCamera camera;
+    private final transient ViewCamera camera;
 
     private transient Optional<InputEventListener> inputListener;
     private transient Optional<InputEventFactory> inputFactory;
     private final Set<Integer> pressedKeys = new HashSet<>();
 
-    Canvas(final int width, final int height, final SwingView scene, final ViewableCamera camera) {
+    Canvas(final int width, final int height, final SwingView scene, final ViewCamera camera) {
         this.scene = scene;
         this.camera = camera;
 
@@ -66,7 +66,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
             .filter(comp -> comp instanceof RenderableGraphicComponent)
             .map(comp -> (RenderableGraphicComponent) comp)
             .forEach(comp -> comp.getRenderer().render(g2, this.camera));
-        generateBlackBars(g2, (int) camera.getHoriOffset(), (int) camera.getVertOffset());
+        //generateBlackBars(g2, (int) camera.getHoriOffset(), (int) camera.getVertOffset());
     }
 
     private void generateBlackBars(Graphics2D g2, int horiOffset, int vertOffset) {
@@ -94,7 +94,8 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    new Position2DImpl(e.getX(), e.getY())
                 )
             );
         }
@@ -105,7 +106,8 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseUpAtPosition(
-                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    new Position2DImpl(e.getX(), e.getY())
                 )
             );
         }
@@ -148,7 +150,8 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    new Position2DImpl(e.getX(), e.getY())
                 )
             );
         }
@@ -159,7 +162,8 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseUpAtPosition(
-                    this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
+                    new Position2DImpl(e.getX(), e.getY())
                 )
             );
         }

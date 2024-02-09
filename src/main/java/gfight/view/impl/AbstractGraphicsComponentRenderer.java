@@ -7,7 +7,7 @@ import java.awt.Color;
 
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.EngineColor;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 import gfight.view.api.GraphicsComponentRenderer;
 
 abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRenderer {
@@ -15,7 +15,7 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
     private Optional<GraphicsComponent> gComp = Optional.empty();
 
     @Override
-    public void render(final Graphics2D g, final ViewableCamera camera) {
+    public void render(final Graphics2D g, final ViewCamera camera) {
         g.setColor(getColorFromComponent(getGraphicsComponent()));
         g.setStroke(new BasicStroke(4f));
 
@@ -48,5 +48,5 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
 
     abstract boolean isCompValid(GraphicsComponent gComp);
 
-    abstract void renderComp(Graphics2D g, ViewableCamera camera);
+    abstract void renderComp(Graphics2D g, ViewCamera camera);
 }

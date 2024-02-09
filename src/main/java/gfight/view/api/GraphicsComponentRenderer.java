@@ -3,7 +3,7 @@ package gfight.view.api;
 import java.awt.Graphics2D;
 
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 
 /**
  * A renderer of a specific GraphicsComponent.
@@ -15,7 +15,7 @@ public interface GraphicsComponentRenderer {
      * @param g
      * @param camera
      */
-    void render(Graphics2D g, ViewableCamera camera);
+    void render(Graphics2D g, ViewCamera camera);
 
     /**
      * A setter of the referenced GraphicsComponent.

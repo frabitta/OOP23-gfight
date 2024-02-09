@@ -1,8 +1,10 @@
 package gfight.engine.graphics.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import gfight.common.api.Position2D;
+import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.Camera;
@@ -13,17 +15,26 @@ import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
  */
 public class CameraImpl implements Camera {
 
-    private final static double DEFAULT_X = 1920;
-    private final static double DEFAULT_Y = 1080;
+    private final static double DEFAULT_X = 500;
+    private final static double DEFAULT_Y = 500;
     private final static double DEFAULT_ARATIO = DEFAULT_Y / DEFAULT_X;
+    
+    private final Position2D centerPos = new Position2DImpl(DEFAULT_X/2, DEFAULT_Y/2);
 
     private Position2D cameraPos = new Position2DImpl(0, 0);
     private double screenX = DEFAULT_X;
     private double screenY = DEFAULT_Y;
-    private double sizeRatio;
-    private double aspectRatio;
-    private double offsetY;
-    private double offsetX;
+    private double sizeRatio = 1;
+    private double aspectRatio  = 1;
+    private double offsetY = 0;
+    private double offsetX = 0;
+
+    private Optional<Integer> areaHeight;
+    private Optional<Integer> areaWidth;
+    private double areaBorderY1;
+    private double areaBorderY2;
+    private double areaBorderX1;
+    private double areaBorderX2;
 
     @Override
     public final void moveTo(final Position2D cameraPos) {
@@ -91,6 +102,47 @@ public class CameraImpl implements Camera {
     @Override
     public double getSizeRatio() {
         return this.sizeRatio;
+    }
+
+    @Override
+    public void centerOn(Position2D position) {
+        moveTo(position.sum(new VectorImpl(-centerPos.getX(), -centerPos.getY())));
+    }
+
+    @Override
+    public void setArea(int height, int widht) {
+        this.areaHeight = Optional.of(height);
+        this.areaWidth = Optional.of(widht);
+        this.areaBorderY1 = this.centerPos.getY() - this.areaHeight.get() / 2;
+        this.areaBorderY2 = this.centerPos.getY() + this.areaHeight.get() / 2;
+        this.areaBorderX1 = this.centerPos.getX() - this.areaWidth.get() / 2;
+        this.areaBorderX2 = this.centerPos.getX() + this.areaWidth.get() / 2;
+    }
+
+    @Override
+    public void keepInArea(Position2D position) {
+        var screenPos = getVirtualFromWorld(position);
+        if (areaWidth.isEmpty()) {
+            centerOn(position);
+        } else {
+            Vect movingVect = new VectorImpl(0,0);
+            if (screenPos.getY() < this.areaBorderY1) {
+                movingVect = movingVect.sum(new VectorImpl(0, screenPos.getY() - this.areaBorderY1));
+            }
+            if (screenPos.getY() > this.areaBorderY2) {
+                movingVect = movingVect.sum(new VectorImpl(0, screenPos.getY() - this.areaBorderY2));
+            }
+            if (screenPos.getX() < this.areaBorderX1) {
+                movingVect = movingVect.sum(new VectorImpl(screenPos.getX() - this.areaBorderX1, 0));
+            }
+            if (screenPos.getX() > this.areaBorderX2) {
+                movingVect = movingVect.sum(new VectorImpl(screenPos.getX() - this.areaBorderX2, 0));
+            }
+            moveTo(this.cameraPos.sum(movingVect));
+            //System.out.println(movingVect);
+            //System.out.println(screenPos);
+            //System.out.println(areaBorderX1 + "," + areaBorderX2 + "," + areaBorderY1 + "," + areaBorderY2);
+        }
     }
 
 }

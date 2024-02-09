@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 import gfight.engine.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventListener;
 import gfight.view.api.EngineView;
 
@@ -26,7 +26,7 @@ public final class SwingView implements EngineView {
     private final Engine engine;
     private JFrame frame;
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
-    private ViewableCamera camera;
+    private ViewCamera camera;
 
     /**
      * Constructor of the view.
@@ -37,7 +37,7 @@ public final class SwingView implements EngineView {
     }
 
     @Override
-    public void initialize(final ViewableCamera camera) {
+    public void initialize(final ViewCamera camera) {
         this.camera = camera;
         frame = new JFrame("Geometry Fight");
         frame.setSize(WIDTH, HEIGHT);     //needs to be changed---------------

@@ -7,8 +7,9 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
+import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.MovableCamera;
+import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventKey;
 import gfight.engine.input.api.InputEventMouse;
@@ -38,7 +39,7 @@ public class WorldImpl implements World {
     private static final int MAP_DIM = 21;
     private static final int CHEST_HEALTH = 150;
 
-    private MovableCamera camera;
+    private WorldCamera camera;
     private EntityManager entityManager;
     private GameMap map;
     private InputMovement keyMapper;
@@ -63,9 +64,10 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public final void installCamera(final MovableCamera camera) {
+    public final void installCamera(final WorldCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
+        this.camera.setArea(50, 70);
     }
 
     @Override
@@ -74,11 +76,12 @@ public class WorldImpl implements World {
 
     @Override
     public final void update(final long deltaTime) {
+        this.testPlayer.pointTo(this.camera.getWorldPosition(this.pointingPosition));
         if(this.isPlayerFiring){
             this.testPlayer.makeDamage();
         }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
-        this.testPlayer.pointTo(this.pointingPosition);
+        this.camera.keepInArea(this.testPlayer.getPosition());
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());

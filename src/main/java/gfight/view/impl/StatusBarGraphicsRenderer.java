@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.graphics.impl.StatusBarGraphicsComponent;
 
 public class StatusBarGraphicsRenderer extends AbstractGraphicsComponentRenderer {
@@ -15,7 +15,7 @@ public class StatusBarGraphicsRenderer extends AbstractGraphicsComponentRenderer
     }
 
     @Override
-    void renderComp(Graphics2D g, ViewableCamera camera) {
+    void renderComp(Graphics2D g, ViewCamera camera) {
         final StatusBarGraphicsComponent gComp = (StatusBarGraphicsComponent) getGraphicsComponent();
         final Position2D pos = camera.getScreenPosition(gComp.getPositions().get(0), gComp.getType());
         final double sizeRatio = camera.getSizeRatio();

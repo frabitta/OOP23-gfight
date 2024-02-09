@@ -6,7 +6,7 @@ import java.util.Optional;
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.MovableCamera;
+import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.graphics.api.EngineColor;
 import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
@@ -35,7 +35,7 @@ import java.util.stream.Stream;
  */
 public class TestWorld implements World {
 
-    private MovableCamera camera;
+    private WorldCamera camera;
     private EntityManager entityManager;
     private GameMap map;
     private InputMovement keyMapper;
@@ -64,7 +64,7 @@ public class TestWorld implements World {
     }
 
     @Override
-    public final void installCamera(final MovableCamera camera) {
+    public final void installCamera(final WorldCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
     }
