@@ -9,6 +9,7 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.impl.AbstractActiveEntity;
+import gfight.world.map.impl.Obstacle;
 import gfight.world.movement.api.Movement;
 import gfight.world.weapon.api.Projectile;
 
@@ -54,14 +55,19 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     @Override
     protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
-        final var projCollided = getAllCollided(gameobjects).stream()
-            .filter(entity -> entity instanceof Character)
-            .map(entity -> (Character) entity)
-            .filter(entity -> entity.getType() != this.team)
-            .peek(ch -> ch.takeDamage(this.damage))
-            .findAny();
-        if (projCollided.isPresent()) {
-            this.collided = true;
+        final var collidedObjects = getAllCollided(gameobjects);
+        final boolean collidedWithObstacle = collidedObjects.stream()
+            .filter(obj -> obj instanceof Obstacle)
+            .findAny().isPresent();
+        this.collided = collidedWithObstacle;
+        if (!this.collided) {
+            final var collidedWithEnemy = collidedObjects.stream()
+                .filter(entity -> entity instanceof Character)
+                .map(entity -> (Character) entity)
+                .filter(entity -> entity.getType() != this.team)
+                .peek(ch -> ch.takeDamage(this.damage))
+                .findAny().isPresent();
+            this.collided = collidedWithEnemy;
         }
     }
 
