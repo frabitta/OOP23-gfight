@@ -18,6 +18,7 @@ import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
+import gfight.world.map.impl.Obstacle;
 
 /**
  * Class that represents the concept of main character (Player, Enemies).
@@ -86,8 +87,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
                 CollisionCommand<Character, Character> coll = new PushAwayCommand<>(this,
                         (Character) el);
                 coll.execute();
-            } else if (el instanceof Projectile) {
-            } else if (el instanceof GameEntity) {
+            } else if (el instanceof Obstacle) {
                 CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
                 coll.execute();
             }
