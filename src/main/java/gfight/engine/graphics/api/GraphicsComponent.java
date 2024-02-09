@@ -10,29 +10,6 @@ import gfight.common.api.Position2D;
 public interface GraphicsComponent {
 
     /**
-     * Colors available in the game.
-     * (we don't use JSwing colors to allow different implementations of the view)
-     */
-    enum EngineColor {
-        /**
-         * Blue.
-         */
-        BLUE,
-        /**
-         * Red.
-         */
-        RED, 
-        /**
-         * Black.
-         */
-        BLACK,
-        /**
-         * Yellow.
-         */
-        YELLOW
-    }
-
-    /**
      * Type of graphic component.
      */
     enum GraphicType {

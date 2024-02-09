@@ -2,7 +2,7 @@ package gfight.engine.graphics.impl;
 
 import java.util.List;
 
-import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.engine.graphics.api.EngineColor;
 import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 import gfight.view.api.GraphicsComponentRenderer;
 import gfight.view.impl.PolygonGraphicsRenderer;

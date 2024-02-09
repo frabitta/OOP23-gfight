@@ -6,7 +6,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.engine.graphics.api.EngineColor;
 import gfight.engine.graphics.api.ViewableCamera;
 import gfight.view.api.GraphicsComponentRenderer;
 
@@ -35,13 +35,8 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
     }
 
     protected Color translateEngineColor(EngineColor color) {
-        switch (color) {
-            case BLUE: return Color.BLUE;
-            case RED: return Color.RED;
-            case BLACK: return Color.BLACK;
-            case YELLOW: return Color.YELLOW;
-            default: return Color.BLACK;
-        }
+        var hsb = Color.RGBtoHSB(color.getR(), color.getG(), color.getB(), null);
+        return Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
     }
 
     GraphicsComponent getGraphicsComponent() {

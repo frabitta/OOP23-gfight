@@ -7,7 +7,7 @@ import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
-import gfight.engine.graphics.api.GraphicsComponent.EngineColor;
+import gfight.engine.graphics.api.EngineColor;
 import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.graphics.impl.PolygonGraphicsComponent;
