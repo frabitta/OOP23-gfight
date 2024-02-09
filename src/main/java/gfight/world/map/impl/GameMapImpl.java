@@ -28,7 +28,8 @@ public final class GameMapImpl implements GameMap {
 
     private final Map<Position2D, Spawner.SpawnerType> spawnersPositions;
     private final List<List<GameTile>> tiles;
-    private final int dimension;
+    private final int width;
+    private final int height;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
 
     /**
@@ -46,48 +47,50 @@ public final class GameMapImpl implements GameMap {
      * Creates default obstacles inside the map, one for each diagonal direction.
      */
     private void defaultScatter() {
-        this.tiles.get(this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(3 * this.dimension / 4).get(this.dimension / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(3 * this.dimension / 4).get(3 * this.dimension / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(this.width / 4).get(this.height / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(this.width / 4).get(3 * this.height / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(3 * this.width / 4).get(this.height / 4).setType(TileType.OBSTACLE);
+        this.tiles.get(3 * this.width / 4).get(3 * this.height / 4).setType(TileType.OBSTACLE);
         this.spawnersPositions.put(
-                new Position2DImpl(realPosition(this.dimension / 4, this.dimension / 2)),
+                new Position2DImpl(realPosition(this.width / 8, this.height / 2)),
                 Spawner.SpawnerType.LINEAR);
         this.spawnersPositions.put(
-                new Position2DImpl(realPosition(3 * this.dimension / 4, this.dimension / 2)),
+                new Position2DImpl(realPosition(7 * this.width / 8, this.height / 2)),
                 Spawner.SpawnerType.SCALAR);
         this.spawnersPositions.put(
-                new Position2DImpl(realPosition(this.dimension / 2, 3 * this.dimension / 4)),
+                new Position2DImpl(realPosition(this.width / 2, 7 * this.height / 8)),
                 Spawner.SpawnerType.BOSS);
     }
 
     /**
-     * Creates a game map with the given dimension.
+     * Creates a game map with the given dimensions.
      * 
-     * @param dimension the number of tiles a side of the map is composed by
+     * @param width  the number of tiles of the width of the map
+     * @param height the number of tiles the heigth of the map
      */
-    public GameMapImpl(final int dimension) {
+    public GameMapImpl(final int width, final int height) {
         this.spawnersPositions = new HashMap<>();
-        this.dimension = dimension;
-        this.tiles = new ArrayList<>(dimension);
-        for (int i = 0; i < dimension; i++) {
-            this.tiles.add(i, new ArrayList<>(dimension));
+        this.width = width;
+        this.height = height;
+        this.tiles = new ArrayList<>(this.width);
+        for (int i = 0; i < this.width; i++) {
+            this.tiles.add(i, new ArrayList<>(this.height));
         }
         this.tileGraph = Optional.empty();
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
                 final GameTile tile = new GameTileImpl(
                         TileType.EMPTY,
                         realPosition(i, j),
                         TILE_DIM);
-                if (i == 0 || i == dimension - 1 || j == 0 || j == dimension - 1) {
+                if (i == 0 || i == width - 1 || j == 0 || j == height - 1) {
                     tile.setType(TileType.OBSTACLE);
                 }
                 this.tiles.get(i).add(j, tile);
             }
         }
         defaultScatter();
-        this.tiles.get(this.dimension / 2).get(this.dimension / 2).setType(TileType.CHEST);
+        this.tiles.get(this.width / 2).get(this.height / 2).setType(TileType.CHEST);
     }
 
     @Override
@@ -102,7 +105,7 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Position2D getPlayerSpawn() {
-        return new Position2DImpl(realPosition(this.dimension / 2, this.dimension / 2 - 2));
+        return new Position2DImpl(realPosition(this.width / 2, this.height / 2 - 2));
     }
 
     public Set<Position2D> getObstaclesPositions() {
@@ -147,9 +150,9 @@ public final class GameMapImpl implements GameMap {
             }
         }
         // col (x)
-        for (int i = 0; i < dimension; i++) {
+        for (int i = 0; i < this.width; i++) {
             // row (y)
-            for (int j = 0; j < dimension; j++) {
+            for (int j = 0; j < this.height; j++) {
                 final var tile = this.tiles.get(i).get(j);
                 Objects.requireNonNull(tile);
                 if (tile.getType().equals(freeCondition)) {
@@ -158,7 +161,7 @@ public final class GameMapImpl implements GameMap {
                         g2.addEdge(tile, this.tiles.get(i).get(j - 1));
                     }
                     // SOUTH
-                    if (j < (dimension - 1) && this.tiles.get(i).get(j + 1).getType().equals(freeCondition)) {
+                    if (j < (width - 1) && this.tiles.get(i).get(j + 1).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i).get(j + 1));
                     }
                     // WEST
@@ -166,7 +169,7 @@ public final class GameMapImpl implements GameMap {
                         g2.addEdge(tile, this.tiles.get(i - 1).get(j));
                     }
                     // EAST
-                    if (i < (dimension - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
+                    if (i < (width - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i + 1).get(j));
                     }
                 }

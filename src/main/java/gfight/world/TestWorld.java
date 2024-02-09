@@ -50,7 +50,7 @@ public class TestWorld implements World {
     public TestWorld() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(10);
+        this.map = new GameMapImpl(10, 10);
         this.keyMapper = new MovementFactoryImpl().createInput();
 
         // seguite sto esempio se volete creare entità di prova, basta 1 riga per entità

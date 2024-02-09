@@ -7,7 +7,6 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
-import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
@@ -36,7 +35,8 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
-    private static final int MAP_DIM = 21;
+    private static final int MAP_WIDTH = 41;
+    private static final int MAP_HEIGHT = 21;
     private static final int CHEST_HEALTH = 150;
 
     private WorldCamera camera;
@@ -57,7 +57,7 @@ public class WorldImpl implements World {
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(MAP_DIM);
+        this.map = new GameMapImpl(MAP_WIDTH, MAP_HEIGHT);
         this.keyMapper = new MovementFactoryImpl().createInput();
         loadMap();
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
