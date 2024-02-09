@@ -3,6 +3,7 @@ package gfight.world.movement.impl;
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.common.impl.VectorImpl;
+import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.map.api.GameMap;
@@ -39,6 +40,9 @@ public final class BfsMovement extends BaseMovement {
 
     @Override
     public void update() {
+        if(this.agent instanceof Character){
+            ((Character)this.agent).pointTo(this.target.getPosition());
+        }
         List<Position2D> path = getPathFromBfs();
         if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
             Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm();
