@@ -18,6 +18,7 @@ import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
+import gfight.world.map.impl.Chest;
 import gfight.world.map.impl.Obstacle;
 
 /**
@@ -82,16 +83,17 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
 
     @Override
     protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
-        getAllCollided(gameobjects).stream().forEach(el -> {
-            if (el instanceof Character) {
-                CollisionCommand<Character, Character> coll = new PushAwayCommand<>(this,
-                        (Character) el);
-                coll.execute();
-            } else if (el instanceof Obstacle) {
-                CollisionCommand<MovingEntity, GameEntity> coll = new SlideCommand<>(this, el);
-                coll.execute();
-            }
-        });
+        if (this.getType() == CharacterType.PLAYER) {
+            getAllCollided(gameobjects).stream()
+                    .filter(el -> !(el instanceof Projectile) && !(el instanceof Obstacle))
+                    .forEach(el -> new PushAwayCommand<>(this, el).execute());
+            getAllCollided(gameobjects).stream()
+                    .filter(el -> el instanceof Obstacle)
+                    .forEach(el -> new SlideCommand<>(this, el).execute());
+        } else {
+            getAllCollided(gameobjects).stream()
+                    .filter(el -> !(el instanceof Projectile))
+                    .forEach(el -> new PushAwayCommand<>(this, el).execute());
+        }
     }
-
 }
