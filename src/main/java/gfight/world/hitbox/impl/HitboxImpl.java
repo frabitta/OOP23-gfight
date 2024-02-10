@@ -17,7 +17,7 @@ import gfight.world.hitbox.api.Hitbox;
  */
 public final class HitboxImpl implements Hitbox {
 
-    final private Polygon hitbox;
+    private final Polygon hitbox;
 
     /**
      * Constructs a HitboxImpl instance with the specified vertex positions.
@@ -32,6 +32,7 @@ public final class HitboxImpl implements Hitbox {
         hitbox = factory.createPolygon(polygon.toArray(new Coordinate[0]));
     }
 
+    @Override
     public Polygon getPolygonalHitbox() {
         return hitbox;
     }
