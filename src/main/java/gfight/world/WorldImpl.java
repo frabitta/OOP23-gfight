@@ -57,7 +57,7 @@ public class WorldImpl implements World {
     public WorldImpl() {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(MAP_WIDTH, MAP_HEIGHT);
+        this.map = new GameMapImpl();
         this.keyMapper = new MovementFactoryImpl().createInput();
         loadMap();
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);

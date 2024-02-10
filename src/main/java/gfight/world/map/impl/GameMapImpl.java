@@ -1,11 +1,14 @@
 package gfight.world.map.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,10 +29,16 @@ import gfight.world.map.api.GameTile.TileType;
  */
 public final class GameMapImpl implements GameMap {
 
+    private static final char WALL = 'w';
+    private static final char CHEST = 'c';
+    private static final char PLAYER = 'p';
+    private static final char LINEAR_SPAWNER = 'l';
+    private static final char SCALAR_SPAWNER = 's';
+    private static final char BOSS_SPAWNER = 'b';
+
     private final Map<Position2D, Spawner.SpawnerType> spawnersPositions;
     private final List<List<GameTile>> tiles;
-    private final int width;
-    private final int height;
+    private Position2D playerSpawn;
     private Optional<Graph<GameTile, DefaultEdge>> tileGraph;
 
     /**
@@ -44,53 +53,13 @@ public final class GameMapImpl implements GameMap {
     }
 
     /**
-     * Creates default obstacles inside the map, one for each diagonal direction.
-     */
-    private void defaultScatter() {
-        this.tiles.get(this.width / 4).get(this.height / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(this.width / 4).get(3 * this.height / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(3 * this.width / 4).get(this.height / 4).setType(TileType.OBSTACLE);
-        this.tiles.get(3 * this.width / 4).get(3 * this.height / 4).setType(TileType.OBSTACLE);
-        this.spawnersPositions.put(
-                new Position2DImpl(realPosition(this.width / 8, this.height / 2)),
-                Spawner.SpawnerType.LINEAR);
-        this.spawnersPositions.put(
-                new Position2DImpl(realPosition(7 * this.width / 8, this.height / 2)),
-                Spawner.SpawnerType.SCALAR);
-        this.spawnersPositions.put(
-                new Position2DImpl(realPosition(this.width / 2, 7 * this.height / 8)),
-                Spawner.SpawnerType.BOSS);
-    }
-
-    /**
      * Creates a game map with the given dimensions.
-     * 
-     * @param width  the number of tiles of the width of the map
-     * @param height the number of tiles the heigth of the map
      */
-    public GameMapImpl(final int width, final int height) {
+    public GameMapImpl() {
         this.spawnersPositions = new HashMap<>();
-        this.width = width;
-        this.height = height;
-        this.tiles = new ArrayList<>(this.width);
-        for (int i = 0; i < this.width; i++) {
-            this.tiles.add(i, new ArrayList<>(this.height));
-        }
+        this.tiles = new ArrayList<>();
         this.tileGraph = Optional.empty();
-        for (int i = 0; i < this.width; i++) {
-            for (int j = 0; j < this.height; j++) {
-                final GameTile tile = new GameTileImpl(
-                        TileType.EMPTY,
-                        realPosition(i, j),
-                        TILE_DIM);
-                if (i == 0 || i == width - 1 || j == 0 || j == height - 1) {
-                    tile.setType(TileType.OBSTACLE);
-                }
-                this.tiles.get(i).add(j, tile);
-            }
-        }
-        defaultScatter();
-        this.tiles.get(this.width / 2).get(this.height / 2).setType(TileType.CHEST);
+        loadFromFile();
     }
 
     @Override
@@ -105,7 +74,7 @@ public final class GameMapImpl implements GameMap {
 
     @Override
     public Position2D getPlayerSpawn() {
-        return new Position2DImpl(realPosition(this.width / 2, this.height / 2 - 2));
+        return this.playerSpawn;
     }
 
     public Set<Position2D> getObstaclesPositions() {
@@ -149,32 +118,74 @@ public final class GameMapImpl implements GameMap {
                 g2.addVertex(tile);
             }
         }
-        // col (x)
-        for (int i = 0; i < this.width; i++) {
-            // row (y)
-            for (int j = 0; j < this.height; j++) {
+        final int height = this.tiles.size();
+        // row
+        for (int i = 0; i < this.tiles.size(); i++) {
+            // column
+            final int width = this.tiles.get(i).size();
+            for (int j = 0; j < this.tiles.get(i).size(); j++) {
                 final var tile = this.tiles.get(i).get(j);
-                Objects.requireNonNull(tile);
                 if (tile.getType().equals(freeCondition)) {
-                    // NORTH
+                    // EAST
                     if (j > 0 && this.tiles.get(i).get(j - 1).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i).get(j - 1));
                     }
-                    // SOUTH
+                    // WEST
                     if (j < (width - 1) && this.tiles.get(i).get(j + 1).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i).get(j + 1));
                     }
-                    // WEST
+                    // NORTH
                     if (i > 0 && this.tiles.get(i - 1).get(j).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i - 1).get(j));
                     }
-                    // EAST
-                    if (i < (width - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
+                    // SOUTH
+                    if (i < (height - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
                         g2.addEdge(tile, this.tiles.get(i + 1).get(j));
                     }
                 }
             }
         }
         this.tileGraph = Optional.of(g2);
+    }
+
+    private void loadFromFile() {
+        try (final InputStream in = ClassLoader.getSystemResourceAsStream("map2.txt")) {
+            int row = 0;
+            final BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            for (final var line : br.lines().toList()) {
+                final List<GameTile> tileRow = new ArrayList<>((line.length() / 2) + 1);
+                this.tiles.add(row, tileRow);
+                int col = 0;
+                while (col * 2 < line.length()) {
+                    switch (line.charAt(col * 2)) {
+                        case CHEST:
+                            tileRow.add(col, new GameTileImpl(TileType.CHEST, realPosition(col, row), TILE_DIM));
+                            break;
+                        case WALL:
+                            tileRow.add(col, new GameTileImpl(TileType.OBSTACLE, realPosition(col, row), TILE_DIM));
+                            break;
+                        case LINEAR_SPAWNER:
+                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.LINEAR);
+                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
+                            break;
+                        case SCALAR_SPAWNER:
+                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.SCALAR);
+                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
+                            break;
+                        case BOSS_SPAWNER:
+                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.BOSS);
+                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
+                            break;
+                        case PLAYER:
+                            this.playerSpawn = realPosition(col, row);
+                        default:
+                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
+                    }
+                    col++;
+                }
+                row++;
+            }
+        } catch (final IOException e) {
+        }
     }
 }
