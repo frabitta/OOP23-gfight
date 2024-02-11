@@ -13,6 +13,7 @@ import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
+import gfight.world.entity.api.ActiveEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
@@ -41,16 +42,18 @@ public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
     private static final int CHEST_HEALTH = 150;
+    private static final int BOSS_LEVEL = 5;
 
     private WorldCamera camera;
     private EntityManager entityManager;
     private GameMap map;
-    private InputMovement keyMapper;
+    private InputMovement inputMapper;
     private Hitboxes hitboxManager;
 
     private Set<Spawner> spawners;
     private int currentLevel;
-    private Character testPlayer;
+    private Character player;
+    private ActiveEntity chest;
     private Position2D pointingPosition;
     private boolean isPlayerFiring;
 
@@ -63,9 +66,9 @@ public class WorldImpl implements World {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
         this.map = new GameMapImpl(mapName);
-        this.keyMapper = new MovementFactoryImpl().createInput();
+        this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap();
-        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
+        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, player);
     }
 
     @Override
@@ -77,17 +80,17 @@ public class WorldImpl implements World {
 
     @Override
     public boolean isOver() {
-        return this.testPlayer.getHealth() <= 0;
+        return this.player.getHealth() <= 0;
     }
 
     @Override
     public final void update(final long deltaTime) {
-        this.testPlayer.pointTo(this.camera.getWorldPosition(this.pointingPosition));
+        this.player.pointTo(this.camera.getWorldPosition(this.pointingPosition));
         if (this.isPlayerFiring) {
-            this.testPlayer.makeDamage();
+            this.player.makeDamage();
         }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
-        this.camera.keepInArea(this.testPlayer.getPosition());
+        this.camera.keepInArea(this.player.getPosition());
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
@@ -95,7 +98,7 @@ public class WorldImpl implements World {
         }
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
-            if (this.currentLevel % 5 == 0) {
+            if (this.currentLevel % BOSS_LEVEL == 0) {
                 this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
                 this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
             } else {
@@ -130,10 +133,10 @@ public class WorldImpl implements World {
         });
         if (direction.isPresent()) {
             if (key.getType() == InputEvent.Type.PRESSED) {
-                this.keyMapper.addDirection(direction.get());
+                this.inputMapper.addDirection(direction.get());
             }
             if (key.getType() == InputEvent.Type.RELEASED) {
-                this.keyMapper.removeDirection(direction.get());
+                this.inputMapper.removeDirection(direction.get());
             }
         }
     }
@@ -151,17 +154,17 @@ public class WorldImpl implements World {
         for (final var pos : this.map.getObstaclesPositions()) {
             this.entityManager.createObstacle(GameMap.TILE_DIM, pos);
         }
-        this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
-        this.testPlayer = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, keyMapper);
-        this.pointingPosition = new Position2DImpl(this.testPlayer.getPosition().getX(), 0);
+        this.chest = this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
+        this.player = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, inputMapper);
+        this.pointingPosition = new Position2DImpl(this.player.getPosition().getX(), 0);
         this.currentLevel = 1;
         final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
         this.spawners = new HashSet<>();
         for (final var entry : this.map.getSpawnersPositions().entrySet()) {
             this.spawners.add(switch (entry.getValue()) {
-                case BOSS -> spawnerFactory.createBoss(entry.getKey(), testPlayer);
-                case SCALAR -> spawnerFactory.createScalar(entry.getKey(), testPlayer);
-                case LINEAR -> spawnerFactory.createLinear(entry.getKey(), testPlayer);
+                case BOSS -> spawnerFactory.createBoss(entry.getKey(), Set.of(this.player, this.chest));
+                case SCALAR -> spawnerFactory.createScalar(entry.getKey(), Set.of(this.player, this.chest));
+                case LINEAR -> spawnerFactory.createLinear(entry.getKey(), Set.of(this.player, this.chest));
             });
         }
     }

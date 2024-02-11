@@ -11,7 +11,7 @@ public abstract class AbstractSpawner implements Spawner {
     private final SpawnerType type;
     private final Position2D position;
     private boolean isEnabled;
-    protected int currentLevel;
+    protected int spawnedEntities;
 
     /**
      * Creates a new abstract Spawner which spawning criteria is not defined.
@@ -21,7 +21,7 @@ public abstract class AbstractSpawner implements Spawner {
     public AbstractSpawner(final Position2D position, final SpawnerType type) {
         this.position = position;
         this.type = type;
-        this.currentLevel = 0;
+        this.spawnedEntities = 0;
         this.isEnabled = true;
     }
 

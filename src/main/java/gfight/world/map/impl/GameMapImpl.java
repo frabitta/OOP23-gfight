@@ -120,7 +120,7 @@ public final class GameMapImpl implements GameMap {
             int width = this.tiles.get(i).size();
             for (int j = 0; j < width; j++) {
                 GameTile tile = this.tiles.get(i).get(j);
-                if (tile.getType() == GameTile.TileType.EMPTY) {
+                if (tile.getType().equals(GameTile.TileType.EMPTY) || tile.getType().equals(GameTile.TileType.CHEST)) {
                     addEdgeIfEmpty(g, tile, i, j - 1); // WEST
                     addEdgeIfEmpty(g, tile, i, j + 1); // EAST
                     addEdgeIfEmpty(g, tile, i - 1, j); // NORTH
