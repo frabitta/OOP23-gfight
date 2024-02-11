@@ -61,7 +61,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
         this.collided = collidedObjects.stream()
             .anyMatch(obj -> {
                 if (obj instanceof Obstacle || obj instanceof Chest) {
-                    if (obj instanceof Chest && this.team == CharacterType.ENEMY) {
+                    if (obj instanceof Chest && this.team != CharacterType.PLAYER) {
                         ((Chest) obj).takeDamage(this.damage);
                     }
                     return true;
