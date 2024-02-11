@@ -139,14 +139,14 @@ public final class GameMapImpl implements GameMap {
 
     private void loadFromFile() {
         try (final BufferedReader br = new BufferedReader(
-                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/map2.txt")))) {
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/map1.txt")))) {
             int row = 0;
             for (final var line : br.lines().toList()) {
                 final List<GameTile> tileRow = new ArrayList<>((line.length() / 2) + 1);
                 this.tiles.add(row, tileRow);
-                for (int col = 0; col * 2 < line.length(); col++) {
+                for (int col = 0; col < line.length(); col++) {
                     final Position2D pos = realPosition(col, row);
-                    final TileType type = switch (line.charAt(col * 2)) {
+                    final TileType type = switch (line.charAt(col)) {
                         case CHEST -> TileType.CHEST;
                         case WALL -> TileType.OBSTACLE;
                         case PLAYER -> {
