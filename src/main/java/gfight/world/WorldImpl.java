@@ -108,7 +108,10 @@ public class WorldImpl implements World {
 
     @Override
     public final List<GraphicsComponent> getGraphicsComponents() {
-        return this.entityManager.getEntities().stream().map(GameEntity::getGraphics).toList();
+        return this.entityManager.getEntities().stream()
+                .map(GameEntity::getGraphics)
+                .flatMap(Set::stream)
+                .toList();
     }
 
     @Override

@@ -47,9 +47,9 @@ public interface GameEntity {
 
     /**
      * 
-     * @return the graphic component of the Entity
+     * @return the graphic components of the Entity
      */
-    GraphicsComponent getGraphics();
+    Set<GraphicsComponent> getGraphics();
 
     /**
      * 

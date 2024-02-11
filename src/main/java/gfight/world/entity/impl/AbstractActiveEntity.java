@@ -1,17 +1,32 @@
 package gfight.world.entity.impl;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import gfight.common.api.Position2D;
+import gfight.common.impl.Position2DImpl;
+import gfight.engine.graphics.api.EngineColor;
 import gfight.engine.graphics.api.GraphicsComponent;
+import gfight.engine.graphics.api.StatusBarGraphicsComponent;
+import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
+import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.GameEntity;
 
 /**
  * This class implements the concept of ActiveEntity with movement and health
  * (Chest, Player and Enemies).
  */
 public abstract class AbstractActiveEntity extends BaseMovingEntity implements ActiveEntity {
+    private static final int HEALTHBAR_WIDTH = 20;
+    private static final int HEALTHBAR_HEIGHT = 4;
+    private static final int HEALTHBAR_OFFSET = -25;
+
     private int health;
+    private int maxHealth;
+    private final StatusBarGraphicsComponent healthBar;
 
     /**
      * Constructor of ActiveEntityImpl.
@@ -25,6 +40,19 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
             final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent);
         this.health = health;
+        this.maxHealth = health;
+        this.healthBar = new GraphicsComponentsFactoryImpl().statusBar(
+                EngineColor.RED,
+                EngineColor.GREEN,
+                position,
+                HEALTHBAR_WIDTH,
+                HEALTHBAR_HEIGHT,
+                GraphicType.WORLD);
+        this.healthBar.setStatus(getHealthPercentage());
+    }
+
+    private int getHealthPercentage() {
+        return 100 * getHealth() / this.maxHealth;
     }
 
     @Override
@@ -35,6 +63,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     @Override
     public final void takeDamage(final int damage) {
         this.setHealth(getHealth() - damage);
+        this.healthBar.setStatus(getHealthPercentage());
     }
 
     @Override
@@ -51,4 +80,15 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         this.health = health;
     }
 
+    @Override
+    public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
+        super.updatePos(dt, gameobjects);
+        this.healthBar.setPositions(
+                List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
+    }
+
+    @Override
+    public Set<GraphicsComponent> getGraphics() {
+        return Stream.concat(super.getGraphics().stream(), Stream.of(this.healthBar)).collect(Collectors.toSet());
+    }
 }

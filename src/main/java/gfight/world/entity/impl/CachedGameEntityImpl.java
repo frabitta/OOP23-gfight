@@ -84,7 +84,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final GraphicsComponent getGraphics() {
+    public Set<GraphicsComponent> getGraphics() {
         return originalEntity.getGraphics();
     }
 

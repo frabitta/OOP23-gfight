@@ -78,8 +78,8 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public GraphicsComponent getGraphics() {
-        return graphicsComponent;
+    public Set<GraphicsComponent> getGraphics() {
+        return Set.of(this.graphicsComponent);
     }
 
     @Override
