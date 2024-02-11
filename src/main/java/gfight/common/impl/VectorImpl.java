@@ -76,7 +76,7 @@ public final class VectorImpl extends Vector2D implements Vect {
     }
 
     @Override
-    public double dotProduct(Vect a) {
+    public double dotProduct(final Vect a) {
         if (a instanceof VectorImpl) {
             return this.dotProduct((Vector2D) a);
         } else {
@@ -85,7 +85,7 @@ public final class VectorImpl extends Vector2D implements Vect {
     }
 
     @Override
-    public double anglecalc(Vect v1) {
+    public double anglecalc(final Vect v1) {
         if ((v1.getX() != 0 || v1.getY() != 0) && (this.getX() != 0 || this.getY() != 0)) {
             if (v1 instanceof VectorImpl) {
                 return Vector2D.angle(this, (VectorImpl) v1);
