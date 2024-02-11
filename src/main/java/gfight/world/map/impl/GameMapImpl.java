@@ -2,7 +2,6 @@ package gfight.world.map.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,81 +110,69 @@ public final class GameMapImpl implements GameMap {
     }
 
     private void buildGraph() {
-        final Graph<GameTile, DefaultEdge> g2 = new DefaultUndirectedGraph<>(DefaultEdge.class);
-        final var freeCondition = GameTile.TileType.EMPTY;
-        for (final var col : this.tiles) {
-            for (final var tile : col) {
-                g2.addVertex(tile);
-            }
-        }
-        final int height = this.tiles.size();
-        // row
+        Graph<GameTile, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        this.tiles.stream()
+                .flatMap(List::stream)
+                .forEach(v -> g.addVertex(v));
         for (int i = 0; i < this.tiles.size(); i++) {
-            // column
-            final int width = this.tiles.get(i).size();
-            for (int j = 0; j < this.tiles.get(i).size(); j++) {
-                final var tile = this.tiles.get(i).get(j);
-                if (tile.getType().equals(freeCondition)) {
-                    // EAST
-                    if (j > 0 && this.tiles.get(i).get(j - 1).getType().equals(freeCondition)) {
-                        g2.addEdge(tile, this.tiles.get(i).get(j - 1));
-                    }
-                    // WEST
-                    if (j < (width - 1) && this.tiles.get(i).get(j + 1).getType().equals(freeCondition)) {
-                        g2.addEdge(tile, this.tiles.get(i).get(j + 1));
-                    }
-                    // NORTH
-                    if (i > 0 && this.tiles.get(i - 1).get(j).getType().equals(freeCondition)) {
-                        g2.addEdge(tile, this.tiles.get(i - 1).get(j));
-                    }
-                    // SOUTH
-                    if (i < (height - 1) && this.tiles.get(i + 1).get(j).getType().equals(freeCondition)) {
-                        g2.addEdge(tile, this.tiles.get(i + 1).get(j));
-                    }
+            int width = this.tiles.get(i).size();
+            for (int j = 0; j < width; j++) {
+                GameTile tile = this.tiles.get(i).get(j);
+                if (tile.getType() == GameTile.TileType.EMPTY) {
+                    addEdgeIfEmpty(g, tile, i, j - 1); // WEST
+                    addEdgeIfEmpty(g, tile, i, j + 1); // EAST
+                    addEdgeIfEmpty(g, tile, i - 1, j); // NORTH
+                    addEdgeIfEmpty(g, tile, i + 1, j); // SOUTH
                 }
             }
         }
-        this.tileGraph = Optional.of(g2);
+
+        this.tileGraph = Optional.of(g);
+    }
+
+    private void addEdgeIfEmpty(Graph<GameTile, DefaultEdge> g, GameTile tile, int x, int y) {
+        if (x >= 0 && x < this.tiles.size() && y >= 0 && y < this.tiles.get(x).size() &&
+                this.tiles.get(x).get(y).getType() == GameTile.TileType.EMPTY) {
+            g.addEdge(tile, this.tiles.get(x).get(y));
+        }
     }
 
     private void loadFromFile() {
-        try (final InputStream in = ClassLoader.getSystemResourceAsStream("map2.txt")) {
+        try (final BufferedReader br = new BufferedReader(
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/map2.txt")))) {
             int row = 0;
-            final BufferedReader br = new BufferedReader(new InputStreamReader(in));
             for (final var line : br.lines().toList()) {
                 final List<GameTile> tileRow = new ArrayList<>((line.length() / 2) + 1);
                 this.tiles.add(row, tileRow);
-                int col = 0;
-                while (col * 2 < line.length()) {
-                    switch (line.charAt(col * 2)) {
-                        case CHEST:
-                            tileRow.add(col, new GameTileImpl(TileType.CHEST, realPosition(col, row), TILE_DIM));
-                            break;
-                        case WALL:
-                            tileRow.add(col, new GameTileImpl(TileType.OBSTACLE, realPosition(col, row), TILE_DIM));
-                            break;
-                        case LINEAR_SPAWNER:
-                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.LINEAR);
-                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
-                            break;
-                        case SCALAR_SPAWNER:
-                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.SCALAR);
-                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
-                            break;
-                        case BOSS_SPAWNER:
-                            this.spawnersPositions.put(realPosition(col, row), Spawner.SpawnerType.BOSS);
-                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
-                            break;
-                        case PLAYER:
-                            this.playerSpawn = realPosition(col, row);
-                        default:
-                            tileRow.add(col, new GameTileImpl(TileType.EMPTY, realPosition(col, row), TILE_DIM));
-                    }
-                    col++;
+                for (int col = 0; col * 2 < line.length(); col++) {
+                    final Position2D pos = realPosition(col, row);
+                    final TileType type = switch (line.charAt(col * 2)) {
+                        case CHEST -> TileType.CHEST;
+                        case WALL -> TileType.OBSTACLE;
+                        case PLAYER -> {
+                            this.playerSpawn = pos;
+                            yield TileType.EMPTY;
+                        }
+                        case LINEAR_SPAWNER -> {
+                            this.spawnersPositions.put(pos, Spawner.SpawnerType.LINEAR);
+                            yield TileType.EMPTY;
+                        }
+                        case SCALAR_SPAWNER -> {
+                            this.spawnersPositions.put(pos, Spawner.SpawnerType.SCALAR);
+                            yield TileType.EMPTY;
+                        }
+                        case BOSS_SPAWNER -> {
+                            this.spawnersPositions.put(pos, Spawner.SpawnerType.BOSS);
+                            yield TileType.EMPTY;
+                        }
+                        default -> TileType.EMPTY;
+                    };
+                    tileRow.add(col, new GameTileImpl(type, pos, TILE_DIM));
                 }
                 row++;
             }
         } catch (final IOException e) {
+            throw new IllegalArgumentException("The specified map does not exist\n" + e);
         }
     }
 }
