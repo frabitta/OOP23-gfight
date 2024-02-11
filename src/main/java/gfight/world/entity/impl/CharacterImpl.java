@@ -57,6 +57,14 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     }
 
     @Override
+    public final void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
+        super.updatePos(dt, gameobjects);
+        if(getType() == CharacterType.ENEMY){
+            this.makeDamage();
+        }
+    }
+
+    @Override
     public void makeDamage() {
         if (this.weapon.isPresent()) {
             this.weapon.get().shoot();

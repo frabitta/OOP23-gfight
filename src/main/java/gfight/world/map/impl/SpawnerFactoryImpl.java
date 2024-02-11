@@ -5,10 +5,12 @@ import java.util.Set;
 
 import gfight.common.api.Position2D;
 import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.Character;
 import gfight.world.entity.api.EntityFactory;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;
+import gfight.world.weapon.impl.WeaponFactoryImpl;
 
 /**
  * An implementation of a factory of different spawners.
@@ -47,11 +49,13 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
                     final Random random = new Random();
                     final ActiveEntity target = targets.stream().toList().get(random.nextInt(targets.size()));
                     final double health = initialHealth + (initialHealth * (spawnedEntities - 1) * statsMultiplier);
+                    Character enemy;
                     if (random.nextBoolean()) {
-                        entityFactory.createRunner(target, dim, position, (int) health, map);
+                        enemy = entityFactory.createRunner(target, dim, position, (int) health, map);
                     } else {
-                        entityFactory.createShooter(target, dim, position, (int) health, map);
+                        enemy = entityFactory.createShooter(target, dim, position, (int) health, map);
                     }
+                    new WeaponFactoryImpl().simpleGunPairing(150, 9, 4, 5, entityFactory, enemy);
                 }
                 spawnedEntities++;
             }
