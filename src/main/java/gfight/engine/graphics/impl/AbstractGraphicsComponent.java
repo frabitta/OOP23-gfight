@@ -4,23 +4,25 @@ import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.EngineColor;
-import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.RenderableGraphicComponent;
 import gfight.view.api.GraphicsComponentRenderer;
 
 /**
  * Abstract class for a generic GraphicsComponent.
  */
-abstract class AbstractGraphicsComponent implements GraphicsComponent, RenderableGraphicComponent {
+abstract class AbstractGraphicsComponent implements RenderableGraphicComponent {
 
     private final GraphicsComponentRenderer renderer;
+    private final GraphicType type;
 
     private EngineColor color;
     private List<Position2D> pos;
 
-    private GraphicType type;
-
-    AbstractGraphicsComponent(final EngineColor color, final List<Position2D> pos, final GraphicsComponentRenderer renderer, final GraphicType type) {
+    AbstractGraphicsComponent(
+        final EngineColor color,
+        final List<Position2D> pos,
+        final GraphicsComponentRenderer renderer,
+        final GraphicType type) {
         this.color = color;
         this.pos = pos;
         this.renderer = renderer;

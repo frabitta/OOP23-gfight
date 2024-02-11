@@ -8,28 +8,23 @@ import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 /**
  * Interface of a Camera that gives world points in relation to its position.
  */
-public interface ViewableCamera {
+public interface ViewCamera {
 
     /**
      * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
-     * @param pos
+     * @param pos   world-related position if of type WORLD, virtual position if of type HUD
+     * @param type  GraphicType of the component
      * @return screen-related position.
      */
     Position2D getScreenPosition(Position2D pos, GraphicType type);
 
     /**
      * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
-     * @param pos   List of position
+     * @param pos   List of positions: world-related position if of type WORLD, virtual position if of type HUD
+     * @param type  GraphicType of the component
      * @return list of screen-related positions.
      */
     List<Position2D> getScreenPositions(List<Position2D> pos, GraphicType type);
-
-    /**
-     * Given a Screen-related position it returns the corrisponding World-related position. 
-     * @param pos
-     * @return world-related position.
-     */
-    Position2D getWorldPosition(Position2D pos);
 
     /**
      * Gives the camera the dimensions of the window.

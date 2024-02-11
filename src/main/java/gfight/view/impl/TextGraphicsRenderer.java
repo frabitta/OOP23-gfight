@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewableCamera;
-import gfight.engine.graphics.impl.TextGraphicsComponent;
+import gfight.engine.graphics.api.ViewCamera;
+import gfight.engine.graphics.api.TextGraphicsComponent;
 
 /**
  * The renderer for TextGraphicsComponent.
@@ -19,7 +19,7 @@ public final class TextGraphicsRenderer extends AbstractGraphicsComponentRendere
     }
 
     @Override
-    void renderComp(final Graphics2D g, final ViewableCamera camera) {
+    void renderComp(final Graphics2D g, final ViewCamera camera) {
         final TextGraphicsComponent gComp = (TextGraphicsComponent) getGraphicsComponent();
         final Position2D printPos = camera.getScreenPosition(gComp.getPositions().get(0), gComp.getType());
         final double sizeRatio = camera.getSizeRatio();

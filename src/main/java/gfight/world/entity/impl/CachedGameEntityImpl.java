@@ -12,7 +12,9 @@ import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
 
 /**
- * An implementation of the cached game entity.
+ * An abstract implementation of the cached game entity.
+ * This class provides caching functionality for game entities to improve
+ * performance.
  */
 public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
@@ -24,11 +26,12 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     private boolean needResCollided;
 
     /**
-     * Chached Game Entity constructor.
+     * Constructs a CachedGameEntityImpl with the specified vertex positions,
+     * position, and graphics component.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
+     * @param vertexes          The list of positions defining the vertices.
+     * @param position          The position of the center of the entity.
+     * @param graphicsComponent The graphics component associated with the entity.
      */
     public CachedGameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
@@ -46,6 +49,10 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
         return boundigBox.get();
     }
 
+    /**
+     * Resets the state of the entity, indicating that cached data needs to be
+     * recalculated.
+     */
     @Override
     public void reset() {
         needResHitbox = true;

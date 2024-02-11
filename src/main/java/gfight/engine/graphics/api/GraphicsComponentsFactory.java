@@ -4,9 +4,6 @@ import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
-import gfight.engine.graphics.impl.PolygonGraphicsComponent;
-import gfight.engine.graphics.impl.StatusBarGraphicsComponent;
-import gfight.engine.graphics.impl.TextGraphicsComponent;
 
 /**
  * A factory of GraphicsComponents.
@@ -43,5 +40,12 @@ public interface GraphicsComponentsFactory {
      * @param type          GraphicType of the component
      * @return StatusBarGraphicsComponent
      */
-    StatusBarGraphicsComponent statusBar(EngineColor bgColor, EngineColor statusColor, Position2D pos, int base, int height, GraphicType type);
+    StatusBarGraphicsComponent statusBar(
+        EngineColor bgColor,
+        EngineColor statusColor,
+        Position2D pos,
+        int base,
+        int height,
+        GraphicType type
+    );
 }

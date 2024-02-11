@@ -9,7 +9,7 @@ import gfight.common.api.Vect;
  * Implementation of Position2D.
  */
 public final class Position2DImpl extends Coordinate implements Position2D {
-    
+
     /**
      * Constructs a new Position2DImpl with the specified x and y coordinates.
      *

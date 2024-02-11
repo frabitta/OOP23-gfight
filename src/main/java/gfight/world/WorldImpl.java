@@ -8,10 +8,10 @@ import java.util.Set;
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.MovableCamera;
+import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
-import gfight.engine.input.api.InputEventKey;
-import gfight.engine.input.api.InputEventMouse;
+import gfight.engine.input.api.InputEventValue;
+import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -35,10 +35,9 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
-    private static final int MAP_DIM = 21;
     private static final int CHEST_HEALTH = 150;
 
-    private MovableCamera camera;
+    private WorldCamera camera;
     private EntityManager entityManager;
     private GameMap map;
     private InputMovement keyMapper;
@@ -52,20 +51,23 @@ public class WorldImpl implements World {
 
     /**
      * Creates a new instance of a World.
+     * 
+     * @param mapName the name of the map to load into the world
      */
-    public WorldImpl() {
+    public WorldImpl(final String mapName) {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(MAP_DIM);
+        this.map = new GameMapImpl(mapName);
         this.keyMapper = new MovementFactoryImpl().createInput();
         loadMap();
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
     }
 
     @Override
-    public final void installCamera(final MovableCamera camera) {
+    public final void installCamera(final WorldCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
+        this.camera.setArea(50, 70);
     }
 
     @Override
@@ -74,11 +76,12 @@ public class WorldImpl implements World {
 
     @Override
     public final void update(final long deltaTime) {
-        if(this.isPlayerFiring){
+        this.testPlayer.pointTo(this.camera.getWorldPosition(this.pointingPosition));
+        if (this.isPlayerFiring) {
             this.testPlayer.makeDamage();
         }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
-        this.testPlayer.pointTo(this.pointingPosition);
+        this.camera.keepInArea(this.testPlayer.getPosition());
         for (final var entity : this.entityManager.getEntities()) {
             if (entity instanceof MovingEntity) {
                 ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
@@ -104,15 +107,15 @@ public class WorldImpl implements World {
 
     @Override
     public final void processInput(final InputEvent event) {
-        if (event instanceof InputEventKey) {
-            manageKey((InputEventKey) event);
-        } else if (event instanceof InputEventMouse) {
-            managePointer((InputEventMouse) event);
+        if (event instanceof InputEventValue) {
+            manageKey((InputEventValue) event);
+        } else if (event instanceof InputEventPointer) {
+            managePointer((InputEventPointer) event);
         }
     }
 
-    private void manageKey(final InputEventKey key) {
-        final var direction = Optional.ofNullable(switch (key.getKey()) {
+    private void manageKey(final InputEventValue key) {
+        final var direction = Optional.ofNullable(switch (key.getValue()) {
             case 87 -> InputMovement.Directions.NORTH;
             case 83 -> InputMovement.Directions.SOUTH;
             case 65 -> InputMovement.Directions.WEST;
@@ -129,7 +132,7 @@ public class WorldImpl implements World {
         }
     }
 
-    private void managePointer(final InputEventMouse pointer) {
+    private void managePointer(final InputEventPointer pointer) {
         this.pointingPosition = pointer.getPosition();
         if (pointer.getType().equals(InputEvent.Type.MOUSE_UP)) {
             this.isPlayerFiring = false;

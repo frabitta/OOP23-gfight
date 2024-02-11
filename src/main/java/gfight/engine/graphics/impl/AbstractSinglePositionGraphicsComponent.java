@@ -6,7 +6,10 @@ import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.EngineColor;
 import gfight.view.api.GraphicsComponentRenderer;
 
-abstract public class AbstractSinglePositionGraphicsComponent extends AbstractGraphicsComponent{
+/**
+ * An abstract GraphicsComponent that only needs and uses 1 position.
+ */
+public abstract class AbstractSinglePositionGraphicsComponent extends AbstractGraphicsComponent {
 
     AbstractSinglePositionGraphicsComponent(
             final EngineColor color,
@@ -17,11 +20,8 @@ abstract public class AbstractSinglePositionGraphicsComponent extends AbstractGr
     }
 
     @Override
-    public void setPositions(List<Position2D> pos) {
-        if (pos.size()>1) {
-            pos = pos.stream().limit(1).toList();
-        }
-        super.setPositions(pos);
+    public final void setPositions(final List<Position2D> pos) {
+        super.setPositions(List.of(pos.get(0)));
     }
 
 }

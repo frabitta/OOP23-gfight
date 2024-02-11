@@ -2,23 +2,23 @@ package gfight.engine.input.impl;
 
 import java.util.Objects;
 
-import gfight.engine.input.api.InputEventKey;
+import gfight.engine.input.api.InputEventValue;
 
 /**
  * Implementation of InputEvent to describe the pressing of buttons.
  * (for example for the keyboard).
  */
-public class InputEventKeyImpl extends AbstractInputEvent implements InputEventKey {
+public class InputEventValueImpl extends AbstractInputEvent implements InputEventValue {
 
     private final int key;
 
-    InputEventKeyImpl(final Type type, final int key) {
+    InputEventValueImpl(final Type type, final int key) {
         super(type);
         this.key = key;
     }
 
     @Override
-    public final int getKey() {
+    public final int getValue() {
         return this.key;
     }
 
@@ -30,9 +30,9 @@ public class InputEventKeyImpl extends AbstractInputEvent implements InputEventK
         if (this == obj) {
             return true;
         }
-        if (obj instanceof InputEventKeyImpl) {
-            final var e = (InputEventKeyImpl) obj;
-            return super.equals(obj) && this.getKey() == e.getKey();
+        if (obj instanceof InputEventValueImpl) {
+            final var e = (InputEventValueImpl) obj;
+            return super.equals(obj) && this.getValue() == e.getValue();
         }
         return false;
     }
@@ -42,6 +42,6 @@ public class InputEventKeyImpl extends AbstractInputEvent implements InputEventK
      */
     @Override
     public final int hashCode() {
-        return Objects.hash(super.hashCode(), this.getKey());
+        return Objects.hash(super.hashCode(), this.getValue());
     }
 }

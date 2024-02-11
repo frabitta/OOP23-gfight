@@ -8,10 +8,10 @@ import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.GraphicsComponentsFactory;
-import gfight.engine.graphics.api.MovableCamera;
+import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.input.api.InputEvent;
-import gfight.engine.input.api.InputEventKey;
+import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.EntityFactory;
@@ -36,7 +36,7 @@ public class TestWorldImpl implements World {
     private MovingEntity testEntity, testEntity2;
     private CachedGameEntity testWall, testWall2;
     private GameMap map;
-    private MovableCamera camera;
+    private WorldCamera camera;
     private final Set<InputEvent> pressed = new HashSet<>();
     private InputMovement movement, movement2;
     private final Hitboxes hitboxes;
@@ -50,7 +50,7 @@ public class TestWorldImpl implements World {
     }
 
     @Override
-    public void installCamera(MovableCamera camera) {
+    public void installCamera(WorldCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
     }
@@ -99,7 +99,7 @@ public class TestWorldImpl implements World {
             this.movement2.addDirection(InputMovement.Directions.WEST);
         }
         if (event.getType() == InputEvent.Type.RELEASED) {
-            this.pressed.remove(new InputEventFactoryImpl().pressedKey(((InputEventKey) event).getKey()));
+            this.pressed.remove(new InputEventFactoryImpl().pressedKey(((InputEventValue) event).getValue()));
             this.movement.removeDirection(InputMovement.Directions.EAST);
             this.movement.removeDirection(InputMovement.Directions.NORTH);
             this.movement2.removeDirection(InputMovement.Directions.WEST);

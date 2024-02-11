@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 import gfight.engine.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewableCamera;
+import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventListener;
 import gfight.view.api.EngineView;
 
@@ -26,23 +26,22 @@ public final class SwingView implements EngineView {
     private final Engine engine;
     private JFrame frame;
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
-    private ViewableCamera camera;
+    private ViewCamera camera;
 
     /**
      * Constructor of the view.
-     * @param engine
+     * @param engine engine managing the app
      */
     public SwingView(final Engine engine) {
         this.engine = engine;
     }
 
     @Override
-    public void initialize(final ViewableCamera camera) {
+    public void initialize(final ViewCamera camera) {
         this.camera = camera;
         frame = new JFrame("Geometry Fight");
-        frame.setSize(WIDTH, HEIGHT);     //needs to be changed---------------
+        frame.setSize(WIDTH, HEIGHT);
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        //frame.setResizable(false);
 
         final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
         if (engine instanceof InputEventListener) {
@@ -53,7 +52,7 @@ public final class SwingView implements EngineView {
 
         frame.getContentPane().add(canvas);
 
-        frame.addWindowListener(new WindowAdapter() { //needs to be changed------------
+        frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent ev) {
                 engine.terminate();

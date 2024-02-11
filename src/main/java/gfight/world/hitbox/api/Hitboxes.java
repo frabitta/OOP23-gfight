@@ -30,6 +30,7 @@ public interface Hitboxes {
      * 
      * @param theta   angle of rotation in radiants
      * @param polygon original list of vertexes
+     * @param center  the center of rotation
      * @return new modified list
      */
     List<Position2D> rotate(List<Position2D> polygon, double theta, Position2D center);
