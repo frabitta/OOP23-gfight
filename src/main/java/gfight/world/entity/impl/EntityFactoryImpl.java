@@ -59,7 +59,7 @@ public class EntityFactoryImpl implements EntityFactory {
                                 vertexes,
                                 GraphicType.WORLD);
                 final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health,
-                                CharacterType.ENEMY);
+                                CharacterType.SHOOTER);
                 final Optional<Movement> movement = Optional
                                 .ofNullable(new BfsMovement(enemy, target, map, SPEED_SHOOTERS));
                 enemy.setMovement(movement);
@@ -75,7 +75,7 @@ public class EntityFactoryImpl implements EntityFactory {
                                 vertexes,
                                 GraphicType.WORLD);
                 final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health,
-                                CharacterType.ENEMY);
+                                CharacterType.RUNNER);
                 final Optional<Movement> movement = Optional
                                 .ofNullable(new BfsMovement(enemy, target, map, SPEED_RUNNERS));
                 enemy.setMovement(movement);
@@ -109,7 +109,7 @@ public class EntityFactoryImpl implements EntityFactory {
                         final int damage) {
                 final List<Position2D> vertexes = vertexCalculator.square(projectileSize, position);
                 final GraphicsComponent gComp = new GraphicsComponentsFactoryImpl().polygon(
-                                team == Character.CharacterType.ENEMY ? EngineColor.RED : EngineColor.BLUE,
+                                team == Character.CharacterType.PLAYER ? EngineColor.RED : EngineColor.BLUE,
                                 vertexes,
                                 GraphicType.WORLD);
                 final Movement movement = new MovementFactoryImpl().createLinearMovement(direction);

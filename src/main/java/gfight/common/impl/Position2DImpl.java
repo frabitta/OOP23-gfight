@@ -34,4 +34,12 @@ public final class Position2DImpl extends Coordinate implements Position2D {
         return new Position2DImpl(getX() + a.getX(), getY() + a.getY());
     }
 
+    @Override
+    public double getDistance(final Position2D point) {
+        if (point instanceof Position2DImpl) {
+            return super.distance((Coordinate) point);
+        } else {
+            throw new IllegalArgumentException("Incompatible type for sum operation");
+        }
+    }
 }

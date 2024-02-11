@@ -10,7 +10,7 @@ import gfight.world.weapon.api.Weapon;
 public interface Character extends ActiveEntity {
     /**
      * Enum representing the types of characters in the game.
-     * It includes Player and Enemy as possible values.
+     * It includes Player and Enemies (RUNNERS and SHOOTERS).
      */
     enum CharacterType {
         /**
@@ -18,9 +18,13 @@ public interface Character extends ActiveEntity {
          */
         PLAYER,
         /**
-         * Represents an enemy character.
+         * Represents an enemy of type RUNNER.
          */
-        ENEMY
+        RUNNER,
+        /**
+         * Represents an enemy of type SHOOTER.
+         */
+        SHOOTER
     }
 
     /**
