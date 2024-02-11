@@ -55,7 +55,7 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
                     } else {
                         enemy = entityFactory.createShooter(target, dim, position, (int) health, map);
                     }
-                    new WeaponFactoryImpl().simpleGunPairing(150, 9, 4, 5, entityFactory, enemy);
+                    new WeaponFactoryImpl().simpleGunPairing(1750, 9, 4, 5, entityFactory, enemy);
                 }
                 spawnedEntities++;
             }
