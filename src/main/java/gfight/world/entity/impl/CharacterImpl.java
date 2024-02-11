@@ -10,15 +10,12 @@ import gfight.common.impl.VectorImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.api.Weapon;
-import gfight.world.collision.api.CollisionCommand;
 import gfight.world.collision.impl.PushAwayCommand;
 import gfight.world.collision.impl.SlideCommand;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
-import gfight.world.entity.api.MovingEntity;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
-import gfight.world.map.impl.Chest;
 import gfight.world.map.impl.Obstacle;
 
 /**
@@ -85,15 +82,15 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         if (this.getType() == CharacterType.PLAYER) {
             getAllCollided(gameobjects).stream()
-                    .filter(el -> !(el instanceof Projectile) && !(el instanceof Obstacle))
-                    .forEach(el -> new PushAwayCommand<>(this, el).execute());
+                    .filter(entity -> !(entity instanceof Projectile) && !(entity instanceof Obstacle))
+                    .forEach(entity -> new PushAwayCommand<>(this, entity).execute());
             getAllCollided(gameobjects).stream()
-                    .filter(el -> el instanceof Obstacle)
-                    .forEach(el -> new SlideCommand<>(this, el).execute());
+                    .filter(entity -> entity instanceof Obstacle)
+                    .forEach(entity -> new SlideCommand<>(this, entity).execute());
         } else {
             getAllCollided(gameobjects).stream()
-                    .filter(el -> !(el instanceof Projectile))
-                    .forEach(el -> new PushAwayCommand<>(this, el).execute());
+                    .filter(entity -> !(entity instanceof Projectile))
+                    .forEach(entity -> new PushAwayCommand<>(this, entity).execute());
         }
     }
 }

@@ -18,11 +18,12 @@ public interface MovementFactory {
      * Creates the AI BFS based movement.
      * 
      * @param target is the entity that you want to reach
-     * @param agent   is the entity with the movement
+     * @param agent  is the entity with the movement
      * @param map    the map of the game
-     * @return the AI BFS based movement object
+     * @param speed  the speed of the agent
+     * @return the BFS based movement object
      */
-    BfsMovement createIabfsMovement(GameEntity target, MovingEntity agent, GameMap map);
+    BfsMovement createBfsMovement(GameEntity target, MovingEntity agent, GameMap map, double speed);
 
     /**
      * Creates Linear movement.

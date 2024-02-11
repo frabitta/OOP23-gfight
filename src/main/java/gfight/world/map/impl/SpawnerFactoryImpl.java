@@ -38,7 +38,8 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
             public void spawn() {
                 if (this.isEnabled()) {
                     final double health = initialHealth + (initialHealth * (currentLevel - 1) * statsMultiplier);
-                    entityFactory.createEnemy(target, dim, position, (int) health, map);
+                    entityFactory.createRunner(target, dim, position, (int) health, map);
+                    entityFactory.createShooter(target, dim, position, (int) health, map);
                 }
                 currentLevel++;
             }

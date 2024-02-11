@@ -24,6 +24,7 @@ public final class BfsMovement extends BaseMovement {
     private final GameEntity target;
     private final MovingEntity agent;
     private final GameMap map;
+    private final double speed;
 
     /**
      * Constructor of bfs movement.
@@ -31,21 +32,23 @@ public final class BfsMovement extends BaseMovement {
      * @param agent  the enemy
      * @param target that the enemy needs to reach (Chest of Player)
      * @param map    of the game
+     * @param speed  of the agent
      */
-    public BfsMovement(final MovingEntity agent, final GameEntity target, final GameMap map) {
+    public BfsMovement(final MovingEntity agent, final GameEntity target, final GameMap map, final double speed) {
         this.target = target;
         this.agent = agent;
         this.map = map;
+        this.speed = speed;
     }
 
     @Override
     public void update() {
-        if(this.agent instanceof Character){
-            ((Character)this.agent).pointTo(this.target.getPosition());
+        if (this.agent instanceof Character) {
+            ((Character) this.agent).pointTo(this.target.getPosition());
         }
         List<Position2D> path = getPathFromBfs();
         if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
-            Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm();
+            Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
             setDirection(newDirection);
         } else {
             setDirection(new VectorImpl(0, 0));

@@ -47,9 +47,16 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public Character createEnemy(final GameEntity target, final double sideLength, final Position2D position,
+    public Character createShooter(final GameEntity target, final double sideLength, final Position2D position,
             final int health, final GameMap map) {
-        final Character enemy = this.factory.createEnemy(target, sideLength, position, health, map);
+        final Character enemy = this.factory.createShooter(target, sideLength, position, health, map);
+        this.enemies.add(enemy);
+        return enemy;
+    }
+
+    @Override
+    public Character createRunner(GameEntity target, double sideLength, Position2D position, int health, GameMap map) {
+        final Character enemy = this.factory.createRunner(target, sideLength, position, health, map);
         this.enemies.add(enemy);
         return enemy;
     }
@@ -99,4 +106,5 @@ public class EntityManagerImpl implements EntityManager {
                 .filter(e -> ((ActiveEntity) e).isAlive())
                 .collect(Collectors.toSet());
     }
+
 }

@@ -27,9 +27,19 @@ public interface EntityFactory {
          * @param position   the center of the enemy
          * @param health     life point of the enemy
          * @param map        the map of the game
-         * @return a new Enemy
+         * @return a new Enemy of type shooter
          */
-        Character createEnemy(GameEntity target, double sideLength, Position2D position, int health, GameMap map);
+        Character createShooter(GameEntity target, double sideLength, Position2D position, int health, GameMap map);
+
+        /**
+         * @param target     of the enemy (chest or player)
+         * @param sideLength of the figure
+         * @param position   the center of the enemy
+         * @param health     life point of the enemy
+         * @param map        the map of the game
+         * @return a new Enemy of type runner
+         */
+        Character createRunner(GameEntity target, double sideLength, Position2D position, int health, GameMap map);
 
         /**
          * 
@@ -50,17 +60,18 @@ public interface EntityFactory {
 
         /**
          * Creates a new Projectile.
-         * @param team                  Team of the projectile
-         * @param position              spawning position
-         * @param direction             direction to face
-         * @param projectileSize        the size of the generated projectile
-         * @param damage                the damage that the projectile makes
+         * 
+         * @param team           Team of the projectile
+         * @param position       spawning position
+         * @param direction      direction to face
+         * @param projectileSize the size of the generated projectile
+         * @param damage         the damage that the projectile makes
          * @return a new Projectile
          */
         Projectile createProjectile(
-                Character.CharacterType team,
-                Position2D position,
-                Vect direction,
-                double projectileSize,
-                int damage);
+                        Character.CharacterType team,
+                        Position2D position,
+                        Vect direction,
+                        double projectileSize,
+                        int damage);
 }
