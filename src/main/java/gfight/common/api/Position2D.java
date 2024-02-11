@@ -16,6 +16,13 @@ public interface Position2D {
     double getY();
 
     /**
+     * 
+     * @param point to calculate the distance with
+     * @return Distance between two points
+     */
+    double getDistance(Position2D point);
+
+    /**
      * Adds the vector to the current position and returns a new
      * Position2DImpl representing the result.
      *
