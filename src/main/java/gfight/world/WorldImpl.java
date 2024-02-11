@@ -35,10 +35,10 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
  */
 public class WorldImpl implements World {
 
-    private static final int UP = 87;
-    private static final int DOWN = 83;
-    private static final int LEFT = 65;
-    private static final int RIGHT = 68;
+    private static final int UP = 'W';
+    private static final int DOWN = 'S';
+    private static final int LEFT = 'A';
+    private static final int RIGHT = 'D';
 
     private static final int PLAYER_DIM = 30;
     private static final int CHEST_HEALTH = 150;
@@ -65,10 +65,9 @@ public class WorldImpl implements World {
     public WorldImpl(final String mapName) {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl(mapName);
         this.inputMapper = new MovementFactoryImpl().createInput();
-        loadMap();
-        new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, player);
+        loadMap(mapName);
+
     }
 
     @Override
@@ -80,7 +79,7 @@ public class WorldImpl implements World {
 
     @Override
     public boolean isOver() {
-        return this.player.getHealth() <= 0;
+        return this.player.getHealth() <= 0 || this.chest.getHealth() <= 0;
     }
 
     @Override
@@ -91,11 +90,9 @@ public class WorldImpl implements World {
         }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
         this.camera.keepInArea(this.player.getPosition());
-        for (final var entity : this.entityManager.getEntities()) {
-            if (entity instanceof MovingEntity) {
-                ((MovingEntity) entity).updatePos(deltaTime, this.entityManager.getEntities());
-            }
-        }
+        this.entityManager.getEntities().stream()
+                .filter(e -> e instanceof MovingEntity)
+                .forEach(e -> ((MovingEntity) e).updatePos(deltaTime, this.entityManager.getEntities()));
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
             if (this.currentLevel % BOSS_LEVEL == 0) {
@@ -150,12 +147,18 @@ public class WorldImpl implements World {
         }
     }
 
-    private void loadMap() {
-        for (final var pos : this.map.getObstaclesPositions()) {
-            this.entityManager.createObstacle(GameMap.TILE_DIM, pos);
-        }
+    /**
+     * Creates the game map from its name and loads
+     * in memory everything from it needed to start the game.
+     * 
+     * @param mapName the name of the map to load
+     */
+    private void loadMap(final String mapName) {
+        this.map = new GameMapImpl(mapName);
+        this.map.getObstaclesPositions().forEach(pos -> this.entityManager.createObstacle(GameMap.TILE_DIM, pos));
         this.chest = this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
         this.player = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, inputMapper);
+        new WeaponFactoryImpl().simpleGunPairing(150, 9, 4, 5, entityManager, player);
         this.pointingPosition = new Position2DImpl(this.player.getPosition().getX(), 0);
         this.currentLevel = 1;
         final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
@@ -169,6 +172,9 @@ public class WorldImpl implements World {
         }
     }
 
+    /**
+     * Tells every spawner to spawn enemies and updates current level.
+     */
     private void newLevel() {
         this.spawners.stream().forEach(Spawner::spawn);
         this.currentLevel++;

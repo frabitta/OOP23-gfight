@@ -16,7 +16,7 @@ public interface World extends CameraMover {
     boolean isOver();
 
     /**
-     * Update the world.
+     * Update the world based on the time passed.
      * 
      * @param deltaTime
      */
