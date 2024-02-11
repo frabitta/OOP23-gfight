@@ -7,6 +7,7 @@ import java.util.Set;
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
+import gfight.world.entity.api.Character.CharacterType;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.impl.AbstractActiveEntity;
 import gfight.world.map.impl.Chest;
@@ -57,19 +58,23 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     @Override
     protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         final var collidedObjects = getAllCollided(gameobjects);
-        final boolean collidedWithObstacle = collidedObjects.stream()
-            .filter(obj -> obj instanceof Obstacle || obj instanceof Chest)
-            .findAny().isPresent();
-        this.collided = collidedWithObstacle;
-        if (!this.collided) {
-            final var collidedWithEnemy = collidedObjects.stream()
-                .filter(entity -> entity instanceof Character)
-                .map(entity -> (Character) entity)
-                .filter(entity -> entity.getType() != this.team)
-                .peek(ch -> ch.takeDamage(this.damage))
-                .findAny().isPresent();
-            this.collided = collidedWithEnemy;
-        }
+        this.collided = collidedObjects.stream()
+            .anyMatch(obj -> {
+                if (obj instanceof Obstacle || obj instanceof Chest) {
+                    if (obj instanceof Chest && this.team == CharacterType.ENEMY) {
+                        ((Chest) obj).takeDamage(this.damage);
+                    }
+                    return true;
+                }
+                if (obj instanceof Character) {
+                    final Character character = (Character) obj;
+                    if (character.getType() != this.team) {
+                        character.takeDamage(damage);
+                        return true;
+                    }
+                }
+                return false;
+            });
     }
 
     @Override
