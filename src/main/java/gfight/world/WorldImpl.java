@@ -34,6 +34,11 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
  */
 public class WorldImpl implements World {
 
+    private static final int UP = 87;
+    private static final int DOWN = 83;
+    private static final int LEFT = 65;
+    private static final int RIGHT = 68;
+
     private static final int PLAYER_DIM = 30;
     private static final int CHEST_HEALTH = 150;
 
@@ -71,7 +76,8 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public void initialize() {
+    public boolean isOver() {
+        return this.testPlayer.getHealth() <= 0;
     }
 
     @Override
@@ -116,10 +122,10 @@ public class WorldImpl implements World {
 
     private void manageKey(final InputEventValue key) {
         final var direction = Optional.ofNullable(switch (key.getValue()) {
-            case 87 -> InputMovement.Directions.NORTH;
-            case 83 -> InputMovement.Directions.SOUTH;
-            case 65 -> InputMovement.Directions.WEST;
-            case 68 -> InputMovement.Directions.EAST;
+            case UP -> InputMovement.Directions.NORTH;
+            case DOWN -> InputMovement.Directions.SOUTH;
+            case LEFT -> InputMovement.Directions.WEST;
+            case RIGHT -> InputMovement.Directions.EAST;
             default -> null;
         });
         if (direction.isPresent()) {

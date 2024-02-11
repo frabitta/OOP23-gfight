@@ -39,7 +39,6 @@ public final class EngineImpl implements Engine, InputEventListener {
         camera.moveTo(new Position2DImpl(0, 0));
 
         world = new WorldImpl("map1");
-        world.initialize();
         world.installCamera(camera);
 
         view = new SwingView(this);

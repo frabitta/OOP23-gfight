@@ -9,13 +9,15 @@ import gfight.engine.input.api.InputEvent;
  * Interface to create a world (model part of the application).
  */
 public interface World extends CameraMover {
-    /**
-     * Initializes the world.
+
+    /*
+     * Returns {@code true} if the game is over.
      */
-    void initialize();
+    boolean isOver();
 
     /**
      * Update the world.
+     * 
      * @param deltaTime
      */
     void update(long deltaTime);
@@ -27,6 +29,7 @@ public interface World extends CameraMover {
 
     /**
      * Process input events coming from the engine.
+     * 
      * @param event the event that needs to be processed
      */
     void processInput(InputEvent event);
