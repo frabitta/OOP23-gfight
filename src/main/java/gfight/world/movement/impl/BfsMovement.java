@@ -26,6 +26,8 @@ public final class BfsMovement extends BaseMovement {
     private final GameMap map;
     private final double speed;
 
+    private static final int RANGE = 150;
+
     /**
      * Constructor of bfs movement.
      * 
@@ -46,7 +48,7 @@ public final class BfsMovement extends BaseMovement {
         this.agent.pointTo(this.target.getPosition());
         List<Position2D> path = getPathFromBfs();
         if (agent.getType() == CharacterType.SHOOTER) {
-            if (agent.getPosition().getDistance(target.getPosition()) < 150) {
+            if (agent.getPosition().getDistance(target.getPosition()) < RANGE) {
                 stopAndAttack();
             } else {
                 move(path);
