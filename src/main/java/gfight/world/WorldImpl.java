@@ -35,8 +35,6 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
-    private static final int MAP_WIDTH = 41;
-    private static final int MAP_HEIGHT = 21;
     private static final int CHEST_HEALTH = 150;
 
     private WorldCamera camera;
@@ -53,11 +51,13 @@ public class WorldImpl implements World {
 
     /**
      * Creates a new instance of a World.
+     * 
+     * @param mapName the name of the map to load into the world
      */
-    public WorldImpl() {
+    public WorldImpl(final String mapName) {
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
-        this.map = new GameMapImpl();
+        this.map = new GameMapImpl(mapName);
         this.keyMapper = new MovementFactoryImpl().createInput();
         loadMap();
         new WeaponFactoryImpl().simpleGunPairing(50, 9, 4, 5, entityManager, testPlayer);
@@ -77,7 +77,7 @@ public class WorldImpl implements World {
     @Override
     public final void update(final long deltaTime) {
         this.testPlayer.pointTo(this.camera.getWorldPosition(this.pointingPosition));
-        if(this.isPlayerFiring){
+        if (this.isPlayerFiring) {
             this.testPlayer.makeDamage();
         }
         this.hitboxManager.freeHitboxes(this.entityManager.getEntities());

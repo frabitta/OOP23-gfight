@@ -53,12 +53,14 @@ public final class GameMapImpl implements GameMap {
 
     /**
      * Creates a game map with the given dimensions.
+     * 
+     * @param mapName the name of the map to load
      */
-    public GameMapImpl() {
+    public GameMapImpl(final String mapName) {
         this.spawnersPositions = new HashMap<>();
         this.tiles = new ArrayList<>();
         this.tileGraph = Optional.empty();
-        loadFromFile();
+        loadFromFile(mapName);
     }
 
     @Override
@@ -137,9 +139,9 @@ public final class GameMapImpl implements GameMap {
         }
     }
 
-    private void loadFromFile() {
+    private void loadFromFile(final String mapName) {
         try (final BufferedReader br = new BufferedReader(
-                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/map1.txt")))) {
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/" + mapName + ".txt")))) {
             int row = 0;
             for (final var line : br.lines().toList()) {
                 final List<GameTile> tileRow = new ArrayList<>((line.length() / 2) + 1);

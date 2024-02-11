@@ -39,7 +39,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         final Camera camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
 
-        world = new WorldImpl();
+        world = new WorldImpl("map1");
         world.initialize();
         world.installCamera(camera);
 
