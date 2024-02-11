@@ -9,13 +9,13 @@ public interface WorldCamera {
 
     /**
      * Moves the camera to the new position.
-     * @param position
+     * @param position world position
      */
     void moveTo(Position2D position);
 
     /**
      * Given a Screen-related position it returns the corrisponding World-related position. 
-     * @param pos
+     * @param pos screen-related position
      * @return world-related position.
      */
     Position2D getWorldPosition(Position2D pos);

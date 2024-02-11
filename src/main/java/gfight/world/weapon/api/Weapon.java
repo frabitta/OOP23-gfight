@@ -9,7 +9,7 @@ public interface Weapon {
 
     /**
      * Sets the entity in possesion of the weapon.
-     * @param parent
+     * @param parent parent Character that has control of the weapon
      */
     void setParentEntity(Character parent);
 

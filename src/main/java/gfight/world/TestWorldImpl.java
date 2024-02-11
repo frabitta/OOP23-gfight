@@ -11,7 +11,7 @@ import gfight.engine.graphics.api.GraphicsComponentsFactory;
 import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.graphics.impl.GraphicsComponentsFactoryImpl;
 import gfight.engine.input.api.InputEvent;
-import gfight.engine.input.api.InputEventKey;
+import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.EntityFactory;
@@ -99,7 +99,7 @@ public class TestWorldImpl implements World {
             this.movement2.addDirection(InputMovement.Directions.WEST);
         }
         if (event.getType() == InputEvent.Type.RELEASED) {
-            this.pressed.remove(new InputEventFactoryImpl().pressedKey(((InputEventKey) event).getKey()));
+            this.pressed.remove(new InputEventFactoryImpl().pressedKey(((InputEventValue) event).getValue()));
             this.movement.removeDirection(InputMovement.Directions.EAST);
             this.movement.removeDirection(InputMovement.Directions.NORTH);
             this.movement2.removeDirection(InputMovement.Directions.WEST);

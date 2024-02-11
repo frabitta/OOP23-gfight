@@ -34,8 +34,13 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
         return translateEngineColor(gComp.getColor());
     }
 
-    protected Color translateEngineColor(EngineColor color) {
-        var hsb = Color.RGBtoHSB(color.getR(), color.getG(), color.getB(), null);
+    /**
+     * Converts EngineColor in JSwing Color
+     * @param color EngineColor color to convert
+     * @return Color using JSwing definitions
+     */
+    protected Color translateEngineColor(final EngineColor color) {
+        final var hsb = Color.RGBtoHSB(color.getR(), color.getG(), color.getB(), null);
         return Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
     }
 

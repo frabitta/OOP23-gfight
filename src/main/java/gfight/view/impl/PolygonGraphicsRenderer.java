@@ -6,7 +6,7 @@ import java.util.List;
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
-import gfight.engine.graphics.impl.PolygonGraphicsComponent;
+import gfight.engine.graphics.api.PolygonGraphicsComponent;
 
 /**
  * The renderer for PolygonGraphicsComponent.
@@ -21,7 +21,7 @@ public final class PolygonGraphicsRenderer extends AbstractGraphicsComponentRend
     @Override
     void renderComp(final Graphics2D g, final ViewCamera camera) {
         final var gComp = getGraphicsComponent();
-        final List<Position2D> pointList = camera.getScreenPositions(gComp.getPositions(),gComp.getType());
+        final List<Position2D> pointList = camera.getScreenPositions(gComp.getPositions(), gComp.getType());
 
         g.fillPolygon(
             pointList.stream()

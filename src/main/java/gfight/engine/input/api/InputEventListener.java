@@ -7,7 +7,7 @@ public interface InputEventListener {
 
     /**
      * Notify the listener with a new event.
-     * @param event
+     * @param event event to notify the listener
      */
     void notifyInputEvent(InputEvent event);
 

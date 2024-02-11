@@ -8,7 +8,7 @@ import gfight.engine.graphics.api.WorldCamera;
 public interface CameraMover {
     /**
      * Setup a new Camera.
-     * @param camera
+     * @param camera WorldCamera to install
      */
     void installCamera(WorldCamera camera);
 }

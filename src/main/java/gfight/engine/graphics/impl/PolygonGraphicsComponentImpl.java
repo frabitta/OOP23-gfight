@@ -4,14 +4,15 @@ import java.util.List;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.EngineColor;
+import gfight.engine.graphics.api.PolygonGraphicsComponent;
 import gfight.view.api.GraphicsComponentRenderer;
 
 /**
- * GraphicsComponent that describes a generic Polygon.
+ * Implementation of a PolygonGraphicsComponent that describes a generic Polygon.
  */
-public class PolygonGraphicsComponent extends AbstractGraphicsComponent {
+public final class PolygonGraphicsComponentImpl extends AbstractGraphicsComponent implements PolygonGraphicsComponent {
 
-    PolygonGraphicsComponent(
+    PolygonGraphicsComponentImpl(
         final EngineColor color,
         final List<Position2D> pos,
         final GraphicsComponentRenderer renderer,

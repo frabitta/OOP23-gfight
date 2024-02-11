@@ -2,24 +2,36 @@ package gfight.engine.graphics.impl;
 
 import gfight.engine.graphics.api.EngineColor;
 
-public class EngineColorImpl implements EngineColor {
+/**
+ * Implementation of EngineColor.
+ */
+public final class EngineColorImpl implements EngineColor {
+
+    private static final int MIN = 0;
+    private static final int MAX = 255;
 
     private final int r;
     private final int g;
     private final int b;
 
-    public EngineColorImpl(int r, int g, int b) {
+    /**
+     * Constructor of EngineColorImpl.
+     * @param r red value
+     * @param g green value
+     * @param b blue value
+     */
+    public EngineColorImpl(final int r, final int g, final int b) {
         this.r = filter(r);
         this.g = filter(g);
         this.b = filter(b);
     }
 
-    private int filter(int i) {
-        if (i<0) {
-            return 0;
+    private int filter(final int i) {
+        if (i < MIN) {
+            return MIN;
         }
-        if (i>255) {
-            return 255;
+        if (i > MAX) {
+            return MAX;
         }
         return i;
     }

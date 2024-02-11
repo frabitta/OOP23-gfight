@@ -10,8 +10,8 @@ import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
-import gfight.engine.input.api.InputEventKey;
-import gfight.engine.input.api.InputEventMouse;
+import gfight.engine.input.api.InputEventValue;
+import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -107,15 +107,15 @@ public class WorldImpl implements World {
 
     @Override
     public final void processInput(final InputEvent event) {
-        if (event instanceof InputEventKey) {
-            manageKey((InputEventKey) event);
-        } else if (event instanceof InputEventMouse) {
-            managePointer((InputEventMouse) event);
+        if (event instanceof InputEventValue) {
+            manageKey((InputEventValue) event);
+        } else if (event instanceof InputEventPointer) {
+            managePointer((InputEventPointer) event);
         }
     }
 
-    private void manageKey(final InputEventKey key) {
-        final var direction = Optional.ofNullable(switch (key.getKey()) {
+    private void manageKey(final InputEventValue key) {
+        final var direction = Optional.ofNullable(switch (key.getValue()) {
             case 87 -> InputMovement.Directions.NORTH;
             case 83 -> InputMovement.Directions.SOUTH;
             case 65 -> InputMovement.Directions.WEST;
@@ -132,7 +132,7 @@ public class WorldImpl implements World {
         }
     }
 
-    private void managePointer(final InputEventMouse pointer) {
+    private void managePointer(final InputEventPointer pointer) {
         this.pointingPosition = pointer.getPosition();
         if (pointer.getType().equals(InputEvent.Type.MOUSE_UP)) {
             this.isPlayerFiring = false;

@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
-import gfight.engine.graphics.impl.TextGraphicsComponent;
+import gfight.engine.graphics.api.TextGraphicsComponent;
 
 /**
  * The renderer for TextGraphicsComponent.

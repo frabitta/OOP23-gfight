@@ -3,16 +3,16 @@ package gfight.engine.input.impl;
 import java.util.Objects;
 
 import gfight.common.api.Position2D;
-import gfight.engine.input.api.InputEventMouse;
+import gfight.engine.input.api.InputEventPointer;
 
 /**
  * Implementation of InputEvent to describe the mouse position.
  */
-public class InputEventMouseImpl extends AbstractInputEvent implements InputEventMouse {
+public class InputEventPointerImpl extends AbstractInputEvent implements InputEventPointer {
 
     private final Position2D position;
 
-    InputEventMouseImpl(final Type type, final Position2D position) {
+    InputEventPointerImpl(final Type type, final Position2D position) {
         super(type);
         this.position = position;
     }
@@ -30,8 +30,8 @@ public class InputEventMouseImpl extends AbstractInputEvent implements InputEven
         if (this == obj) {
             return true;
         }
-        if (obj instanceof InputEventMouseImpl) {
-            final var e = (InputEventMouseImpl) obj;
+        if (obj instanceof InputEventPointerImpl) {
+            final var e = (InputEventPointerImpl) obj;
             return super.equals(obj) && this.getPosition().equals(e.getPosition());
         }
         return false;

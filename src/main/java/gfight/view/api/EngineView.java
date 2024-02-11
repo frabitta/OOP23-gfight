@@ -12,13 +12,13 @@ public interface EngineView {
 
     /**
      * Initialize the view.
-     * @param camera
+     * @param camera ViewCamera that the view can use to print correctly on screen
      */
     void initialize(ViewCamera camera);
 
     /**
      * Renders a frame.
-     * @param gComponentsList
+     * @param gComponentsList list of GraphicsComponents to print
      */
     void render(List<GraphicsComponent> gComponentsList);
 

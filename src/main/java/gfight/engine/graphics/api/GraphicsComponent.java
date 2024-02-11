@@ -35,13 +35,13 @@ public interface GraphicsComponent {
 
     /**
      * A setter for the color of the object.
-     * @param color
+     * @param color color of the component
      */
     void setColor(EngineColor color);
 
     /**
      * A setter for the position of the object.
-     * @param pos
+     * @param pos   list of positions of the component
      */
     void setPositions(List<Position2D> pos);
 

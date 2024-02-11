@@ -5,7 +5,7 @@ import gfight.common.api.Position2D;
 /**
  * Input event to describe events from the mouse.
  */
-public interface InputEventMouse extends InputEvent {
+public interface InputEventPointer extends InputEvent {
 
     /**
      * Returns the position 2D in relation to the world. (needs to be trasformed with the help of the Camera).

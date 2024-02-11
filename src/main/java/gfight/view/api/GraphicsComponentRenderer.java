@@ -12,14 +12,14 @@ public interface GraphicsComponentRenderer {
 
     /**
      * Renders the GraphicsComponent.
-     * @param g
-     * @param camera
+     * @param g         Graphics2D used to print
+     * @param camera    ViewCamera used to filter positions
      */
     void render(Graphics2D g, ViewCamera camera);
 
     /**
      * A setter of the referenced GraphicsComponent.
-     * @param gComp
+     * @param gComp GraphicsComponent that the renderer prints
      */
     void setComponent(GraphicsComponent gComp);
 

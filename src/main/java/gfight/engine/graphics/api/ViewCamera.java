@@ -12,14 +12,16 @@ public interface ViewCamera {
 
     /**
      * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
-     * @param pos
+     * @param pos   world-related position if of type WORLD, virtual position if of type HUD
+     * @param type  GraphicType of the component
      * @return screen-related position.
      */
     Position2D getScreenPosition(Position2D pos, GraphicType type);
 
     /**
      * Given a World-related/Virtual position it returns the corrisponding Screen-related position. 
-     * @param pos   List of position
+     * @param pos   List of positions: world-related position if of type WORLD, virtual position if of type HUD
+     * @param type  GraphicType of the component
      * @return list of screen-related positions.
      */
     List<Position2D> getScreenPositions(List<Position2D> pos, GraphicType type);

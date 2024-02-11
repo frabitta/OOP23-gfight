@@ -1,7 +1,6 @@
 package gfight.engine.graphics.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
@@ -13,78 +12,73 @@ import gfight.engine.graphics.api.GraphicsComponent.GraphicType;
 /**
  * Implementation of a simple camera.
  */
-public class CameraImpl implements Camera {
+public final class CameraImpl implements Camera {
 
-    private final static double DEFAULT_X = 500;
-    private final static double DEFAULT_Y = 500;
-    private final static double DEFAULT_ARATIO = DEFAULT_Y / DEFAULT_X;
-    
-    private final Position2D centerPos = new Position2DImpl(DEFAULT_X/2, DEFAULT_Y/2);
+    private static final  double VIRTUAL_X = 500;
+    private static final double VIRTUAL_Y = 500;
+    private static final double VIRTUAL_ARATIO = VIRTUAL_Y / VIRTUAL_X;
+    private final Position2D centerPos = new Position2DImpl(VIRTUAL_X / 2, VIRTUAL_Y / 2);
 
     private Position2D cameraPos = new Position2DImpl(0, 0);
-    private double screenX = DEFAULT_X;
-    private double screenY = DEFAULT_Y;
     private double sizeRatio = 1;
-    private double aspectRatio  = 1;
-    private double offsetY = 0;
-    private double offsetX = 0;
+    private double offsetX;
+    private double offsetY;
 
-    private Optional<Integer> areaHeight;
-    private Optional<Integer> areaWidth;
-    private double areaBorderY1;
-    private double areaBorderY2;
+    private boolean areaSetted;
     private double areaBorderX1;
     private double areaBorderX2;
+    private double areaBorderY1;
+    private double areaBorderY2;
 
     @Override
-    public final void moveTo(final Position2D cameraPos) {
+    public void moveTo(final Position2D cameraPos) {
         this.cameraPos = cameraPos;
     }
 
     @Override
-    public final Position2D getWorldPosition(final Position2D pos) {
+    public Position2D getWorldPosition(final Position2D pos) {
         return getWorldFromVirtual(getVirtualFromScreen(pos));
     }
 
     @Override
-    public Position2D getScreenPosition(Position2D pos, GraphicType type) {
+    public Position2D getScreenPosition(final Position2D pos, final GraphicType type) {
         final var virtualPos = type == GraphicType.WORLD ? getVirtualFromWorld(pos) : pos;
         return getScreenFromVirtual(virtualPos);
     }
 
-    private Position2D getVirtualFromWorld(Position2D pos) {
+    private Position2D getVirtualFromWorld(final Position2D pos) {
         return pos.sum(new VectorImpl(-cameraPos.getX(), -cameraPos.getY()));
     }
 
-    private Position2D getWorldFromVirtual(Position2D pos) {
+    private Position2D getWorldFromVirtual(final Position2D pos) {
         return pos.sum(new VectorImpl(cameraPos.getX(), cameraPos.getY()));
     }
 
-    private Position2D getScreenFromVirtual(Position2D pos) {
+    private Position2D getScreenFromVirtual(final Position2D pos) {
         return new Position2DImpl(pos.getX() * this.sizeRatio + this.offsetX, pos.getY() * this.sizeRatio + this.offsetY);
     }
 
-    private Position2D getVirtualFromScreen(Position2D pos) {
-        return new Position2DImpl((pos.getX() - this.offsetX) / this.sizeRatio , (pos.getY() - this.offsetY) / this.sizeRatio);
+    private Position2D getVirtualFromScreen(final Position2D pos) {
+        return new Position2DImpl((pos.getX() - this.offsetX) / this.sizeRatio, (pos.getY() - this.offsetY) / this.sizeRatio);
     }
 
     @Override
-    public List<Position2D> getScreenPositions(List<Position2D> pos, GraphicType type) {
+    public List<Position2D> getScreenPositions(final List<Position2D> pos, final GraphicType type) {
         return pos.stream().map(p -> getScreenPosition(p, type)).toList();
     }
 
     @Override
-    public void setScreenDimension(double width, double height) {
-        this.screenX = width;
-        this.screenY = height;
-        this.aspectRatio = this.screenY / this.screenX;
-        if (this.aspectRatio >= DEFAULT_ARATIO) {
-            this.sizeRatio = this.screenX / DEFAULT_X;
+    public void setScreenDimension(final double width, final double height) {
+        final double screenX = width;
+        final double screenY = height;
+        final double aspectRatio = screenY / screenX;
+        if (aspectRatio >= VIRTUAL_ARATIO) {
+            this.sizeRatio = screenX / VIRTUAL_X;
             this.offsetX = 0;
-            this.offsetY = (this.screenY - DEFAULT_Y * this.screenX / DEFAULT_X) / 2;
+            this.offsetY = (screenY - VIRTUAL_Y * screenX / VIRTUAL_X) / 2;
         } else {
-            this.sizeRatio = this.screenY / DEFAULT_Y;
-            this.offsetX = (this.screenX - DEFAULT_X * this.screenY / DEFAULT_Y) / 2;
+            this.sizeRatio = screenY / VIRTUAL_Y;
+            this.offsetX = (screenX - VIRTUAL_X * screenY / VIRTUAL_Y) / 2;
             this.offsetY = 0;
         }
     }
@@ -105,43 +99,39 @@ public class CameraImpl implements Camera {
     }
 
     @Override
-    public void centerOn(Position2D position) {
+    public void centerOn(final Position2D position) {
         moveTo(position.sum(new VectorImpl(-centerPos.getX(), -centerPos.getY())));
     }
 
     @Override
-    public void setArea(int height, int widht) {
-        this.areaHeight = Optional.of(height);
-        this.areaWidth = Optional.of(widht);
-        this.areaBorderY1 = this.centerPos.getY() - this.areaHeight.get() / 2;
-        this.areaBorderY2 = this.centerPos.getY() + this.areaHeight.get() / 2;
-        this.areaBorderX1 = this.centerPos.getX() - this.areaWidth.get() / 2;
-        this.areaBorderX2 = this.centerPos.getX() + this.areaWidth.get() / 2;
+    public void setArea(final int height, final int widht) {
+        this.areaBorderY1 = this.centerPos.getY() - height / 2;
+        this.areaBorderY2 = this.centerPos.getY() + height / 2;
+        this.areaBorderX1 = this.centerPos.getX() - widht / 2;
+        this.areaBorderX2 = this.centerPos.getX() + widht / 2;
+        this.areaSetted = true;
     }
 
     @Override
-    public void keepInArea(Position2D position) {
-        var screenPos = getVirtualFromWorld(position);
-        if (areaWidth.isEmpty()) {
+    public void keepInArea(final Position2D position) {
+        if (this.areaSetted) {
             centerOn(position);
         } else {
-            Vect movingVect = new VectorImpl(0,0);
-            if (screenPos.getY() < this.areaBorderY1) {
-                movingVect = movingVect.sum(new VectorImpl(0, screenPos.getY() - this.areaBorderY1));
+            final Position2D virtualPos = getVirtualFromWorld(position);
+            Vect movingVect = new VectorImpl(0, 0);
+            if (virtualPos.getY() < this.areaBorderY1) {
+                movingVect = movingVect.sum(new VectorImpl(0, virtualPos.getY() - this.areaBorderY1));
             }
-            if (screenPos.getY() > this.areaBorderY2) {
-                movingVect = movingVect.sum(new VectorImpl(0, screenPos.getY() - this.areaBorderY2));
+            if (virtualPos.getY() > this.areaBorderY2) {
+                movingVect = movingVect.sum(new VectorImpl(0, virtualPos.getY() - this.areaBorderY2));
             }
-            if (screenPos.getX() < this.areaBorderX1) {
-                movingVect = movingVect.sum(new VectorImpl(screenPos.getX() - this.areaBorderX1, 0));
+            if (virtualPos.getX() < this.areaBorderX1) {
+                movingVect = movingVect.sum(new VectorImpl(virtualPos.getX() - this.areaBorderX1, 0));
             }
-            if (screenPos.getX() > this.areaBorderX2) {
-                movingVect = movingVect.sum(new VectorImpl(screenPos.getX() - this.areaBorderX2, 0));
+            if (virtualPos.getX() > this.areaBorderX2) {
+                movingVect = movingVect.sum(new VectorImpl(virtualPos.getX() - this.areaBorderX2, 0));
             }
             moveTo(this.cameraPos.sum(movingVect));
-            //System.out.println(movingVect);
-            //System.out.println(screenPos);
-            //System.out.println(areaBorderX1 + "," + areaBorderX2 + "," + areaBorderY1 + "," + areaBorderY2);
         }
     }
 
