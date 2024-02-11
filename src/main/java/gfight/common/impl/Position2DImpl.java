@@ -35,7 +35,7 @@ public final class Position2DImpl extends Coordinate implements Position2D {
     }
 
     @Override
-    public double getDistance(Position2D point) {
+    public double getDistance(final Position2D point) {
         if (point instanceof Position2DImpl) {
             return super.distance((Coordinate) point);
         } else {

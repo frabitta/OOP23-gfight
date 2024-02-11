@@ -18,11 +18,11 @@ public interface Character extends ActiveEntity {
          */
         PLAYER,
         /**
-         * Represents an enemy of type RUNNER character.
+         * Represents an enemy of type RUNNER.
          */
         RUNNER,
         /**
-         * Represents an enemy of type Shooter
+         * Represents an enemy of type SHOOTER.
          */
         SHOOTER
     }
