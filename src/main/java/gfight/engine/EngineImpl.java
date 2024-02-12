@@ -137,14 +137,16 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void notifyInputEvent(final InputEvent event) {
-        if (!mutex) {
-            if (!bufferInputQueue.isEmpty()) {
-                inputQueue.addAll(bufferInputQueue);
-                bufferInputQueue.clear();
+        if (this.appStatus == EngineStatus.GAME) {
+            if (!mutex) {
+                if (!bufferInputQueue.isEmpty()) {
+                    inputQueue.addAll(bufferInputQueue);
+                    bufferInputQueue.clear();
+                }
+                inputQueue.add(event);
+            } else {
+                bufferInputQueue.add(event);
             }
-            inputQueue.add(event);
-        } else {
-            bufferInputQueue.add(event);
         }
     }
 

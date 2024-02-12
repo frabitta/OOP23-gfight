@@ -11,6 +11,7 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventValue;
+import gfight.engine.input.api.InputEventValue.Value;
 import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.ActiveEntity;
@@ -34,11 +35,6 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
  * Implementation of a World controlling the execution of the game.
  */
 public class WorldImpl implements World {
-
-    private static final int UP = 'W';
-    private static final int DOWN = 'S';
-    private static final int LEFT = 'A';
-    private static final int RIGHT = 'D';
 
     private static final int PLAYER_DIM = 30;
     private static final int CHEST_HEALTH = 150;
@@ -124,19 +120,25 @@ public class WorldImpl implements World {
     }
 
     private void manageKey(final InputEventValue key) {
-        final var direction = Optional.ofNullable(switch (key.getValue()) {
-            case UP -> InputMovement.Directions.NORTH;
-            case DOWN -> InputMovement.Directions.SOUTH;
-            case LEFT -> InputMovement.Directions.WEST;
-            case RIGHT -> InputMovement.Directions.EAST;
-            default -> null;
-        });
-        if (direction.isPresent()) {
-            if (key.getType() == InputEvent.Type.PRESSED) {
-                this.inputMapper.addDirection(direction.get());
-            }
-            if (key.getType() == InputEvent.Type.RELEASED) {
-                this.inputMapper.removeDirection(direction.get());
+        if (key.getValue() == Value.RESET) {
+            System.out.println("required reset of inputs");
+            this.inputMapper.setNullDirection();
+            this.isPlayerFiring = false;
+        } else {
+            final var direction = Optional.ofNullable(switch (key.getValue()) {
+                case UP -> InputMovement.Directions.NORTH;
+                case DOWN -> InputMovement.Directions.SOUTH;
+                case LEFT -> InputMovement.Directions.WEST;
+                case RIGHT -> InputMovement.Directions.EAST;
+                default -> null;
+            });
+            if (direction.isPresent()) {
+                if (key.getType() == InputEvent.Type.PRESSED) {
+                    this.inputMapper.addDirection(direction.get());
+                }
+                if (key.getType() == InputEvent.Type.RELEASED) {
+                    this.inputMapper.removeDirection(direction.get());
+                }
             }
         }
     }

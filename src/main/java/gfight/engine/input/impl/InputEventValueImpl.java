@@ -10,15 +10,15 @@ import gfight.engine.input.api.InputEventValue;
  */
 public class InputEventValueImpl extends AbstractInputEvent implements InputEventValue {
 
-    private final int key;
+    private final Value key;
 
-    InputEventValueImpl(final Type type, final int key) {
+    InputEventValueImpl(final Type type, final Value key) {
         super(type);
         this.key = key;
     }
 
     @Override
-    public final int getValue() {
+    public final Value getValue() {
         return this.key;
     }
 

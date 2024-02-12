@@ -126,9 +126,12 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
             final int key = e.getKeyCode();
             if (!pressedKeys.contains(key)) {
                 pressedKeys.add(key);
-                this.inputListener.get().notifyInputEvent(
-                    this.inputFactory.get().pressedKey(key)
-                );
+                final var value = this.inputFactory.get().filterKeyValue(key);
+                if (value.isPresent()) {
+                    this.inputListener.get().notifyInputEvent(
+                        this.inputFactory.get().pressedValue(value.get())
+                    );
+                }
             }
         }
     }
@@ -138,9 +141,12 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             final int key = e.getKeyCode();
             pressedKeys.remove(key);
-            this.inputListener.get().notifyInputEvent(
-                this.inputFactory.get().releasedKey(key)
-            );
+            final var value = this.inputFactory.get().filterKeyValue(key);
+            if (value.isPresent()) {
+                this.inputListener.get().notifyInputEvent(
+                    this.inputFactory.get().releasedValue(value.get())
+                );
+            }
         }
     }
 
@@ -178,5 +184,9 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
 
     @Override
     public void mouseExited(final MouseEvent e) {
+    }
+
+    public void resetPressedKeys() {
+        this.pressedKeys.clear();
     }
 }
