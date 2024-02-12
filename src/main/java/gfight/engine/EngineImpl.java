@@ -23,32 +23,43 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private static final int FRAME_RATE = 60;
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
-
-    private EngineView view;
-    private World world;
-
+    
     private final Queue<InputEvent> inputQueue = new LinkedList<>();
     private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
+    
+    private EngineView view;
+    private World world;
+    private Status appStatus;
+    private Camera camera;
 
     private boolean mutex;
-    private boolean engineAlive = true;
 
     @Override
     public void initialize() {
-        final Camera camera = new CameraImpl();
+        this.appStatus = Status.GAME;
+        this.camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
-
-        world = new WorldImpl("map1");
-        world.installCamera(camera);
-
-        view = new SwingView(this);
-        view.initialize(camera);
+        
+        view = new SwingView(this,camera);
     }
 
     @Override
     public void mainLoop() {
-        long prevFrameStartTime = System.currentTimeMillis();
         while (isAppRunning()) {
+            //menu ------------------
+            gameLoop();
+        }
+    }
+
+    private void gameLoop() {
+        long prevFrameStartTime = System.currentTimeMillis();
+        
+        //setup game-----------------
+        this.camera.moveTo(new Position2DImpl(0, 0));
+        world = new WorldImpl("map1");
+        world.installCamera(this.camera);
+
+        while (isAppRunning() && !this.world.isOver()) {
             final long frameStartTime = System.currentTimeMillis();
             final long deltaTime = frameStartTime - prevFrameStartTime;
             processInput();
@@ -56,7 +67,11 @@ public final class EngineImpl implements Engine, InputEventListener {
             render();
             waitNextFrame(frameStartTime);
             prevFrameStartTime = frameStartTime;
+            //pause menu is inside this loop just doesn't update world.
+            // if we want to exit from thhe game directly to the menu we have to add a condition on the loop and skip the death screen.
         }
+
+        // display death screen------------
     }
 
     private void waitNextFrame(final long frameStartTime) {
@@ -89,7 +104,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private boolean isAppRunning() {
-        return this.engineAlive;
+        return this.appStatus != Status.TERMINATED;
     }
 
     @Override
@@ -112,7 +127,7 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void terminate() {
-        this.engineAlive = false;
+        this.appStatus = Status.TERMINATED;
     }
 
 }

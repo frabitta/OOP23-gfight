@@ -5,6 +5,13 @@ package gfight.engine;
  */
 public interface Engine {
 
+    enum Status {
+        MENU,
+        GAME,
+        DEATH_SCREEN,
+        TERMINATED
+    }
+
     /**
      * initializes the engine.
      */

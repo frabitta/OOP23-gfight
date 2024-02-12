@@ -3,18 +3,26 @@ package gfight.view.api;
 import java.util.List;
 
 import gfight.engine.graphics.api.GraphicsComponent;
-import gfight.engine.graphics.api.ViewCamera;
 
 /**
  * A viewer for the engine.
  */
 public interface EngineView {
 
-    /**
-     * Initialize the view.
-     * @param camera ViewCamera that the view can use to print correctly on screen
-     */
-    void initialize(ViewCamera camera);
+    enum Pages {
+        MENU("menu"),
+        GAME("game"),
+        DEATH_SCREEN("death_screen");
+
+        String name;
+        Pages(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
 
     /**
      * Renders a frame.
@@ -22,4 +30,9 @@ public interface EngineView {
      */
     void render(List<GraphicsComponent> gComponentsList);
 
+    /**
+     * Changes the page to display
+     * @param panel page of the available Pages to display.
+     */
+    void changePage(Pages panel);
 }
