@@ -38,4 +38,9 @@ public final class InputMovementImpl extends BaseMovement implements InputMoveme
             default -> new VectorImpl(0, 0);
         };
     }
+
+    @Override
+    public void setNullDirection() {
+        this.inputVector = new VectorImpl(0, 0);
+    }
 }

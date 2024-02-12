@@ -20,6 +20,11 @@ public interface InputMovement extends Movement {
     void removeDirection(Directions dir);
 
     /**
+     * It sets the input direction to (0, 0).
+     */
+    void setNullDirection();
+
+    /**
      * An enum rapresenting the direction that can be added to the player.
      */
     enum Directions {
