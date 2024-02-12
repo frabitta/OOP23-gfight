@@ -10,6 +10,9 @@ import gfight.common.api.Vect;
  */
 public final class Position2DImpl extends Coordinate implements Position2D {
 
+    /** Serializable UID. */
+    private static final long serialVersionUID = 6683108902428366910L;
+
     /**
      * Constructs a new Position2DImpl with the specified x and y coordinates.
      *

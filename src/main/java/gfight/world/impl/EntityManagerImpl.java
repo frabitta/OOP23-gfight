@@ -39,44 +39,56 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public Character createPlayer(
-            final double sideLength, final Position2D position, final int health, final InputMovement movement) {
+    public final Character createPlayer(
+            final double sideLength,
+            final Position2D position,
+            final int health,
+            final InputMovement movement) {
         final Character player = this.factory.createPlayer(sideLength, position, health, movement);
         this.otherEntities.add(player);
         return player;
     }
 
     @Override
-    public Character createShooter(final GameEntity target, final double sideLength, final Position2D position,
-            final int health, final GameMap map) {
+    public final Character createShooter(
+            final GameEntity target,
+            final double sideLength,
+            final Position2D position,
+            final int health,
+            final GameMap map) {
         final Character enemy = this.factory.createShooter(target, sideLength, position, health, map);
         this.enemies.add(enemy);
         return enemy;
     }
 
     @Override
-    public Character createRunner(GameEntity target, double sideLength, Position2D position, int health, GameMap map) {
+    public final Character createRunner(
+            final GameEntity target,
+            final double sideLength,
+            final Position2D position,
+            final int health,
+            final GameMap map) {
         final Character enemy = this.factory.createRunner(target, sideLength, position, health, map);
         this.enemies.add(enemy);
         return enemy;
     }
 
     @Override
-    public CachedGameEntity createObstacle(final double sideLength, final Position2D position) {
+    public final CachedGameEntity createObstacle(final double sideLength, final Position2D position) {
         final CachedGameEntity obstacle = this.factory.createObstacle(sideLength, position);
         this.otherEntities.add(obstacle);
         return obstacle;
     }
 
     @Override
-    public ActiveEntity createChest(final double sideLength, final Position2D position, final int health) {
+    public final ActiveEntity createChest(final double sideLength, final Position2D position, final int health) {
         final ActiveEntity chest = this.factory.createChest(sideLength, position, health);
         this.otherEntities.add(chest);
         return chest;
     }
 
     @Override
-    public Projectile createProjectile(
+    public final Projectile createProjectile(
             final Character.CharacterType team,
             final Position2D position,
             final Vect direction,
@@ -88,17 +100,17 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public Set<CachedGameEntity> getEntities() {
+    public final Set<CachedGameEntity> getEntities() {
         return Stream.concat(this.enemies.stream(), this.otherEntities.stream()).collect(Collectors.toSet());
     }
 
     @Override
-    public boolean isClear() {
+    public final boolean isClear() {
         return this.enemies.isEmpty();
     }
 
     @Override
-    public void clean() {
+    public final void clean() {
         this.otherEntities = this.otherEntities.stream()
                 .filter(e -> !(e instanceof ActiveEntity) || ((ActiveEntity) e).isAlive())
                 .collect(Collectors.toSet());

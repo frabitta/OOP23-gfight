@@ -104,11 +104,11 @@ public final class CameraImpl implements Camera {
     }
 
     @Override
-    public void setArea(final int height, final int widht) {
+    public void setArea(final int height, final int width) {
         this.areaBorderY1 = this.centerPos.getY() - height / 2;
         this.areaBorderY2 = this.centerPos.getY() + height / 2;
-        this.areaBorderX1 = this.centerPos.getX() - widht / 2;
-        this.areaBorderX2 = this.centerPos.getX() + widht / 2;
+        this.areaBorderX1 = this.centerPos.getX() - width / 2;
+        this.areaBorderX2 = this.centerPos.getX() + width / 2;
         this.areaSetted = true;
     }
 

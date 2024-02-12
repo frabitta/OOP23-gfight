@@ -78,6 +78,7 @@ public final class GameMapImpl implements GameMap {
         return this.playerSpawn;
     }
 
+    @Override
     public Set<Position2D> getObstaclesPositions() {
         return this.tiles.stream()
                 .flatMap(List::stream)
@@ -112,14 +113,14 @@ public final class GameMapImpl implements GameMap {
     }
 
     private void buildGraph() {
-        Graph<GameTile, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        final Graph<GameTile, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
         this.tiles.stream()
                 .flatMap(List::stream)
                 .forEach(v -> g.addVertex(v));
         for (int i = 0; i < this.tiles.size(); i++) {
-            int width = this.tiles.get(i).size();
+            final int width = this.tiles.get(i).size();
             for (int j = 0; j < width; j++) {
-                GameTile tile = this.tiles.get(i).get(j);
+                final GameTile tile = this.tiles.get(i).get(j);
                 if (tile.getType().equals(GameTile.TileType.EMPTY) || tile.getType().equals(GameTile.TileType.CHEST)) {
                     addEdgeIfEmpty(g, tile, i, j - 1); // WEST
                     addEdgeIfEmpty(g, tile, i, j + 1); // EAST
@@ -132,19 +133,19 @@ public final class GameMapImpl implements GameMap {
         this.tileGraph = Optional.of(g);
     }
 
-    private void addEdgeIfEmpty(Graph<GameTile, DefaultEdge> g, GameTile tile, int x, int y) {
-        if (x >= 0 && x < this.tiles.size() && y >= 0 && y < this.tiles.get(x).size() &&
-                this.tiles.get(x).get(y).getType() == GameTile.TileType.EMPTY) {
+    private void addEdgeIfEmpty(final Graph<GameTile, DefaultEdge> g, final GameTile tile, final int x, final int y) {
+        if (x >= 0 && x < this.tiles.size() && y >= 0 && y < this.tiles.get(x).size()
+                && this.tiles.get(x).get(y).getType() == GameTile.TileType.EMPTY) {
             g.addEdge(tile, this.tiles.get(x).get(y));
         }
     }
 
     private void loadFromFile(final String mapName) {
-        try (final BufferedReader br = new BufferedReader(
+        try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/" + mapName + ".txt")))) {
             int row = 0;
             for (final var line : br.lines().toList()) {
-                final List<GameTile> tileRow = new ArrayList<>((line.length() / 2) + 1);
+                final List<GameTile> tileRow = new ArrayList<>(line.length() / 2 + 1);
                 this.tiles.add(row, tileRow);
                 for (int col = 0; col < line.length(); col++) {
                     final Position2D pos = realPosition(col, row);
@@ -174,7 +175,8 @@ public final class GameMapImpl implements GameMap {
                 row++;
             }
         } catch (final IOException e) {
-            throw new IllegalArgumentException("The specified map does not exist\n" + e);
+            throw (IllegalArgumentException) new IllegalArgumentException("The specified map does not exist\n")
+                    .initCause(e);
         }
     }
 }

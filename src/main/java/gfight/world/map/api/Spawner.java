@@ -65,4 +65,16 @@ public interface Spawner {
      * Disables the spawner.
      */
     void disable();
+
+    /**
+     * Returns the number of spawned entities.
+     * 
+     * @return the number of spawned entities
+     */
+    int getSpawnedEntities();
+
+    /**
+     * Increment by 1 the number of spawned entities.
+     */
+    void incrementSpawnedEntities();
 }

@@ -11,12 +11,13 @@ public abstract class AbstractSpawner implements Spawner {
     private final SpawnerType type;
     private final Position2D position;
     private boolean isEnabled;
-    protected int spawnedEntities;
+    private int spawnedEntities;
 
     /**
      * Creates a new abstract Spawner which spawning criteria is not defined.
      * 
      * @param position the position of the spawner
+     * @param type     the type of the spawner
      */
     public AbstractSpawner(final Position2D position, final SpawnerType type) {
         this.position = position;
@@ -26,27 +27,37 @@ public abstract class AbstractSpawner implements Spawner {
     }
 
     @Override
-    public SpawnerType getType() {
+    public final SpawnerType getType() {
         return this.type;
     }
 
     @Override
-    public Position2D getPosition() {
+    public final Position2D getPosition() {
         return this.position;
     }
 
     @Override
-    public boolean isEnabled() {
+    public final boolean isEnabled() {
         return this.isEnabled;
     }
 
     @Override
-    public void enable() {
+    public final void enable() {
         this.isEnabled = true;
     }
 
     @Override
-    public void disable() {
+    public final void disable() {
         this.isEnabled = false;
+    }
+
+    @Override
+    public final int getSpawnedEntities() {
+        return this.spawnedEntities;
+    }
+
+    @Override
+    public final void incrementSpawnedEntities() {
+        this.spawnedEntities = this.spawnedEntities + 1;
     }
 }

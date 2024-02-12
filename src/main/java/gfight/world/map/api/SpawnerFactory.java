@@ -17,7 +17,7 @@ public interface SpawnerFactory {
      * @param targets  the possible targets to attack
      * @return a linear spawner
      */
-    Spawner createLinear(final Position2D position, final Set<? extends ActiveEntity> targets);
+    Spawner createLinear(Position2D position, Set<? extends ActiveEntity> targets);
 
     /**
      * Creates a new spawner which spawn the same enemy
@@ -27,7 +27,7 @@ public interface SpawnerFactory {
      * @param targets  the possible targets to attack
      * @return a scalar spawner
      */
-    Spawner createScalar(final Position2D position, final Set<? extends ActiveEntity> targets);
+    Spawner createScalar(Position2D position, Set<? extends ActiveEntity> targets);
 
     /**
      * Creates a new spawner which spawns a boss.
@@ -36,5 +36,5 @@ public interface SpawnerFactory {
      * @param targets  the possible targets to attack
      * @return a boss spawner
      */
-    Spawner createBoss(final Position2D position, final Set<? extends ActiveEntity> targets);
+    Spawner createBoss(Position2D position, Set<? extends ActiveEntity> targets);
 }
