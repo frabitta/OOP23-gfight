@@ -29,14 +29,14 @@ public final class EngineImpl implements Engine, InputEventListener {
     
     private EngineView view;
     private World world;
-    private Status appStatus;
+    private EngineStatus appStatus;
     private Camera camera;
 
     private boolean mutex;
 
     @Override
     public void initialize() {
-        this.appStatus = Status.GAME;
+        this.appStatus = EngineStatus.MENU;
         this.camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
         
@@ -46,20 +46,25 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void mainLoop() {
         while (isAppRunning()) {
-            //menu ------------------
-            gameLoop();
+            switch (this.appStatus) {
+                case MENU -> holdPageUntilNotified(EngineView.Pages.MENU);
+                case GAME -> gameLoop();
+                default -> {break;}
+            }
         }
+        this.view.close();
     }
 
     private void gameLoop() {
         long prevFrameStartTime = System.currentTimeMillis();
         
-        //setup game-----------------
         this.camera.moveTo(new Position2DImpl(0, 0));
-        world = new WorldImpl("map1");
-        world.installCamera(this.camera);
+        this.world = new WorldImpl("map1");
+        this.world.installCamera(this.camera);
 
-        while (isAppRunning() && !this.world.isOver()) {
+        changeVisualizedPage(EngineView.Pages.GAME);
+
+        while (isGameRunning()) {
             final long frameStartTime = System.currentTimeMillis();
             final long deltaTime = frameStartTime - prevFrameStartTime;
             processInput();
@@ -69,9 +74,28 @@ public final class EngineImpl implements Engine, InputEventListener {
             prevFrameStartTime = frameStartTime;
             //pause menu is inside this loop just doesn't update world.
             // if we want to exit from thhe game directly to the menu we have to add a condition on the loop and skip the death screen.
+            if (this.world.isOver()) {
+                this.appStatus = EngineStatus.DEATH_SCREEN;
+            }
         }
 
-        // display death screen------------
+        if (this.appStatus == EngineStatus.DEATH_SCREEN)  {
+            holdPageUntilNotified(EngineView.Pages.DEATH_SCREEN);
+        }
+        this.appStatus = EngineStatus.MENU;
+    }
+
+    private synchronized void holdPageUntilNotified(EngineView.Pages page) {
+        changeVisualizedPage(page);
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            terminate();
+        }
+    }
+
+    private void changeVisualizedPage(EngineView.Pages page) {
+        this.view.changePage(page);
     }
 
     private void waitNextFrame(final long frameStartTime) {
@@ -104,7 +128,11 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private boolean isAppRunning() {
-        return this.appStatus != Status.TERMINATED;
+        return this.appStatus != EngineStatus.TERMINATED;
+    }
+
+    private boolean isGameRunning() {
+        return isAppRunning() && this.appStatus == EngineStatus.GAME;
     }
 
     @Override
@@ -127,7 +155,13 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void terminate() {
-        this.appStatus = Status.TERMINATED;
+        changeStatus(EngineStatus.TERMINATED);
+    }
+
+    @Override
+    public synchronized void changeStatus(final EngineStatus status) {
+        this.appStatus = status;
+        notify();
     }
 
 }

@@ -51,14 +51,12 @@ public final class SwingView implements EngineView {
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         this.frame.getContentPane().add(this.cardPanel);
-        this.menuPanel = new JPanel();          //put menu JPanel
-        this.deathPanel = new JPanel();         //put deathScreen JPanel
+        this.menuPanel = new TestPanel(this.engine,"gioca");          //put menu JPanel-------------------
+        this.deathPanel = new TestPanel(this.engine,"hai perso");         //put deathScreen JPanel-------------------
         this.gamePanel = setupGamePanel(camera);
         this.cardPanel.add(this.menuPanel, Pages.MENU.getName());
         this.cardPanel.add(this.deathPanel, Pages.DEATH_SCREEN.getName());
         this.cardPanel.add(this.gamePanel, Pages.GAME.getName());
-
-        changePage(Pages.GAME);                 //put menu
 
         frame.pack();
         frame.setVisible(true);
@@ -106,6 +104,14 @@ public final class SwingView implements EngineView {
     @Override
     public void changePage(Pages panel) {
         this.cardLayout.show(this.cardPanel, panel.getName());
+        if (panel == Pages.GAME) {
+            this.gamePanel.requestFocusInWindow();
+        }
+    }
+
+    @Override
+    public void close() {
+        this.frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
 }

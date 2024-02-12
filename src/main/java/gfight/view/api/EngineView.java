@@ -35,4 +35,9 @@ public interface EngineView {
      * @param panel page of the available Pages to display.
      */
     void changePage(Pages panel);
+
+    /**
+     * Closes the window.
+     */
+    void close();
 }

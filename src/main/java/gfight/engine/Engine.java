@@ -5,7 +5,7 @@ package gfight.engine;
  */
 public interface Engine {
 
-    enum Status {
+    enum EngineStatus {
         MENU,
         GAME,
         DEATH_SCREEN,
@@ -26,4 +26,10 @@ public interface Engine {
      * terminate engine.
      */
     void terminate();
+
+    /**
+     * Changes the status of the Engine.
+     * @param status status to put
+     */
+    void changeStatus(EngineStatus status);
 }
