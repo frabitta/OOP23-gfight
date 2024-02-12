@@ -68,7 +68,8 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
                 }
                 if (obj instanceof Character) {
                     final Character character = (Character) obj;
-                    if (character.getType() != this.team) {
+                    if ((this.team == CharacterType.PLAYER && character.getType() != CharacterType.PLAYER)
+                        || (this.team != CharacterType.PLAYER && character.getType() == CharacterType.PLAYER)) {
                         character.takeDamage(damage);
                         return true;
                     }
