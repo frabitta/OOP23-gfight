@@ -84,7 +84,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public Set<GraphicsComponent> getGraphics() {
+    public final Set<GraphicsComponent> getGraphics() {
         return originalEntity.getGraphics();
     }
 
@@ -96,5 +96,10 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     @Override
     public final void setCoordinates(final List<Position2D> vertexes) {
         originalEntity.setCoordinates(vertexes);
+    }
+
+    @Override
+    public final void setGraphics(Set<GraphicsComponent> graphics) {
+        originalEntity.setGraphics(graphics);
     }
 }

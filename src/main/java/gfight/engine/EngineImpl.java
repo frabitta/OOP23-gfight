@@ -21,7 +21,7 @@ import gfight.view.impl.SwingView;
  */
 public final class EngineImpl implements Engine, InputEventListener {
 
-    private static final int FRAME_RATE = 60;
+    private static final int FRAME_RATE = 240;
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
 
     private EngineView view;

@@ -62,4 +62,6 @@ public interface GameEntity {
      * @param vertexes
      */
     void setCoordinates(List<Position2D> vertexes);
+
+    void setGraphics(Set<GraphicsComponent> graphics);
 }

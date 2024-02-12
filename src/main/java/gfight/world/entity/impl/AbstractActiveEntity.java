@@ -26,7 +26,6 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
 
     private int health;
     private int maxHealth;
-    private final StatusBarGraphicsComponent healthBar;
 
     /**
      * Constructor of ActiveEntityImpl.
@@ -41,14 +40,15 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         super(vertexes, position, graphicsComponent);
         this.health = health;
         this.maxHealth = health;
-        this.healthBar = new GraphicsComponentsFactoryImpl().statusBar(
+        final StatusBarGraphicsComponent healthBar = new GraphicsComponentsFactoryImpl().statusBar(
                 EngineColor.RED,
                 EngineColor.GREEN,
                 position,
                 HEALTHBAR_WIDTH,
                 HEALTHBAR_HEIGHT,
                 GraphicType.WORLD);
-        this.healthBar.setStatus(getHealthPercentage());
+        healthBar.setStatus(getHealthPercentage());
+        setGraphics(Stream.concat(super.getGraphics().stream(), Stream.of(healthBar)).collect(Collectors.toSet()));
     }
 
     private int getHealthPercentage() {
@@ -63,7 +63,10 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     @Override
     public final void takeDamage(final int damage) {
         this.setHealth(getHealth() - damage);
-        this.healthBar.setStatus(getHealthPercentage());
+        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
+            StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
+            a.setStatus(getHealthPercentage());
+        });
     }
 
     @Override
@@ -83,12 +86,9 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     @Override
     public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         super.updatePos(dt, gameobjects);
-        this.healthBar.setPositions(
-                List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
-    }
-
-    @Override
-    public Set<GraphicsComponent> getGraphics() {
-        return Stream.concat(super.getGraphics().stream(), Stream.of(this.healthBar)).collect(Collectors.toSet());
+        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
+            StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
+            a.setPositions(List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
+        });
     }
 }
