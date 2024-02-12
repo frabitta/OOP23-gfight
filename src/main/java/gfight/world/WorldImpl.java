@@ -113,32 +113,31 @@ public class WorldImpl implements World {
     @Override
     public final void processInput(final InputEvent event) {
         if (event instanceof InputEventValue) {
-            manageKey((InputEventValue) event);
+            manageValue((InputEventValue) event);
         } else if (event instanceof InputEventPointer) {
             managePointer((InputEventPointer) event);
         }
     }
 
-    private void manageKey(final InputEventValue key) {
-        if (key.getValue() == Value.RESET) {
-            System.out.println("required reset of inputs");
-            this.inputMapper.setNullDirection();
-            this.isPlayerFiring = false;
-        } else {
-            final var direction = Optional.ofNullable(switch (key.getValue()) {
-                case UP -> InputMovement.Directions.NORTH;
-                case DOWN -> InputMovement.Directions.SOUTH;
-                case LEFT -> InputMovement.Directions.WEST;
-                case RIGHT -> InputMovement.Directions.EAST;
-                default -> null;
-            });
-            if (direction.isPresent()) {
-                if (key.getType() == InputEvent.Type.PRESSED) {
-                    this.inputMapper.addDirection(direction.get());
-                }
-                if (key.getType() == InputEvent.Type.RELEASED) {
-                    this.inputMapper.removeDirection(direction.get());
-                }
+    private void manageValue(final InputEventValue key) {
+        final var direction = Optional.ofNullable(switch (key.getValue()) {
+            case UP -> InputMovement.Directions.NORTH;
+            case DOWN -> InputMovement.Directions.SOUTH;
+            case LEFT -> InputMovement.Directions.WEST;
+            case RIGHT -> InputMovement.Directions.EAST;
+            case RESET -> {
+                this.inputMapper.setNullDirection();
+                this.isPlayerFiring = false;
+                yield null;
+            }
+            default -> null;
+        });
+        if (direction.isPresent()) {
+            if (key.getType() == InputEvent.Type.PRESSED) {
+                this.inputMapper.addDirection(direction.get());
+            }
+            if (key.getType() == InputEvent.Type.RELEASED) {
+                this.inputMapper.removeDirection(direction.get());
             }
         }
     }
