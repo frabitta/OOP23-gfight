@@ -27,6 +27,7 @@ public interface GameEntity {
 
     /**
      * Return where is the object.
+     * 
      * @return object position
      */
     Position2D getPosition();
@@ -47,9 +48,9 @@ public interface GameEntity {
 
     /**
      * 
-     * @return the graphic component of the Entity
+     * @return the graphic components of the Entity
      */
-    GraphicsComponent getGraphics();
+    Set<GraphicsComponent> getGraphics();
 
     /**
      * 
@@ -59,7 +60,15 @@ public interface GameEntity {
 
     /**
      * Set the coordinates of the entity.
+     * 
      * @param vertexes
      */
     void setCoordinates(List<Position2D> vertexes);
+
+    /**
+     * Set the graphics associated with the entity.
+     * 
+     * @param graphics
+     */
+    void setGraphics(Set<GraphicsComponent> graphics);
 }

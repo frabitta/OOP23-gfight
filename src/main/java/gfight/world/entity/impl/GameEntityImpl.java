@@ -3,7 +3,6 @@ package gfight.world.entity.impl;
 import java.util.List;
 import java.util.Set;
 import java.util.LinkedHashSet;
-
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 public final class GameEntityImpl implements GameEntity {
     private List<Position2D> vertexes = new ArrayList<>();
     private Position2D position;
-    private final GraphicsComponent graphicsComponent;
+    private Set<GraphicsComponent> graphicsComponents;
     private final Set<GameEntity> ignoredEntities = new LinkedHashSet<>();
 
     /**
@@ -36,7 +35,7 @@ public final class GameEntityImpl implements GameEntity {
      */
     public GameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
-        this.graphicsComponent = graphicsComponent;
+        this.graphicsComponents = Set.of(graphicsComponent);
         this.position = position;
         this.vertexes.addAll(vertexes);
     }
@@ -78,8 +77,8 @@ public final class GameEntityImpl implements GameEntity {
     }
 
     @Override
-    public GraphicsComponent getGraphics() {
-        return graphicsComponent;
+    public Set<GraphicsComponent> getGraphics() {
+        return new LinkedHashSet<>(this.graphicsComponents);
     }
 
     @Override
@@ -90,5 +89,10 @@ public final class GameEntityImpl implements GameEntity {
     @Override
     public void setCoordinates(final List<Position2D> vertexes) {
         this.vertexes = vertexes;
+    }
+
+    @Override
+    public void setGraphics(final Set<GraphicsComponent> graphics) {
+        this.graphicsComponents = graphics;
     }
 }

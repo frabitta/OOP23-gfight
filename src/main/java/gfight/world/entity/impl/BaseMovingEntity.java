@@ -46,7 +46,7 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
             this.movement.get().update();
             applyCollisions(gameobjects);
             setPosition(getPosition().sum(getDirection().scale(scalar * dt)));
-            getGraphics().setPositions(getPosition2Ds());
+            getGraphics().stream().forEach(g -> g.setPositions(getPosition2Ds()));
         }
     }
 
