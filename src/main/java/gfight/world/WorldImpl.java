@@ -11,7 +11,6 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.WorldCamera;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventValue;
-import gfight.engine.input.api.InputEventValue.Value;
 import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.entity.api.ActiveEntity;
