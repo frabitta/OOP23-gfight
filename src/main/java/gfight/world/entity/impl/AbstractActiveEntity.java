@@ -20,12 +20,11 @@ import gfight.world.entity.api.GameEntity;
  * (Chest, Player and Enemies).
  */
 public abstract class AbstractActiveEntity extends BaseMovingEntity implements ActiveEntity {
-    private static final int HEALTHBAR_WIDTH = 20;
+    private static final int HEALTHBAR_WIDTH = 25;
     private static final int HEALTHBAR_HEIGHT = 4;
     private static final int HEALTHBAR_OFFSET = -25;
 
     private int health;
-    private int maxHealth;
 
     /**
      * Constructor of ActiveEntityImpl.
@@ -39,7 +38,6 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
             final GraphicsComponent graphicsComponent, final int health) {
         super(vertexes, position, graphicsComponent);
         this.health = health;
-        this.maxHealth = health;
         final StatusBarGraphicsComponent healthBar = new GraphicsComponentsFactoryImpl().statusBar(
                 EngineColor.RED,
                 EngineColor.GREEN,
@@ -47,12 +45,9 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
                 HEALTHBAR_WIDTH,
                 HEALTHBAR_HEIGHT,
                 GraphicType.WORLD);
-        healthBar.setStatus(getHealthPercentage());
-        setGraphics(Stream.concat(super.getGraphics().stream(), Stream.of(healthBar)).collect(Collectors.toSet()));
-    }
-
-    private int getHealthPercentage() {
-        return 100 * getHealth() / this.maxHealth;
+        healthBar.setMax(getHealth());
+        healthBar.setStatus(getHealth());
+        setGraphics(Stream.concat(Stream.of(healthBar), super.getGraphics().stream()).collect(Collectors.toSet()));
     }
 
     @Override
@@ -65,7 +60,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         this.setHealth(getHealth() - damage);
         getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
             StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
-            a.setStatus(getHealthPercentage());
+            a.setStatus(getHealth());
         });
     }
 
