@@ -29,6 +29,7 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
 
     private final EntityFactory entityFactory;
     private final GameMap map;
+    private final Random random;
 
     /**
      * Creates a new SpawnerFactory.
@@ -39,6 +40,7 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
     public SpawnerFactoryImpl(final EntityFactory entityFactory, final GameMap map) {
         this.entityFactory = entityFactory;
         this.map = map;
+        this.random = new Random();
     }
 
     private Spawner create(
@@ -51,7 +53,6 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
             @Override
             public void spawn() {
                 if (this.isEnabled()) {
-                    final Random random = new Random();
                     final ActiveEntity target = targets.stream().toList().get(random.nextInt(targets.size()));
                     final double health = initialHealth
                             + (initialHealth * (getSpawnedEntities() - 1) * statsMultiplier);

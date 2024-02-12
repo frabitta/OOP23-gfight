@@ -121,7 +121,7 @@ public final class GameMapImpl implements GameMap {
             final int width = this.tiles.get(i).size();
             for (int j = 0; j < width; j++) {
                 final GameTile tile = this.tiles.get(i).get(j);
-                if (tile.getType().equals(GameTile.TileType.EMPTY) || tile.getType().equals(GameTile.TileType.CHEST)) {
+                if (tile.getType() == GameTile.TileType.EMPTY || tile.getType() == GameTile.TileType.CHEST) {
                     addEdgeIfEmpty(g, tile, i, j - 1); // WEST
                     addEdgeIfEmpty(g, tile, i, j + 1); // EAST
                     addEdgeIfEmpty(g, tile, i - 1, j); // NORTH
@@ -142,7 +142,7 @@ public final class GameMapImpl implements GameMap {
 
     private void loadFromFile(final String mapName) {
         try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/" + mapName + ".txt")))) {
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream("map/" + mapName + ".txt"), "UTF-8"))) {
             int row = 0;
             for (final var line : br.lines().toList()) {
                 final List<GameTile> tileRow = new ArrayList<>(line.length() / 2 + 1);

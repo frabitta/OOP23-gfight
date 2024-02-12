@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -37,12 +38,12 @@ public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
     private static final int PLAYER_HEALTH = 50;
-    private static final int PLAYER_RELOAD_TIME = 5;
+    private static final int PLAYER_RELOAD_TIME = 200;
     private static final int PLAYER_PROJ_SPEED = 9;
     private static final int PLAYER_PROJ_SIZE = 4;
     private static final int PLAYER_PROJ_DAMAGE = 5;
     private static final int CHEST_HEALTH = 250;
-    private static final int BOSS_LEVEL = 150;
+    private static final int BOSS_LEVEL = 5;
 
     private final EntityManager entityManager;
     private final InputMovement inputMapper;
@@ -70,6 +71,7 @@ public class WorldImpl implements World {
 
     }
 
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to command it")
     @Override
     public final void installCamera(final WorldCamera camera) {
         this.camera = camera;
