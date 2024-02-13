@@ -9,13 +9,14 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.movement.api.Movement;
+
 import java.util.Set;
 
 /**
  * An implementation of Moving Entity that also extends Cached Game Entity.
  */
 public abstract class BaseMovingEntity extends CachedGameEntityImpl implements MovingEntity {
-    private Optional<Movement> movement;
+    private Optional<Movement> movement = Optional.empty();
 
     /**
      * Moving Entity Updated Constructor with initial Movement.
