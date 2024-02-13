@@ -28,7 +28,11 @@ public interface InputEventValue extends InputEvent {
         /**
          * reset inputs received.
          */
-        RESET(-1);
+        RESET(-1),
+        /**
+         * pause game
+         */
+        PAUSE(27);
 
         private int key;
         Value(final int key) {

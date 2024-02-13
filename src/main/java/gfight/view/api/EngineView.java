@@ -24,7 +24,11 @@ public interface EngineView {
         /**
          * Death screen page.
          */
-        DEATH_SCREEN("death_screen");
+        DEATH_SCREEN("death_screen"),
+        /**
+         * Pause screen page.
+         */
+        PAUSE_SCREEN("pause_screen");
 
         private String name;
         Pages(final String name) {

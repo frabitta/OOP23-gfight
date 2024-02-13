@@ -159,7 +159,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );
@@ -171,7 +170,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseUpAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );

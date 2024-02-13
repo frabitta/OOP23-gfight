@@ -35,6 +35,7 @@ public final class SwingView implements EngineView {
     private final JPanel menuPanel;
     private final JPanel deathPanel;
     private final Canvas gamePanel;
+    private final JPanel pausePanel;
     private final ViewCamera camera;
     private final CardLayout cardLayout;
 
@@ -61,9 +62,11 @@ public final class SwingView implements EngineView {
         this.menuPanel = new MenuPanel(this.engine);
         this.deathPanel = new GameOver(this.engine);
         this.gamePanel = setupGamePanel(camera);
+        this.pausePanel = new PausePanel(this.engine);
         this.cardPanel.add(this.menuPanel, Pages.MENU.getName());
         this.cardPanel.add(this.deathPanel, Pages.DEATH_SCREEN.getName());
         this.cardPanel.add(this.gamePanel, Pages.GAME.getName());
+        this.cardPanel.add(this.pausePanel, Pages.PAUSE_SCREEN.getName());
 
         frame.pack();
         frame.setVisible(true);

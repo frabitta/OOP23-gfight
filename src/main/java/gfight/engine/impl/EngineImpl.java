@@ -14,6 +14,7 @@ import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
+import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.api.World;
 import gfight.world.impl.WorldImpl;
@@ -78,11 +79,13 @@ public final class EngineImpl implements Engine, InputEventListener {
             render();
             waitNextFrame(frameStartTime);
             prevFrameStartTime = frameStartTime;
-            /*pause menu is inside this loop just doesn't update world.
-            if we want to exit from thhe game directly to the menu we
-            have to add a condition on the loop and skip the death screen.*/
             if (this.world.isOver()) {
                 this.appStatus = EngineStatus.DEATH_SCREEN;
+            }
+            if (this.appStatus == EngineStatus.PAUSE) {
+                holdPageUntilNotified(EngineView.Pages.PAUSE_SCREEN);
+                changeVisualizedPage(EngineView.Pages.GAME);
+                prevFrameStartTime = System.currentTimeMillis();
             }
         }
 
@@ -134,7 +137,11 @@ public final class EngineImpl implements Engine, InputEventListener {
         inputQueue.clear();
         mutex = false;
         for (final var event: frameInputSequence) {
-            world.processInput(event);
+            if (event instanceof InputEventValue && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
+                this.appStatus = EngineStatus.PAUSE;
+            } else {
+                world.processInput(event);
+            }
         }
     }
 

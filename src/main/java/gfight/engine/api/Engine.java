@@ -24,7 +24,11 @@ public interface Engine {
         /**
          * Engine terminated.
          */
-        TERMINATED
+        TERMINATED,
+        /**
+         * Game paused.
+         */
+        PAUSE
     }
 
     /**
