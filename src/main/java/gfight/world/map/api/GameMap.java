@@ -13,7 +13,10 @@ import gfight.common.api.Position2D;
  */
 public interface GameMap {
 
-    public static final int TILE_DIM = 40;
+    /**
+     * The dimension of a tile.
+     */
+    int TILE_DIM = 40;
 
     /**
      * Returns the position where the player needs to spawn.
@@ -23,7 +26,7 @@ public interface GameMap {
     Position2D getPlayerSpawn();
 
     /**
-     * Returns the position of the chest in the map:
+     * Returns the position of the chest in the map.
      * 
      * @return the position of the chest
      */
@@ -47,7 +50,7 @@ public interface GameMap {
     /**
      * Returns the GameTile which contains the given position.
      * 
-     * @param position
+     * @param position the position to search the associated tile
      * @return the GameTile containing {@code position}
      * @throws IllegalStateException if the given position is not inside the map
      */

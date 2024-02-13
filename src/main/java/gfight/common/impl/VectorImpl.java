@@ -10,6 +10,9 @@ import gfight.common.api.Vect;
  */
 public final class VectorImpl extends Vector2D implements Vect {
 
+    /** Serializable UID. */
+    private static final long serialVersionUID = 266938651998679754L;
+
     /**
      * Constructs a new VectorImpl with the specified x and y components.
      *

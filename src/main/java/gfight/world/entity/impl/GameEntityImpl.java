@@ -15,6 +15,7 @@ import gfight.world.hitbox.impl.HitboxImpl;
 import gfight.world.hitbox.impl.HitboxesImpl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Implementation of Game Entity.
@@ -88,11 +89,11 @@ public final class GameEntityImpl implements GameEntity {
 
     @Override
     public void setCoordinates(final List<Position2D> vertexes) {
-        this.vertexes = vertexes;
+        this.vertexes = new ArrayList<>(vertexes);
     }
 
     @Override
     public void setGraphics(final Set<GraphicsComponent> graphics) {
-        this.graphicsComponents = graphics;
+        this.graphicsComponents = new HashSet<>(graphics);
     }
 }

@@ -1,4 +1,4 @@
-package gfight.engine;
+package gfight.engine.api;
 
 /**
  * Interface to describe a game engine.
@@ -32,4 +32,10 @@ public interface Engine {
      * @param status status to put
      */
     void changeStatus(EngineStatus status);
+
+    /**
+     * Selects the level to load during EngineStatus.GAME.
+     * @param level level name
+     */
+    void selectLevel(String level);
 }

@@ -1,10 +1,11 @@
-package gfight.world;
+package gfight.world.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -13,6 +14,7 @@ import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
+import gfight.world.api.World;
 import gfight.world.entity.api.ActiveEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -20,7 +22,6 @@ import gfight.world.entity.api.MovingEntity;
 import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
-import gfight.world.impl.EntityManagerImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;
@@ -35,22 +36,21 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
  */
 public class WorldImpl implements World {
 
-    private static final int UP = 'W';
-    private static final int DOWN = 'S';
-    private static final int LEFT = 'A';
-    private static final int RIGHT = 'D';
-
     private static final int PLAYER_DIM = 30;
-    private static final int CHEST_HEALTH = 150;
+    private static final int PLAYER_HEALTH = 50;
+    private static final int PLAYER_RELOAD_TIME = 200;
+    private static final int PLAYER_PROJ_SPEED = 9;
+    private static final int PLAYER_PROJ_SIZE = 4;
+    private static final int PLAYER_PROJ_DAMAGE = 5;
+    private static final int CHEST_HEALTH = 250;
     private static final int BOSS_LEVEL = 5;
 
-    private WorldCamera camera;
-    private EntityManager entityManager;
-    private GameMap map;
-    private InputMovement inputMapper;
-    private Hitboxes hitboxManager;
+    private final EntityManager entityManager;
+    private final InputMovement inputMapper;
+    private final Hitboxes hitboxManager;
+    private final Set<Spawner> spawners;
 
-    private Set<Spawner> spawners;
+    private WorldCamera camera;
     private int currentLevel;
     private Character player;
     private ActiveEntity chest;
@@ -63,22 +63,25 @@ public class WorldImpl implements World {
      * @param mapName the name of the map to load into the world
      */
     public WorldImpl(final String mapName) {
+        this.spawners = new HashSet<>();
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
         this.hitboxManager = new HitboxesImpl();
         this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap(mapName);
-
     }
 
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to command it")
     @Override
     public final void installCamera(final WorldCamera camera) {
         this.camera = camera;
         this.camera.moveTo(new Position2DImpl(0, 0));
-        this.camera.setArea(50, 70);
+        final int height = 50;
+        final int width = 70;
+        this.camera.setArea(height, width);
     }
 
     @Override
-    public boolean isOver() {
+    public final boolean isOver() {
         return this.player.getHealth() <= 0 || this.chest.getHealth() <= 0;
     }
 
@@ -117,20 +120,26 @@ public class WorldImpl implements World {
     @Override
     public final void processInput(final InputEvent event) {
         if (event instanceof InputEventValue) {
-            manageKey((InputEventValue) event);
+            manageValue((InputEventValue) event);
         } else if (event instanceof InputEventPointer) {
             managePointer((InputEventPointer) event);
         }
     }
 
-    private void manageKey(final InputEventValue key) {
-        final var direction = Optional.ofNullable(switch (key.getValue()) {
-            case UP -> InputMovement.Directions.NORTH;
-            case DOWN -> InputMovement.Directions.SOUTH;
-            case LEFT -> InputMovement.Directions.WEST;
-            case RIGHT -> InputMovement.Directions.EAST;
-            default -> null;
-        });
+    private void manageValue(final InputEventValue key) {
+        final var direction = Optional.ofNullable(
+                switch (key.getValue()) {
+                    case UP -> InputMovement.Directions.NORTH;
+                    case DOWN -> InputMovement.Directions.SOUTH;
+                    case LEFT -> InputMovement.Directions.WEST;
+                    case RIGHT -> InputMovement.Directions.EAST;
+                    case RESET -> {
+                        this.inputMapper.setNullDirection();
+                        this.isPlayerFiring = false;
+                        yield null;
+                    }
+                    default -> null;
+                });
         if (direction.isPresent()) {
             if (key.getType() == InputEvent.Type.PRESSED) {
                 this.inputMapper.addDirection(direction.get());
@@ -157,21 +166,26 @@ public class WorldImpl implements World {
      * @param mapName the name of the map to load
      */
     private void loadMap(final String mapName) {
-        this.map = new GameMapImpl(mapName);
-        this.map.getObstaclesPositions().forEach(pos -> this.entityManager.createObstacle(GameMap.TILE_DIM, pos));
-        this.chest = this.entityManager.createChest(GameMap.TILE_DIM, this.map.getChestPosition(), CHEST_HEALTH);
-        this.player = this.entityManager.createPlayer(PLAYER_DIM, this.map.getPlayerSpawn(), 20, inputMapper);
-        new WeaponFactoryImpl().simpleGunPairing(150, 9, 4, 5, entityManager, player);
+        final GameMap map = new GameMapImpl(mapName);
+        map.getObstaclesPositions().forEach(pos -> this.entityManager.createObstacle(GameMap.TILE_DIM, pos));
+        this.chest = this.entityManager.createChest(GameMap.TILE_DIM, map.getChestPosition(), CHEST_HEALTH);
+        this.player = this.entityManager.createPlayer(PLAYER_DIM, map.getPlayerSpawn(), PLAYER_HEALTH, inputMapper);
+        this.player.setWeapon(new WeaponFactoryImpl().simpleGun(
+                PLAYER_RELOAD_TIME,
+                PLAYER_PROJ_SPEED,
+                PLAYER_PROJ_SIZE,
+                PLAYER_PROJ_DAMAGE,
+                this.entityManager));
         this.pointingPosition = new Position2DImpl(this.player.getPosition().getX(), 0);
         this.currentLevel = 1;
-        final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, this.map);
-        this.spawners = new HashSet<>();
-        for (final var entry : this.map.getSpawnersPositions().entrySet()) {
-            this.spawners.add(switch (entry.getValue()) {
-                case BOSS -> spawnerFactory.createBoss(entry.getKey(), Set.of(this.player, this.chest));
-                case SCALAR -> spawnerFactory.createScalar(entry.getKey(), Set.of(this.player, this.chest));
-                case LINEAR -> spawnerFactory.createLinear(entry.getKey(), Set.of(this.player, this.chest));
-            });
+        final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, map);
+        for (final var entry : map.getSpawnersPositions().entrySet()) {
+            this.spawners.add(
+                    switch (entry.getValue()) {
+                        case BOSS -> spawnerFactory.createBoss(entry.getKey(), Set.of(this.player, this.chest));
+                        case SCALAR -> spawnerFactory.createScalar(entry.getKey(), Set.of(this.player, this.chest));
+                        case LINEAR -> spawnerFactory.createLinear(entry.getKey(), Set.of(this.player, this.chest));
+                    });
         }
     }
 

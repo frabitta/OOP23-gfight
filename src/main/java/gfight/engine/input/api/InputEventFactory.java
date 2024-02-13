@@ -1,6 +1,9 @@
 package gfight.engine.input.api;
 
 import gfight.common.api.Position2D;
+import gfight.engine.input.api.InputEventValue.Value;
+
+import java.util.Optional;
 
 /**
  * Factory of InputEvents.
@@ -8,18 +11,25 @@ import gfight.common.api.Position2D;
 public interface InputEventFactory {
 
     /**
+     * Given a pressed key filters it 
+     * @param key
+     * @return
+     */
+    Optional<Value> filterKeyValue(final int key);
+
+    /**
      * Returns a new InputEvent that describes a pressed key.
-     * @param key key pressed
+     * @param value key pressed
      * @return InputEvent describing the pressed key
      */
-    InputEvent pressedKey(int key);
+    InputEvent pressedValue(Value value);
 
     /**
      * Returns a new InputEvent that describes a released key.
-     * @param key key released
+     * @param value key released
      * @return InputEvent describing the released key
      */
-    InputEvent releasedKey(int key);
+    InputEvent releasedValue(Value value);
 
     /**
      * Returns a new InputEvent that describes the mouse at a certain position with a button pressed.

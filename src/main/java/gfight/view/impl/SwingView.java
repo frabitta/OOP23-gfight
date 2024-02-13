@@ -4,14 +4,16 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import gfight.engine.Engine;
+import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventListener;
+import gfight.engine.input.api.InputEventValue;
 import gfight.view.api.EngineView;
 
 import java.util.Collections;
@@ -31,7 +33,7 @@ public final class SwingView implements EngineView {
     private final JPanel cardPanel;
     private final JPanel menuPanel;
     private final JPanel deathPanel;
-    private final JPanel gamePanel;
+    private final Canvas gamePanel;
     private final ViewCamera camera;
 
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
@@ -76,10 +78,24 @@ public final class SwingView implements EngineView {
                 engine.terminate();
             }
         });
+        this.frame.addWindowFocusListener(new WindowFocusListener() {
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                final InputEventListener listener = (InputEventListener) engine;
+                listener.notifyInputEvent(listener.getInputEventFactory().pressedValue(InputEventValue.Value.RESET));
+                gamePanel.resetPressedKeys();
+            }
+            
+        });
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private JPanel setupGamePanel(final ViewCamera camera) {
+    private Canvas setupGamePanel(final ViewCamera camera) {
         final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
         if (engine instanceof InputEventListener) {
             final InputEventListener listener = (InputEventListener) engine;
@@ -105,6 +121,7 @@ public final class SwingView implements EngineView {
     public void changePage(Pages panel) {
         this.cardLayout.show(this.cardPanel, panel.getName());
         if (panel == Pages.GAME) {
+            this.gamePanel.resetPressedKeys();
             this.gamePanel.requestFocusInWindow();
         }
     }

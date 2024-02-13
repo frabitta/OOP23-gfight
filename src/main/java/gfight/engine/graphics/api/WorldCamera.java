@@ -29,9 +29,9 @@ public interface WorldCamera {
     /**
      * Sets the area to be used in the keepInArea method.
      * @param height height of the rectangle
-     * @param widht widht of the rectangle
+     * @param width widht of the rectangle
      */
-    void setArea(int height, int widht);
+    void setArea(int height, int width);
 
     /**
      * Keeps the world position in the area defined by setArea.

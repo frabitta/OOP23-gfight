@@ -1,18 +1,19 @@
-package gfight.engine;
+package gfight.engine.impl;
 
 import java.util.Queue;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import gfight.common.impl.Position2DImpl;
+import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.impl.InputEventFactoryImpl;
-import gfight.world.World;
-import gfight.world.WorldImpl;
+import gfight.world.api.World;
+import gfight.world.impl.WorldImpl;
 import gfight.view.api.EngineView;
 import gfight.view.impl.SwingView;
 
@@ -21,7 +22,7 @@ import gfight.view.impl.SwingView;
  */
 public final class EngineImpl implements Engine, InputEventListener {
 
-    private static final int FRAME_RATE = 60;
+    private static final int FRAME_RATE = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
     
     private final Queue<InputEvent> inputQueue = new LinkedList<>();
@@ -33,6 +34,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     private Camera camera;
 
     private boolean mutex;
+    private String level = "map3";
 
     @Override
     public void initialize() {
@@ -59,7 +61,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         long prevFrameStartTime = System.currentTimeMillis();
         
         this.camera.moveTo(new Position2DImpl(0, 0));
-        this.world = new WorldImpl("map1");
+        this.world = new WorldImpl(this.level);
         this.world.installCamera(this.camera);
 
         changeVisualizedPage(EngineView.Pages.GAME);
@@ -137,14 +139,16 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void notifyInputEvent(final InputEvent event) {
-        if (!mutex) {
-            if (!bufferInputQueue.isEmpty()) {
-                inputQueue.addAll(bufferInputQueue);
-                bufferInputQueue.clear();
+        if (this.appStatus == EngineStatus.GAME) {
+            if (!mutex) {
+                if (!bufferInputQueue.isEmpty()) {
+                    inputQueue.addAll(bufferInputQueue);
+                    bufferInputQueue.clear();
+                }
+                inputQueue.add(event);
+            } else {
+                bufferInputQueue.add(event);
             }
-            inputQueue.add(event);
-        } else {
-            bufferInputQueue.add(event);
         }
     }
 
@@ -162,6 +166,11 @@ public final class EngineImpl implements Engine, InputEventListener {
     public synchronized void changeStatus(final EngineStatus status) {
         this.appStatus = status;
         notify();
+    }
+
+    @Override
+    public void selectLevel(String level) {
+        this.level = level;
     }
 
 }

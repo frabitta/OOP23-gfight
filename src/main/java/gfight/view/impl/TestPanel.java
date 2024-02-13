@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import gfight.engine.Engine;
-import gfight.engine.Engine.EngineStatus;
+import gfight.engine.api.Engine;
+import gfight.engine.api.Engine.EngineStatus;
 
 public class TestPanel extends JPanel {
     TestPanel(final Engine engine, final String text) {

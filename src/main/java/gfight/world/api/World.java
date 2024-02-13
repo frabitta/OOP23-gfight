@@ -1,4 +1,4 @@
-package gfight.world;
+package gfight.world.api;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ import gfight.engine.input.api.InputEvent;
  */
 public interface World extends CameraMover {
 
-    /*
-     * Returns {@code true} if the game is over.
+    /**
+     * @return {@code true} if the game is over.
      */
     boolean isOver();
 
     /**
      * Update the world based on the time passed.
      * 
-     * @param deltaTime
+     * @param deltaTime the time elapsed since last update
      */
     void update(long deltaTime);
 

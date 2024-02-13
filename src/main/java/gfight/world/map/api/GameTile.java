@@ -36,6 +36,8 @@ public interface GameTile {
     /**
      * Sets the new type of the tile.
      * Usefull when you don't want enemies to cross it to reach the player.
+     * 
+     * @param type the type of the tile
      */
     void setType(TileType type);
 
