@@ -9,7 +9,7 @@ public interface Projectile extends ActiveEntity {
 
     /**
      * Sets the damage of the projectile.
-     * @param damage
+     * @param damage damage value
      */
     void setDamage(int damage);
 }
