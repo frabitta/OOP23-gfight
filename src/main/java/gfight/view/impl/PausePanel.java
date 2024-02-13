@@ -14,34 +14,48 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.Box;
 
-public class PausePanel extends JPanel {
+/**
+ * The panel that generates the view for the pause.
+ */
+public final class PausePanel extends JPanel {
 
-    private final static String PATH_STRING = "src/main/resources/images/";
+    /** Serializable UID. */
+    private static final long serialVersionUID = 1675654981775835696L;
+    private static final String PATH_STRING = "src/main/resources/images/";
+    private static final int TITLE_FONT_DIM = 55;
+    private static final int BUTTON_FONT_DIM = 22;
+    private static final int TILE_SPACING = 5;
+
     private final Image backgroundImage;
 
+    /**
+     * It creates a pause panel view.
+     * 
+     * @param engine the game engine.
+     */
     public PausePanel(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         backgroundImage = new ImageIcon(PATH_STRING + "Pause.png").getImage();
 
         final JLabel titleLabel = new JLabel("Paused");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 55));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JButton continueButton = new JButton("  Continue   ");
-        continueButton.setFont(new Font("Arial", Font.ITALIC, 22));
+        continueButton.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         continueButton.addActionListener(e -> engine.changeStatus(EngineStatus.GAME));
 
         final JButton goToMenuButton = new JButton("Go to Menu");
-        goToMenuButton.setFont(new Font("Arial", Font.ITALIC, 22));
+        goToMenuButton.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
         goToMenuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         goToMenuButton.addActionListener(e -> engine.changeStatus(EngineStatus.MENU));
 
         this.add(Box.createVerticalGlue());
         this.add(titleLabel);
-        this.add(Box.createVerticalStrut(5));
+        this.add(Box.createVerticalStrut(TILE_SPACING));
         this.add(continueButton);
-        this.add(Box.createVerticalStrut(5));
+        this.add(Box.createVerticalStrut(TILE_SPACING));
         this.add(goToMenuButton);
         this.add(Box.createVerticalGlue());
 

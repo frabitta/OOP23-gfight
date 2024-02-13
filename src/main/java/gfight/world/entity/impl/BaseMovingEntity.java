@@ -39,6 +39,9 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
         this.movement.get().setDirection(direction);
     }
 
+    /**
+     * it can be extended by adding things to update.
+     */
     @Override
     public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         final double scalar = 0.1;
