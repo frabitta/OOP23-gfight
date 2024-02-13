@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import gfight.engine.api.Engine;
+import gfight.engine.api.Engine.EngineStatus;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -17,12 +19,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import gfight.engine.Engine;
-import gfight.engine.Engine.EngineStatus;
-
+/**
+ * Class that represent the game menu.
+ */
 public class MenuPanel extends JPanel {
 
     private static final int WIDTH = 1280;
@@ -43,7 +42,7 @@ public class MenuPanel extends JPanel {
         background = new ImageIcon(PATH_STRING + "GFight.png");
         // TITLE
         JLabel title = new JLabel("GEOMETRY FIGHT");
-        title.setFont(new Font("Comic Sans", Font.BOLD, TITLE_SIZE));
+        title.setFont(new Font("Helvetica", Font.BOLD, TITLE_SIZE));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.setOpaque(false);
@@ -62,52 +61,43 @@ public class MenuPanel extends JPanel {
         configurateButton(playButton);
         buttonPanel.add(playButton);
         playButton.addActionListener(al -> engine.changeStatus(EngineStatus.GAME));
+
         JButton statsButton = new JButton("STATS", resizedStatsImage);
         configurateButton(statsButton);
         buttonPanel.add(statsButton);
-
-        //MEUNU BAR
+        // MEUNU BAR
         JMenu mapMenu = new JMenu("Select a map");
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
         JMenuItem map3 = new JMenuItem("Map 3");
-
-        // map1.addActionListener(new ActionListener() {
-
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-               
-        //     }
-            
-        // });
-
+        map1.addActionListener(e -> engine.selectLevel("map1"));
+        map2.addActionListener(e -> engine.selectLevel("map2"));
+        map3.addActionListener(e -> engine.selectLevel("map3"));
         mapMenu.add(map1);
         mapMenu.add(map2);
         mapMenu.add(map3);
-
         menuBar.add(mapMenu);
-        
-
         titlePanel.add(menuBar, BorderLayout.NORTH);
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
     }
 
-    private void configurateButton(JButton button) {
+    private void configurateButton(final JButton button) {
+        button.setFocusable(false);
         button.setPreferredSize(new Dimension(WIDTH / 5, HEIGHT / 5));
         button.setHorizontalTextPosition(JButton.LEFT);
         button.setVerticalTextPosition(JButton.CENTER);
         button.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
     }
 
-    private ImageIcon resizeImage(int width, int height, ImageIcon icon) {
+    private ImageIcon resizeImage(final int width, final int height, final ImageIcon icon) {
         Image image = icon.getImage();
         Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
