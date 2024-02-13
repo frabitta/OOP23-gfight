@@ -1,6 +1,5 @@
 package gfight.view.impl;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,10 +13,11 @@ import javax.swing.SwingConstants;
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
+/**
+ * Class that represent the GameOver panel
+ */
 public class GameOver extends JPanel {
     private static final int TITLE_SIZE = 100;
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
 
     public GameOver(final Engine engine, final String text) {
         this.setLayout(new BorderLayout());
@@ -32,7 +32,6 @@ public class GameOver extends JPanel {
         JButton button = new JButton("Back to menu...");
         button.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
         button.setForeground(Color.BLUE);
-        button.setSize(new Dimension(WIDTH / 5, HEIGHT / 5));
         button.addActionListener(al -> engine.changeStatus(EngineStatus.MENU));
         buttonContainer.add(button);
         add(title, BorderLayout.NORTH);
