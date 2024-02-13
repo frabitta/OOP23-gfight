@@ -189,4 +189,9 @@ public final class EngineImpl implements Engine, InputEventListener {
         this.level = level;
     }
 
+    @Override
+    public EngineStatus getEngineStatus() {
+        return this.appStatus;
+    }
+
 }

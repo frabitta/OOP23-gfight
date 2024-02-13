@@ -53,6 +53,12 @@ public interface Engine {
     void changeStatus(EngineStatus status);
 
     /**
+     * Gives the current EngineStatus of the engine.
+     * @return the current status
+     */
+    EngineStatus getEngineStatus();
+
+    /**
      * Selects the level to load during EngineStatus.GAME.
      * @param level level name
      */

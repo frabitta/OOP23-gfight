@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.engine.api.Engine;
+import gfight.engine.api.Engine.EngineStatus;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventListener;
@@ -95,6 +96,9 @@ public final class SwingView implements EngineView {
                 final InputEventListener listener = (InputEventListener) engine;
                 listener.notifyInputEvent(listener.getInputEventFactory().pressedValue(InputEventValue.Value.RESET));
                 gamePanel.resetPressedKeys();
+                if (engine.getEngineStatus() == EngineStatus.GAME) {
+                    engine.changeStatus(EngineStatus.PAUSE);
+                }
             }
         });
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
