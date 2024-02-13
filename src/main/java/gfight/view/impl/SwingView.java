@@ -133,4 +133,8 @@ public final class SwingView implements EngineView {
         this.frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
+    @Override
+    public int getRefreshRate() {
+        return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
+    }
 }

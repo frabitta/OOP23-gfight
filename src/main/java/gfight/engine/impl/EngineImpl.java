@@ -25,8 +25,9 @@ import gfight.view.impl.SwingView;
  */
 public final class EngineImpl implements Engine, InputEventListener {
 
-    private static final int FRAME_RATE = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
-    private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
+    private static final int MILLIS = 1000;
+
+    private long frameLenght;
 
     private final Queue<InputEvent> inputQueue = new LinkedList<>();
     private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
@@ -62,6 +63,8 @@ public final class EngineImpl implements Engine, InputEventListener {
     private void gameLoop() {
         long prevFrameStartTime = System.currentTimeMillis();
         
+        final int frameRate = this.view.getRefreshRate();
+        this.frameLenght = MILLIS / frameRate;
         this.camera.moveTo(new Position2DImpl(0, 0));
         this.world = new WorldImpl(this.level);
         this.world.installCamera(this.camera);
@@ -105,9 +108,9 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private void waitNextFrame(final long frameStartTime) {
         final long dt = System.currentTimeMillis() - frameStartTime;
-        if (dt < FRAME_LENGHT) {
+        if (dt < this.frameLenght) {
             try {
-                Thread.sleep(FRAME_LENGHT - dt);
+                Thread.sleep(this.frameLenght - dt);
             } catch (InterruptedException e) {
                 terminate();
             }
