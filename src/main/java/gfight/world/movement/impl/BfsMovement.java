@@ -25,8 +25,8 @@ public final class BfsMovement extends BaseMovement {
     private final Character agent;
     private final GameMap map;
     private final double speed;
-
-    private static final int RANGE = 150;
+    private static final int RANGE_RUNNER = 42;
+    private static final int TILES_SHOOTER = 5;
 
     /**
      * Constructor of bfs movement.
@@ -47,19 +47,27 @@ public final class BfsMovement extends BaseMovement {
     public void update() {
         this.agent.pointTo(this.target.getPosition());
         List<Position2D> path = getPathFromBfs();
+
         if (agent.getType() == CharacterType.SHOOTER) {
-            if (agent.getPosition().getDistance(target.getPosition()) < RANGE) {
-                stopAndAttack();
-            } else {
-                move(path);
-            }
+            handleShooterBehavior(path);
+        } else if (agent.getType() == CharacterType.RUNNER) {
+            handleRunnerBehavior(path);
         }
-        if (agent.getType() == CharacterType.RUNNER) {
-            if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
-                move(path);
-            } else {
-                stopAndAttack();
-            }
+    }
+
+    private void handleShooterBehavior(List<Position2D> path) {
+        if (path.size() < TILES_SHOOTER) {
+            stopAndAttack();
+        } else {
+            move(path);
+        }
+    }
+
+    private void handleRunnerBehavior(List<Position2D> path) {
+        if (agent.getPosition().getDistance(target.getPosition()) < RANGE_RUNNER) {
+            stopAndAttack();
+        } else {
+            move(path);
         }
     }
 
