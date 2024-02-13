@@ -121,6 +121,7 @@ public final class SwingView implements EngineView {
     public void changePage(Pages panel) {
         this.cardLayout.show(this.cardPanel, panel.getName());
         if (panel == Pages.GAME) {
+            this.gamePanel.resetPressedKeys();
             this.gamePanel.requestFocusInWindow();
         }
     }
