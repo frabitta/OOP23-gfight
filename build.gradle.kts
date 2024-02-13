@@ -21,6 +21,7 @@ dependencies {
     implementation("org.locationtech.jts:jts-core:1.19.0")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("org.jgrapht:jgrapht-core:1.5.2")
+    implementation("com.github.spotbugs:spotbugs-annotations:4.8.3")
 }
 
 tasks.test {
