@@ -35,7 +35,7 @@ public class MenuPanel extends JPanel {
     private final ImageIcon statsImage;
     private final JMenuBar menuBar = new JMenuBar();
 
-    MenuPanel(final Engine engine, final String text) {
+    public MenuPanel(final Engine engine, final String text) {
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
         // BACKGROUND IMAGE
