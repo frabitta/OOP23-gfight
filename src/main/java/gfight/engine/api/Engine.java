@@ -5,11 +5,30 @@ package gfight.engine.api;
  */
 public interface Engine {
 
+    /**
+     * Possible status of the Engine.
+     */
     enum EngineStatus {
+        /**
+         * In the menu.
+         */
         MENU,
+        /**
+         * In game.
+         */
         GAME,
+        /**
+         * In the death screen.
+         */
         DEATH_SCREEN,
-        TERMINATED
+        /**
+         * Engine terminated.
+         */
+        TERMINATED,
+        /**
+         * Game paused.
+         */
+        PAUSE
     }
 
     /**
@@ -32,6 +51,12 @@ public interface Engine {
      * @param status status to put
      */
     void changeStatus(EngineStatus status);
+
+    /**
+     * Gives the current EngineStatus of the engine.
+     * @return the current status
+     */
+    EngineStatus getEngineStatus();
 
     /**
      * Selects the level to load during EngineStatus.GAME.

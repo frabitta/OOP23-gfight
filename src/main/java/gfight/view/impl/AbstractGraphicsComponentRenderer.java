@@ -35,7 +35,7 @@ abstract class AbstractGraphicsComponentRenderer implements GraphicsComponentRen
     }
 
     /**
-     * Converts EngineColor in JSwing Color
+     * Converts EngineColor in JSwing Color.
      * @param color EngineColor color to convert
      * @return Color using JSwing definitions
      */

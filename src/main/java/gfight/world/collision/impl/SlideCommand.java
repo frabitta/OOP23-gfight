@@ -16,8 +16,8 @@ public final class SlideCommand<M extends MovingEntity, G extends GameEntity> ex
 
     /**
      * 
-     * @param outercollider
-     * @param outercollided
+     * @param outercollider the moving entity that collides.
+     * @param outercollided the other entity.
      */
     public SlideCommand(final M outercollider, final G outercollided) {
         super(outercollider, outercollided);

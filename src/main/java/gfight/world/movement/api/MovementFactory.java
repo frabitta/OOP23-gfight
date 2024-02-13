@@ -28,19 +28,19 @@ public interface MovementFactory {
     /**
      * Creates Linear movement.
      * 
-     * @param direction
-     * @return the Linear Movement Class object
+     * @param direction direction of the entity.
+     * @return the Linear Movement Class object.
      */
     LinearMovement createLinearMovement(Vect direction);
 
     /**
      * Creates Linear movement with an acceleration.
      * 
-     * @param direction
-     * @param accelleration
+     * @param direction    direction of the entity.
+     * @param acceleration acceleration of the entity.
      * @return the Linear Movement Class object
      */
-    LinearMovement createLinearMovement(double accelleration, Vect direction);
+    LinearMovement createLinearMovement(double acceleration, Vect direction);
 
     /**
      * 

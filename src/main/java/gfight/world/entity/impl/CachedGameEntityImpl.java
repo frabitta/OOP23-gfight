@@ -99,7 +99,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
     }
 
     @Override
-    public final void setGraphics(Set<GraphicsComponent> graphics) {
+    public final void setGraphics(final Set<GraphicsComponent> graphics) {
         originalEntity.setGraphics(graphics);
     }
 }

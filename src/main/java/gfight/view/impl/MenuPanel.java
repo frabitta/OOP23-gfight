@@ -24,6 +24,7 @@ import java.awt.Image;
  * Class that represent the game menu.
  */
 public class MenuPanel extends JPanel {
+    private static final long serialVersionUID = -9101397258771046262L;
 
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 720;
@@ -36,7 +37,7 @@ public class MenuPanel extends JPanel {
     private final ImageIcon statsImage;
     private final JMenuBar menuBar = new JMenuBar();
 
-    public MenuPanel(final Engine engine, final String text) {
+    public MenuPanel(final Engine engine) {
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
         // BACKGROUND IMAGE

@@ -1,6 +1,9 @@
 package gfight.engine.impl;
 
 import java.util.Queue;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -11,6 +14,7 @@ import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
+import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.impl.InputEventFactoryImpl;
 import gfight.world.api.World;
 import gfight.world.impl.WorldImpl;
@@ -22,12 +26,13 @@ import gfight.view.impl.SwingView;
  */
 public final class EngineImpl implements Engine, InputEventListener {
 
-    private static final int FRAME_RATE = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
-    private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
-    
+    private static final int MILLIS = 1000;
+
+    private long frameLenght;
+
     private final Queue<InputEvent> inputQueue = new LinkedList<>();
     private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
-    
+
     private EngineView view;
     private World world;
     private EngineStatus appStatus;
@@ -41,8 +46,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         this.appStatus = EngineStatus.MENU;
         this.camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
-        
-        view = new SwingView(this,camera);
+        view = new SwingView(this, camera);
     }
 
     @Override
@@ -51,7 +55,7 @@ public final class EngineImpl implements Engine, InputEventListener {
             switch (this.appStatus) {
                 case MENU -> holdPageUntilNotified(EngineView.Pages.MENU);
                 case GAME -> gameLoop();
-                default -> {break;}
+                default -> { }
             }
         }
         this.view.close();
@@ -59,11 +63,12 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private void gameLoop() {
         long prevFrameStartTime = System.currentTimeMillis();
-        
+
+        final int frameRate = this.view.getRefreshRate();
+        this.frameLenght = MILLIS / frameRate;
         this.camera.moveTo(new Position2DImpl(0, 0));
         this.world = new WorldImpl(this.level);
         this.world.installCamera(this.camera);
-
         changeVisualizedPage(EngineView.Pages.GAME);
 
         while (isGameRunning()) {
@@ -74,10 +79,13 @@ public final class EngineImpl implements Engine, InputEventListener {
             render();
             waitNextFrame(frameStartTime);
             prevFrameStartTime = frameStartTime;
-            //pause menu is inside this loop just doesn't update world.
-            // if we want to exit from thhe game directly to the menu we have to add a condition on the loop and skip the death screen.
             if (this.world.isOver()) {
                 this.appStatus = EngineStatus.DEATH_SCREEN;
+            }
+            if (this.appStatus == EngineStatus.PAUSE) {
+                holdPageUntilNotified(EngineView.Pages.PAUSE_SCREEN);
+                changeVisualizedPage(EngineView.Pages.GAME);
+                prevFrameStartTime = System.currentTimeMillis();
             }
         }
 
@@ -87,7 +95,11 @@ public final class EngineImpl implements Engine, InputEventListener {
         this.appStatus = EngineStatus.MENU;
     }
 
-    private synchronized void holdPageUntilNotified(EngineView.Pages page) {
+    @SuppressFBWarnings(
+        value = "WA_NOT_IN_LOOP",
+        justification = "We don't want to go back waiting."
+            + "Once freed the thread needs to be able to proceed and exit this method.")
+    private synchronized void holdPageUntilNotified(final EngineView.Pages page) {
         changeVisualizedPage(page);
         try {
             this.wait();
@@ -96,15 +108,15 @@ public final class EngineImpl implements Engine, InputEventListener {
         }
     }
 
-    private void changeVisualizedPage(EngineView.Pages page) {
+    private void changeVisualizedPage(final EngineView.Pages page) {
         this.view.changePage(page);
     }
 
     private void waitNextFrame(final long frameStartTime) {
         final long dt = System.currentTimeMillis() - frameStartTime;
-        if (dt < FRAME_LENGHT) {
+        if (dt < this.frameLenght) {
             try {
-                Thread.sleep(FRAME_LENGHT - dt);
+                Thread.sleep(this.frameLenght - dt);
             } catch (InterruptedException e) {
                 terminate();
             }
@@ -125,7 +137,11 @@ public final class EngineImpl implements Engine, InputEventListener {
         inputQueue.clear();
         mutex = false;
         for (final var event: frameInputSequence) {
-            world.processInput(event);
+            if (event instanceof InputEventValue && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
+                this.appStatus = EngineStatus.PAUSE;
+            } else {
+                world.processInput(event);
+            }
         }
     }
 
@@ -165,12 +181,17 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public synchronized void changeStatus(final EngineStatus status) {
         this.appStatus = status;
-        notify();
+        notifyAll();
     }
 
     @Override
-    public void selectLevel(String level) {
+    public void selectLevel(final String level) {
         this.level = level;
+    }
+
+    @Override
+    public EngineStatus getEngineStatus() {
+        return this.appStatus;
     }
 
 }

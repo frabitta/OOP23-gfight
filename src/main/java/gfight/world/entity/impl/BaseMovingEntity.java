@@ -9,20 +9,21 @@ import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
 import gfight.world.movement.api.Movement;
+
 import java.util.Set;
 
 /**
  * An implementation of Moving Entity that also extends Cached Game Entity.
  */
 public abstract class BaseMovingEntity extends CachedGameEntityImpl implements MovingEntity {
-    private Optional<Movement> movement;
+    private Optional<Movement> movement = Optional.empty();
 
     /**
      * Moving Entity Updated Constructor with initial Movement.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
+     * @param vertexes          vertexes of the polygon.
+     * @param position          initial position of this entity.
+     * @param graphicsComponent graphic of this entity.
      */
     public BaseMovingEntity(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
@@ -39,6 +40,9 @@ public abstract class BaseMovingEntity extends CachedGameEntityImpl implements M
         this.movement.get().setDirection(direction);
     }
 
+    /**
+     * it can be extended by adding things to update.
+     */
     @Override
     public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         final double scalar = 0.1;

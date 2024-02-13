@@ -8,14 +8,14 @@ public interface InputMovement extends Movement {
     /**
      * It passes a direction to add to the player.
      * 
-     * @param dir
+     * @param dir direction taken from the player.
      */
     void addDirection(Directions dir);
 
     /**
      * It passes a direction to remove to the player.
      * 
-     * @param dir
+     * @param dir dirction that the player doesn't use anymore.
      */
     void removeDirection(Directions dir);
 

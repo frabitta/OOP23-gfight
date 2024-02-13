@@ -17,9 +17,11 @@ import gfight.engine.api.Engine.EngineStatus;
  * Class that represent the GameOver panel
  */
 public class GameOver extends JPanel {
+    private static final long serialVersionUID = 4003161718422635256L;
+
     private static final int TITLE_SIZE = 100;
 
-    public GameOver(final Engine engine, final String text) {
+    public GameOver(final Engine engine) {
         this.setLayout(new BorderLayout());
         JLabel title = new JLabel("GAME OVER!!");
         title.setHorizontalAlignment(SwingConstants.CENTER);

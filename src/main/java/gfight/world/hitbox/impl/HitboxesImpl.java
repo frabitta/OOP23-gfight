@@ -35,9 +35,9 @@ public final class HitboxesImpl implements Hitboxes {
         if (polygon.isEmpty()) {
             return new ArrayList<>();
         }
-        Hitbox hitbox = new HitboxImpl(polygon);
-        AffineTransformation rotation = AffineTransformation.rotationInstance(theta, center.getX(), center.getY());
-        Coordinate[] rotatedCoordinates = rotation.transform(hitbox.getPolygonalHitbox()).getCoordinates();
+        final Hitbox hitbox = new HitboxImpl(polygon);
+        final AffineTransformation rotation = AffineTransformation.rotationInstance(theta, center.getX(), center.getY());
+        final Coordinate[] rotatedCoordinates = rotation.transform(hitbox.getPolygonalHitbox()).getCoordinates();
         return Arrays.stream(rotatedCoordinates)
                 .map(coordinate -> new Position2DImpl(coordinate.getX(), coordinate.getY()))
                 .collect(Collectors.toList());

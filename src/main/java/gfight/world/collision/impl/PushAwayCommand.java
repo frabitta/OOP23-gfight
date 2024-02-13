@@ -17,8 +17,8 @@ public final class PushAwayCommand<M extends MovingEntity, G extends GameEntity>
 
     /**
      * 
-     * @param outercollider
-     * @param outercollided
+     * @param outercollider the moving entity that collides.
+     * @param outercollided the other entity.
      */
     public PushAwayCommand(final M outercollider, final G outercollided) {
         super(outercollider, outercollided);

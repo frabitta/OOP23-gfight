@@ -35,7 +35,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     /**
      * Set of currently pressed keys.
      */
-    private final transient Set<Integer> pressedKeys = new HashSet<>();
+    private final Set<Integer> pressedKeys = new HashSet<>();
 
     private transient Optional<InputEventListener> inputListener;
     private transient Optional<InputEventFactory> inputFactory;
@@ -159,7 +159,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );
@@ -171,7 +170,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseUpAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );
@@ -186,6 +184,9 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     public void mouseExited(final MouseEvent e) {
     }
 
+    /**
+     * Reset the current state of input.
+     */
     public void resetPressedKeys() {
         this.pressedKeys.clear();
     }
