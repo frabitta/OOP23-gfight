@@ -9,6 +9,7 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
@@ -43,6 +44,7 @@ public final class SwingView implements EngineView {
      * Constructor of the view.
      * @param engine engine managing the app
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to print correctly on screen")
     public SwingView(final Engine engine, final ViewCamera camera) {
         this.engine = engine;
         this.camera = camera;
@@ -131,4 +133,8 @@ public final class SwingView implements EngineView {
         this.frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
+    @Override
+    public int getRefreshRate() {
+        return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
+    }
 }

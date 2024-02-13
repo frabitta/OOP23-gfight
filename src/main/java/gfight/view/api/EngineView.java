@@ -40,4 +40,10 @@ public interface EngineView {
      * Closes the window.
      */
     void close();
+
+    /**
+     * Returns the refresh rate of the screen.
+     * @return int refresh rate
+     */
+    int getRefreshRate();
 }
