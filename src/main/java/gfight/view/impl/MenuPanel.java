@@ -1,6 +1,8 @@
 package gfight.view.impl;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -8,17 +10,17 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+
 /**
  * Class that represent the game menu.
  */
@@ -29,7 +31,7 @@ public class MenuPanel extends JPanel {
     private static final int HEIGHT = 720;
     private static final int BUTTON_IMAGE_WIDTH = 100;
     private static final int BUTTON_IMAGE_HEIGHT = 75;
-    private static final int TITLE_SIZE = 100;
+    private static final int TITLE_SIZE = 75;
     private static final String PATH_STRING = "src/main/resources/images/";
     private final ImageIcon background;
     private final ImageIcon playImage;
@@ -40,34 +42,42 @@ public class MenuPanel extends JPanel {
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
         // BACKGROUND IMAGE
-        background = new ImageIcon(PATH_STRING + "GFight.png");
-        // TITLE
-        JLabel title = new JLabel("GEOMETRY FIGHT");
-        title.setFont(new Font("Helvetica", Font.BOLD, TITLE_SIZE));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        JPanel titlePanel = new JPanel(new BorderLayout());
-        titlePanel.setOpaque(false);
-        titlePanel.add(title, BorderLayout.CENTER);
-        title.setBorder(BorderFactory.createEmptyBorder(TITLE_SIZE / 4, 0, TITLE_SIZE, 0));
+        background = new ImageIcon(PATH_STRING + "Background.png");
         // BUTTON IMAGES
         playImage = new ImageIcon(PATH_STRING + "play.png");
         statsImage = new ImageIcon(PATH_STRING + "stats.jpg");
         ImageIcon resizedPlayImage = resizeImage(BUTTON_IMAGE_WIDTH, BUTTON_IMAGE_HEIGHT, playImage);
         ImageIcon resizedStatsImage = resizeImage(BUTTON_IMAGE_WIDTH, BUTTON_IMAGE_HEIGHT, statsImage);
-        // BUTTON PANEL
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setOpaque(false);
+
+        // MAIN PANEL
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 0));
+
+        // TITLE
+        JLabel firstLabel = new JLabel("Geometry");
+        JLabel secondLabel = new JLabel("Fight");
+        firstLabel.setFont(new Font("Helvetica", Font.BOLD, TITLE_SIZE));
+        secondLabel.setFont(new Font("Helvetica", Font.BOLD, TITLE_SIZE));
+        firstLabel.setAlignmentX(CENTER_ALIGNMENT);
+        secondLabel.setAlignmentX(CENTER_ALIGNMENT);
+
+        leftPanel.setOpaque(false);
         // BUTTONS
-        JButton playButton = new JButton("PLAY", resizedPlayImage);
+        JButton playButton = new JButton("PLAY  ", resizedPlayImage);
         configurateButton(playButton);
-        buttonPanel.add(playButton);
+        playButton.setBackground(Color.BLACK);
         playButton.addActionListener(al -> engine.changeStatus(EngineStatus.GAME));
+        playButton.setAlignmentX(CENTER_ALIGNMENT);
 
         JButton statsButton = new JButton("STATS", resizedStatsImage);
         configurateButton(statsButton);
-        buttonPanel.add(statsButton);
+        statsButton.setAlignmentX(CENTER_ALIGNMENT);
+
         // MEUNU BAR
-        JMenu mapMenu = new JMenu("Select a map");
+        JMenu mapMenu = new JMenu("     Select a map     ");
+        mapMenu.setBorder(BorderFactory.createEtchedBorder());
+        mapMenu.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
         JMenuItem map3 = new JMenuItem("Map 3");
@@ -78,14 +88,23 @@ public class MenuPanel extends JPanel {
         mapMenu.add(map2);
         mapMenu.add(map3);
         menuBar.add(mapMenu);
-        titlePanel.add(menuBar, BorderLayout.NORTH);
-        add(titlePanel, BorderLayout.NORTH);
-        add(buttonPanel, BorderLayout.CENTER);
+        menuBar.setAlignmentX(CENTER_ALIGNMENT);
+
+        leftPanel.add(Box.createVerticalGlue());
+        leftPanel.add(firstLabel);
+        leftPanel.add(secondLabel);
+        leftPanel.add(Box.createVerticalStrut(50));
+        leftPanel.add(playButton);
+        leftPanel.add(statsButton);
+        leftPanel.add(menuBar);
+        leftPanel.add(Box.createVerticalGlue());
+
+        add(leftPanel, BorderLayout.WEST);
     }
 
     private void configurateButton(final JButton button) {
         button.setFocusable(false);
-        button.setPreferredSize(new Dimension(WIDTH / 5, HEIGHT / 5));
+        button.setPreferredSize(new Dimension(WIDTH / 6, HEIGHT / 6));
         button.setHorizontalTextPosition(JButton.LEFT);
         button.setVerticalTextPosition(JButton.CENTER);
         button.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
