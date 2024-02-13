@@ -30,9 +30,9 @@ public final class GameEntityImpl implements GameEntity {
      * Game Entity constructor that creates gameEntity with vertexes position and
      * graphic component.
      * 
-     * @param vertexes
-     * @param position
-     * @param graphicsComponent
+     * @param vertexes the vertexes of the polygon.
+     * @param position the starting position of the polygon.
+     * @param graphicsComponent the grphic of this entity.
      */
     public GameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {

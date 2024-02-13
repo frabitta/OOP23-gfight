@@ -7,7 +7,7 @@ import gfight.common.impl.VectorImpl;
  * An implementation of BaseMovement that returns a linear or linear accelerated Movement.
  */
 public final class LinearMovement extends BaseMovement {
-    private final double accelleration;
+    private final double acceleration;
 
     /**
      * 
@@ -15,23 +15,23 @@ public final class LinearMovement extends BaseMovement {
      */
     public LinearMovement(final Vect direction) {
         this.setDirection(direction);
-        accelleration = 1;
+        acceleration = 1;
     }
 
     /**
      * 
-     * @param accelleration of the vector
+     * @param acceleration of the vector
      * @param direction of the vector
      */
-    public LinearMovement(final double accelleration, final Vect direction) {
+    public LinearMovement(final double acceleration, final Vect direction) {
         this.setDirection(direction);
-        this.accelleration = accelleration;
+        this.acceleration = acceleration;
     }
 
     @Override
     public void update() {
-        if (accelleration != 1) {
-            this.setDirection(new VectorImpl(accelleration, getDirection()));
+        if (acceleration != 1) {
+            this.setDirection(new VectorImpl(acceleration, getDirection()));
         }
     }
 

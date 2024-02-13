@@ -17,8 +17,8 @@ public abstract class AbstractCollisionCommand<M extends MovingEntity, G extends
 
     /**
      * 
-     * @param collider
-     * @param collided
+     * @param collider the moving entity that collides.
+     * @param collided the other entity.
      */
     public AbstractCollisionCommand(final M collider, final G collided) {
         this.collided = collided;

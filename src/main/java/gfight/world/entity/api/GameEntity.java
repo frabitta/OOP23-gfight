@@ -42,7 +42,7 @@ public interface GameEntity {
     /**
      * Set ignoredEntities for the related entity.
      * 
-     * @param ignoredEntities
+     * @param ignoredEntities the entities that this entities can ignore.
      */
     void setIgnoredEntities(Set<GameEntity> ignoredEntities);
 
@@ -61,14 +61,14 @@ public interface GameEntity {
     /**
      * Set the coordinates of the entity.
      * 
-     * @param vertexes
+     * @param vertexes the vertexes of the polygon of this entity.
      */
     void setCoordinates(List<Position2D> vertexes);
 
     /**
      * Set the graphics associated with the entity.
      * 
-     * @param graphics
+     * @param graphics the set of ghphic elements associated to this entity.
      */
     void setGraphics(Set<GraphicsComponent> graphics);
 }
