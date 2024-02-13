@@ -30,7 +30,7 @@ public interface InputEventValue extends InputEvent {
          */
         RESET(-1),
         /**
-         * pause game
+         * pause game.
          */
         PAUSE(27);
 

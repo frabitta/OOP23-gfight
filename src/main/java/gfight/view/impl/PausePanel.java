@@ -10,6 +10,7 @@ import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 public class PausePanel extends JPanel {
+    private static final long serialVersionUID = -3569782901557207072L;
 
     PausePanel(final Engine engine) {
         final JButton continueBTN = new JButton();
