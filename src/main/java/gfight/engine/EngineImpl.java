@@ -33,7 +33,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     private Camera camera;
 
     private boolean mutex;
-    private String level = "map1";
+    private String level = "map3";
 
     @Override
     public void initialize() {

@@ -114,7 +114,7 @@ public final class CameraImpl implements Camera {
 
     @Override
     public void keepInArea(final Position2D position) {
-        if (this.areaSetted) {
+        if (!this.areaSetted) {
             centerOn(position);
         } else {
             final Position2D virtualPos = getVirtualFromWorld(position);
