@@ -17,6 +17,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import gfight.engine.Engine;
 import gfight.engine.Engine.EngineStatus;
@@ -68,10 +70,25 @@ public class MenuPanel extends JPanel {
         JMenu mapMenu = new JMenu("Select a map");
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
-        
-        menuBar.add(mapMenu);
+        JMenuItem map3 = new JMenuItem("Map 3");
 
-        add(menuBar);
+        // map1.addActionListener(new ActionListener() {
+
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+               
+        //     }
+            
+        // });
+
+        mapMenu.add(map1);
+        mapMenu.add(map2);
+        mapMenu.add(map3);
+
+        menuBar.add(mapMenu);
+        
+
+        titlePanel.add(menuBar, BorderLayout.NORTH);
         add(titlePanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
     }
