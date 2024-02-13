@@ -68,7 +68,6 @@ public class WorldImpl implements World {
         this.hitboxManager = new HitboxesImpl();
         this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap(mapName);
-
     }
 
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to command it")
