@@ -9,7 +9,7 @@ import java.awt.event.WindowFocusListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import gfight.engine.Engine;
+import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
 import gfight.engine.input.api.InputEventListener;

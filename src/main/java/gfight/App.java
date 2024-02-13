@@ -1,7 +1,7 @@
 package gfight;
 
-import gfight.engine.Engine;
-import gfight.engine.EngineImpl;
+import gfight.engine.api.Engine;
+import gfight.engine.impl.EngineImpl;
 
 /**
  * Main class, here the program starts creating a new engine and giving him control.

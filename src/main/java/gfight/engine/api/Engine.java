@@ -1,4 +1,4 @@
-package gfight.engine;
+package gfight.engine.api;
 
 /**
  * Interface to describe a game engine.

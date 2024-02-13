@@ -1,4 +1,4 @@
-package gfight.world;
+package gfight.world.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +14,7 @@ import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
+import gfight.world.api.World;
 import gfight.world.entity.api.ActiveEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
@@ -21,7 +22,6 @@ import gfight.world.entity.api.MovingEntity;
 import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.hitbox.api.Hitboxes;
 import gfight.world.hitbox.impl.HitboxesImpl;
-import gfight.world.impl.EntityManagerImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;

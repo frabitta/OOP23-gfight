@@ -1,4 +1,4 @@
-package gfight.world;
+package gfight.world.api;
 
 import java.util.List;
 

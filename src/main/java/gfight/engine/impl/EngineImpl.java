@@ -1,18 +1,19 @@
-package gfight.engine;
+package gfight.engine.impl;
 
 import java.util.Queue;
 import java.util.Collections;
 import java.util.LinkedList;
 
 import gfight.common.impl.Position2DImpl;
+import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
 import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.impl.InputEventFactoryImpl;
-import gfight.world.World;
-import gfight.world.WorldImpl;
+import gfight.world.api.World;
+import gfight.world.impl.WorldImpl;
 import gfight.view.api.EngineView;
 import gfight.view.impl.SwingView;
 
