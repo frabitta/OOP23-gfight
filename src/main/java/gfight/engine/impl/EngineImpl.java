@@ -22,7 +22,7 @@ import gfight.view.impl.SwingView;
  */
 public final class EngineImpl implements Engine, InputEventListener {
 
-    private static final int FRAME_RATE = 60;
+    private static final int FRAME_RATE = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
     private static final long FRAME_LENGHT = 1000 / FRAME_RATE;
     
     private final Queue<InputEvent> inputQueue = new LinkedList<>();

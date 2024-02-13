@@ -16,6 +16,7 @@ final class App {
      * @param args
      */
     public static void main(final String[] args) {
+        System.setProperty("sun.java2d.opengl", "true");
         final Engine engine = new EngineImpl();
         engine.initialize();
         engine.mainLoop();
