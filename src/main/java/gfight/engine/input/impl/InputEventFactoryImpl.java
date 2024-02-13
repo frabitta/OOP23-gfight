@@ -12,30 +12,30 @@ import java.util.Optional;
 /**
  * Implementation of a factory of InputEvents.
  */
-public class InputEventFactoryImpl implements InputEventFactory {
+public final class InputEventFactoryImpl implements InputEventFactory {
 
+    @Override
     public Optional<Value> filterKeyValue(final int key) {
-        final Optional<Value> outValue = Stream.of(Value.values()).filter(value -> (value.getKey() == key)).findFirst();
-        return outValue;
+        return Stream.of(Value.values()).filter(value -> value.getKey() == key).findFirst();
     }
 
     @Override
-    public final InputEvent pressedValue(final Value value) {
+    public InputEvent pressedValue(final Value value) {
         return new InputEventValueImpl(Type.PRESSED, value);
     }
 
     @Override
-    public final InputEvent releasedValue(final Value value) {
+    public InputEvent releasedValue(final Value value) {
         return new InputEventValueImpl(Type.RELEASED, value);
     }
 
     @Override
-    public final InputEvent mouseDownAtPosition(final Position2D position) {
+    public InputEvent mouseDownAtPosition(final Position2D position) {
         return new InputEventPointerImpl(Type.MOUSE_DOWN, position);
     }
 
     @Override
-    public final InputEvent mouseUpAtPosition(final Position2D position) {
+    public InputEvent mouseUpAtPosition(final Position2D position) {
         return new InputEventPointerImpl(Type.MOUSE_UP, position);
     }
 

@@ -5,17 +5,39 @@ package gfight.engine.input.api;
  */
 public interface InputEventValue extends InputEvent {
 
+    /**
+     * Values that can be received by the world with the corrisponding key binding.
+     */
     enum Value {
+        /**
+         * Player up.
+         */
         UP('W'),
+        /**
+         * Player down.
+         */
         DOWN('S'),
+        /**
+         * Player left.
+         */
         LEFT('A'),
+        /**
+         * Player right.
+         */
         RIGHT('D'),
+        /**
+         * reset inputs received.
+         */
         RESET(-1);
 
-        int key;
-        Value(int key) {
+        private int key;
+        Value(final int key) {
             this.key = key;
         }
+        /**
+         * Get the binded key from the corrisponding Value.
+         * @return ascii code of the key
+         */
         public int getKey() {
             return this.key;
         }

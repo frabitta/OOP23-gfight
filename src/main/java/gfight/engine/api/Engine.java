@@ -5,10 +5,25 @@ package gfight.engine.api;
  */
 public interface Engine {
 
+    /**
+     * Possible status of the Engine.
+     */
     enum EngineStatus {
+        /**
+         * In the menu.
+         */
         MENU,
+        /**
+         * In game.
+         */
         GAME,
+        /**
+         * In the death screen.
+         */
         DEATH_SCREEN,
+        /**
+         * Engine terminated.
+         */
         TERMINATED
     }
 

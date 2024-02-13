@@ -11,11 +11,11 @@ import java.util.Optional;
 public interface InputEventFactory {
 
     /**
-     * Given a pressed key filters it 
-     * @param key
-     * @return
+     * Given a pressed key filters it.
+     * @param key pressed key
+     * @return the corrispondi Value if present
      */
-    Optional<Value> filterKeyValue(final int key);
+    Optional<Value> filterKeyValue(int key);
 
     /**
      * Returns a new InputEvent that describes a pressed key.

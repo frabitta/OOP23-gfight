@@ -54,7 +54,7 @@ public final class EngineImpl implements Engine, InputEventListener {
             switch (this.appStatus) {
                 case MENU -> holdPageUntilNotified(EngineView.Pages.MENU);
                 case GAME -> gameLoop();
-                default -> {}
+                default -> { }
             }
         }
         this.view.close();
@@ -62,13 +62,12 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private void gameLoop() {
         long prevFrameStartTime = System.currentTimeMillis();
-        
+
         final int frameRate = this.view.getRefreshRate();
         this.frameLenght = MILLIS / frameRate;
         this.camera.moveTo(new Position2DImpl(0, 0));
         this.world = new WorldImpl(this.level);
         this.world.installCamera(this.camera);
-
         changeVisualizedPage(EngineView.Pages.GAME);
 
         while (isGameRunning()) {
@@ -79,8 +78,9 @@ public final class EngineImpl implements Engine, InputEventListener {
             render();
             waitNextFrame(frameStartTime);
             prevFrameStartTime = frameStartTime;
-            //pause menu is inside this loop just doesn't update world.
-            // if we want to exit from thhe game directly to the menu we have to add a condition on the loop and skip the death screen.
+            /*pause menu is inside this loop just doesn't update world.
+            if we want to exit from thhe game directly to the menu we
+            have to add a condition on the loop and skip the death screen.*/
             if (this.world.isOver()) {
                 this.appStatus = EngineStatus.DEATH_SCREEN;
             }
@@ -92,8 +92,11 @@ public final class EngineImpl implements Engine, InputEventListener {
         this.appStatus = EngineStatus.MENU;
     }
 
-    @SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification = "We don't want to go back waiting. Once freed the thread needs to be able to proceed and exit this method.")
-    private synchronized void holdPageUntilNotified(EngineView.Pages page) {
+    @SuppressFBWarnings(
+        value = "WA_NOT_IN_LOOP",
+        justification = "We don't want to go back waiting."
+            + "Once freed the thread needs to be able to proceed and exit this method.")
+    private synchronized void holdPageUntilNotified(final EngineView.Pages page) {
         changeVisualizedPage(page);
         try {
             this.wait();
@@ -102,7 +105,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         }
     }
 
-    private void changeVisualizedPage(EngineView.Pages page) {
+    private void changeVisualizedPage(final EngineView.Pages page) {
         this.view.changePage(page);
     }
 
@@ -175,7 +178,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     @Override
-    public void selectLevel(String level) {
+    public void selectLevel(final String level) {
         this.level = level;
     }
 

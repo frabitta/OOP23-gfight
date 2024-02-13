@@ -186,6 +186,9 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     public void mouseExited(final MouseEvent e) {
     }
 
+    /**
+     * Reset the current state of input.
+     */
     public void resetPressedKeys() {
         this.pressedKeys.clear();
     }

@@ -1,5 +1,6 @@
 package gfight.world.weapon.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.EntityFactory;
 import gfight.world.weapon.api.Weapon;
@@ -41,8 +42,10 @@ public class SimpleGun implements Weapon {
         this.lastShootTime = System.currentTimeMillis();
     }
 
-    //  may expose internal representation by storing an externally mutable object into SimpleGun.parent
     @Override
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "Necessary to store the parent in order uniquely connect weapon and parent")
     public final void setParentEntity(final Character parent) {
         this.parent = parent;
     }

@@ -36,15 +36,18 @@ public final class SwingView implements EngineView {
     private final JPanel deathPanel;
     private final Canvas gamePanel;
     private final ViewCamera camera;
+    private final CardLayout cardLayout;
 
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
-    private CardLayout cardLayout;
 
     /**
      * Constructor of the view.
      * @param engine engine managing the app
+     * @param camera ViewCamera through wich observe the world
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to print correctly on screen")
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "It's necessary to store and external camera to print correctly on screen")
     public SwingView(final Engine engine, final ViewCamera camera) {
         this.engine = engine;
         this.camera = camera;
@@ -55,8 +58,8 @@ public final class SwingView implements EngineView {
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         this.frame.getContentPane().add(this.cardPanel);
-        this.menuPanel = new TestPanel(this.engine,"gioca");          //put menu JPanel-------------------
-        this.deathPanel = new TestPanel(this.engine,"hai perso");         //put deathScreen JPanel-------------------
+        this.menuPanel = new TestPanel(this.engine, "gioca");          //put menu JPanel-------------------
+        this.deathPanel = new TestPanel(this.engine, "hai perso");         //put deathScreen JPanel-------------------
         this.gamePanel = setupGamePanel(camera);
         this.cardPanel.add(this.menuPanel, Pages.MENU.getName());
         this.cardPanel.add(this.deathPanel, Pages.DEATH_SCREEN.getName());
@@ -81,18 +84,15 @@ public final class SwingView implements EngineView {
             }
         });
         this.frame.addWindowFocusListener(new WindowFocusListener() {
-
             @Override
-            public void windowGainedFocus(WindowEvent e) {
+            public void windowGainedFocus(final WindowEvent e) {
             }
-
             @Override
-            public void windowLostFocus(WindowEvent e) {
+            public void windowLostFocus(final WindowEvent e) {
                 final InputEventListener listener = (InputEventListener) engine;
                 listener.notifyInputEvent(listener.getInputEventFactory().pressedValue(InputEventValue.Value.RESET));
                 gamePanel.resetPressedKeys();
             }
-            
         });
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -111,7 +111,7 @@ public final class SwingView implements EngineView {
     List<GraphicsComponent> getGraphicsComponents() {
         return this.gComponentsList;
     }
-    
+
     @Override
     public void render(final List<GraphicsComponent> gComponentsList) {
         this.camera.setScreenDimension(frame.getSize().getWidth(), frame.getSize().getHeight());
@@ -120,7 +120,7 @@ public final class SwingView implements EngineView {
     }
 
     @Override
-    public void changePage(Pages panel) {
+    public void changePage(final Pages panel) {
         this.cardLayout.show(this.cardPanel, panel.getName());
         if (panel == Pages.GAME) {
             this.gamePanel.resetPressedKeys();
@@ -135,6 +135,9 @@ public final class SwingView implements EngineView {
 
     @Override
     public int getRefreshRate() {
-        return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getRefreshRate();
+        return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
+            .getDefaultScreenDevice()
+            .getDisplayMode()
+            .getRefreshRate();
     }
 }
