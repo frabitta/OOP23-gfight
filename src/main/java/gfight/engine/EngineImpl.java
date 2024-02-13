@@ -33,6 +33,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     private Camera camera;
 
     private boolean mutex;
+    private String level = "map1";
 
     @Override
     public void initialize() {
@@ -59,7 +60,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         long prevFrameStartTime = System.currentTimeMillis();
         
         this.camera.moveTo(new Position2DImpl(0, 0));
-        this.world = new WorldImpl("map1");
+        this.world = new WorldImpl(this.level);
         this.world.installCamera(this.camera);
 
         changeVisualizedPage(EngineView.Pages.GAME);
@@ -164,6 +165,11 @@ public final class EngineImpl implements Engine, InputEventListener {
     public synchronized void changeStatus(final EngineStatus status) {
         this.appStatus = status;
         notify();
+    }
+
+    @Override
+    public void selectLevel(String level) {
+        this.level = level;
     }
 
 }
