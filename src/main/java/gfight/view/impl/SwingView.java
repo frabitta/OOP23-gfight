@@ -51,7 +51,7 @@ public final class SwingView implements EngineView {
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         this.frame.getContentPane().add(this.cardPanel);
-        this.menuPanel = new TestPanel(this.engine,"gioca");          //put menu JPanel-------------------
+        this.menuPanel = new MenuPanel(this.engine,"gioca");          //put menu JPanel-------------------
         this.deathPanel = new TestPanel(this.engine,"hai perso");         //put deathScreen JPanel-------------------
         this.gamePanel = setupGamePanel(camera);
         this.cardPanel.add(this.menuPanel, Pages.MENU.getName());
