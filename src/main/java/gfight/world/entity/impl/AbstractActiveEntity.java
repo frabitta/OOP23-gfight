@@ -64,6 +64,9 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         });
     }
 
+    /**
+     * This method can be overriden.
+     */
     @Override
     public boolean isAlive() {
         return this.getHealth() > 0;
@@ -79,7 +82,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     }
 
     @Override
-    public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
+    public final void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         super.updatePos(dt, gameobjects);
         getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
             StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
