@@ -45,7 +45,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
                 HEALTHBAR_WIDTH,
                 HEALTHBAR_HEIGHT,
                 GraphicType.WORLD);
-        healthBar.setMax(getHealth());
+        healthBar.setRange(0, getHealth());
         healthBar.setStatus(getHealth());
         setGraphics(Stream.concat(Stream.of(healthBar), super.getGraphics().stream()).collect(Collectors.toSet()));
     }
