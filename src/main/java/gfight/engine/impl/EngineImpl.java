@@ -4,9 +4,17 @@ import java.util.Queue;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 
+import gfight.App;
 import gfight.common.impl.Position2DImpl;
 import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.Camera;
@@ -55,7 +63,8 @@ public final class EngineImpl implements Engine, InputEventListener {
             switch (this.appStatus) {
                 case MENU -> holdPageUntilNotified(EngineView.Pages.MENU);
                 case GAME -> gameLoop();
-                default -> { }
+                default -> {
+                }
             }
         }
         this.view.close();
@@ -80,6 +89,7 @@ public final class EngineImpl implements Engine, InputEventListener {
             waitNextFrame(frameStartTime);
             prevFrameStartTime = frameStartTime;
             if (this.world.isOver()) {
+                saveStats();
                 this.appStatus = EngineStatus.DEATH_SCREEN;
             }
             if (this.appStatus == EngineStatus.PAUSE) {
@@ -89,15 +99,30 @@ public final class EngineImpl implements Engine, InputEventListener {
             }
         }
 
-        if (this.appStatus == EngineStatus.DEATH_SCREEN)  {
+        if (this.appStatus == EngineStatus.DEATH_SCREEN) {
             holdPageUntilNotified(EngineView.Pages.DEATH_SCREEN);
         }
         this.appStatus = EngineStatus.MENU;
     }
 
-    @SuppressFBWarnings(
-        value = "WA_NOT_IN_LOOP",
-        justification = "We don't want to go back waiting."
+    private void saveStats() {
+        final File dir = new File(App.GAME_FOLDER);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(App.GAME_FOLDER + "stats.txt", true))) {
+            final int waves = this.world.getSurvivedWaves();
+            final Duration time = this.world.getPlayedTime();
+            bw.write("• " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())
+                    + "   Waves cleared: " + waves
+                    + "   Time: " + time.toMinutesPart()
+                    + "m " + time.toSecondsPart() + "s");
+            bw.newLine();
+        } catch (final IOException e) {
+        }
+    }
+
+    @SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification = "We don't want to go back waiting."
             + "Once freed the thread needs to be able to proceed and exit this method.")
     private synchronized void holdPageUntilNotified(final EngineView.Pages page) {
         changeVisualizedPage(page);
@@ -136,8 +161,9 @@ public final class EngineImpl implements Engine, InputEventListener {
         final var frameInputSequence = Collections.unmodifiableList(inputQueue.stream().toList());
         inputQueue.clear();
         mutex = false;
-        for (final var event: frameInputSequence) {
-            if (event instanceof InputEventValue && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
+        for (final var event : frameInputSequence) {
+            if (event instanceof InputEventValue
+                    && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
                 this.appStatus = EngineStatus.PAUSE;
             } else {
                 world.processInput(event);

@@ -44,7 +44,7 @@ public class WorldImpl implements World {
     private static final int PLAYER_PROJ_SPEED = 9;
     private static final int PLAYER_PROJ_SIZE = 4;
     private static final int PLAYER_PROJ_DAMAGE = 5;
-    private static final int CHEST_HEALTH = 250;
+    private static final int CHEST_HEALTH = 200;
     private static final int BOSS_LEVEL = 5;
 
     private final EntityManager entityManager;
@@ -102,7 +102,7 @@ public class WorldImpl implements World {
                 .forEach(e -> ((MovingEntity) e).updatePos(deltaTime, this.entityManager.getEntities()));
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
-            if (this.currentLevel % BOSS_LEVEL == 0) {
+            if (this.currentLevel % BOSS_LEVEL == 0 && this.currentLevel != 0) {
                 this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
                 this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
             } else {
@@ -181,7 +181,7 @@ public class WorldImpl implements World {
                 PLAYER_PROJ_DAMAGE,
                 this.entityManager));
         this.pointingPosition = new Position2DImpl(this.player.getPosition().getX(), 0);
-        this.currentLevel = 1;
+        this.currentLevel = 0;
         final SpawnerFactory spawnerFactory = new SpawnerFactoryImpl(this.entityManager, map);
         for (final var entry : map.getSpawnersPositions().entrySet()) {
             this.spawners.add(

@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -9,8 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import gfight.App;
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
@@ -20,6 +22,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Class that represent the game menu.
@@ -80,6 +85,14 @@ public class MenuPanel extends JPanel {
         JButton statsButton = new JButton("STATS", resizedStatsImage);
         configurateButton(statsButton);
         statsButton.setAlignmentX(CENTER_ALIGNMENT);
+        statsButton.addActionListener(e -> {
+            try {
+                JOptionPane.showMessageDialog(MenuPanel.this, Files.readString(Path.of(App.GAME_FOLDER + "stats.txt")),
+                        "Stats", JOptionPane.PLAIN_MESSAGE);
+            } catch (final IOException ex) {
+                JOptionPane.showMessageDialog(MenuPanel.this, "No stats yet", "Stats", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
 
         // MEUNU BAR
         JMenu mapMenu = new JMenu("     Select a map     ");

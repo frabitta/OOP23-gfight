@@ -6,13 +6,22 @@ import gfight.engine.impl.EngineImpl;
 /**
  * Main class, here the program starts creating a new engine and giving him control.
  */
-final class App {
+public final class App {
+
+    /**
+     * The path containing files used by the game.
+     */
+    public static final String GAME_FOLDER = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + ".gfight"
+            + System.getProperty("file.separator");;
 
     private App() {
     }
 
     /**
      * main method of the program.
+     * 
      * @param args
      */
     public static void main(final String[] args) {
