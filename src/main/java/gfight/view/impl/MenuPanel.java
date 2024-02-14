@@ -81,6 +81,7 @@ public class MenuPanel extends JPanel {
         // MEUNU BAR
         JMenu mapMenu = new JMenu("     Select a map     ");
         mapMenu.setBorder(new RoundedBorder(10));
+        mapMenu.setBackground(Color.WHITE);
         mapMenu.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
