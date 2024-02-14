@@ -8,7 +8,7 @@ import gfight.engine.input.api.InputEventPointer;
 /**
  * Implementation of InputEvent to describe the mouse position.
  */
-public class InputEventPointerImpl extends AbstractInputEvent implements InputEventPointer {
+public final class InputEventPointerImpl extends AbstractInputEvent implements InputEventPointer {
 
     private final Position2D position;
 
@@ -18,7 +18,7 @@ public class InputEventPointerImpl extends AbstractInputEvent implements InputEv
     }
 
     @Override
-    public final Position2D getPosition() {
+    public Position2D getPosition() {
         return this.position;
     }
 
@@ -26,7 +26,7 @@ public class InputEventPointerImpl extends AbstractInputEvent implements InputEv
      * Equals if of the same class, type and same position. 
      */
     @Override
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -41,7 +41,7 @@ public class InputEventPointerImpl extends AbstractInputEvent implements InputEv
      * Generates hashCode using type and position.
      */
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hash(super.hashCode(), this.getPosition());
     }
 }

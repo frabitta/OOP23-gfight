@@ -21,7 +21,7 @@ import gfight.world.weapon.api.Projectile;
  * It damages the ActiveEntities that come in touch with it and are of the
  * opponent team.
  */
-public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
+public final class ProjectileImpl extends AbstractActiveEntity implements Projectile {
 
     private static final int ALIVE_HEALTH = 1;
 
@@ -55,12 +55,12 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     }
 
     @Override
-    public final void setDamage(final int damage) {
+    public void setDamage(final int damage) {
         this.damage = damage;
     }
 
     @Override
-    protected final void applyCollisions(final Set<? extends GameEntity> gameobjects) {
+    protected void applyCollisions(final Set<? extends GameEntity> gameobjects) {
         final var collidedObjects = getAllCollided(gameobjects);
         this.collided = collidedObjects.stream()
             .anyMatch(obj -> {
@@ -83,7 +83,7 @@ public class ProjectileImpl extends AbstractActiveEntity implements Projectile {
     }
 
     @Override
-    public final boolean isAlive() {
+    public boolean isAlive() {
         return !this.collided;
     }
 }

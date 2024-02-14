@@ -9,7 +9,7 @@ import gfight.view.api.GraphicsComponentRenderer;
 /**
  * An abstract GraphicsComponent that only needs and uses 1 position.
  */
-public abstract class AbstractSinglePositionGraphicsComponent extends AbstractGraphicsComponent {
+abstract class AbstractSinglePositionGraphicsComponent extends AbstractGraphicsComponent {
 
     AbstractSinglePositionGraphicsComponent(
             final EngineColor color,

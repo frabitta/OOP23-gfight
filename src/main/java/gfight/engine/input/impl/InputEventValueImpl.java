@@ -8,7 +8,7 @@ import gfight.engine.input.api.InputEventValue;
  * Implementation of InputEvent to describe the pressing of buttons.
  * (for example for the keyboard).
  */
-public class InputEventValueImpl extends AbstractInputEvent implements InputEventValue {
+public final class InputEventValueImpl extends AbstractInputEvent implements InputEventValue {
 
     private final Value key;
 
@@ -18,7 +18,7 @@ public class InputEventValueImpl extends AbstractInputEvent implements InputEven
     }
 
     @Override
-    public final Value getValue() {
+    public Value getValue() {
         return this.key;
     }
 
@@ -26,7 +26,7 @@ public class InputEventValueImpl extends AbstractInputEvent implements InputEven
      * Equals if of the same class, type and same key. 
      */
     @Override
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -41,7 +41,7 @@ public class InputEventValueImpl extends AbstractInputEvent implements InputEven
      * Generates hashCode using type and key.
      */
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hash(super.hashCode(), this.getValue());
     }
 }

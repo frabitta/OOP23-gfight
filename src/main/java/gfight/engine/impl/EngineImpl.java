@@ -43,7 +43,7 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private EngineView view;
     private World world;
-    private EngineStatus appStatus;
+    private EngineStatus engineStatus;
     private Camera camera;
 
     private boolean mutex;
@@ -51,7 +51,7 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public void initialize() {
-        this.appStatus = EngineStatus.MENU;
+        this.engineStatus = EngineStatus.MENU;
         this.camera = new CameraImpl();
         camera.moveTo(new Position2DImpl(0, 0));
         view = new SwingView(this, camera);
@@ -60,7 +60,7 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void mainLoop() {
         while (isAppRunning()) {
-            switch (this.appStatus) {
+            switch (this.engineStatus) {
                 case MENU -> holdPageUntilNotified(EngineView.Pages.MENU);
                 case GAME -> gameLoop();
                 default -> {
@@ -90,19 +90,19 @@ public final class EngineImpl implements Engine, InputEventListener {
             prevFrameStartTime = frameStartTime;
             if (this.world.isOver()) {
                 saveStats();
-                this.appStatus = EngineStatus.DEATH_SCREEN;
+                this.engineStatus = EngineStatus.DEATH_SCREEN;
             }
-            if (this.appStatus == EngineStatus.PAUSE) {
+            if (this.engineStatus == EngineStatus.PAUSE) {
                 holdPageUntilNotified(EngineView.Pages.PAUSE_SCREEN);
                 changeVisualizedPage(EngineView.Pages.GAME);
                 prevFrameStartTime = System.currentTimeMillis();
             }
         }
 
-        if (this.appStatus == EngineStatus.DEATH_SCREEN) {
+        if (this.engineStatus == EngineStatus.DEATH_SCREEN) {
             holdPageUntilNotified(EngineView.Pages.DEATH_SCREEN);
         }
-        this.appStatus = EngineStatus.MENU;
+        this.engineStatus = EngineStatus.MENU;
     }
 
     private void saveStats() {
@@ -164,7 +164,7 @@ public final class EngineImpl implements Engine, InputEventListener {
         for (final var event : frameInputSequence) {
             if (event instanceof InputEventValue
                     && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
-                this.appStatus = EngineStatus.PAUSE;
+                this.engineStatus = EngineStatus.PAUSE;
             } else {
                 world.processInput(event);
             }
@@ -172,16 +172,16 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private boolean isAppRunning() {
-        return this.appStatus != EngineStatus.TERMINATED;
+        return this.engineStatus != EngineStatus.TERMINATED;
     }
 
     private boolean isGameRunning() {
-        return isAppRunning() && this.appStatus == EngineStatus.GAME;
+        return isAppRunning() && this.engineStatus == EngineStatus.GAME;
     }
 
     @Override
     public void notifyInputEvent(final InputEvent event) {
-        if (this.appStatus == EngineStatus.GAME) {
+        if (this.engineStatus == EngineStatus.GAME) {
             if (!mutex) {
                 if (!bufferInputQueue.isEmpty()) {
                     inputQueue.addAll(bufferInputQueue);
@@ -206,7 +206,7 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public synchronized void changeStatus(final EngineStatus status) {
-        this.appStatus = status;
+        this.engineStatus = status;
         notifyAll();
     }
 
@@ -217,7 +217,7 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     @Override
     public EngineStatus getEngineStatus() {
-        return this.appStatus;
+        return this.engineStatus;
     }
 
 }
