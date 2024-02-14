@@ -85,10 +85,6 @@ public final class BfsMovement extends BaseMovement {
         setDirection(newDirection);
     }
 
-    /**
-     * 
-     * @return the shortest path from the agent to the target
-     */
     private List<Position2D> getPathFromBfs() {
         final Position2D startNode = agent.getPosition();
         final Position2D targetNode = target.getPosition();
