@@ -16,7 +16,7 @@ import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 /**
- * Class that represent the GameOver panel
+ * Class that represents the GameOver panel.
  */
 public class GameOver extends JPanel {
     private static final long serialVersionUID = 4003161718422635256L;
