@@ -10,19 +10,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Insets;
 
 /**
  * Class that represent the game menu.
@@ -37,12 +34,18 @@ public class MenuPanel extends JPanel {
     private static final int BUTTON_IMAGE_WIDTH = 100;
     private static final int BUTTON_IMAGE_HEIGHT = 75;
     private static final int TITLE_SIZE = 75;
+    private static final int RADIUS = 10;
     private static final String PATH_STRING = "src/main/resources/images/";
     private final ImageIcon background;
     private final ImageIcon playImage;
     private final ImageIcon statsImage;
     private final JMenuBar menuBar = new JMenuBar();
 
+    /**
+     * Creates a new menu view.
+     * 
+     * @param engine the game engine
+     */
     public MenuPanel(final Engine engine) {
         this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
@@ -80,7 +83,7 @@ public class MenuPanel extends JPanel {
 
         // MEUNU BAR
         JMenu mapMenu = new JMenu("     Select a map     ");
-        mapMenu.setBorder(new RoundedBorder(10));
+        mapMenu.setBorder(new RoundedBorder(RADIUS));
         mapMenu.setBackground(Color.WHITE);
         mapMenu.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
         JMenuItem map1 = new JMenuItem("Map 1");
@@ -122,7 +125,7 @@ public class MenuPanel extends JPanel {
         button.setHorizontalTextPosition(JButton.LEFT);
         button.setVerticalTextPosition(JButton.CENTER);
         button.setBackground(Color.WHITE);
-        button.setBorder(new RoundedBorder(10));
+        button.setBorder(new RoundedBorder(RADIUS));
         button.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
     }
 
@@ -136,27 +139,6 @@ public class MenuPanel extends JPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
-    }
-
-    private static class RoundedBorder implements Border {
-
-        private int radius;
-
-        RoundedBorder(int radius) {
-            this.radius = radius;
-        }
-
-        public Insets getBorderInsets(Component c) {
-            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-        }
-
-        public boolean isBorderOpaque() {
-            return true;
-        }
-
-        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-        }
     }
 
 }

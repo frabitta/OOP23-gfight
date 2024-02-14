@@ -25,6 +25,7 @@ public class GameOver extends JPanel {
     private static final int TITLE_FONT_DIM = 70;
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
+    private static final int RADIUS = 10;
 
     private final Image backgroundImage;
 
@@ -44,6 +45,7 @@ public class GameOver extends JPanel {
         final JButton backToMenu = new JButton("Go to Menu");
         backToMenu.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
         backToMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backToMenu.setBorder(new RoundedBorder(RADIUS));
         backToMenu.addActionListener(e -> engine.changeStatus(EngineStatus.MENU));
 
         this.add(Box.createVerticalGlue());
