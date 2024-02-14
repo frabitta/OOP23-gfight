@@ -82,9 +82,18 @@ public class MenuPanel extends JPanel {
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
         JMenuItem map3 = new JMenuItem("Map 3");
-        map1.addActionListener(e -> engine.selectLevel("map1"));
-        map2.addActionListener(e -> engine.selectLevel("map2"));
-        map3.addActionListener(e -> engine.selectLevel("map3"));
+        map1.addActionListener(e -> {
+            engine.selectLevel("map1");
+            mapMenu.setText("     Map 1    ");
+        });
+        map2.addActionListener(e -> {
+            engine.selectLevel("map2");
+            mapMenu.setText("    Map 2    ");
+        });
+        map3.addActionListener(e -> {
+            engine.selectLevel("map3");
+            mapMenu.setText("    Map 3    ");
+        });
         mapMenu.add(map1);
         mapMenu.add(map2);
         mapMenu.add(map3);
