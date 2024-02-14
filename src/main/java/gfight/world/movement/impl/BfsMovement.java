@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
 /**
@@ -46,7 +47,7 @@ public final class BfsMovement extends BaseMovement {
     @Override
     public void update() {
         this.agent.pointTo(this.target.getPosition());
-        List<Position2D> path = getPathFromBfs();
+        final List<Position2D> path = getPathFromBfs();
         if (!path.isEmpty()) {
             if (agent.getType() == CharacterType.SHOOTER) {
                 handleShooterBehavior(path);
@@ -80,7 +81,7 @@ public final class BfsMovement extends BaseMovement {
     }
 
     private void move(final List<Position2D> path) {
-        Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
+        final Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
         setDirection(newDirection);
     }
 
@@ -89,14 +90,17 @@ public final class BfsMovement extends BaseMovement {
      * @return the shortest path from the agent to the target
      */
     private List<Position2D> getPathFromBfs() {
-        Position2D startNode = agent.getPosition();
-        Position2D targetNode = target.getPosition();
-        BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
-        List<Position2D> shortestPath = Optional
-                .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
-                .map(path -> path.getVertexList().stream().map(GameTile::getPosition).collect(Collectors.toList()))
-                .filter(path -> path.size() >= 2)
-                .orElse(Collections.emptyList());
-        return shortestPath;
+        final Position2D startNode = agent.getPosition();
+        final Position2D targetNode = target.getPosition();
+        final BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
+        final Optional<GraphPath<GameTile, DefaultEdge>> path = Optional
+                .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)));
+        if (path.isPresent() && path.get().getLength() >= 1) {
+            return path.get().getVertexList().stream()
+                    .map(GameTile::getPosition)
+                    .collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
