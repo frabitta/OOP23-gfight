@@ -1,5 +1,6 @@
 package gfight.world.api;
 
+import java.time.Duration;
 import java.util.List;
 
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -33,4 +34,19 @@ public interface World extends CameraMover {
      * @param event the event that needs to be processed
      */
     void processInput(InputEvent event);
+
+    /**
+     * Returns the number of survived waves.
+     * 
+     * @return the number of survived waves
+     */
+    int getSurvivedWaves();
+
+    /**
+     * Returns the total played time,
+     * indicating how long you survived.
+     * 
+     * @return the total played time
+     */
+    Duration getPlayedTime();
 }

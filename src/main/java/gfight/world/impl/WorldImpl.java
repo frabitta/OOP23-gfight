@@ -1,5 +1,7 @@
 package gfight.world.impl;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +51,7 @@ public class WorldImpl implements World {
     private final InputMovement inputMapper;
     private final Hitboxes hitboxManager;
     private final Set<Spawner> spawners;
+    private final LocalTime startTime;
 
     private WorldCamera camera;
     private int currentLevel;
@@ -68,6 +71,7 @@ public class WorldImpl implements World {
         this.hitboxManager = new HitboxesImpl();
         this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap(mapName);
+        this.startTime = LocalTime.now();
     }
 
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to command it")
@@ -195,5 +199,15 @@ public class WorldImpl implements World {
     private void newLevel() {
         this.spawners.stream().forEach(Spawner::spawn);
         this.currentLevel++;
+    }
+
+    @Override
+    public final int getSurvivedWaves() {
+        return this.currentLevel - 1;
+    }
+
+    @Override
+    public final Duration getPlayedTime() {
+        return Duration.between(this.startTime, LocalTime.now());
     }
 }
