@@ -39,12 +39,12 @@ import gfight.world.weapon.impl.WeaponFactoryImpl;
 public class WorldImpl implements World {
 
     private static final int PLAYER_DIM = 30;
-    private static final int PLAYER_HEALTH = 50;
-    private static final int PLAYER_RELOAD_TIME = 200;
+    private static final int PLAYER_HEALTH = 10;
+    private static final int PLAYER_RELOAD_TIME = 150;
     private static final int PLAYER_PROJ_SPEED = 9;
     private static final int PLAYER_PROJ_SIZE = 4;
     private static final int PLAYER_PROJ_DAMAGE = 5;
-    private static final int CHEST_HEALTH = 200;
+    private static final int CHEST_HEALTH = 300;
     private static final int BOSS_LEVEL = 5;
 
     private final EntityManager entityManager;

@@ -53,20 +53,21 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
             @Override
             public void spawn() {
                 if (this.isEnabled()) {
-                    final ActiveEntity target = targets.stream().toList().get(random.nextInt(targets.size()));
+                    final ActiveEntity target = type == SpawnerType.BOSS
+                            ? targets.stream().filter(e -> e instanceof Character).findAny().get()
+                            : targets.stream().toList().get(random.nextInt(targets.size()));
                     final double health = initialHealth
                             + (initialHealth * (getSpawnedEntities() - 1) * statsMultiplier);
-                    Character enemy;
-                    if (random.nextBoolean()) {
-                        enemy = entityFactory.createRunner(target, dim, position, (int) health, map);
-                    } else {
-                        enemy = entityFactory.createShooter(target, dim, position, (int) health, map);
-                    }
+                    final double damage = ENEMY_PROJ_DAMAGE
+                            + (ENEMY_PROJ_DAMAGE * (getSpawnedEntities() - 1) * statsMultiplier);
+                    final Character enemy = random.nextBoolean()
+                            ? entityFactory.createRunner(target, dim, position, (int) health, map)
+                            : entityFactory.createShooter(target, dim, position, (int) health, map);
                     enemy.setWeapon(new WeaponFactoryImpl().simpleGun(
                             ENEMY_RELOAD_TIME,
                             ENEMY_PROJ_SPEED,
                             ENEMY_PROJ_SIZE,
-                            ENEMY_PROJ_DAMAGE,
+                            (int) damage,
                             entityFactory));
 
                 }
