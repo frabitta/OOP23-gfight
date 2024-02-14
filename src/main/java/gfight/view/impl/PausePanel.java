@@ -3,7 +3,6 @@ package gfight.view.impl;
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
-import java.awt.Image;
 import java.awt.Font;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -21,13 +20,13 @@ public final class PausePanel extends JPanel {
 
     /** Serializable UID. */
     private static final long serialVersionUID = 1675654981775835696L;
+    
     private static final String PATH_STRING = "src/main/resources/images/";
     private static final int TITLE_FONT_DIM = 55;
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
 
-    /** The background of the pause panel. */
-    private final Image backgroundImage;
+    private final ImageIcon backgroundImage;
 
     /**
      * It creates a pause panel view.
@@ -36,7 +35,7 @@ public final class PausePanel extends JPanel {
      */
     public PausePanel(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backgroundImage = new ImageIcon(PATH_STRING + "Pause.png").getImage();
+        this.backgroundImage = new ImageIcon(PATH_STRING + "Pause.png");
 
         final JLabel titleLabel = new JLabel("Paused");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));
@@ -65,6 +64,6 @@ public final class PausePanel extends JPanel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(this.backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }

@@ -123,18 +123,11 @@ classDiagram
       getGraphicsComponents()
     }
 ```
-```
-Nel rendering la View chiede al controller i componenti grafici da stampare (di tutti gli elementi del gioco) e ciclandoli li stampa seguendo le loro indicazioni
-
-Controller (ENGINE):
-- init:
-  - crea finestra
-  - crea model
-- mainLoop:
-  - come da gameAsALab
-- l'input lo prende la view, la passa al controller (pattern Observer step 4 gameAsALab), il controller lo passa al model.
-```
 ## 2.2 Design dettagliato
+### Baldazzi Andrea
+### Bittasi Francesco
+### Marchi Luca
+### Monaco Andrea
 # Capitolo 3 - Sviluppo
 ## 3.1 Testing automatizzato
 ## 3.2 Note di sviluppo

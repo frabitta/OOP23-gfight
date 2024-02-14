@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,6 +22,8 @@ import gfight.view.api.EngineView;
 
 import java.util.Collections;
 import java.util.List;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 /**
  * An EngineView implementation using JSwing.
@@ -44,13 +48,14 @@ public final class SwingView implements EngineView {
 
     /**
      * Constructor of the view.
+     * 
      * @param engine engine managing the app
      * @param camera ViewCamera through wich observe the world
      */
-    @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP2",
-        justification = "It's necessary to store and external camera to print correctly on screen")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to print correctly on screen")
     public SwingView(final Engine engine, final ViewCamera camera) {
+        final String path = "src/main/resources/images/";
+        
         this.engine = engine;
         this.camera = camera;
 
@@ -69,6 +74,8 @@ public final class SwingView implements EngineView {
         this.cardPanel.add(this.gamePanel, Pages.GAME.getName());
         this.cardPanel.add(this.pausePanel, Pages.PAUSE_SCREEN.getName());
 
+        Image img = new ImageIcon(path + "Icon.png").getImage();
+        frame.setIconImage(img);
         frame.pack();
         frame.setVisible(true);
     }
@@ -82,6 +89,7 @@ public final class SwingView implements EngineView {
             public void windowClosing(final WindowEvent ev) {
                 engine.terminate();
             }
+
             @Override
             public void windowClosed(final WindowEvent ev) {
                 engine.terminate();
@@ -91,6 +99,7 @@ public final class SwingView implements EngineView {
             @Override
             public void windowGainedFocus(final WindowEvent e) {
             }
+
             @Override
             public void windowLostFocus(final WindowEvent e) {
                 final InputEventListener listener = (InputEventListener) engine;
@@ -143,8 +152,8 @@ public final class SwingView implements EngineView {
     @Override
     public int getRefreshRate() {
         return java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment()
-            .getDefaultScreenDevice()
-            .getDisplayMode()
-            .getRefreshRate();
+                .getDefaultScreenDevice()
+                .getDisplayMode()
+                .getRefreshRate();
     }
 }

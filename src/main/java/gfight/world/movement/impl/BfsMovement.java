@@ -9,6 +9,7 @@ import gfight.world.entity.api.Character.CharacterType;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.GameTile;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -25,8 +26,8 @@ public final class BfsMovement extends BaseMovement {
     private final Character agent;
     private final GameMap map;
     private final double speed;
-
-    private static final int RANGE = 150;
+    private static final int RANGE_RUNNER = GameMap.TILE_DIM;
+    private static final int TILES_SHOOTER = 5;
 
     /**
      * Constructor of bfs movement.
@@ -47,19 +48,30 @@ public final class BfsMovement extends BaseMovement {
     public void update() {
         this.agent.pointTo(this.target.getPosition());
         List<Position2D> path = getPathFromBfs();
-        if (agent.getType() == CharacterType.SHOOTER) {
-            if (agent.getPosition().getDistance(target.getPosition()) < RANGE) {
-                stopAndAttack();
-            } else {
-                move(path);
+        if (!path.isEmpty()) {
+            if (agent.getType() == CharacterType.SHOOTER) {
+                handleShooterBehavior(path);
+            } else if (agent.getType() == CharacterType.RUNNER) {
+                handleRunnerBehavior(path);
             }
+        } else {
+            agent.setDirection(new VectorImpl(0, 0));
         }
-        if (agent.getType() == CharacterType.RUNNER) {
-            if (!map.searchTile(agent.getPosition()).equals(map.searchTile(target.getPosition()))) {
-                move(path);
-            } else {
-                stopAndAttack();
-            }
+    }
+
+    private void handleShooterBehavior(List<Position2D> path) {
+        if (path.size() < TILES_SHOOTER) {
+            stopAndAttack();
+        } else {
+            move(path);
+        }
+    }
+
+    private void handleRunnerBehavior(List<Position2D> path) {
+        if (agent.getPosition().getDistance(target.getPosition()) < RANGE_RUNNER) {
+            stopAndAttack();
+        } else {
+            move(path);
         }
     }
 
@@ -84,7 +96,8 @@ public final class BfsMovement extends BaseMovement {
         List<Position2D> shortestPath = Optional
                 .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
                 .map(path -> path.getVertexList().stream().map(GameTile::getPosition).collect(Collectors.toList()))
-                .orElseThrow(NoSuchElementException::new);
+                .filter(path -> path.size() >= 2)
+                .orElse(Collections.emptyList());
         return shortestPath;
     }
 }

@@ -25,6 +25,8 @@ import java.awt.Image;
  * Class that represent the game menu.
  */
 public class MenuPanel extends JPanel {
+
+    /** Serializable UID. */
     private static final long serialVersionUID = -9101397258771046262L;
 
     private static final int WIDTH = 1280;
@@ -66,7 +68,6 @@ public class MenuPanel extends JPanel {
         // BUTTONS
         JButton playButton = new JButton("PLAY  ", resizedPlayImage);
         configurateButton(playButton);
-        playButton.setBackground(Color.BLACK);
         playButton.addActionListener(al -> engine.changeStatus(EngineStatus.GAME));
         playButton.setAlignmentX(CENTER_ALIGNMENT);
 
