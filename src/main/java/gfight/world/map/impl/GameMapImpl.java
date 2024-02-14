@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.DefaultUndirectedGraph;
 
 import gfight.common.api.Position2D;
 import gfight.common.impl.Position2DImpl;
@@ -113,7 +113,7 @@ public final class GameMapImpl implements GameMap {
     }
 
     private void buildGraph() {
-        final Graph<GameTile, DefaultEdge> g = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        final Graph<GameTile, DefaultEdge> g = new DefaultDirectedGraph<>(DefaultEdge.class);
         this.tiles.stream()
                 .flatMap(List::stream)
                 .forEach(v -> g.addVertex(v));
@@ -121,11 +121,11 @@ public final class GameMapImpl implements GameMap {
             final int width = this.tiles.get(i).size();
             for (int j = 0; j < width; j++) {
                 final GameTile tile = this.tiles.get(i).get(j);
-                if (tile.getType() == GameTile.TileType.EMPTY || tile.getType() == GameTile.TileType.CHEST) {
-                    addEdgeIfEmpty(g, tile, i, j - 1); // WEST
-                    addEdgeIfEmpty(g, tile, i, j + 1); // EAST
-                    addEdgeIfEmpty(g, tile, i - 1, j); // NORTH
-                    addEdgeIfEmpty(g, tile, i + 1, j); // SOUTH
+                if (tile.getType() == GameTile.TileType.EMPTY) {
+                    addEdge(g, tile, i, j - 1); // WEST
+                    addEdge(g, tile, i, j + 1); // EAST
+                    addEdge(g, tile, i - 1, j); // NORTH
+                    addEdge(g, tile, i + 1, j); // SOUTH
                 }
             }
         }
@@ -133,9 +133,8 @@ public final class GameMapImpl implements GameMap {
         this.tileGraph = Optional.of(g);
     }
 
-    private void addEdgeIfEmpty(final Graph<GameTile, DefaultEdge> g, final GameTile tile, final int x, final int y) {
-        if (x >= 0 && x < this.tiles.size() && y >= 0 && y < this.tiles.get(x).size()
-                && this.tiles.get(x).get(y).getType() == GameTile.TileType.EMPTY) {
+    private void addEdge(final Graph<GameTile, DefaultEdge> g, final GameTile tile, final int x, final int y) {
+        if (x >= 0 && x < this.tiles.size() && y >= 0 && y < this.tiles.get(x).size()) {
             g.addEdge(tile, this.tiles.get(x).get(y));
         }
     }
