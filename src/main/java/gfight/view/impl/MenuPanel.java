@@ -10,16 +10,19 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 
 /**
  * Class that represent the game menu.
@@ -77,7 +80,7 @@ public class MenuPanel extends JPanel {
 
         // MEUNU BAR
         JMenu mapMenu = new JMenu("     Select a map     ");
-        mapMenu.setBorder(BorderFactory.createEtchedBorder());
+        mapMenu.setBorder(new RoundedBorder(10));
         mapMenu.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
         JMenuItem map1 = new JMenuItem("Map 1");
         JMenuItem map2 = new JMenuItem("Map 2");
@@ -117,6 +120,8 @@ public class MenuPanel extends JPanel {
         button.setPreferredSize(new Dimension(WIDTH / 6, HEIGHT / 6));
         button.setHorizontalTextPosition(JButton.LEFT);
         button.setVerticalTextPosition(JButton.CENTER);
+        button.setBackground(Color.WHITE);
+        button.setBorder(new RoundedBorder(10));
         button.setFont(new Font("Arial", Font.BOLD, TITLE_SIZE / 4));
     }
 
@@ -130,6 +135,27 @@ public class MenuPanel extends JPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
+    }
+
+    private static class RoundedBorder implements Border {
+
+        private int radius;
+
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+        }
+
+        public boolean isBorderOpaque() {
+            return true;
+        }
+
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+        }
     }
 
 }
