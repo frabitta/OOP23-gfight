@@ -8,7 +8,7 @@ import gfight.world.map.api.Spawner;
 public abstract class AbstractSpawner implements Spawner {
 
     private final SpawnerType type;
-    private int spawnedEntities;
+    private int difficulty;
 
     /**
      * Creates a new abstract Spawner which spawning criteria is not defined.
@@ -18,7 +18,7 @@ public abstract class AbstractSpawner implements Spawner {
      */
     public AbstractSpawner(final SpawnerType type) {
         this.type = type;
-        this.spawnedEntities = 0;
+        this.difficulty = 0;
     }
 
     @Override
@@ -28,11 +28,11 @@ public abstract class AbstractSpawner implements Spawner {
 
     @Override
     public final int getDifficulty() {
-        return this.spawnedEntities;
+        return this.difficulty;
     }
 
     @Override
     public final void incrementDifficulty() {
-        this.spawnedEntities = this.spawnedEntities + 1;
+        this.difficulty = this.difficulty + 1;
     }
 }
