@@ -2,9 +2,7 @@ package gfight.world.hitbox.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.locationtech.jts.geom.Coordinate;
@@ -15,7 +13,6 @@ import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
 import gfight.world.entity.api.CachedGameEntity;
-import gfight.world.entity.api.GameEntity;
 import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
 
@@ -46,13 +43,6 @@ public final class HitboxesImpl implements Hitboxes {
     @Override
     public void freeHitboxes(final Set<CachedGameEntity> gaemobjects) {
         gaemobjects.stream().forEach(CachedGameEntity::reset);
-    }
-
-    @Override
-    public Map<GameEntity, Set<GameEntity>> getAllCollision(final Set<GameEntity> gameObjects) {
-        final Map<GameEntity, Set<GameEntity>> collisionMap = new LinkedHashMap<>();
-        gameObjects.stream().forEach(entity -> collisionMap.put(entity, entity.getAllCollided(gameObjects)));
-        return collisionMap;
     }
 
     @Override
