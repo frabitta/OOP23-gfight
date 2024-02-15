@@ -25,7 +25,7 @@ import gfight.world.weapon.api.Projectile;
 /**
  * Class that tests the correct creation of entities.
  */
-public class EntityFactoryTest {
+class EntityFactoryTest {
     private final EntityFactory entityFactory = new EntityFactoryImpl();
     private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
 
@@ -34,9 +34,9 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Player.
      */
     @Test
-    public void testPlayer() {
-        Position2D position = new Position2DImpl(100, 100);
-        Character player = entityFactory.createPlayer(10, position, 10, new InputMovementImpl());
+    void testPlayer() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final Character player = entityFactory.createPlayer(10, position, 10, new InputMovementImpl());
         assertNotNull(player);
         assertEquals(CharacterType.PLAYER, player.getType());
         assertEquals(position, player.getPosition());
@@ -49,9 +49,9 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Chest.
      */
     @Test
-    public void testChest() {
-        Position2D position = new Position2DImpl(100, 100);
-        ActiveEntity chest = entityFactory.createChest(40, position, 10);
+    void testChest() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final ActiveEntity chest = entityFactory.createChest(40, position, 10);
         assertNotNull(chest);
         assertEquals(position, chest.getPosition());
         assertEquals(10, chest.getHealth());
@@ -63,11 +63,11 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Shooter (enemy).
      */
     @Test
-    public void testShooter() {
-        Position2D position = new Position2DImpl(100, 100);
-        GameMap map = new GameMapImpl("map1");
-        ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
-        Character enemy = entityFactory.createShooter(target, 10, position, 10, map);
+    void testShooter() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final GameMap map = new GameMapImpl("map1");
+        final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
+        final Character enemy = entityFactory.createShooter(target, 10, position, 10, map);
         assertNotNull(enemy);
         assertEquals(position, enemy.getPosition());
         assertEquals(CharacterType.SHOOTER, enemy.getType());
@@ -80,11 +80,11 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Runner (enemy).
      */
     @Test
-    public void testRunner() {
-        Position2D position = new Position2DImpl(100, 100);
-        GameMap map = new GameMapImpl("map1");
-        ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
-        Character enemy = entityFactory.createRunner(target, 10, position, 10, map);
+    void testRunner() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final GameMap map = new GameMapImpl("map1");
+        final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
+        final Character enemy = entityFactory.createRunner(target, 10, position, 10, map);
         assertNotNull(enemy);
         assertEquals(position, enemy.getPosition());
         assertEquals(CharacterType.RUNNER, enemy.getType());
@@ -97,9 +97,9 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Obstacle.
      */
     @Test
-    public void testObstacle() {
-        Position2D position = new Position2DImpl(100, 100);
-        CachedGameEntity obstacle = entityFactory.createObstacle(10, position);
+    void testObstacle() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final CachedGameEntity obstacle = entityFactory.createObstacle(10, position);
         assertNotNull(obstacle);
         assertEquals(position, obstacle.getPosition());
         assertEquals(vertexCalculator.square(10, position), obstacle.getPosition2Ds());
@@ -109,9 +109,10 @@ public class EntityFactoryTest {
      * Test the correct creation of entity Projectile.
      */
     @Test
-    public void testProjectile() {
-        Position2D position = new Position2DImpl(100, 100);
-        Projectile projectile = entityFactory.createProjectile(CharacterType.RUNNER, position, new VectorImpl(1, 1), 5,
+    void testProjectile() {
+        final Position2D position = new Position2DImpl(100, 100);
+        final Projectile projectile = entityFactory.createProjectile(CharacterType.RUNNER, position,
+                new VectorImpl(1, 1), 5,
                 10);
         assertNotNull(projectile);
         assertEquals(position, projectile.getPosition());

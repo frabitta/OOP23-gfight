@@ -14,7 +14,7 @@ import gfight.world.entity.impl.VertexCalculatorImpl;
 /**
  * Class that tests the correct calculation of the vertexes of the shapes.
  */
-public class VertexCalculatorTest {
+class VertexCalculatorTest {
     private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
 
     // CHECKSTYLE: MagicNumber OFF
@@ -22,11 +22,11 @@ public class VertexCalculatorTest {
      * Test the correct calculation of the vertexes of a regular triangle.
      */
     @Test
-    public void testTriangle() {
-        double sideLength = 1.0;
-        Position2D position = new Position2DImpl(0, 0);
+    void testTriangle() {
+        final double sideLength = 1.0;
+        final Position2D position = new Position2DImpl(0, 0);
 
-        List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
+        final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
         assertTrue(vertexes.size() == 3);
         assertTrue(vertexes.get(0).equals(new Position2DImpl(0, -(sideLength * Math.sqrt(3)) / 3)));
         assertTrue(vertexes.get(1).equals(new Position2DImpl(sideLength / 2, (sideLength * Math.sqrt(3)) / 6)));
@@ -38,10 +38,10 @@ public class VertexCalculatorTest {
      * Test the correct calculation of the vertexes of a square.
      */
     @Test
-    public void testSquare() {
-        double sideLength = 1.0;
-        Position2D position = new Position2DImpl(0, 0);
-        List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
+    void testSquare() {
+        final double sideLength = 1.0;
+        final Position2D position = new Position2DImpl(0, 0);
+        final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
 
         assertTrue(vertexes.size() == 4);
         assertTrue(vertexes.get(0).equals(new Position2DImpl(-0.5, -0.5)));
@@ -54,11 +54,11 @@ public class VertexCalculatorTest {
      * Test the correct calculation of the vertexes of a rectangle.
      */
     @Test
-    public void testRectangle() {
-        double width = 4.0;
-        double height = 2.0;
-        Position2D position = new Position2DImpl(0, 0);
-        List<Position2D> vertexes = vertexCalculator.rectangle(width, height, position);
+    void testRectangle() {
+        final double width = 4.0;
+        final double height = 2.0;
+        final Position2D position = new Position2DImpl(0, 0);
+        final List<Position2D> vertexes = vertexCalculator.rectangle(width, height, position);
         assertTrue(vertexes.size() == 4);
         assertTrue(vertexes.get(0).equals(new Position2DImpl(-2, -1)));
         assertTrue(vertexes.get(1).equals(new Position2DImpl(-2, 1)));
