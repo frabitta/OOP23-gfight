@@ -1,6 +1,6 @@
 package world;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -27,10 +27,10 @@ class VertexCalculatorTest {
         final Position2D position = new Position2DImpl(0, 0);
 
         final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-        assertTrue(vertexes.size() == 3);
-        assertTrue(vertexes.get(0).equals(new Position2DImpl(0, -(sideLength * Math.sqrt(3)) / 3)));
-        assertTrue(vertexes.get(1).equals(new Position2DImpl(sideLength / 2, (sideLength * Math.sqrt(3)) / 6)));
-        assertTrue(vertexes.get(2).equals(new Position2DImpl(-sideLength / 2, (sideLength * Math.sqrt(3)) / 6)));
+        assertEquals(vertexes.size(), 3);
+        assertEquals(vertexes.get(0), new Position2DImpl(0, -(sideLength * Math.sqrt(3)) / 3));
+        assertEquals(vertexes.get(1), new Position2DImpl(sideLength / 2, (sideLength * Math.sqrt(3)) / 6));
+        assertEquals(vertexes.get(2), new Position2DImpl(-sideLength / 2, (sideLength * Math.sqrt(3)) / 6));
 
     }
 
@@ -43,11 +43,11 @@ class VertexCalculatorTest {
         final Position2D position = new Position2DImpl(0, 0);
         final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
 
-        assertTrue(vertexes.size() == 4);
-        assertTrue(vertexes.get(0).equals(new Position2DImpl(-0.5, -0.5)));
-        assertTrue(vertexes.get(1).equals(new Position2DImpl(-0.5, 0.5)));
-        assertTrue(vertexes.get(2).equals(new Position2DImpl(0.5, 0.5)));
-        assertTrue(vertexes.get(3).equals(new Position2DImpl(0.5, -0.5)));
+        assertEquals(vertexes.size(), 4);
+        assertEquals(vertexes.get(0), new Position2DImpl(-0.5, -0.5));
+        assertEquals(vertexes.get(1), new Position2DImpl(-0.5, 0.5));
+        assertEquals(vertexes.get(2), new Position2DImpl(0.5, 0.5));
+        assertEquals(vertexes.get(3), new Position2DImpl(0.5, -0.5));
     }
 
     /**
@@ -59,11 +59,11 @@ class VertexCalculatorTest {
         final double height = 2.0;
         final Position2D position = new Position2DImpl(0, 0);
         final List<Position2D> vertexes = vertexCalculator.rectangle(width, height, position);
-        assertTrue(vertexes.size() == 4);
-        assertTrue(vertexes.get(0).equals(new Position2DImpl(-2, -1)));
-        assertTrue(vertexes.get(1).equals(new Position2DImpl(-2, 1)));
-        assertTrue(vertexes.get(2).equals(new Position2DImpl(2, 1)));
-        assertTrue(vertexes.get(3).equals(new Position2DImpl(2, -1)));
+        assertEquals(vertexes.size(), 4);
+        assertEquals(vertexes.get(0), new Position2DImpl(-2, -1));
+        assertEquals(vertexes.get(1), new Position2DImpl(-2, 1));
+        assertEquals(vertexes.get(2), new Position2DImpl(2, 1));
+        assertEquals(vertexes.get(3), new Position2DImpl(2, -1));
 
     }
 }
