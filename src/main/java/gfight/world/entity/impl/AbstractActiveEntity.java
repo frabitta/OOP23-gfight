@@ -58,12 +58,15 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     @Override
     public final void takeDamage(final int damage) {
         this.setHealth(getHealth() - damage);
-        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
-            StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
-            a.setStatus(getHealth());
+        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(bar -> {
+            final StatusBarGraphicsComponent statusBar = (StatusBarGraphicsComponent) bar;
+            statusBar.setStatus(getHealth());
         });
     }
 
+    /**
+     * This method can be overriden.
+     */
     @Override
     public boolean isAlive() {
         return this.getHealth() > 0;
@@ -79,11 +82,11 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     }
 
     @Override
-    public void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
+    public final void updatePos(final long dt, final Set<? extends GameEntity> gameobjects) {
         super.updatePos(dt, gameobjects);
-        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(healthbar -> {
-            StatusBarGraphicsComponent a = (StatusBarGraphicsComponent) healthbar;
-            a.setPositions(List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
+        getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(bar -> {
+            final StatusBarGraphicsComponent statusBar = (StatusBarGraphicsComponent) bar;
+            statusBar.setPositions(List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
         });
     }
 }

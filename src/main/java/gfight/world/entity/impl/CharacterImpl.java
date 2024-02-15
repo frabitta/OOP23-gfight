@@ -24,7 +24,7 @@ import gfight.world.map.impl.Obstacle;
 public final class CharacterImpl extends AbstractActiveEntity implements Character {
     private Optional<Weapon> weapon = Optional.empty();
     private Vect pointingDirection = new VectorImpl(getPosition(), getPosition2Ds().get(0));
-    private CharacterType role;
+    private final CharacterType role;
 
     /**
      * Constructor of abstract character.
