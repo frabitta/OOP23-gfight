@@ -1,7 +1,5 @@
 package gfight.world.map.api;
 
-import gfight.common.api.Position2D;
-
 /**
  * A spawner which spawns enemies on the map.
  */

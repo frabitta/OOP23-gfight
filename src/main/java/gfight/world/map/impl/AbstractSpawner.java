@@ -13,8 +13,7 @@ public abstract class AbstractSpawner implements Spawner {
     /**
      * Creates a new abstract Spawner which spawning criteria is not defined.
      * 
-     * @param position the position of the spawner
-     * @param type     the type of the spawner
+     * @param type the type of the spawner
      */
     public AbstractSpawner(final SpawnerType type) {
         this.type = type;
