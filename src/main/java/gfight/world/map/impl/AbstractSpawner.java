@@ -1,6 +1,5 @@
 package gfight.world.map.impl;
 
-import gfight.common.api.Position2D;
 import gfight.world.map.api.Spawner;
 
 /**
@@ -9,7 +8,6 @@ import gfight.world.map.api.Spawner;
 public abstract class AbstractSpawner implements Spawner {
 
     private final SpawnerType type;
-    private final Position2D position;
     private int spawnedEntities;
 
     /**
@@ -18,8 +16,7 @@ public abstract class AbstractSpawner implements Spawner {
      * @param position the position of the spawner
      * @param type     the type of the spawner
      */
-    public AbstractSpawner(final Position2D position, final SpawnerType type) {
-        this.position = position;
+    public AbstractSpawner(final SpawnerType type) {
         this.type = type;
         this.spawnedEntities = 0;
     }
@@ -27,11 +24,6 @@ public abstract class AbstractSpawner implements Spawner {
     @Override
     public final SpawnerType getType() {
         return this.type;
-    }
-
-    @Override
-    public final Position2D getPosition() {
-        return this.position;
     }
 
     @Override

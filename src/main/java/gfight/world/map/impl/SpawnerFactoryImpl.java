@@ -49,7 +49,7 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
             final int dim, final int initialHealth,
             final Spawner.SpawnerType type,
             final double statsMultiplier) {
-        return new AbstractSpawner(position, type) {
+        return new AbstractSpawner(type) {
             @Override
             public void spawn() {
                 final ActiveEntity target = type == SpawnerType.BOSS

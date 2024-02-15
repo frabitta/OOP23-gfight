@@ -43,13 +43,6 @@ public interface Spawner {
     SpawnerType getType();
 
     /**
-     * Returns the position of the spawner in the map.
-     * 
-     * @return the position of the spawner
-     */
-    Position2D getPosition();
-
-    /**
      * Returns the difficulty determining the stregth
      * of the spawned enemies.
      * 
