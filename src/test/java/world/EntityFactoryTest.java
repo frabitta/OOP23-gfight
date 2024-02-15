@@ -23,7 +23,7 @@ import gfight.world.movement.impl.InputMovementImpl;
 import gfight.world.weapon.api.Projectile;
 
 /**
- * Class that test the correct creation of entities.
+ * Class that tests the correct creation of entities.
  */
 public class EntityFactoryTest {
     private final EntityFactory entityFactory = new EntityFactoryImpl();
