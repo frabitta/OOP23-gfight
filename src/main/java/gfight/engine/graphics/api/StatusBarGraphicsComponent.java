@@ -12,28 +12,18 @@ public interface StatusBarGraphicsComponent extends GraphicsComponent {
     void setStatusColor(EngineColor statusColor);
 
     /**
-     * Sets the lenght of the component on screen.
+     * Sets the dimensions of the component on screen.
      * @param base int for the lenght of the base of the rectangle
-     */
-    void setBase(int base);
-
-    /**
-     * Sets the height of the component on screen.
      * @param height int for the height of the rectangle.
      */
-    void setHeight(int height);
+    void setDimension(int base, int height);
 
     /**
-     * Sets the max value of the contained value.
+     * Sets the min and max value of the contained value.
+     * @param min int for the min value
      * @param max int for the max value
      */
-    void setMax(int max);
-
-    /**
-     * Sets the min value of the contained value.
-     * @param min int for the min value
-     */
-    void setMin(int min);
+    void setRange(int min, int max);
 
     /**
      * Sets the value contained by the status bar (between min and max).

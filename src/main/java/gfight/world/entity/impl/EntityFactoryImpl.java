@@ -41,7 +41,7 @@ public class EntityFactoryImpl implements EntityFactory {
         public final Character createPlayer(final double sideLength, final Position2D position,
                         final int health, final InputMovement movement) {
                 final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-                PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.RED,
+                final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.RED,
                                 vertexes,
                                 GraphicType.WORLD);
                 final Character player = new CharacterImpl(vertexes, position, graphicsComponent, health,
@@ -55,7 +55,7 @@ public class EntityFactoryImpl implements EntityFactory {
                         final Position2D position,
                         final int health, final GameMap map) {
                 final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-                PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLUE,
+                final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLUE,
                                 vertexes,
                                 GraphicType.WORLD);
                 final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health,
@@ -71,7 +71,7 @@ public class EntityFactoryImpl implements EntityFactory {
                         final int health,
                         final GameMap map) {
                 final List<Position2D> vertexes = vertexCalculator.triangle(sideLength, position);
-                PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.GREEN,
+                final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.GREEN,
                                 vertexes,
                                 GraphicType.WORLD);
                 final Character enemy = new CharacterImpl(vertexes, position, graphicsComponent, health,
@@ -85,11 +85,10 @@ public class EntityFactoryImpl implements EntityFactory {
         @Override
         public final CachedGameEntity createObstacle(final double sideLength, final Position2D position) {
                 final List<Position2D> vertexes = vertexCalculator.square(sideLength, position);
-                PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLACK,
+                final PolygonGraphicsComponent graphicsComponent = graphicsComponentsFactory.polygon(EngineColor.BLACK,
                                 vertexes,
                                 GraphicType.WORLD);
-                final CachedGameEntity obstacle = new Obstacle(vertexes, position, graphicsComponent);
-                return obstacle;
+                return new Obstacle(vertexes, position, graphicsComponent);
         }
 
         @Override

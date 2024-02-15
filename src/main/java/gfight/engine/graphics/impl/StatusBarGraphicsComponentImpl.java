@@ -35,16 +35,6 @@ public final class StatusBarGraphicsComponentImpl
     }
 
     @Override
-    public void setBase(final int base) {
-        this.base = base;
-    }
-
-    @Override
-    public void setHeight(final int height) {
-        this.height = height;
-    }
-
-    @Override
     public void setStatus(final int i) {
         if (i > this.max) {
             this.status = this.max;
@@ -91,17 +81,19 @@ public final class StatusBarGraphicsComponentImpl
     }
 
     @Override
-    public void setMax(final int max) {
-        this.max = max;
-    }
-
-    @Override
     public int getMin() {
         return min;
     }
 
     @Override
-    public void setMin(final int min) {
+    public void setDimension(int base, int height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    @Override
+    public void setRange(int min, int max) {
         this.min = min;
+        this.max = max;
     }
 }

@@ -59,8 +59,7 @@ public final class GraphicsComponentsFactoryImpl implements GraphicsComponentsFa
             type
         );
         renderer.setComponent(out);
-        out.setBase(base);
-        out.setHeight(height);
+        out.setDimension(base, height);
         return out;
     }
 
