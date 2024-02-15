@@ -50,31 +50,16 @@ public interface Spawner {
     Position2D getPosition();
 
     /**
-     * Checks whether the spawner is enabled or not.
+     * Returns the difficulty determining the stregth
+     * of the spawned enemies.
      * 
-     * @return a boolean describing if the spawner is enabled or disabled
+     * @return the difficulty of the spawned enemies
      */
-    boolean isEnabled();
+    int getDifficulty();
 
     /**
-     * Enables the spawner.
+     * Increment the difficulty of the spawner,
+     * determining the stats of the enemis.
      */
-    void enable();
-
-    /**
-     * Disables the spawner.
-     */
-    void disable();
-
-    /**
-     * Returns the number of spawned entities.
-     * 
-     * @return the number of spawned entities
-     */
-    int getSpawnedEntities();
-
-    /**
-     * Increment by 1 the number of spawned entities.
-     */
-    void incrementSpawnedEntities();
+    void incrementDifficulty();
 }

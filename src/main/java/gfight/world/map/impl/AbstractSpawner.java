@@ -10,7 +10,6 @@ public abstract class AbstractSpawner implements Spawner {
 
     private final SpawnerType type;
     private final Position2D position;
-    private boolean isEnabled;
     private int spawnedEntities;
 
     /**
@@ -23,7 +22,6 @@ public abstract class AbstractSpawner implements Spawner {
         this.position = position;
         this.type = type;
         this.spawnedEntities = 0;
-        this.isEnabled = true;
     }
 
     @Override
@@ -37,27 +35,12 @@ public abstract class AbstractSpawner implements Spawner {
     }
 
     @Override
-    public final boolean isEnabled() {
-        return this.isEnabled;
-    }
-
-    @Override
-    public final void enable() {
-        this.isEnabled = true;
-    }
-
-    @Override
-    public final void disable() {
-        this.isEnabled = false;
-    }
-
-    @Override
-    public final int getSpawnedEntities() {
+    public final int getDifficulty() {
         return this.spawnedEntities;
     }
 
     @Override
-    public final void incrementSpawnedEntities() {
+    public final void incrementDifficulty() {
         this.spawnedEntities = this.spawnedEntities + 1;
     }
 }

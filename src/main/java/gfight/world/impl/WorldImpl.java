@@ -45,7 +45,7 @@ public class WorldImpl implements World {
     private static final int PLAYER_PROJ_SIZE = 4;
     private static final int PLAYER_PROJ_DAMAGE = 5;
     private static final int CHEST_HEALTH = 400;
-    private static final int BOSS_LEVEL = 5;
+    private static final int BOSS_LEVEL_INTERVAL = 5;
 
     private final EntityManager entityManager;
     private final InputMovement inputMapper;
@@ -102,13 +102,6 @@ public class WorldImpl implements World {
                 .forEach(e -> ((MovingEntity) e).updatePos(deltaTime, this.entityManager.getEntities()));
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
-            if (this.currentLevel % BOSS_LEVEL == 0 && this.currentLevel != 0) {
-                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
-            } else {
-                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
-            }
             newLevel();
         }
     }
@@ -194,11 +187,16 @@ public class WorldImpl implements World {
     }
 
     /**
-     * Tells every spawner to spawn enemies and updates current level.
+     * Commands spawners spawning and updates current level.
      */
     private void newLevel() {
-        this.spawners.stream().forEach(Spawner::spawn);
-        this.currentLevel++;
+        if (this.currentLevel % BOSS_LEVEL_INTERVAL == 0 && this.currentLevel != 0) {
+            this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::spawn);
+        } else {
+            this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::spawn);
+        }
+        this.spawners.stream().forEach(Spawner::incrementDifficulty);
+        this.currentLevel = this.currentLevel + 1;
     }
 
     @Override

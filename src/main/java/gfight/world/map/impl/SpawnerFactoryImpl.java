@@ -52,26 +52,22 @@ public class SpawnerFactoryImpl implements SpawnerFactory {
         return new AbstractSpawner(position, type) {
             @Override
             public void spawn() {
-                if (this.isEnabled()) {
-                    final ActiveEntity target = type == SpawnerType.BOSS
-                            ? targets.stream().filter(e -> e instanceof Character).findAny().get()
-                            : targets.stream().toList().get(random.nextInt(targets.size()));
-                    final double health = initialHealth
-                            + (initialHealth * (getSpawnedEntities() - 1) * statsMultiplier);
-                    final double damage = ENEMY_PROJ_DAMAGE
-                            + (ENEMY_PROJ_DAMAGE * (getSpawnedEntities() - 1) * statsMultiplier);
-                    final Character enemy = random.nextBoolean()
-                            ? entityFactory.createRunner(target, dim, position, (int) health, map)
-                            : entityFactory.createShooter(target, dim, position, (int) health, map);
-                    enemy.setWeapon(new WeaponFactoryImpl().simpleGun(
-                            ENEMY_RELOAD_TIME,
-                            ENEMY_PROJ_SPEED,
-                            ENEMY_PROJ_SIZE,
-                            (int) damage,
-                            entityFactory));
-
-                }
-                incrementSpawnedEntities();
+                final ActiveEntity target = type == SpawnerType.BOSS
+                        ? targets.stream().filter(e -> e instanceof Character).findAny().get()
+                        : targets.stream().toList().get(random.nextInt(targets.size()));
+                final double health = initialHealth
+                        + (initialHealth * (getDifficulty() - 1) * statsMultiplier);
+                final double damage = ENEMY_PROJ_DAMAGE
+                        + (ENEMY_PROJ_DAMAGE * (getDifficulty() - 1) * statsMultiplier);
+                final Character enemy = random.nextBoolean()
+                        ? entityFactory.createRunner(target, dim, position, (int) health, map)
+                        : entityFactory.createShooter(target, dim, position, (int) health, map);
+                enemy.setWeapon(new WeaponFactoryImpl().simpleGun(
+                        ENEMY_RELOAD_TIME,
+                        ENEMY_PROJ_SPEED,
+                        ENEMY_PROJ_SIZE,
+                        (int) damage,
+                        entityFactory));
             }
         };
     }
