@@ -20,9 +20,9 @@ import gfight.world.hitbox.api.Hitboxes;
 public final class HitboxesImpl implements Hitboxes {
 
     @Override
-    public boolean isColliding(final Hitbox collider, final Hitbox coollided) {
+    public boolean isColliding(final Hitbox collider, final Hitbox collided) {
         final PreparedPolygon myObject = new PreparedPolygon(collider.getPolygonalHitbox());
-        return myObject.intersects(coollided.getPolygonalHitbox());
+        return myObject.intersects(collided.getPolygonalHitbox());
     }
 
     @Override
