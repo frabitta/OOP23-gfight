@@ -31,12 +31,12 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
     private static final long serialVersionUID = -4058048042685678594L;
 
     private final transient SwingView scene;
-    private final transient ViewCamera camera;
     /**
      * Set of currently pressed keys.
      */
     private final Set<Integer> pressedKeys = new HashSet<>();
-
+    
+    private transient ViewCamera camera;
     private transient Optional<InputEventListener> inputListener;
     private transient Optional<InputEventFactory> inputFactory;
 
@@ -88,6 +88,10 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         this.inputFactory = Optional.ofNullable(inputFactory);
     }
 
+    void setCamera(final ViewCamera camera) {
+        this.camera = camera;
+    }
+
     private boolean isInputAvailable() {
         return this.inputListener.isPresent() && this.inputFactory.isPresent();
     }
@@ -97,7 +101,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseDownAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );
@@ -109,7 +112,6 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
         if (isInputAvailable()) {
             this.inputListener.get().notifyInputEvent(
                 this.inputFactory.get().mouseUpAtPosition(
-                    //this.camera.getWorldPosition(new Position2DImpl(e.getX(), e.getY()))
                     new Position2DImpl(e.getX(), e.getY())
                 )
             );
