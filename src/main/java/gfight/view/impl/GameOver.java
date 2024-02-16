@@ -38,7 +38,7 @@ public class GameOver extends JPanel {
      */
     public GameOver(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backgroundImage = new ImageIcon(PATH_STRING + "game_over2.png");
+        backgroundImage = new ImageIcon(PATH_STRING + "game_over.png");
 
         final JLabel titleLabel = new JLabel("GAME OVER!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));
