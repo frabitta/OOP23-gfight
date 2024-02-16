@@ -21,22 +21,22 @@ public final class InputEventFactoryImpl implements InputEventFactory {
 
     @Override
     public InputEvent pressedValue(final Value value) {
-        return new InputEventValueImpl(Type.PRESSED, value);
+        return new InputEventValueImpl(Type.ACTIVE, value);
     }
 
     @Override
     public InputEvent releasedValue(final Value value) {
-        return new InputEventValueImpl(Type.RELEASED, value);
+        return new InputEventValueImpl(Type.INACTIVE, value);
     }
 
     @Override
     public InputEvent mouseDownAtPosition(final Position2D position) {
-        return new InputEventPointerImpl(Type.MOUSE_DOWN, position);
+        return new InputEventPointerImpl(Type.ACTIVE, position);
     }
 
     @Override
     public InputEvent mouseUpAtPosition(final Position2D position) {
-        return new InputEventPointerImpl(Type.MOUSE_UP, position);
+        return new InputEventPointerImpl(Type.INACTIVE, position);
     }
 
 }
