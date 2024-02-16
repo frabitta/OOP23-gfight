@@ -18,6 +18,7 @@ import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.api.InputEventProvider;
 import gfight.engine.input.api.InputEventValue;
+import gfight.view.api.CameraViewer;
 import gfight.view.api.EngineView;
 
 import java.util.Collections;
@@ -28,7 +29,7 @@ import java.awt.Image;
 /**
  * An EngineView implementation using JSwing.
  */
-public final class SwingView implements EngineView, InputEventProvider {
+public final class SwingView implements EngineView, InputEventProvider, CameraViewer {
 
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 720;
@@ -41,12 +42,12 @@ public final class SwingView implements EngineView, InputEventProvider {
     private final JPanel deathPanel;
     private final Canvas gamePanel;
     private final JPanel pausePanel;
-    private final ViewCamera camera;
     private final CardLayout cardLayout;
-
+    
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
     private InputEventListener listener;
     private InputEventFactory inputEventFactory;
+    private ViewCamera camera;
 
     /**
      * Constructor of the view.
@@ -168,5 +169,11 @@ public final class SwingView implements EngineView, InputEventProvider {
     public void setInputEventFactory(InputEventFactory factory) {
         this.inputEventFactory = factory;
         this.gamePanel.setInputEventFactory(factory);
+    }
+
+    @Override
+    public void installCamera(final ViewCamera camera) {
+        this.camera = camera;
+        this.gamePanel.setCamera(camera);
     }
 }
