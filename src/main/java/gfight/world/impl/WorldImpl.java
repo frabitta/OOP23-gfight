@@ -18,12 +18,12 @@ import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.api.World;
 import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
+import gfight.world.entity.impl.CachedGameEntityImpl;
 import gfight.world.entity.impl.EntityFactoryImpl;
-import gfight.world.hitbox.api.Hitboxes;
-import gfight.world.hitbox.impl.HitboxesImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;
@@ -45,11 +45,10 @@ public class WorldImpl implements World {
     private static final int PLAYER_PROJ_SIZE = 4;
     private static final int PLAYER_PROJ_DAMAGE = 5;
     private static final int CHEST_HEALTH = 400;
-    private static final int BOSS_LEVEL = 5;
+    private static final int BOSS_LEVEL_INTERVAL = 5;
 
     private final EntityManager entityManager;
     private final InputMovement inputMapper;
-    private final Hitboxes hitboxManager;
     private final Set<Spawner> spawners;
     private final LocalTime startTime;
 
@@ -68,7 +67,6 @@ public class WorldImpl implements World {
     public WorldImpl(final String mapName) {
         this.spawners = new HashSet<>();
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
-        this.hitboxManager = new HitboxesImpl();
         this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap(mapName);
         this.startTime = LocalTime.now();
@@ -95,20 +93,13 @@ public class WorldImpl implements World {
         if (this.isPlayerFiring) {
             this.player.makeDamage();
         }
-        this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        this.freeHitboxes();
         this.camera.keepInArea(this.player.getPosition());
         this.entityManager.getEntities().stream()
                 .filter(e -> e instanceof MovingEntity)
                 .forEach(e -> ((MovingEntity) e).updatePos(deltaTime, this.entityManager.getEntities()));
         this.entityManager.clean();
         if (this.entityManager.isClear()) {
-            if (this.currentLevel % BOSS_LEVEL == 0 && this.currentLevel != 0) {
-                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
-            } else {
-                this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::enable);
-                this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::disable);
-            }
             newLevel();
         }
     }
@@ -194,11 +185,16 @@ public class WorldImpl implements World {
     }
 
     /**
-     * Tells every spawner to spawn enemies and updates current level.
+     * Commands spawners spawning and updates current level.
      */
     private void newLevel() {
-        this.spawners.stream().forEach(Spawner::spawn);
-        this.currentLevel++;
+        if (this.currentLevel % BOSS_LEVEL_INTERVAL == 0 && this.currentLevel != 0) {
+            this.spawners.stream().filter(s -> s.getType() == Spawner.SpawnerType.BOSS).forEach(Spawner::spawn);
+        } else {
+            this.spawners.stream().filter(s -> s.getType() != Spawner.SpawnerType.BOSS).forEach(Spawner::spawn);
+        }
+        this.spawners.stream().forEach(Spawner::incrementDifficulty);
+        this.currentLevel = this.currentLevel + 1;
     }
 
     @Override
@@ -209,5 +205,11 @@ public class WorldImpl implements World {
     @Override
     public final Duration getPlayedTime() {
         return Duration.between(this.startTime, LocalTime.now());
+    }
+
+    private void freeHitboxes() {
+        this.entityManager.getEntities().stream()
+                .filter(el -> el instanceof CachedGameEntityImpl)
+                .forEach(CachedGameEntity::reset);
     }
 }

@@ -4,7 +4,8 @@ import gfight.engine.api.Engine;
 import gfight.engine.impl.EngineImpl;
 
 /**
- * Main class, here the program starts creating a new engine and giving him control.
+ * Main class, here the program starts creating a new engine and giving him
+ * control.
  */
 public final class App {
 
@@ -14,7 +15,7 @@ public final class App {
     public static final String GAME_FOLDER = System.getProperty("user.home")
             + System.getProperty("file.separator")
             + ".gfight"
-            + System.getProperty("file.separator");;
+            + System.getProperty("file.separator");
 
     private App() {
     }
@@ -22,7 +23,7 @@ public final class App {
     /**
      * main method of the program.
      * 
-     * @param args
+     * @param args the arguments passed from terminal
      */
     public static void main(final String[] args) {
         System.setProperty("sun.java2d.opengl", "true");

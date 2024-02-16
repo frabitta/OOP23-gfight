@@ -96,28 +96,34 @@ public class MenuPanel extends JPanel {
         });
 
         // MEUNU BAR
-        final JMenu mapMenu = new JMenu("     Select a map     ");
+        final JMenu mapMenu = new JMenu("     Map 1     ");
         mapMenu.setBorder(new RoundedBorder(RADIUS));
         mapMenu.setBackground(Color.WHITE);
         mapMenu.setFont(new Font("Arial", Font.BOLD, TEXT_SIZE));
         final JMenuItem map1 = new JMenuItem("Map 1");
         final JMenuItem map2 = new JMenuItem("Map 2");
         final JMenuItem map3 = new JMenuItem("Map 3");
+        final JMenuItem map4 = new JMenuItem("Map 4");
         map1.addActionListener(e -> {
             engine.selectLevel("map1");
-            mapMenu.setText("     Map 1    ");
+            mapMenu.setText("     Map 1     ");
         });
         map2.addActionListener(e -> {
             engine.selectLevel("map2");
-            mapMenu.setText("    Map 2    ");
+            mapMenu.setText("     Map 2     ");
         });
         map3.addActionListener(e -> {
             engine.selectLevel("map3");
-            mapMenu.setText("    Map 3    ");
+            mapMenu.setText("     Map 3     ");
+        });
+        map4.addActionListener(e -> {
+            engine.selectLevel("map4");
+            mapMenu.setText("     Map 4     ");
         });
         mapMenu.add(map1);
         mapMenu.add(map2);
         mapMenu.add(map3);
+        mapMenu.add(map4);
         menuBar.add(mapMenu);
         menuBar.setAlignmentX(CENTER_ALIGNMENT);
 

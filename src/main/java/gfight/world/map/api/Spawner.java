@@ -1,7 +1,5 @@
 package gfight.world.map.api;
 
-import gfight.common.api.Position2D;
-
 /**
  * A spawner which spawns enemies on the map.
  */
@@ -43,38 +41,16 @@ public interface Spawner {
     SpawnerType getType();
 
     /**
-     * Returns the position of the spawner in the map.
+     * Returns the difficulty determining the stregth
+     * of the spawned enemies.
      * 
-     * @return the position of the spawner
+     * @return the difficulty of the spawned enemies
      */
-    Position2D getPosition();
+    int getDifficulty();
 
     /**
-     * Checks whether the spawner is enabled or not.
-     * 
-     * @return a boolean describing if the spawner is enabled or disabled
+     * Increment the difficulty of the spawner,
+     * determining the stats of the enemis.
      */
-    boolean isEnabled();
-
-    /**
-     * Enables the spawner.
-     */
-    void enable();
-
-    /**
-     * Disables the spawner.
-     */
-    void disable();
-
-    /**
-     * Returns the number of spawned entities.
-     * 
-     * @return the number of spawned entities
-     */
-    int getSpawnedEntities();
-
-    /**
-     * Increment by 1 the number of spawned entities.
-     */
-    void incrementSpawnedEntities();
+    void incrementDifficulty();
 }

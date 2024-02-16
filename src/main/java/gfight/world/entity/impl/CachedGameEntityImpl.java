@@ -20,10 +20,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Hitbox> boundigBox;
-
     private Optional<Set<GameEntity>> collidedObjects;
-    private boolean needResHitbox;
-    private boolean needResCollided;
 
     /**
      * Constructs a CachedGameEntityImpl with the specified vertex positions,
@@ -42,8 +39,7 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     @Override
     public final Hitbox getHitBox() {
-        if (needResHitbox || boundigBox.isEmpty()) {
-            needResHitbox = false;
+        if (boundigBox.isEmpty()) {
             boundigBox = Optional.of(originalEntity.getHitBox());
         }
         return boundigBox.get();
@@ -55,14 +51,13 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
      */
     @Override
     public void reset() {
-        needResHitbox = true;
-        needResCollided = true;
+        collidedObjects = Optional.empty();
+        boundigBox = Optional.empty();
     }
 
     @Override
     public final Set<GameEntity> getAllCollided(final Set<? extends GameEntity> gameObjects) {
-        if (needResCollided || collidedObjects.isEmpty()) {
-            needResCollided = false;
+        if (collidedObjects.isEmpty()) {
             collidedObjects = Optional.of(originalEntity.getAllCollided(gameObjects));
         }
         return new LinkedHashSet<>(collidedObjects.get());
