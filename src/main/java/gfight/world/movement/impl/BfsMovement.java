@@ -16,7 +16,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
 /**
