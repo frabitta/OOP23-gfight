@@ -27,7 +27,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsMovement() {
-        final GameMap map = new GameMapImpl("map3");
+        final GameMap map = new GameMapImpl("map1");
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(180, 100), 50);
         final Character agent = entityFactory.createRunner(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
@@ -52,7 +52,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsShooter() {
-        final GameMap map = new GameMapImpl("map3");
+        final GameMap map = new GameMapImpl("map1");
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(180, 100), 50);
         final Character agent = entityFactory.createShooter(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
@@ -77,7 +77,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsRunner() {
-        final GameMap map = new GameMapImpl("map3");
+        final GameMap map = new GameMapImpl("map1");
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(620, 100), 50);
         final Character agent = entityFactory.createRunner(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
