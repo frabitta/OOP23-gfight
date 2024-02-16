@@ -44,6 +44,9 @@ public class MenuPanel extends JPanel {
     private static final int SCALE_BUTTON = 6;
     private static final int RADIUS = 10;
     private static final String PATH_STRING = "src/main/resources/images/";
+    /**
+     * The background image.
+     */
     private final ImageIcon background;
     private final JMenuBar menuBar = new JMenuBar();
 
