@@ -20,8 +20,8 @@ class MovementTest {
      */
     @Test
     void testLinearMovement() {
-        MovementFactory movementFactory = new MovementFactoryImpl();
-        LinearMovement linearMovement = movementFactory.createLinearMovement(new VectorImpl(1, 0));
+        final MovementFactory movementFactory = new MovementFactoryImpl();
+        final LinearMovement linearMovement = movementFactory.createLinearMovement(new VectorImpl(1, 0));
 
         assertEquals(new VectorImpl(1, 0), linearMovement.getDirection(), "Initial direction should be (1, 0)");
 
@@ -36,8 +36,8 @@ class MovementTest {
      */
     @Test
     void testInputMovement() {
-        MovementFactory movementFactory = new MovementFactoryImpl();
-        InputMovement inputMovement = movementFactory.createInput();
+        final MovementFactory movementFactory = new MovementFactoryImpl();
+        final InputMovement inputMovement = movementFactory.createInput();
 
         inputMovement.addDirection(InputMovement.Directions.SOUTH);
         inputMovement.addDirection(InputMovement.Directions.WEST);
