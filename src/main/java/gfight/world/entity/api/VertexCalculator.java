@@ -9,7 +9,7 @@ import gfight.common.api.Position2D;
  */
 public interface VertexCalculator {
     /**
-     * Calculate vertexes of an equilater triangle.
+     * Calculate vertexes of an regular triangle.
      * 
      * @param sideLength of the triangle
      * @param position   the centre of the triangle

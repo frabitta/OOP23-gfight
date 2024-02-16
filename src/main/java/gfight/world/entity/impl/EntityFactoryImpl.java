@@ -29,7 +29,7 @@ import gfight.world.weapon.api.Projectile;
 import gfight.world.weapon.impl.ProjectileImpl;
 
 /**
- * This class is a factory of enteties.
+ * This class is a factory of entities.
  */
 public class EntityFactoryImpl implements EntityFactory {
         private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
