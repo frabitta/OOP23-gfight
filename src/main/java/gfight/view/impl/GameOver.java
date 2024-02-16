@@ -3,6 +3,7 @@ package gfight.view.impl;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -44,6 +45,7 @@ public class GameOver extends JPanel {
 
         final JButton backToMenu = new JButton("Go to Menu");
         backToMenu.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
+        backToMenu.setBackground(Color.WHITE);
         backToMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
         backToMenu.setBorder(new RoundedBorder(RADIUS));
         backToMenu.addActionListener(e -> engine.changeStatus(EngineStatus.MENU));

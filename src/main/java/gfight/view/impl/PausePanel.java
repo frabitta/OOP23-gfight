@@ -4,6 +4,7 @@ import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 
 import java.awt.Font;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import javax.swing.JButton;
@@ -44,12 +45,14 @@ public final class PausePanel extends JPanel {
 
         final JButton continueButton = new JButton("  Continue   ");
         continueButton.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
+        continueButton.setBackground(Color.WHITE);
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         continueButton.setBorder(new RoundedBorder(RADIUS));
         continueButton.addActionListener(e -> engine.changeStatus(EngineStatus.GAME));
 
         final JButton goToMenuButton = new JButton("Go to Menu");
         goToMenuButton.setFont(new Font("Arial", Font.ITALIC, BUTTON_FONT_DIM));
+        goToMenuButton.setBackground(Color.WHITE);
         goToMenuButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         goToMenuButton.setBorder(new RoundedBorder(RADIUS));
         goToMenuButton.addActionListener(e -> engine.changeStatus(EngineStatus.MENU));

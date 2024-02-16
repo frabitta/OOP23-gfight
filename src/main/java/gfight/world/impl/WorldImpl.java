@@ -207,7 +207,7 @@ public class WorldImpl implements World {
         return Duration.between(this.startTime, LocalTime.now());
     }
 
-    private final void freeHitboxes() {
+    private void freeHitboxes() {
         this.entityManager.getEntities().stream()
                 .filter(el -> el instanceof CachedGameEntityImpl)
                 .forEach(CachedGameEntity::reset);
