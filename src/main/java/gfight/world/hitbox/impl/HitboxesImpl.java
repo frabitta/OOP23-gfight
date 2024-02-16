@@ -3,7 +3,6 @@ package gfight.world.hitbox.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.prep.PreparedPolygon;
@@ -12,7 +11,6 @@ import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
 import gfight.common.impl.Position2DImpl;
 import gfight.common.impl.VectorImpl;
-import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.hitbox.api.Hitbox;
 import gfight.world.hitbox.api.Hitboxes;
 
@@ -38,11 +36,6 @@ public final class HitboxesImpl implements Hitboxes {
         return Arrays.stream(rotatedCoordinates)
                 .map(coordinate -> new Position2DImpl(coordinate.getX(), coordinate.getY()))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void freeHitboxes(final Set<CachedGameEntity> gaemobjects) {
-        gaemobjects.stream().forEach(CachedGameEntity::reset);
     }
 
     @Override

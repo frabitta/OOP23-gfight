@@ -18,12 +18,12 @@ import gfight.engine.input.api.InputEventPointer;
 import gfight.world.api.EntityManager;
 import gfight.world.api.World;
 import gfight.world.entity.api.ActiveEntity;
+import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
+import gfight.world.entity.impl.CachedGameEntityImpl;
 import gfight.world.entity.impl.EntityFactoryImpl;
-import gfight.world.hitbox.api.Hitboxes;
-import gfight.world.hitbox.impl.HitboxesImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
 import gfight.world.map.api.SpawnerFactory;
@@ -49,7 +49,6 @@ public class WorldImpl implements World {
 
     private final EntityManager entityManager;
     private final InputMovement inputMapper;
-    private final Hitboxes hitboxManager;
     private final Set<Spawner> spawners;
     private final LocalTime startTime;
 
@@ -68,7 +67,6 @@ public class WorldImpl implements World {
     public WorldImpl(final String mapName) {
         this.spawners = new HashSet<>();
         this.entityManager = new EntityManagerImpl(new EntityFactoryImpl());
-        this.hitboxManager = new HitboxesImpl();
         this.inputMapper = new MovementFactoryImpl().createInput();
         loadMap(mapName);
         this.startTime = LocalTime.now();
@@ -95,7 +93,7 @@ public class WorldImpl implements World {
         if (this.isPlayerFiring) {
             this.player.makeDamage();
         }
-        this.hitboxManager.freeHitboxes(this.entityManager.getEntities());
+        this.freeHitboxes();
         this.camera.keepInArea(this.player.getPosition());
         this.entityManager.getEntities().stream()
                 .filter(e -> e instanceof MovingEntity)
@@ -207,5 +205,11 @@ public class WorldImpl implements World {
     @Override
     public final Duration getPlayedTime() {
         return Duration.between(this.startTime, LocalTime.now());
+    }
+
+    private final void freeHitboxes() {
+        this.entityManager.getEntities().stream()
+                .filter(el -> el instanceof CachedGameEntityImpl)
+                .forEach(CachedGameEntity::reset);
     }
 }

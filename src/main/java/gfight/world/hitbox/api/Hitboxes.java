@@ -2,9 +2,7 @@ package gfight.world.hitbox.api;
 
 import gfight.common.api.Position2D;
 import gfight.common.api.Vect;
-import gfight.world.entity.api.CachedGameEntity;
 import java.util.List;
-import java.util.Set;
 
 /**
  * An interface that can be used to perform operations on Hitboxes.
@@ -42,11 +40,4 @@ public interface Hitboxes {
      * @return the rotated list.
      */
     List<Position2D> rotateTo(List<Position2D> polygon, Vect pointingDir, Position2D center, Position2D target);
-
-    /**
-     * it signals to all onjects that hitboxes needs to be recalculated.
-     * 
-     * @param gameobjects all object you want to calculate updated hitboxes
-     */
-    void freeHitboxes(Set<CachedGameEntity> gameobjects);
 }
