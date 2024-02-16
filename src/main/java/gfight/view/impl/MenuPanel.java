@@ -91,10 +91,10 @@ public class MenuPanel extends JPanel {
         statsButton.setAlignmentX(CENTER_ALIGNMENT);
         statsButton.addActionListener(e -> {
             try {
-                JOptionPane.showMessageDialog(MenuPanel.this, Files.readString(Path.of(App.GAME_FOLDER + "stats.txt")),
+                JOptionPane.showMessageDialog(this, Files.readString(Path.of(App.GAME_FOLDER + "stats.txt")),
                         "Stats", JOptionPane.PLAIN_MESSAGE);
             } catch (final IOException ex) {
-                JOptionPane.showMessageDialog(MenuPanel.this, "No stats yet", "Stats", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No stats yet", "Stats", JOptionPane.PLAIN_MESSAGE);
             }
         });
 

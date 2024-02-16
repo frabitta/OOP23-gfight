@@ -1,5 +1,6 @@
 package gfight.world.collision.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.world.collision.api.CollisionCommand;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
@@ -10,6 +11,7 @@ import gfight.world.entity.api.MovingEntity;
  * @param <M> is the entitiy that moves and causes the collision
  * @param <G> is the other entity
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "This class uses the actual collider and collided")
 public abstract class AbstractCollisionCommand<M extends MovingEntity, G extends GameEntity>
         implements CollisionCommand<M, G> {
     private final M collider;

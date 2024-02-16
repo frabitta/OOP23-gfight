@@ -22,7 +22,6 @@ import gfight.world.entity.api.CachedGameEntity;
 import gfight.world.entity.api.Character;
 import gfight.world.entity.api.GameEntity;
 import gfight.world.entity.api.MovingEntity;
-import gfight.world.entity.impl.CachedGameEntityImpl;
 import gfight.world.entity.impl.EntityFactoryImpl;
 import gfight.world.map.api.GameMap;
 import gfight.world.map.api.Spawner;
@@ -208,8 +207,6 @@ public class WorldImpl implements World {
     }
 
     private void freeHitboxes() {
-        this.entityManager.getEntities().stream()
-                .filter(el -> el instanceof CachedGameEntityImpl)
-                .forEach(CachedGameEntity::reset);
+        this.entityManager.getEntities().stream().forEach(CachedGameEntity::reset);
     }
 }

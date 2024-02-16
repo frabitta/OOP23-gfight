@@ -8,6 +8,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import gfight.common.api.Position2D;
 import gfight.world.hitbox.api.Hitbox;
 
@@ -15,6 +16,7 @@ import gfight.world.hitbox.api.Hitbox;
  * A concrete implementation of the Hitbox interface representing a polygonal
  * hitbox in a game world.
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "getPolygonalHitbox needs to expose internal representation")
 public final class HitboxImpl implements Hitbox {
 
     private final Polygon hitbox;
