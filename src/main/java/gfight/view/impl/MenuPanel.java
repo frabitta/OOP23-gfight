@@ -150,8 +150,8 @@ public class MenuPanel extends JPanel {
     }
 
     private ImageIcon resizeImage(final int width, final int height, final ImageIcon icon) {
-        Image image = icon.getImage();
-        Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        final Image image = icon.getImage();
+        final Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return new ImageIcon(resizedImage);
     }
 
