@@ -26,7 +26,9 @@ public class GameOver extends JPanel {
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
     private static final int RADIUS = 10;
-
+    /**
+     * The background image.
+     */
     private final ImageIcon backgroundImage;
 
     /**
@@ -36,7 +38,7 @@ public class GameOver extends JPanel {
      */
     public GameOver(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backgroundImage = new ImageIcon(PATH_STRING + "game_over2.png");
+        backgroundImage = new ImageIcon(PATH_STRING + "game_over.png");
 
         final JLabel titleLabel = new JLabel("GAME OVER!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));

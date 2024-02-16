@@ -7,7 +7,7 @@ import gfight.common.impl.Position2DImpl;
 import gfight.world.entity.api.VertexCalculator;
 
 /**
- * This class contais the methods to calculate the vertexes of different shapes.
+ * This class contains the methods to calculate the vertexes of different shapes.
  */
 public final class VertexCalculatorImpl implements VertexCalculator {
 
