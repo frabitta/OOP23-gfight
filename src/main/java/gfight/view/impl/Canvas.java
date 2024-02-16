@@ -35,7 +35,7 @@ public final class Canvas extends JPanel implements KeyListener, MouseMotionList
      * Set of currently pressed keys.
      */
     private final Set<Integer> pressedKeys = new HashSet<>();
-    
+
     private transient ViewCamera camera;
     private transient Optional<InputEventListener> inputListener;
     private transient Optional<InputEventFactory> inputFactory;

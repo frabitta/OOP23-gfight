@@ -86,13 +86,13 @@ public final class StatusBarGraphicsComponentImpl
     }
 
     @Override
-    public void setDimension(int base, int height) {
+    public void setDimension(final int base, final int height) {
         this.base = base;
         this.height = height;
     }
 
     @Override
-    public void setRange(int min, int max) {
+    public void setRange(final int min, final int max) {
         this.min = min;
         this.max = max;
     }

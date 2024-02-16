@@ -38,12 +38,9 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     private final JFrame frame;
 
     private final JPanel cardPanel;
-    private final JPanel menuPanel;
-    private final JPanel deathPanel;
     private final Canvas gamePanel;
-    private final JPanel pausePanel;
     private final CardLayout cardLayout;
-    
+
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
     private InputEventListener listener;
     private InputEventFactory inputEventFactory;
@@ -54,11 +51,14 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
      * 
      * @param engine engine managing the app
      * @param camera ViewCamera through wich observe the world
+     * @param inputEventFactory factory to create input events
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to print correctly on screen")
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2",
+        justification = "It's necessary to store and external camera to print correctly on screen")
     public SwingView(final Engine engine, final ViewCamera camera, final InputEventFactory inputEventFactory) {
         final String path = "src/main/resources/images/";
-        
+
         this.engine = engine;
         this.camera = camera;
         this.inputEventFactory = inputEventFactory;
@@ -72,16 +72,16 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(this.cardLayout);
         this.frame.getContentPane().add(this.cardPanel);
-        this.menuPanel = new MenuPanel(this.engine);
-        this.deathPanel = new GameOver(this.engine);
+        final JPanel menuPanel = new MenuPanel(this.engine);
+        final JPanel deathPanel = new GameOver(this.engine);
+        final JPanel pausePanel = new PausePanel(this.engine);
         this.gamePanel = setupGamePanel(camera);
-        this.pausePanel = new PausePanel(this.engine);
-        this.cardPanel.add(this.menuPanel, Pages.MENU.getName());
-        this.cardPanel.add(this.deathPanel, Pages.DEATH_SCREEN.getName());
+        this.cardPanel.add(menuPanel, Pages.MENU.getName());
+        this.cardPanel.add(deathPanel, Pages.DEATH_SCREEN.getName());
+        this.cardPanel.add(pausePanel, Pages.PAUSE_SCREEN.getName());
         this.cardPanel.add(this.gamePanel, Pages.GAME.getName());
-        this.cardPanel.add(this.pausePanel, Pages.PAUSE_SCREEN.getName());
 
-        Image img = new ImageIcon(path + "Icon.png").getImage();
+        final Image img = new ImageIcon(path + "Icon.png").getImage();
         frame.setIconImage(img);
         frame.pack();
         frame.setVisible(true);
@@ -161,17 +161,18 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     }
 
     @Override
-    public void setInputEventListener(InputEventListener listener) {
+    public void setInputEventListener(final InputEventListener listener) {
         this.listener = listener;
     }
 
     @Override
-    public void setInputEventFactory(InputEventFactory factory) {
+    public void setInputEventFactory(final InputEventFactory factory) {
         this.inputEventFactory = factory;
         this.gamePanel.setInputEventFactory(factory);
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to use it")
     public void installCamera(final ViewCamera camera) {
         this.camera = camera;
         this.gamePanel.setCamera(camera);
