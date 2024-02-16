@@ -68,7 +68,7 @@ public final class BfsMovement extends BaseMovement {
     }
 
     private void handleRunnerBehavior(final List<Position2D> path) {
-        if (agent.getPosition().getDistance(target.getPosition()) < RANGE_RUNNER) {
+        if (agent.getPosition().getDistance(target.getPosition()) <= RANGE_RUNNER) {
             stopAndAttack();
         } else {
             move(path);
@@ -82,7 +82,7 @@ public final class BfsMovement extends BaseMovement {
 
     private void move(final List<Position2D> path) {
         final Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
-        setDirection(newDirection);
+        agent.setDirection(newDirection);
     }
 
     private List<Position2D> getPathFromBfs() {
