@@ -45,7 +45,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     public void pointTo(final Position2D target) {
         final Hitboxes rotation = new HitboxesImpl();
         setCoordinates(rotation.rotateTo(getPosition2Ds(), this.pointingDirection, getPosition(), target));
-        this.pointingDirection = new VectorImpl(getPosition(), getPosition2Ds().get(2));
+        setPointingDirection(new VectorImpl(getPosition(), getPosition2Ds().get(2)));
     }
 
     @Override
