@@ -51,7 +51,7 @@ public final class SimpleGun implements Weapon {
     }
 
     @Override
-    public void shoot() {
+    public void attack() {
         if (reloaded()) {
             this.lastShootTime = System.currentTimeMillis();
             this.projectileFactory.createProjectile(

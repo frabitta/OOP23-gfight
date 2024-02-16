@@ -16,6 +16,6 @@ public interface Weapon {
     /**
      * Lets the weapon perform the attack.
      */
-    void shoot();
+    void attack();
 
 }

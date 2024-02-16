@@ -59,7 +59,7 @@ public final class CharacterImpl extends AbstractActiveEntity implements Charact
     @Override
     public void makeDamage() {
         if (this.weapon.isPresent()) {
-            this.weapon.get().shoot();
+            this.weapon.get().attack();
         }
     }
 
