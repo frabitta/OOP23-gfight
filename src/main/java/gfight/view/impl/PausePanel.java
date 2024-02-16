@@ -27,7 +27,7 @@ public final class PausePanel extends JPanel {
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
     private static final int RADIUS = 10;
-
+    /** The BackgrundImage for Pause */
     private final ImageIcon backgroundImage;
 
     /**
