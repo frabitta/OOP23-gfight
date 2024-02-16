@@ -136,10 +136,10 @@ public class WorldImpl implements World {
                     default -> null;
                 });
         if (direction.isPresent()) {
-            if (key.getType() == InputEvent.Type.PRESSED) {
+            if (key.getType() == InputEvent.Type.ACTIVE) {
                 this.inputMapper.addDirection(direction.get());
             }
-            if (key.getType() == InputEvent.Type.RELEASED) {
+            if (key.getType() == InputEvent.Type.INACTIVE) {
                 this.inputMapper.removeDirection(direction.get());
             }
         }
@@ -147,9 +147,9 @@ public class WorldImpl implements World {
 
     private void managePointer(final InputEventPointer pointer) {
         this.pointingPosition = pointer.getPosition();
-        if (pointer.getType().equals(InputEvent.Type.MOUSE_UP)) {
+        if (pointer.getType().equals(InputEvent.Type.INACTIVE)) {
             this.isPlayerFiring = false;
-        } else if (pointer.getType().equals(InputEvent.Type.MOUSE_DOWN)) {
+        } else if (pointer.getType().equals(InputEvent.Type.ACTIVE)) {
             this.isPlayerFiring = true;
         }
     }
