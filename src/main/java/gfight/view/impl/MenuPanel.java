@@ -48,6 +48,9 @@ public class MenuPanel extends JPanel {
      * The background image.
      */
     private final ImageIcon background;
+    /**
+     * The menu for map selection.
+     */
     private final JMenuBar menuBar = new JMenuBar();
 
     /**

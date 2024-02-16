@@ -42,7 +42,7 @@ public interface Character extends ActiveEntity {
     /**
      * Set the weapon of the entity.
      * 
-     * @param weapon
+     * @param weapon the weapon of the character
      */
     void setWeapon(Weapon weapon);
 
@@ -55,7 +55,7 @@ public interface Character extends ActiveEntity {
     /**
      * Set the direction to which the entity is facing.
      * 
-     * @param pointingDirection
+     * @param pointingDirection of the character
      */
     void setPointingDirection(Vect pointingDirection);
 
