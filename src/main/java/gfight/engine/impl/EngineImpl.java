@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Collections;
@@ -107,9 +108,12 @@ public final class EngineImpl implements Engine, InputEventListener {
     private void saveStats() {
         final File dir = new File(App.GAME_FOLDER);
         if (!dir.exists()) {
-            dir.mkdirs();
+            if (!dir.mkdirs()) {
+                throw new IllegalStateException("Game directory could not be created");
+            }
         }
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(App.GAME_FOLDER + "stats.txt", true))) {
+        try (BufferedWriter bw = new BufferedWriter(
+                new FileWriter(App.GAME_FOLDER + "stats.txt", Charset.forName("UTF-8"), true))) {
             final int waves = this.world.getSurvivedWaves();
             final Duration time = this.world.getPlayedTime();
             bw.write("• " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())

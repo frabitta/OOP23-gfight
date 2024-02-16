@@ -2,7 +2,6 @@ package gfight.view.impl;
 
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -28,7 +27,7 @@ public class GameOver extends JPanel {
     private static final int TILE_SPACING = 5;
     private static final int RADIUS = 10;
 
-    private final Image backgroundImage;
+    private final ImageIcon backgroundImage;
 
     /**
      * Creates a GameOver view.
@@ -37,7 +36,7 @@ public class GameOver extends JPanel {
      */
     public GameOver(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backgroundImage = new ImageIcon(PATH_STRING + "game_over2.png").getImage();
+        backgroundImage = new ImageIcon(PATH_STRING + "game_over2.png");
 
         final JLabel titleLabel = new JLabel("GAME OVER!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));
@@ -60,6 +59,6 @@ public class GameOver extends JPanel {
     @Override
     protected final void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
     }
 }
