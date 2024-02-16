@@ -10,4 +10,10 @@ public interface InputEventProvider {
      * @param listener a listener for input events
      */
     void setInputEventListener(InputEventListener listener);
+
+    /**
+     * Set the input event factory.
+     * @param factory a factory of input events
+     */
+    void setInputEventFactory(InputEventFactory factory);
 }

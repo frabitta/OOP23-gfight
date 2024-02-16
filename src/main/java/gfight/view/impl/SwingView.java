@@ -14,6 +14,7 @@ import gfight.engine.api.Engine;
 import gfight.engine.api.Engine.EngineStatus;
 import gfight.engine.graphics.api.GraphicsComponent;
 import gfight.engine.graphics.api.ViewCamera;
+import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.api.InputEventProvider;
 import gfight.engine.input.api.InputEventValue;
@@ -45,6 +46,7 @@ public final class SwingView implements EngineView, InputEventProvider {
 
     private List<GraphicsComponent> gComponentsList = Collections.emptyList();
     private InputEventListener listener;
+    private InputEventFactory inputEventFactory;
 
     /**
      * Constructor of the view.
@@ -53,11 +55,12 @@ public final class SwingView implements EngineView, InputEventProvider {
      * @param camera ViewCamera through wich observe the world
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "It's necessary to store and external camera to print correctly on screen")
-    public SwingView(final Engine engine, final ViewCamera camera) {
+    public SwingView(final Engine engine, final ViewCamera camera, final InputEventFactory inputEventFactory) {
         final String path = "src/main/resources/images/";
         
         this.engine = engine;
         this.camera = camera;
+        this.inputEventFactory = inputEventFactory;
         if (engine instanceof InputEventListener) {
             setInputEventListener((InputEventListener) engine);
         }
@@ -105,7 +108,7 @@ public final class SwingView implements EngineView, InputEventProvider {
 
             @Override
             public void windowLostFocus(final WindowEvent e) {
-                listener.notifyInputEvent(listener.getInputEventFactory().pressedValue(InputEventValue.Value.RESET));
+                listener.notifyInputEvent(inputEventFactory.pressedValue(InputEventValue.Value.RESET));
                 gamePanel.resetPressedKeys();
                 if (engine.getEngineStatus() == EngineStatus.GAME) {
                     engine.changeStatus(EngineStatus.PAUSE);
@@ -118,7 +121,7 @@ public final class SwingView implements EngineView, InputEventProvider {
     private Canvas setupGamePanel(final ViewCamera camera) {
         final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
         canvas.setInputEventListener(this.listener);
-        canvas.setInputEventFactory(this.listener.getInputEventFactory());
+        canvas.setInputEventFactory(this.inputEventFactory);
         canvas.requestFocusInWindow();
         return canvas;
     }
@@ -159,5 +162,11 @@ public final class SwingView implements EngineView, InputEventProvider {
     @Override
     public void setInputEventListener(InputEventListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public void setInputEventFactory(InputEventFactory factory) {
+        this.inputEventFactory = factory;
+        this.gamePanel.setInputEventFactory(factory);
     }
 }

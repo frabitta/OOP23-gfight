@@ -20,7 +20,6 @@ import gfight.engine.api.Engine;
 import gfight.engine.graphics.api.Camera;
 import gfight.engine.graphics.impl.CameraImpl;
 import gfight.engine.input.api.InputEvent;
-import gfight.engine.input.api.InputEventFactory;
 import gfight.engine.input.api.InputEventListener;
 import gfight.engine.input.api.InputEventValue;
 import gfight.engine.input.impl.InputEventFactoryImpl;
@@ -53,8 +52,8 @@ public final class EngineImpl implements Engine, InputEventListener {
     public void initialize() {
         this.engineStatus = EngineStatus.MENU;
         this.camera = new CameraImpl();
-        camera.moveTo(new Position2DImpl(0, 0));
-        view = new SwingView(this, camera);
+        this.camera.moveTo(new Position2DImpl(0, 0));
+        this.view = new SwingView(this, camera, new InputEventFactoryImpl());
     }
 
     @Override
@@ -192,11 +191,6 @@ public final class EngineImpl implements Engine, InputEventListener {
                 bufferInputQueue.add(event);
             }
         }
-    }
-
-    @Override
-    public InputEventFactory getInputEventFactory() {
-        return new InputEventFactoryImpl();
     }
 
     @Override

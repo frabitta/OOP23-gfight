@@ -11,10 +11,4 @@ public interface InputEventListener {
      */
     void notifyInputEvent(InputEvent event);
 
-    /**
-     * Returs the factory of the events that wants to observe.
-     * @return factory of input events
-     */
-    InputEventFactory getInputEventFactory();
-
 }
