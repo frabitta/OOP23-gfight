@@ -59,7 +59,7 @@ public final class BfsMovement extends BaseMovement {
                 handleRunnerBehavior(path);
             }
         } else {
-            setDirection(new VectorImpl(0, 0));
+            agent.setDirection(new VectorImpl(0, 0));
         }
     }
 
@@ -80,13 +80,13 @@ public final class BfsMovement extends BaseMovement {
     }
 
     private void stopAndAttack() {
-        setDirection(new VectorImpl(0, 0));
+        agent.setDirection(new VectorImpl(0, 0));
         agent.makeDamage();
     }
 
     private void move(final List<Position2D> path) {
         final Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
-        setDirection(newDirection);
+        agent.setDirection(newDirection);
     }
 
     private List<Position2D> getPathFromBfs() {
