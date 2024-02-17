@@ -2,6 +2,7 @@ package world;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import gfight.common.api.Position2D;
@@ -19,7 +20,15 @@ import gfight.world.movement.impl.BfsMovement;
  * Class that tests the correct movement of enemies.
  */
 class BfsMovementTest {
-    private final EntityFactory entityFactory = new EntityFactoryImpl();
+    private GameMap map;
+
+    /**
+     * Creates a new GameMap before each test.
+     */
+    @BeforeEach
+    void setUp() {
+        this.map = new GameMapImpl("map1");
+    }
 
     // CHECKSTYLE: MagicNumber OFF
     /**
@@ -27,7 +36,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsMovement() {
-        final GameMap map = new GameMapImpl("map1");
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(180, 100), 50);
         final Character agent = entityFactory.createRunner(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
@@ -52,7 +61,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsShooter() {
-        final GameMap map = new GameMapImpl("map1");
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(180, 100), 50);
         final Character agent = entityFactory.createShooter(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
@@ -77,7 +86,7 @@ class BfsMovementTest {
      */
     @Test
     void testBfsRunner() {
-        final GameMap map = new GameMapImpl("map1");
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(620, 100), 50);
         final Character agent = entityFactory.createRunner(target, 25, new Position2DImpl(100, 100), 50, map);
         final BfsMovement bfs = new BfsMovement(agent, target, map, 1);
@@ -90,7 +99,6 @@ class BfsMovementTest {
         }
         // The final position should be 1 tile (The width of a tile is 40) far from the
         // target
-        // System.out.println(agent.getPosition());
         assertEquals(agent.getPosition(), new Position2DImpl(580, 100));
         assertEquals(agent.getDirection(), new VectorImpl(0, 0));
     }

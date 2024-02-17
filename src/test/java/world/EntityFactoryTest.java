@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import gfight.common.api.Position2D;
@@ -26,15 +27,24 @@ import gfight.world.weapon.api.Projectile;
  * Class that tests the correct creation of entities.
  */
 class EntityFactoryTest {
-    private final EntityFactory entityFactory = new EntityFactoryImpl();
-    private final VertexCalculator vertexCalculator = new VertexCalculatorImpl();
+
+    private VertexCalculator vertexCalculator;
 
     // CHECKSTYLE: MagicNumber OFF
+    /**
+     * Creates a new VertexCalculator before each test.
+     */
+    @BeforeEach
+    void setUp() {
+        this.vertexCalculator = new VertexCalculatorImpl();
+    }
+
     /**
      * Test the correct creation of entity Player.
      */
     @Test
     void testPlayer() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final Character player = entityFactory.createPlayer(10, position, 10, new InputMovementImpl());
         assertNotNull(player);
@@ -50,6 +60,7 @@ class EntityFactoryTest {
      */
     @Test
     void testChest() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final ActiveEntity chest = entityFactory.createChest(40, position, 10);
         assertNotNull(chest);
@@ -64,6 +75,7 @@ class EntityFactoryTest {
      */
     @Test
     void testShooter() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final GameMap map = new GameMapImpl("map1");
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
@@ -81,6 +93,7 @@ class EntityFactoryTest {
      */
     @Test
     void testRunner() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final GameMap map = new GameMapImpl("map1");
         final ActiveEntity target = entityFactory.createChest(40, new Position2DImpl(200, 200), 100);
@@ -98,6 +111,7 @@ class EntityFactoryTest {
      */
     @Test
     void testObstacle() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final CachedGameEntity obstacle = entityFactory.createObstacle(10, position);
         assertNotNull(obstacle);
@@ -110,6 +124,7 @@ class EntityFactoryTest {
      */
     @Test
     void testProjectile() {
+        final EntityFactory entityFactory = new EntityFactoryImpl();
         final Position2D position = new Position2DImpl(100, 100);
         final Projectile projectile = entityFactory.createProjectile(CharacterType.RUNNER, position,
                 new VectorImpl(1, 1), 5,
