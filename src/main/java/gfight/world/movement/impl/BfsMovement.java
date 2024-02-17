@@ -16,11 +16,15 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.jgrapht.graph.DefaultEdge;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
 /**
  * Class that represents the movement of the enemies.
  */
+@SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "This class needs to access the actual agent and target")
 public final class BfsMovement extends BaseMovement {
     private final GameEntity target;
     private final Character agent;
@@ -55,7 +59,7 @@ public final class BfsMovement extends BaseMovement {
                 handleRunnerBehavior(path);
             }
         } else {
-            agent.setDirection(new VectorImpl(0, 0));
+            setDirection(new VectorImpl(0, 0));
         }
     }
 
@@ -76,13 +80,13 @@ public final class BfsMovement extends BaseMovement {
     }
 
     private void stopAndAttack() {
-        agent.setDirection(new VectorImpl(0, 0));
+        setDirection(new VectorImpl(0, 0));
         agent.makeDamage();
     }
 
     private void move(final List<Position2D> path) {
         final Vect newDirection = new VectorImpl(agent.getPosition(), path.get(1)).norm().scale(speed);
-        agent.setDirection(newDirection);
+        setDirection(newDirection);
     }
 
     private List<Position2D> getPathFromBfs() {
@@ -90,8 +94,7 @@ public final class BfsMovement extends BaseMovement {
         final Position2D targetNode = target.getPosition();
         final BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
         return Optional.ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
-                .filter(Objects::nonNull)
-                .filter(path -> path.getLength() >= 1)
+                .filter(path -> Objects.nonNull(path) && path.getLength() >= 1)
                 .map(path -> path.getVertexList()
                         .stream()
                         .map(GameTile::getPosition)
