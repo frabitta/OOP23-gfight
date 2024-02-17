@@ -32,7 +32,7 @@ public final class GameEntityImpl implements GameEntity {
      * 
      * @param vertexes          the vertexes of the polygon.
      * @param position          the starting position of the polygon.
-     * @param graphicsComponent the grphic of this entity.
+     * @param graphicsComponent the graphic of this entity.
      */
     public GameEntityImpl(final List<Position2D> vertexes, final Position2D position,
             final GraphicsComponent graphicsComponent) {
@@ -62,12 +62,12 @@ public final class GameEntityImpl implements GameEntity {
     public Set<GameEntity> getAllCollided(final Set<? extends GameEntity> gameObjects) {
         final Hitboxes hitbox = new HitboxesImpl();
         final Hitbox boundingBox = this.getHitBox();
-        final Set<GameEntity> collidedObjectes = new LinkedHashSet<>();
+        final Set<GameEntity> collidedObjects = new LinkedHashSet<>();
         gameObjects.stream()
                 .filter(a -> !a.getPosition().equals(this.getPosition()) && !ignoredEntities.contains(a)
                         && hitbox.isColliding(boundingBox, a.getHitBox()))
-                .forEach(collidedObjectes::add);
-        return collidedObjectes;
+                .forEach(collidedObjects::add);
+        return collidedObjects;
     }
 
     @Override

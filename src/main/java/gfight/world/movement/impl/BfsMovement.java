@@ -12,10 +12,10 @@ import gfight.world.map.api.GameTile;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 
 /**
@@ -89,14 +89,13 @@ public final class BfsMovement extends BaseMovement {
         final Position2D startNode = agent.getPosition();
         final Position2D targetNode = target.getPosition();
         final BFSShortestPath<GameTile, DefaultEdge> bfs = new BFSShortestPath<>(map.getTileGraph());
-        final Optional<GraphPath<GameTile, DefaultEdge>> path = Optional
-                .ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)));
-        if (path.isPresent() && path.get().getLength() >= 1) {
-            return path.get().getVertexList().stream()
-                    .map(GameTile::getPosition)
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
+        return Optional.ofNullable(bfs.getPath(map.searchTile(startNode), map.searchTile(targetNode)))
+                .filter(Objects::nonNull)
+                .filter(path -> path.getLength() >= 1)
+                .map(path -> path.getVertexList()
+                        .stream()
+                        .map(GameTile::getPosition)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 }

@@ -20,9 +20,9 @@ import gfight.world.entity.api.GameEntity;
  * (Chest, Player and Enemies).
  */
 public abstract class AbstractActiveEntity extends BaseMovingEntity implements ActiveEntity {
-    private static final int HEALTHBAR_WIDTH = 25;
-    private static final int HEALTHBAR_HEIGHT = 4;
-    private static final int HEALTHBAR_OFFSET = -25;
+    private static final int HEALTH_BAR_WIDTH = 25;
+    private static final int HEALTH_BAR_HEIGHT = 4;
+    private static final int HEALTH_BAR_OFFSET = -25;
 
     private int health;
 
@@ -42,8 +42,8 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
                 EngineColor.RED,
                 EngineColor.GREEN,
                 position,
-                HEALTHBAR_WIDTH,
-                HEALTHBAR_HEIGHT,
+                HEALTH_BAR_WIDTH,
+                HEALTH_BAR_HEIGHT,
                 GraphicType.WORLD);
         healthBar.setRange(0, getHealth());
         healthBar.setStatus(getHealth());
@@ -65,7 +65,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
     }
 
     /**
-     * This method can be overriden.
+     * This method can be overridden.
      */
     @Override
     public boolean isAlive() {
@@ -86,7 +86,7 @@ public abstract class AbstractActiveEntity extends BaseMovingEntity implements A
         super.updatePos(dt, gameobjects);
         getGraphics().stream().filter(el -> el instanceof StatusBarGraphicsComponent).forEach(bar -> {
             final StatusBarGraphicsComponent statusBar = (StatusBarGraphicsComponent) bar;
-            statusBar.setPositions(List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTHBAR_OFFSET)));
+            statusBar.setPositions(List.of(new Position2DImpl(getPosition().getX(), getPosition().getY() + HEALTH_BAR_OFFSET)));
         });
     }
 }

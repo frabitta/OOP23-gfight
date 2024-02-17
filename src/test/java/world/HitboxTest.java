@@ -15,35 +15,35 @@ import java.util.List;
 /**
  * Class that tests hitboxes collision.
  */
-public class HitboxTest {
+class HitboxTest {
     /*
      * test 2 known polygons collision.
      */
     // CHECKSTYLE: MagicNumber OFF
     @Test
     void testBox() {
-        Hitboxes hitbox = new HitboxesImpl();
-        List<Position2D> polygon1 = new ArrayList<>();
+        final Hitboxes hitbox = new HitboxesImpl();
+        final List<Position2D> polygon1 = new ArrayList<>();
         polygon1.add(new Position2DImpl(0, 0));
         polygon1.add(new Position2DImpl(0, 2));
         polygon1.add(new Position2DImpl(2, 2));
         polygon1.add(new Position2DImpl(2, 0));
 
-        List<Position2D> polygon2 = new ArrayList<>();
+        final List<Position2D> polygon2 = new ArrayList<>();
 
         polygon2.add(new Position2DImpl(1, 1));
         polygon2.add(new Position2DImpl(3, 1));
         polygon2.add(new Position2DImpl(1, 3));
         assertTrue(hitbox.isColliding(new HitboxImpl(polygon1), new HitboxImpl(polygon2)));
 
-        List<Position2D> polygon3 = new ArrayList<>();
+        final List<Position2D> polygon3 = new ArrayList<>();
 
         polygon3.add(new Position2DImpl(0, 0));
         polygon3.add(new Position2DImpl(0, 3));
         polygon3.add(new Position2DImpl(3, 3));
         polygon3.add(new Position2DImpl(3, 0));
 
-        List<Position2D> polygon4 = new ArrayList<>();
+        final List<Position2D> polygon4 = new ArrayList<>();
 
         polygon4.add(new Position2DImpl(4, 4));
         polygon4.add(new Position2DImpl(5, 5));

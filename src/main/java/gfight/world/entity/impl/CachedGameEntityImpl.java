@@ -3,7 +3,6 @@ package gfight.world.entity.impl;
 import java.util.Optional;
 import java.util.List;
 import java.util.Set;
-import java.util.LinkedHashSet;
 
 import gfight.common.api.Position2D;
 import gfight.engine.graphics.api.GraphicsComponent;
@@ -20,7 +19,6 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
 
     private final GameEntity originalEntity;
     private Optional<Hitbox> boundigBox;
-    private Optional<Set<GameEntity>> collidedObjects;
 
     /**
      * Constructs a CachedGameEntityImpl with the specified vertex positions,
@@ -34,7 +32,6 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
             final GraphicsComponent graphicsComponent) {
         originalEntity = new GameEntityImpl(vertexes, position, graphicsComponent);
         this.boundigBox = Optional.empty();
-        this.collidedObjects = Optional.empty();
     }
 
     @Override
@@ -51,16 +48,12 @@ public abstract class CachedGameEntityImpl implements CachedGameEntity {
      */
     @Override
     public void reset() {
-        collidedObjects = Optional.empty();
         boundigBox = Optional.empty();
     }
 
     @Override
     public final Set<GameEntity> getAllCollided(final Set<? extends GameEntity> gameObjects) {
-        if (collidedObjects.isEmpty()) {
-            collidedObjects = Optional.of(originalEntity.getAllCollided(gameObjects));
-        }
-        return new LinkedHashSet<>(collidedObjects.get());
+        return originalEntity.getAllCollided(gameObjects);
     }
 
     @Override

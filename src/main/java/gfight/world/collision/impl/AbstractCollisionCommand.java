@@ -8,7 +8,7 @@ import gfight.world.entity.api.MovingEntity;
 /**
  * Abstract class that implements Collision Command.
  * 
- * @param <M> is the entitiy that moves and causes the collision
+ * @param <M> is the entity that moves and causes the collision
  * @param <G> is the other entity
  */
 @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "This class uses the actual collider and collided")

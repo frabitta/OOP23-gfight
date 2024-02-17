@@ -85,12 +85,12 @@ public class MenuPanel extends JPanel {
         leftPanel.setOpaque(false);
         // BUTTONS
         final JButton playButton = new JButton("PLAY  ", resizedPlayImage);
-        configurateButton(playButton);
+        configureButton(playButton);
         playButton.addActionListener(al -> engine.changeStatus(EngineStatus.GAME));
         playButton.setAlignmentX(CENTER_ALIGNMENT);
 
         final JButton statsButton = new JButton("STATS", resizedStatsImage);
-        configurateButton(statsButton);
+        configureButton(statsButton);
         statsButton.setAlignmentX(CENTER_ALIGNMENT);
         statsButton.addActionListener(e -> {
             try {
@@ -101,7 +101,7 @@ public class MenuPanel extends JPanel {
             }
         });
 
-        // MEUNU BAR
+        // MENU BAR
         final JMenu mapMenu = new JMenu("     Map 1     ");
         mapMenu.setBorder(new RoundedBorder(RADIUS));
         mapMenu.setBackground(Color.WHITE);
@@ -145,7 +145,7 @@ public class MenuPanel extends JPanel {
         add(leftPanel, BorderLayout.WEST);
     }
 
-    private void configurateButton(final JButton button) {
+    private void configureButton(final JButton button) {
         button.setFocusable(false);
         button.setPreferredSize(new Dimension(WIDTH / SCALE_BUTTON, HEIGHT / SCALE_BUTTON));
         button.setHorizontalTextPosition(JButton.LEFT);

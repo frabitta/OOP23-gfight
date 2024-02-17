@@ -10,15 +10,15 @@ import java.util.List;
 public interface Hitboxes {
 
     /**
-     * A class that calulates if a Polygon is colliding with another object
+     * A class that calculates if a Polygon is colliding with another object
      * with hitbox.
      * 
-     * @param collider  is the object that can have a change in his behaviour
+     * @param collider  is the object that can have a change in his behavior
      *                  or cause that after a collision
-     * @param coollided is the object that can be hitted
+     * @param collided is the object that can be hit
      * @return if the collision happens
      */
-    boolean isColliding(Hitbox collider, Hitbox coollided);
+    boolean isColliding(Hitbox collider, Hitbox collided);
 
     /**
      * Returns the rotated list of vertex.

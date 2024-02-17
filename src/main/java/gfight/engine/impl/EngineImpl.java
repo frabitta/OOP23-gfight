@@ -8,12 +8,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import gfight.App;
 import gfight.common.impl.Position2DImpl;
@@ -107,21 +108,21 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private void saveStats() {
         final File dir = new File(App.GAME_FOLDER);
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                throw new IllegalStateException("Game directory could not be created");
-            }
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IllegalStateException("Game directory could not be created");
         }
         try (BufferedWriter bw = new BufferedWriter(
-                new FileWriter(App.GAME_FOLDER + "stats.txt", Charset.forName("UTF-8"), true))) {
+                new FileWriter(App.GAME_FOLDER + "stats.txt", StandardCharsets.UTF_8, true))) {
             final int waves = this.world.getSurvivedWaves();
             final Duration time = this.world.getPlayedTime();
-            bw.write("• " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date())
+            bw.write("• "
+                    + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.forLanguageTag("it-IT")).format(new Date())
                     + "   Waves cleared: " + waves
                     + "   Time: " + time.toMinutesPart()
                     + "m " + time.toSecondsPart() + "s");
             bw.newLine();
         } catch (final IOException e) {
+            throw (IllegalStateException) new IllegalStateException("Couldn't save stats").initCause(e);
         }
     }
 
