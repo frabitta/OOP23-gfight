@@ -1,6 +1,7 @@
 package gfight.engine.impl;
 
 import java.util.Queue;
+import java.util.concurrent.Semaphore;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -41,13 +42,13 @@ public final class EngineImpl implements Engine, InputEventListener {
 
     private final Queue<InputEvent> inputQueue = new LinkedList<>();
     private final Queue<InputEvent> bufferInputQueue = new LinkedList<>();
+    private final Semaphore mutexSemaphore = new Semaphore(1);
 
     private EngineView view;
     private World world;
     private EngineStatus engineStatus;
     private Camera camera;
 
-    private boolean mutex;
     private String level = "map1";
 
     @Override
@@ -161,10 +162,14 @@ public final class EngineImpl implements Engine, InputEventListener {
     }
 
     private void processInput() {
-        mutex = true;
+        try {
+            this.mutexSemaphore.acquire();
+        } catch (InterruptedException e) {
+            this.terminate();
+        }
         final var frameInputSequence = Collections.unmodifiableList(inputQueue.stream().toList());
         inputQueue.clear();
-        mutex = false;
+        this.mutexSemaphore.release();
         for (final var event : frameInputSequence) {
             if (event instanceof InputEventValue
                     && ((InputEventValue) event).getValue() == InputEventValue.Value.PAUSE) {
@@ -186,12 +191,13 @@ public final class EngineImpl implements Engine, InputEventListener {
     @Override
     public void notifyInputEvent(final InputEvent event) {
         if (this.engineStatus == EngineStatus.GAME) {
-            if (!mutex) {
+            if (this.mutexSemaphore.tryAcquire()) {
                 if (!bufferInputQueue.isEmpty()) {
                     inputQueue.addAll(bufferInputQueue);
                     bufferInputQueue.clear();
                 }
                 inputQueue.add(event);
+                this.mutexSemaphore.release();
             } else {
                 bufferInputQueue.add(event);
             }
