@@ -847,6 +847,8 @@ Inoltre il movimento è inserito come campo all'interno delle varie classi che p
 almeno un muro, una cassa, un player e degli spawner.
 * EntityManagerTest: viene testato l'EntityManager, quindi il salvataggio delle entità
 create, la pulizia di quelle non più vive e la condizione di morte di tutti i nemici.
+* HitboxTest: viene testata la corretta creazione delle hitbox a partire da una lista di vertici e il corretto test delle collisioni.
+* MovementTest: in particolare viene testa il corretto funzionamento di inputMovement e di LinearMovement e se lo spostamento avviene come previsto.
 ## 3.2 Note di sviluppo
 ### Baldazzi Andrea
 #### Utilizzo della libreria JGraphT
