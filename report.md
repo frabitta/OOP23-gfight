@@ -723,6 +723,161 @@ All'interno del gioco è necessario gestire il movimento dei nemici. Questi ulti
  L'implementazione della BFS è stata presa dalla libreria Jgrapht.
  L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta nel nodo successivo in direzione del target (Player o Chest).
 ### Monaco Andrea
+### **Creazione di entità con hitbox e movimento**
+```mermaid
+classDiagram
+  GameEntity <|-- CachedGameEntityImpl
+  CachedGameEntityImpl <|-- BaseMovingEntity
+  CachedGameEntityImpl *-- GameEntityImpl
+  GameEntity <|-- GameEntityImpl
+  Position2D --* GameEntityImpl
+
+  <<Interface>> GameEntity
+
+  class GameEntityImpl{
+    List~Position2D~ vertexes
+    Position2D position
+    +getHitbox() : Hitbox
+    +getAllCollided(Set~GameEntity~ gameObjects) : Set~GameEntity~
+  }
+
+  class CachedGameEntityImpl{
+    Optional~Hitbox~ hitbox
+    Optional~Set~Hitbox~~ collidedObjects
+    GameEntity entity
+
+    +reset()
+  }
+  
+```
+**Problema**
+Il gioco coinvolge esclusivamente entità con un corpo fisico e ogni entità può avere delle collisioni con le altre. Gestire queste collisioni tra queste entità può diventare complesso a livello computazionale se fatto in modo inefficente, ogni entità condivide poi buona parte del codice con le altre e solitamente differisce solo per pochi metodi.
+
+**Soluzione**
+Per risolvere questo problema è implementato il pattern proxy. In questo modo è possibile controllare la hitbox delle varie entità senza doverla ricalcolare ogni volta, quindi è possibile inserire anche un gran numero di entità all'interno di una singola scena senza che venga richiesto uno sforzo computazionale eccessivo.
+La motivazioni principale che spinge a questa soluzione è l'Ottimizzaione delle collisioni: Il proxy `CachedGameEntityImpl` memorizza le informazioni sull'hitbox dell'entità. Questo permette di ricalcolare le collisioni e le hitbox solo dopo le entità effettuano un movimento. Qualora si volesse utilizzare `GameEntity` al posto di `CachedGameEntity` è sufficente rinominare la classe Cached Game entity in game entity dove necessario e rimuovere dalla classe principale world l'utilizzo del metodo reset.
+
+### **Creazione delle Hitbox nel gioco**
+```mermaid
+classDiagram
+  CachedGameEntity *-- Hitbox
+
+  Hitbox <|-- HitboxImpl
+  Hitboxes <|-- HitboxesImpl
+  HitboxImpl *-- Polygon
+
+  <<Interface>> Hitbox
+  <<Interface>> Hitboxes
+
+  class Hitbox{
+    getPolygonalHitbox() : Polygon
+    getVertexes() : List~Coordinates~
+  }
+
+  class HitboxImpl{
+    Polygon
+  }
+
+  class Hitboxes{
+    isColliding(Hitbox collider, Hitbox coollided) : boolean
+    rotate(List~Position2D~ polygon, double theta, Position2D center) : List~Position2D~
+    rotateTo(List~Position2D~ polygon, Vect pointingDir, Position2D center, Position2D target) : List~Position2D~
+  }
+```
+**Problema**
+Ogni entità deve avere una hitbox con cui possa interfacciarsi con le altre e rilevare le collisioni.
+
+**Soluzione**
+Un'implementazione dei poligoni comoda si può ottenere dalla librerria JTS che però è molto complessa. In questo caso si fa uso del pattern Facade per creare una serie di metodi che sfruttando JTS permettono di eseguire operazioni tra poligoni in modo semplificato.
+
+### **Gestione delle collisioni nel gioco**
+```mermaid
+classDiagram
+  CollisionCommand <|.. AbstractCollisionCommand
+  AbstractCollisionCommand *-- MovingEntity
+  AbstractCollisionCommand *-- GameEntity
+  AbstractCollisionCommand <|-- PushAwayCommand
+  AbstractCollisionCommand <|-- SlideCommand
+
+  <<Interface>> CollisionCommand
+
+  class CollisionCommand{
+    execute()
+  }
+
+  class AbstractCollisionCommand{
+    collider
+    collided
+    AbstractCollisionCommand(collider, collided)
+  }
+```
+**Problema**
+Nel contesto del gioco avvengo numerose collisioni, tuttavia la gestione delle collisioni tra le entità possono variare in base al tipo di collisione. Quindi bisogna progettare un sistema che consenta modifiche specifiche al movimento in base al tipo di collisione.
+
+**Soluzione**
+Per risolvere il problema si è scelto di utilizzare il pattern Command. Questo pattern consente di variare le azioni da intraprendere a seguito di una collisione in base alla classe contreta che estende il command.
+`CollisionCommand` è l'interfaccia che definisce il metodo execute che sarà implementato dalle classi concrete per eseguire azioni specifiche a seguito di una collisione. In `PushAwayCommand` e in `SlideCommand` la direzione del collider, che è una moving entity, viene modificata in base alla posizione dell'altra entità.
+
+### **Implementazione dei movimenti delle entità**
+```mermaid
+classDiagram
+  MovingEntity <|.. BaseMovingEntity
+  BaseMovingEntity *-- Movement
+  Movement <|.. BaseMovement
+  BaseMovement <|-- InputMovement
+  BaseMovement <|-- LinearMovement
+  BaseMovement <|-- Fixed
+  BaseMovement <|-- RandomMovement
+
+  MovementFactory <|.. MovementFactoryImpl
+
+  <<Interface>> Movement
+  <<Interface>> MovementFactory
+  <<Interface>> MovingEntity
+
+  class Movement{
+    update()
+    getDirection(Vect direction)
+    setDirection() : Vect
+  }
+
+  class InputMovement{
+    Vect inputVector
+    +addDirection(Directions dir)
+    +removeDirection(Directions dir)
+    +setNullDirection()
+  }
+
+  class BaseMovement{
+    Vect dirVector
+  }
+
+  class MovementFactory{
+    createLinearMovement(Vect direction) : LinearMovement
+    createRandomMovement() : RandomMovement
+    createInput() : InputMovement
+    createFixed() : Fixed
+  }
+
+  class BaseMovingEntity{
+    Movement movement
+    +updatePos(long deltatime)
+    +getDirection() : Vect
+    +setDirection(Vect)
+    #appyCollison()
+  }
+```
+**Problema**
+Diverse entità di gioco possono avere diversi movimenti che potrebbero anche cambire a seconda di diversi fattori. Inoltre è importante separare la logica di moviemento dalla logica delle entità stessa per migliorare la modularità e la manutelibilità del codice.
+
+**Soluzione**
+Per affrontare il problema è stata implementata una soluzione che combina il pattern Factory Method e il pattern Strategy.
+Factory Method Pattern:
+La classe MovemntFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
+Strategy Pattern:
+Le varie classi condividono l'interfaccia Movement ma l'implementazione dei metodi varia a seconda del tipo di movement.
+Inoltre il movimento è inserito come campo all'interno delle varie classi che possono richiamare il vettore direzione risultante del movement e chiamare update per far aggionare al movement questo vettore in base alle logiche della classe.
+
 # Capitolo 3 - Sviluppo
 ## 3.1 Testing automatizzato
 * BfsMovementTest: viene testato il funzionamento del movimento dei nemici. Ad ogni chiamata update() il nemico, se non ha ancora raggiunto l'obiettivo, deve spostarsi nella posizione successiva in direzine del target. Per ogni tipologia di nemico viene controllato che si fermi nella corretta posizione, gli Shooter dovranno arrestarsi lontano dal target mentre i Runner devono avvicinarsi il più possibile.
@@ -777,6 +932,30 @@ https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747
 Per effettuare i bordi rotondi nei bottoni in Swing, non essendo presenti di default, ho trovato un classe che li implementava:
 https://stackoverflow.com/a/3634480
 ### Monaco Andrea
+**Utilizzo di stream, lambda e method referece**
+
+Utilizzati spesso in tutto il codice:
+
+https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/GameEntityImpl.java#L66C9-L69C48
+
+**Uso di Optional**
+
+Utilizzati in particolare in cached game entity:
+
+https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/CachedGameEntityImpl.java#L21C2-L21C41
+
+**Classe con Generics**
+
+Molte classi usufruiscono dei generics ad esempio tutte quelle che implementano collision:
+
+https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/collision/api/CollisionCommand.java#L12C1-L12C80
+
+**Uso di librerie di terze parti**
+
+Faccio uso di varie classi di JTS (Polygon, Coordinates ...) e di Vector2D di Apache
+
+https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/hitbox/impl/HitboxesImpl.java#L20C1-L20C52
+
 # Capitolo 4 - Commenti finali
 ## 4.1 Autovalutazione e lavori futuri
 ### Baldazzi Andrea
@@ -801,4 +980,14 @@ Il design scelto favorisce l'OCP (principio di apertura/chiusura), il codice è 
 Era la prima volta che lavoravo ad un progetto di tali dimensioni, è stata un'esperienza stimolante, ma anche molto impegnativa.
 La partenza è stato lo scoglio più grande, inizialmente ho avuto difficoltà a rapportami con git e a gestire i file nei diversi package, però a progetto terminato posso affermare di essere soddisfatto del risultato ottenuto.
 Abbiamo collaborato tutti assieme nella risoluzione di bug e problemi, ci siamo coordianti riuscendo a consegnare un gioco ben strutturato.
+### Andrea Monaco
+Sono abbastanza soddisfatto del risultato finale del nostro lavoro di gruppo. Abbiamo fatto del nostro meglio nell'organizzare il codice e siamo riusciti a coordinarci bene nella divisione dei compiti. In particolare io mi sono occupato di gestire i movimenti di tutte l'entità, apparte i nemici che sfruttano una bfs, e di scrivere il codice di entità dotate di movimento e di hitboxes in modo di favorire il riuso e di lasciare la possibilità di effettuare numerose modifiche agli elementi di gioco.
+I punti di forza del mio codice includono la facilità nel aggiungere e rimuovere feature al gioco grazie all'indipendenza del movimento dalle entità e la semplicità nell'implementare le hitbox.
+
+Tuttavia, ho incontrato alcune difficoltà:
+- Utilizzo di Git: Soprattutto nelle prime fasi e nei primi commit, ho trovato difficile utilizzare Git in modo efficace.
+- Creazione delle GUI: Anche se le GUI sono esteticamente accettabili, ho impiegato troppo tempo nella loro creazione, considerando l'aspetto del progetto.
+- Creazione dei test: Ho avuto difficoltà a pensare a un numero sufficiente di test utili. Inoltre, molte delle funzionalità sarebbero state più comode da testare a livello grafico.
+- Ricerca delle informazioni sulle librerie non JDK: Trovare esempi di codice per le librerie utilizzate è stato difficile. Ho dovuto fare affidamento principalmente sulla documentazione, che spesso contiene molte classi non riconoscibili, rendendo difficile capire rapidamente se una libreria fosse adatta al nostro progetto o meno.
+
 ## 4.2 Difficoltà incontrate e commenti per i docenti
