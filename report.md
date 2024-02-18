@@ -2,13 +2,13 @@
 ## 1.1 Requisiti
 Il software, ispirato alla modalità Robo-Rumble di Brawl Stars della Supercell, è un gioco 2d top-down il cui obiettivo è quello di difendere per più tempo possibile il centro della mappa e sopravvivere agli attacchi continui di orde nemiche.
 ### Requisiti funzionali
-- La partita termina in caso di esaurimento dei punti vita del giocatore o del centro della mappa.
+- La partita termina in caso di esaurimento dei punti vita del giocatore o della cassa gialla.
 - Il player:
   - deve essere controllabile tramite tastiera nelle quattro direzioni.
   - deve essere in grado di sparare proiettili ai nemici in una direzione scelta tramite il mouse.
 - I nemici:
   - nascono ad ondate.
-  - attaccano il centro della mappa o il giocatore.
+  - attaccano la cassa o il giocatore.
 - Il livello di difficoltà cresce man mano che il gioco avanza.
 - Il gioco è top-down con visuale dall'alto.
 - L'ambiente di gioco è delimitato e include ostacoli fisici che il giocatore può usare come copertura.
@@ -19,54 +19,23 @@ Il software, ispirato alla modalità Robo-Rumble di Brawl Stars della Supercell,
   - deve essere eseguibile in modo fluido.
   - deve essere compatibile con una varia gamma di hardware e sistemi operativi (Linux, Windows e MacOS). 
 ## 1.2 Analisi e modello del dominio
-Il gioco ha luogo all'interno di una mappa, la quale contiene il giocatore, i nemici e gli oggetti permanenti (e.g. muri e cassa centrale). Il player e i nemici devono potersi muovere liberamente all'interno di essa, secondo la volontà del giocatore oppure in base ad un' AI stabilita e possono sparare proiettili per cercare di danneggiare il proprio obiettivo. Il player, i nemici e la cassa infatti hanno un quantitativo di punti vita e all'esaurimento di questi l'entità muore.
+Il gioco ha luogo all'interno di una mappa, la quale contiene il giocatore, i nemici e gli oggetti permanenti (e.g. muri e cassa centrale). Il player e i nemici devono potersi muovere liberamente all'interno di essa, secondo la volontà del giocatore oppure in base ad un'AI stabilita e possono sparare proiettili per cercare di danneggiare il proprio obiettivo. Il player, i nemici e la cassa infatti hanno un quantitativo di punti vita e all'esaurimento di questi l'entità muore.
 ```mermaid
-classDiagram 
-    GameEntity <|-- AliveEntity
-    GameEntity <|-- MovableEntity
-    GameEntity <|-- Obstacle
-
-    AliveEntity <|-- Chest
-    AliveEntity<|--ActiveEntity
-    MovableEntity<|--Projectile
-    MovableEntity<|--ActiveEntity
-
-    ActiveEntity<|--Player
-    ActiveEntity<|--Enemy
-
-    AI --o Enemy
-    GameEntity o-- Position2D
-
-    <<Interface>> AI
-    <<Interface>> Position2D
-    <<Interface>> ActiveEntity
-    <<Interface>> Obstacle
-    <<Interface>> MovableEntity
-    <<Interface>> Projectile
-    <<Interface>> Chest
-    <<Interface>> Player
-    <<Interface>> Enemy
-    <<Interface>> AliveEntity
-    <<Interface>> GameEntity
-
-    class GameEntity{
-        getPosition() Position2D
+classDiagram
+    class GameEntity {
+        <<interface>>
     }
-
-    class AliveEntity{
-        getLife() int
-    }
-
-    class MovableEntity{
-        move()  void
-    }
-
-    class Position2D {
-    }
-
-    class ActiveEntity{
-        shoot() void
-    }
+    GameEntity <|-- Enemy
+    GameEntity <|-- Player
+    GameEntity <|-- Chest
+    GameEntity --* World
+    World *-- Map
+    Map *-- Obstacle
+    Enemy *-- IA
+    Enemy <--> Player : attack
+    Enemy <--> Chest : attack
+    Player --> GameOver
+    Chest --> GameOver
 ```
 # Capitolo 2 - Design
 ## 2.1 Architettura
@@ -76,52 +45,47 @@ Il controller richiama l'update del model, gli passa gli input, prende da lui i 
 Per questo motivo è anche facile cambiare il model dell'applicazione e riusare il resto dell'applicazione per altri giochi.
 ```mermaid
 classDiagram
-    Controller o--o View
-    View --> GraphicsComponent
-    Controller o-- Model
-    Model o-- GameObject  
-    GraphicsComponent --o GameObject
-
-    View --> ViewAPI
-
-    <<Interface>> View
-    <<Interface>> ViewAPI
-    <<Interface>> Controller
-    <<Interface>> Model
-    <<Interface>> GameObject
-    <<Interface>> GraphicsComponent
-
-    class View {
-      render()
+    direction LR
+    class World {
+        <<interface>>
+        +isOver(): boolean
+        +update(deltaTime: long): void
+        +getGraphicsComponents(): List~GraphicsComponent~
+        +processInput(event: InputEvent): void
     }
-
-    class ViewAPI {
-      enum DrawableShape
-      drawCircle()
-      drawRectangle()
+    class Engine {
+        <<interface>>
+        +initialize(): void
+        +mainLoop(): void
+        +changeStatus(status: EngineStatus): void
+        +terminate(): void
     }
-
-    class GameObject {
-
+    class EngineView {
+        <<interface>>
+        +render(gComponentsList: List~GraphicsComponent~): void
+        +changePage(panel: Pages): void
+        +close(): void
     }
+    Engine *--* EngineView
+    World --* Engine
 
-    class GraphicsComponent {
-      DrawableShape
-      Color
-      Position
-      Rotation
+    class EngineStatus {
+        <<enum>>
+        MENU
+        GAME
+        DEATH_SCREEN
+        TERMINATED
+        PAUSE
     }
-
-    class Controller {
-      init()
-      mainLoop()
-      notifyCommand()
+    Engine --> EngineStatus
+    class Pages {
+        <<enum>>
+        MENU
+        GAME
+        DEATH_SCREEN
+        PAUSE_SCREEN
     }
-
-    class Model {
-      update()
-      getGraphicsComponents()
-    }
+    EngineView --> Pages
 ```
 ## 2.2 Design dettagliato
 ### Baldazzi Andrea
@@ -366,7 +330,7 @@ classDiagram
 **Problema:** Permettere alla view di leggere questi componenti grafici e rappresentarli a schermo.
 
 **Soluzione:** Per facilitare la view nell'interpretare questi oggetti è stata definita un'interfaccia che estende GraphicsComponent e che permette di contenere un oggetto che si occupa di renderizzare questi componenti grafici, specifico per la tecnologia usata.
-- Il GraphicsComponentRenderer è dunque unico per Swing: è legato ad un solo componente grafico e alla chiamata del metodo `render` lo stampa a schermo avendo il riferimento alla Camera e all'oggetto Graphics2D.
+- Il GraphicsComponentRenderer è dunque unico per la tecnologia di View usata: è legato ad un solo componente grafico e alla chiamata del metodo `render` lo stampa a schermo avendo il riferimento alla Camera e agli oggetti necessari per effettuare la stampa a video.
 - Per l'implementazione della view alla fine i componenti grafici che le vengono passati si comportano similmente al pattern Command: ottenuto il set di Componenti grafici filtra quelli che è capace di interpretare (chi implementa RenderableGraphicComponent) e li stampa a schermo chiamando il metodo `render`.
 
 ```mermaid
@@ -459,8 +423,6 @@ classDiagram
     - al momento della stampa l'EngineView passa il riferimento della ViewCamera ai GraphicsComponentRenderer che si occupano della effettiva stampa a schermo.
 
 Non è stato adottato alcun design pattern particolare se non lo Strategy: le diverse interfacce definiscono infatti una classe Camera generica che può avere l'implementazione che vogliamo, quella adottata nel nostro gioco è una implementazione standard, ma potremmo adottarne una che segue una logica diversa andando a distorcere le cose visualizzate a schermo senza dover modificare in alcun modo le classi che usano la telecamera.
-
-A differenza della view, potrebbero esserci più oggetti che si occupano di muovere la telecamera, per questo motivo è stato definita anche l'interfaccia di chi può farlo (CameraMover) per poter ricevere il riferimento alla telecamera.
 
 #### Input
 ```mermaid
@@ -639,11 +601,9 @@ classDiagram
   }
 
 ```
-**Problema**
-Progettazione delle diverse entità di gioco (in particolare quelle dotate di vita). Il design deve essere tale da dividere in maniera chiara le entità e i loro ruoli, inoltre deve garantire una facile estendibilità per modifiche future evitando la ripetizione di codice.
+**Problema:** Progettazione delle diverse entità di gioco (in particolare quelle dotate di vita). Il design deve essere tale da dividere in maniera chiara le entità e i loro ruoli, inoltre deve garantire una facile estendibilità per modifiche future evitando la ripetizione di codice.
 
-**Soluzione**
-Per risolvere il problema di design delle entità è stato utilizzato il pattern Composite, dove la struttura ad albero (tipica di questo pattern) ha come radice `CachedGameEntity`, da cui tutte le altre entità ereditano le caratteristiche comuni. 
+**Soluzione:** Per risolvere il problema di design delle entità è stato utilizzato il pattern Composite, dove la struttura ad albero (tipica di questo pattern) ha come radice `CachedGameEntity`, da cui tutte le altre entità ereditano le caratteristiche comuni. 
 Nella gerarchia del Composite l' `ActiveEntity`, ovvero entità in grado di muoversi e dotata di vita, eredita il movimento estendendo `MovingEntity` e implementa il componente vita. Le entità di tipo `Character`, invece, rappresentano il player ed i nemici, quindi sono dotate di un'arma per poter infliggere danni. Questo tipo di design consente di estendere facilmente le funzionalità del gioco, rendendo possibile l'aggiunta di nuove entità o di nuovi comportamenti evitando di duplicare porzioni di codice. Ad esempio se si volesse creare un nuovo oggetto dotato di vita, basterebbe estendere la classe astratta `AbstractActiveEntity` (la quale definisce un'implementazione di base dei metodi relativi alle entità con la vita), e quest'ultimo risulterebbe una foglia dell'albero del Composite.
 Il difetto di questo design è che non si possono creare entità con la vita senza il movimento. Per risolvere questo problema si sarebbe potuto realizzare una classe intermedia la quale avrebbe fornito esclusivamente la vita. In questo modo però, `ActiveEntity` avrebbe dovuto estendere sia quest'ultima classe, sia `MovingEntity`. Rendendo il movimento un campo `Optional` si è risolto il problema, permettendo di creare entità dotate di vita, ma che non si possono muovere come `Chest` (foglia del composite).
 Inoltre viene utilizzato il pattern Strategy tramite l'utilizzo di interfacce. Questo permette di aggiungere diverse implementazioni, diverse "strategie" e di poter scegliere la più opportuna a runtime.
@@ -688,21 +648,16 @@ classDiagram
 
 ```
 
-**Problema**
-Nel videogame sono presenti molteplici entità di gioco, tra cui player, nemici, ostacoli, proiettili, ecc. Ogni tipo di entità ha comportamenti e attributi diversi. Questi oggetti devono poter essere istanziati comodamente nel World e nelle altre classi che li utilizzano, così da disporli nella mappa. Se si utilizzasse direttamente l'operatore 'new' nella creazione di oggetti ciò potrebbe portare ad una dipendenza diretta tra il codice che lo istanzia e la classe dell'oggetto stesso.
+**Problema:** Nel videogame sono presenti molteplici entità di gioco, tra cui player, nemici, ostacoli, proiettili, ecc. Ogni tipo di entità ha comportamenti e attributi diversi. Questi oggetti devono poter essere istanziati comodamente nel World e nelle altre classi che li utilizzano, così da disporli nella mappa. Se si utilizzasse direttamente l'operatore 'new' nella creazione di oggetti ciò potrebbe portare ad una dipendenza diretta tra il codice che lo istanzia e la classe dell'oggetto stesso.
 
-**Soluzione**
-Utilizzando il design pattern Factory Method viene risolto il problema:
+**Soluzione:** Utilizzando il design pattern Factory Method viene risolto il problema:
 * Questo pattern separa il codice che crea gli oggetti dalla loro implementazione concreta, garantendo una migliore divisione delle responsabilità nel codice.
 * I metodi della Factory (nel codice rappresentata da EntityFactory) consentono di istanziare vari tipi di entità in maniera flessibile. Così facendo la classe client può richiedere l'oggetto desiderato senza dover conoscere i dettagli implementativi.
 * Delegando la logica creazionale alla Factory inoltre vengono ridotte le dipendenza tra la classe client e la classe concreta dell'oggetto.
 Si è preferito scegliere questo pattern rispetto ad un Builder perchè in questo caso i dettagli necessari alla creazione dell'oggetto sono noti a priori, ogni metodo della factory crea un tipo specifico di oggetto con parametri ben definiti. Istanziare oggetti step-by-step con numerosi passaggi, come fornisce il pattern Builder, non era adeguato.
 La classe EntityFactoryImpl utilizza una classe utilità per calcolare le coordinate dei vertici che sono necessari alla creazione di oggetti. Quest'ultima classe, VertexCalculatorImpl, si occupa esclusivamente del calcolo dei vertici di diverse figure geometriche.
 
-
-
-
-#### Movimento dei nemici
+#### IA dei nemici
 ```mermaid
 classDiagram
   BaseMovement <|-- BfsMovement
@@ -716,18 +671,19 @@ classDiagram
     + update() : void
   }
 ```
- **Problema**
-All'interno del gioco è necessario gestire il movimento dei nemici. Questi ultimi devono muoversi verso il player, oppure verso la chest e fermarsi una volta giunti a destinazione.
- **Soluzione**
- Per risolvere il problema del movimento dei nemici, viene utilizzato un algoritmo di ricerca Breadth-First Search (BFS), che è efficace ed efficiente nel trovare il percorso più breve tra due punti (nel codice rappresentati dal centro di due GameTile) in un grafo non pesato. 
- L'implementazione della BFS è stata presa dalla libreria Jgrapht.
- L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta nel nodo successivo in direzione del target (Player o Chest).
+**Problema:** All'interno del gioco è necessario gestire il movimento dei nemici. Questi ultimi devono muoversi verso il player, oppure verso la chest e fermarsi una volta giunti a destinazione.
+
+**Soluzione:** Per risolvere il problema del movimento dei nemici, viene utilizzato un algoritmo di ricerca Breadth-First Search (BFS), che è efficace ed efficiente nel trovare il percorso più breve tra due punti (nel codice rappresentati dal centro di due GameTile) in un grafo non pesato. 
+L'implementazione della BFS è stata presa dalla libreria JGrapht.
+L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta verso il nodo successivo in direzione del target (Player o Chest).
+
 ### Monaco Andrea
-### **Creazione di entità con hitbox e movimento**
+#### Creazione di entità con hitbox e movimento
 ```mermaid
 classDiagram
   GameEntity <|-- CachedGameEntityImpl
   CachedGameEntityImpl <|-- BaseMovingEntity
+  CachedGameEntityImpl <|-- Obstacle
   CachedGameEntityImpl *-- GameEntityImpl
   GameEntity <|-- GameEntityImpl
   Position2D --* GameEntityImpl
@@ -743,21 +699,19 @@ classDiagram
 
   class CachedGameEntityImpl{
     Optional~Hitbox~ hitbox
-    Optional~Set~Hitbox~~ collidedObjects
     GameEntity entity
 
     +reset()
   }
+
   
 ```
-**Problema**
-Il gioco coinvolge esclusivamente entità con un corpo fisico e ogni entità può avere delle collisioni con le altre. Gestire queste collisioni tra queste entità può diventare complesso a livello computazionale se fatto in modo inefficente, ogni entità condivide poi buona parte del codice con le altre e solitamente differisce solo per pochi metodi.
+**Problema:** Il gioco coinvolge esclusivamente entità con un corpo fisico e ogni entità può avere delle collisioni con le altre. Gestire queste collisioni tra queste entità può diventare complesso a livello computazionale se fatto in modo inefficente, ogni entità condivide poi buona parte del codice con le altre e solitamente differisce solo per pochi metodi.
 
-**Soluzione**
-Per risolvere questo problema è implementato il pattern proxy. In questo modo è possibile controllare la hitbox delle varie entità senza doverla ricalcolare ogni volta, quindi è possibile inserire anche un gran numero di entità all'interno di una singola scena senza che venga richiesto uno sforzo computazionale eccessivo.
-La motivazioni principale che spinge a questa soluzione è l'Ottimizzaione delle collisioni: Il proxy `CachedGameEntityImpl` memorizza le informazioni sull'hitbox dell'entità. Questo permette di ricalcolare le collisioni e le hitbox solo dopo le entità effettuano un movimento. Qualora si volesse utilizzare `GameEntity` al posto di `CachedGameEntity` è sufficente rinominare la classe Cached Game entity in game entity dove necessario e rimuovere dalla classe principale world l'utilizzo del metodo reset.
+**Soluzione:** Per risolvere questo problema è implementato il pattern proxy. In questo modo è possibile controllare la hitbox delle varie entità senza doverla ricalcolare ogni volta, quindi è possibile inserire anche un gran numero di entità all'interno di una singola scena senza che venga richiesto uno sforzo computazionale eccessivo.
+La motivazione principale che spinge a questa soluzione è l'ottimizzazione delle collisioni: il proxy `CachedGameEntityImpl` memorizza le informazioni sulla hitbox dell'entità. Questo permette di ricalcolare le collisioni e le hitbox solo dopo che le entità effettuino un movimento. Qualora si volesse utilizzare `GameEntity` al posto di `CachedGameEntity` è sufficente rinominare la classe Cached Game entity in game entity dove necessario e rimuovere dalla classe principale world l'utilizzo del metodo reset.
 
-### **Creazione delle Hitbox nel gioco**
+#### Creazione delle Hitbox nel gioco
 ```mermaid
 classDiagram
   CachedGameEntity *-- Hitbox
@@ -765,6 +719,7 @@ classDiagram
   Hitbox <|-- HitboxImpl
   Hitboxes <|-- HitboxesImpl
   HitboxImpl *-- Polygon
+  Hitboxes --> Hitbox
 
   <<Interface>> Hitbox
   <<Interface>> Hitboxes
@@ -784,13 +739,11 @@ classDiagram
     rotateTo(List~Position2D~ polygon, Vect pointingDir, Position2D center, Position2D target) : List~Position2D~
   }
 ```
-**Problema**
-Ogni entità deve avere una hitbox con cui possa interfacciarsi con le altre e rilevare le collisioni.
+**Problema:** Ogni entità deve avere una hitbox con cui possa interfacciarsi con le altre e rilevare le collisioni.
 
-**Soluzione**
-Un'implementazione dei poligoni comoda si può ottenere dalla librerria JTS che però è molto complessa. In questo caso si fa uso del pattern Facade per creare una serie di metodi che sfruttando JTS permettono di eseguire operazioni tra poligoni in modo semplificato.
+**Soluzione:** Un'implementazione dei poligoni comoda si può ottenere dalla librerria JTS che però è molto complessa. In questo caso si fa uso del pattern Facade per creare una serie di metodi che sfruttando JTS permettono di eseguire operazioni tra poligoni in modo semplificato.
 
-### **Gestione delle collisioni nel gioco**
+#### Gestione delle collisioni nel gioco
 ```mermaid
 classDiagram
   CollisionCommand <|.. AbstractCollisionCommand
@@ -811,14 +764,12 @@ classDiagram
     AbstractCollisionCommand(collider, collided)
   }
 ```
-**Problema**
-Nel contesto del gioco avvengo numerose collisioni, tuttavia la gestione delle collisioni tra le entità possono variare in base al tipo di collisione. Quindi bisogna progettare un sistema che consenta modifiche specifiche al movimento in base al tipo di collisione.
+**Problema:** Nel contesto del gioco avvengo numerose collisioni, tuttavia la gestione delle collisioni tra le entità possono variare in base al tipo di collisione. Quindi bisogna progettare un sistema che consenta modifiche specifiche al movimento in base al tipo di collisione.
 
-**Soluzione**
-Per risolvere il problema si è scelto di utilizzare il pattern Command. Questo pattern consente di variare le azioni da intraprendere a seguito di una collisione in base alla classe contreta che estende il command.
+**Soluzione:** Per risolvere il problema si è scelto di utilizzare il pattern Command. Questo pattern consente di variare le azioni da intraprendere a seguito di una collisione in base alla classe contreta che estende il command.
 `CollisionCommand` è l'interfaccia che definisce il metodo execute che sarà implementato dalle classi concrete per eseguire azioni specifiche a seguito di una collisione. In `PushAwayCommand` e in `SlideCommand` la direzione del collider, che è una moving entity, viene modificata in base alla posizione dell'altra entità.
 
-### **Implementazione dei movimenti delle entità**
+#### Implementazione dei movimenti delle entità
 ```mermaid
 classDiagram
   MovingEntity <|.. BaseMovingEntity
@@ -830,6 +781,10 @@ classDiagram
   BaseMovement <|-- RandomMovement
 
   MovementFactory <|.. MovementFactoryImpl
+  InputMovement <-- MovementFactory
+  LinearMovement <-- MovementFactory
+  RandomMovement <-- MovementFactory
+  Fixed <-- MovementFactory
 
   <<Interface>> Movement
   <<Interface>> MovementFactory
@@ -867,11 +822,9 @@ classDiagram
     #appyCollison()
   }
 ```
-**Problema**
-Diverse entità di gioco possono avere diversi movimenti che potrebbero anche cambire a seconda di diversi fattori. Inoltre è importante separare la logica di moviemento dalla logica delle entità stessa per migliorare la modularità e la manutelibilità del codice.
+**Problema:** Diverse entità di gioco possono avere diversi movimenti che potrebbero anche cambire a seconda di diversi fattori. Inoltre è importante separare la logica di moviemento dalla logica delle entità stessa per migliorare la modularità e la manutelibilità del codice.
 
-**Soluzione**
-Per affrontare il problema è stata implementata una soluzione che combina il pattern Factory Method e il pattern Strategy.
+**Soluzione:** Per affrontare il problema è stata implementata una soluzione che combina il pattern Factory Method e il pattern Strategy.
 Factory Method Pattern:
 La classe MovemntFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
 Strategy Pattern:
