@@ -568,54 +568,60 @@ classDiagram
 #### **Realizzazione di entità dotate di "vita"**
 ```mermaid
 classDiagram
-  MovingEntity <|-- ActiveEntity
   BaseMovingEntity <|-- AbstractActiveEntity
   MovingEntity <|.. BaseMovingEntity
-  ActiveEntity <|.. AbstractActiveEntity
-  ActiveEntity <|-- Character
   AbstractActiveEntity <|-- CharacterImpl
-  Character <|.. CharacterImpl
-  CharacterType <-- Character
   AbstractActiveEntity <|-- Chest
   AbstractActiveEntity <|-- Projectile
+  Weapon --* CharacterImpl
 
   <<Interface>> MovingEntity
-  <<Inteface>> ActiveEntity
-  <<Interface>> Character
-  <<enumeration>> CharacterType
-
-  class ActiveEntity{
-    getHealth() : int
-    takeDamage(int damage) : void
-    isAlive() : boolean 
-  }
-
-  class Character{
-    makeDamage() : void
-    setWeapon() : void
-    pointTo(Position2D target) : void
-    getType() : CharacterType
-  }
-
-  class CharacterType{
-    <<Enumeration>>
-    PLAYER 
-    SHOOTER
-    RUNNER
-  }
+  <<Interface>> Weapon
 
   class AbstractActiveEntity{
+    <<Abstract>>
+    -health : int
+    +getHealth() : int
+    +takeDamage(int damage) : void
+    +isAlive() : boolean 
   }
 
   class CharacterImpl{
+    -weapon :: Weapon
+    +makeDamage() : void
+    +setWeapon() : void
+    +pointTo(Position2D target) : void
+    +getType() : CharacterType
   }
+
 
 ```
 **Problema:** Progettazione delle diverse entità di gioco (in particolare quelle dotate di vita). Il design deve essere tale da dividere in maniera chiara le entità e i loro ruoli, inoltre deve garantire una facile estendibilità per modifiche future evitando la ripetizione di codice.
 
 **Soluzione:** Per risolvere il problema di design delle entità è stato utilizzato il pattern Composite, dove la struttura ad albero (tipica di questo pattern) ha come radice `CachedGameEntity`, da cui tutte le altre entità ereditano le caratteristiche comuni. 
-Nella gerarchia del Composite l' `ActiveEntity`, ovvero entità in grado di muoversi e dotata di vita, eredita il movimento estendendo `MovingEntity` e implementa il componente vita. Le entità di tipo `Character`, invece, rappresentano il player ed i nemici, quindi sono dotate di un'arma per poter infliggere danni. Questo tipo di design consente di estendere facilmente le funzionalità del gioco, rendendo possibile l'aggiunta di nuove entità o di nuovi comportamenti evitando di duplicare porzioni di codice. Ad esempio se si volesse creare un nuovo oggetto dotato di vita, basterebbe estendere la classe astratta `AbstractActiveEntity` (la quale definisce un'implementazione di base dei metodi relativi alle entità con la vita), e quest'ultimo risulterebbe una foglia dell'albero del Composite.
-Il difetto di questo design è che non si possono creare entità con la vita senza il movimento. Per risolvere questo problema si sarebbe potuto realizzare una classe intermedia la quale avrebbe fornito esclusivamente la vita. In questo modo però, `ActiveEntity` avrebbe dovuto estendere sia quest'ultima classe, sia `MovingEntity`. Rendendo il movimento un campo `Optional` si è risolto il problema, permettendo di creare entità dotate di vita, ma che non si possono muovere come `Chest` (foglia del composite).
+Nella gerarchia del Composite l' `AbstractActiveEntity`, ovvero entità in grado di muoversi e dotata di vita, eredita il movimento estendendo `BaseMovingEntity` e implementa il componente vita. Le entità di tipo `CharacterImpl`, invece, rappresentano il player ed i nemici, quindi sono dotate di un'arma per poter infliggere danni. Questo tipo di design consente di estendere facilmente le funzionalità del gioco, rendendo possibile l'aggiunta di nuove entità o di nuovi comportamenti evitando di duplicare porzioni di codice. Ad esempio se si volesse creare un nuovo oggetto dotato di vita, basterebbe estendere la classe astratta `AbstractActiveEntity` (la quale definisce un'implementazione di base dei metodi relativi alle entità con la vita), e quest'ultimo risulterebbe una foglia dell'albero del Composite.
+Il difetto di questo design è che non si possono creare entità con la vita senza il movimento. Per risolvere questo problema si sarebbe potuto realizzare una classe intermedia la quale avrebbe fornito esclusivamente la vita. In questo modo però, `AbstractActiveEntity` avrebbe dovuto estendere sia quest'ultima classe, sia `BaseMovingEntity`. Rendendo il movimento un campo opzionale si è risolto il problema, permettendo di creare entità dotate di vita, ma che non si possono muovere come `Chest` (foglia del composite).
+
+```mermaid
+classDiagram
+  Character <|.. CharacterImpl
+  ActiveEntity <|-- Character
+  ActiveEntity <|.. AbstractActiveEntity
+  CharacterType <-- Character
+
+  <<Interface>> ActiveEntity
+  <<Interface>> Character
+
+  class CharacterType{
+    <<Enumeration>>
+    PLAYER
+    SHOOTER
+    RUNNER
+  }
+
+
+```
+
 Inoltre viene utilizzato il pattern Strategy tramite l'utilizzo di interfacce. Questo permette di aggiungere diverse implementazioni, diverse "strategie" e di poter scegliere la più opportuna a runtime.
 
 ---
@@ -673,7 +679,7 @@ La classe EntityFactoryImpl utilizza una classe utilità per calcolare le coordi
 classDiagram
   BaseMovement <|-- BfsMovement
   Character --* BfsMovement
-  GameEntity --* BfsMovement
+  BfsMovement *--  GameEntity
 
   class BfsMovement{
     - target : GameEntity
@@ -685,7 +691,6 @@ classDiagram
 **Problema:** All'interno del gioco è necessario gestire il movimento dei nemici. Questi ultimi devono muoversi verso il player, oppure verso la chest e fermarsi una volta giunti a destinazione.
 
 **Soluzione:** Per risolvere il problema del movimento dei nemici, viene utilizzato un algoritmo di ricerca Breadth-First Search (BFS), che è efficace ed efficiente nel trovare il percorso più breve tra due punti (nel codice rappresentati dal centro di due GameTile) in un grafo non pesato. 
-L'implementazione della BFS è stata presa dalla libreria JGrapht.
 L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta verso il nodo successivo in direzione del target (Player o Chest).
 
 ---

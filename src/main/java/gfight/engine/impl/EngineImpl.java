@@ -116,7 +116,7 @@ public final class EngineImpl implements Engine, InputEventListener {
                 new FileWriter(App.GAME_FOLDER + "stats.txt", StandardCharsets.UTF_8, true))) {
             final int waves = this.world.getSurvivedWaves();
             final Duration time = this.world.getPlayedTime();
-            bw.write("• "
+            bw.write("- "
                     + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.forLanguageTag("it-IT")).format(new Date())
                     + "   Waves cleared: " + waves
                     + "   Time: " + time.toMinutesPart()
