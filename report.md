@@ -944,3 +944,6 @@ Tuttavia, ho incontrato alcune difficoltà:
 - Ricerca delle informazioni sulle librerie non JDK: Trovare esempi di codice per le librerie utilizzate è stato difficile. Ho dovuto fare affidamento principalmente sulla documentazione, che spesso contiene molte classi non riconoscibili, rendendo difficile capire rapidamente se una libreria fosse adatta al nostro progetto o meno.
 
 ## 4.2 Difficoltà incontrate e commenti per i docenti
+- Riteniamo sarebbe stato molto più utile al fine del corso e della realizzazione del progetto che i Design Patterns venissero più approfonditi durante le lezioni in aula, in quanto sono stati trattati rapidamente alla fine del corso e ci siamo trovati in difficoltà nell'usarli e riconoscerli.
+- Riteniamo che l'attuale forma di prova pratica metta a disposizione troppo poco tempo: in questo momento la prova induce a consegnare un codice scritto male ma funzionante per ottenere il bonus, al posto di valorizzare codice scritto decentemente.
+- Potrebbe essere utile dare maggiori esempi e spiegazioni di come strutturare progetti di dimensioni simili a quelli del progetto, similmente a GameAsALab, per avere dei punti di riferimento di codice di qualità.
