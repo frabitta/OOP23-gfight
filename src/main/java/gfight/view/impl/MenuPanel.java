@@ -59,7 +59,6 @@ public class MenuPanel extends JPanel {
      * @param engine the game engine
      */
     public MenuPanel(final Engine engine) {
-        this.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         this.setLayout(new BorderLayout());
         // BACKGROUND IMAGE
         background = new ImageIcon(PATH_STRING + "Background.png");
