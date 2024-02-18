@@ -22,7 +22,7 @@ public final class PausePanel extends JPanel {
     /** Serializable UID. */
     private static final long serialVersionUID = 1675654981775835696L;
 
-    private static final String PATH_STRING = "/images";
+    private static final String PATH_STRING = "images";
     private static final int TITLE_FONT_DIM = 55;
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
@@ -37,7 +37,7 @@ public final class PausePanel extends JPanel {
      */
     public PausePanel(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.backgroundImage = new ImageIcon(getClass().getResource(PATH_STRING + "/Pause.png"));
+        this.backgroundImage = new ImageIcon(getClass().getClassLoader().getResource(PATH_STRING + "/Pause.png"));
         final JLabel titleLabel = new JLabel("Paused");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
