@@ -38,7 +38,8 @@ public class MenuPanel extends JPanel {
     private static final int HEIGHT = 720;
     private static final int BUTTON_IMAGE_WIDTH = 100;
     private static final int BUTTON_IMAGE_HEIGHT = 75;
-    private static final int DISTANCE = 50;
+    private static final int LEFT_DISTANCE = 50;
+    private static final int BOTTOM_DISTANCE = 200;
     private static final int TITLE_SIZE = 75;
     private static final int TEXT_SIZE = TITLE_SIZE / 4;
     private static final int SCALE_BUTTON = 6;
@@ -71,7 +72,7 @@ public class MenuPanel extends JPanel {
         // MAIN PANEL
         final JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, DISTANCE, 200, 0));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, LEFT_DISTANCE, BOTTOM_DISTANCE, 0));
 
         // TITLE
         final JLabel firstLabel = new JLabel("Geometry");
@@ -80,8 +81,8 @@ public class MenuPanel extends JPanel {
         secondLabel.setFont(new Font("Helvetica", Font.BOLD, TITLE_SIZE));
         firstLabel.setAlignmentX(CENTER_ALIGNMENT);
         secondLabel.setAlignmentX(CENTER_ALIGNMENT);
-
         leftPanel.setOpaque(false);
+
         // BUTTONS
         final JButton playButton = new JButton("PLAY  ", resizedPlayImage);
         configureButton(playButton);
@@ -132,16 +133,14 @@ public class MenuPanel extends JPanel {
         menuBar.add(mapMenu);
         menuBar.setAlignmentX(CENTER_ALIGNMENT);
 
-
         leftPanel.add(Box.createVerticalGlue());
         leftPanel.add(firstLabel);
         leftPanel.add(secondLabel);
-        leftPanel.add(Box.createVerticalStrut(DISTANCE));
+        leftPanel.add(Box.createVerticalStrut(LEFT_DISTANCE));
         leftPanel.add(playButton);
         leftPanel.add(statsButton);
         leftPanel.add(menuBar);
         leftPanel.add(Box.createVerticalGlue());
-
 
         add(leftPanel, BorderLayout.WEST);
     }
