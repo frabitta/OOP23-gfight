@@ -6,7 +6,6 @@ import gfight.world.entity.api.GameEntity;
 import gfight.world.map.api.GameMap;
 import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.LinearMovement;
-import gfight.world.movement.impl.Fixed;
 
 /**
  * Factory for the creation of movements.
@@ -31,12 +30,6 @@ public interface MovementFactory {
      * @return the Linear Movement Class object.
      */
     LinearMovement createLinearMovement(Vect direction);
-
-    /**
-     * 
-     * @return the Fixed Movement class object
-     */
-    Fixed createFixed();
 
     /**
      * 
