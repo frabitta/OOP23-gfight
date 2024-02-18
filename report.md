@@ -109,7 +109,7 @@ classDiagram
         + clean()
     }
     EntityManager <|.. EntityManagerImpl
-    EntityFactory --* EntityManager
+    EntityFactory --* EntityManagerImpl
 
 ```
 
@@ -837,6 +837,10 @@ Inoltre il movimento è inserito come campo all'interno delle varie classi che p
 
 * EntityFactoryTest: Per ognuna delle entità viene testata la sua corretta creazione.
 * VertexCalculatorTest: Viene testato il corretto calcolo della posizione dei vertici, per le figure geometriche triangolo equilatero, quadrato e rettangolo.
+* GameMapTest: viene testata la corretta creazione della mappa, la quale deve avere
+almeno un muro, una cassa, un player e degli spawner.
+* EntityManagerTest: viene testato l'EntityManager, quindi il salvataggio delle entità
+create, la pulizia di quelle non più vive e la condizione di morte di tutti i nemici.
 ## 3.2 Note di sviluppo
 ### Baldazzi Andrea
 #### Utilizzo della libreria JGraphT
