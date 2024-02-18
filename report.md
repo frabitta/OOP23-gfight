@@ -827,9 +827,9 @@ classDiagram
 **Problema:** Diverse entità di gioco possono avere diversi movimenti che potrebbero anche cambire a seconda di diversi fattori. Inoltre è importante separare la logica di moviemento dalla logica delle entità stessa per migliorare la modularità e la manutelibilità del codice.
 
 **Soluzione:** Per affrontare il problema è stata implementata una soluzione che combina il pattern Factory Method e il pattern Strategy.
-Factory Method Pattern:
-La classe MovemntFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
-Strategy Pattern:
+- Factory Method Pattern:
+La classe MovementFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
+- Strategy Pattern:
 Le varie classi condividono l'interfaccia Movement ma l'implementazione dei metodi varia a seconda del tipo di movement.
 Inoltre il movimento è inserito come campo all'interno delle varie classi che possono richiamare il vettore direzione risultante del movement e chiamare update per far aggionare al movement questo vettore in base alle logiche della classe.
 
