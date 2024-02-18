@@ -88,6 +88,10 @@ classDiagram
     EngineView --> Pages
 ```
 ## 2.2 Design dettagliato
+Alcuni dei nostri schemi UML potrebbero mostrare unicamente le interfacce interessate al design che vogliamo mostrare, questo perché abbiamo cercato di applicare il pattern Strategy il più possibile per poter rendere ogni elemento dell'applicazione modificabile senza dover modificare altre parti del codice, di conseguenza le sole interfacce sono spesso sufficienti a spiegare il design del progetto.
+
+Quando nei diagrammi utilizzeremo collegamenti propri delle classi concrete tra interfacce è invece per indicare che l'effettiva implementazione di tale interfaccia avrà quel tipo di collegamento con l'implementazione dell'altra, omettiamo di mostrare le classi concrete per semplice chiarezza e facilità di lettura del diagramma.
+
 ### Baldazzi Andrea
 #### Creazione e salvataggio di entità di gioco
 
