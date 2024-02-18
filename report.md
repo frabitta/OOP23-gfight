@@ -25,9 +25,9 @@ classDiagram
     class GameEntity {
         <<interface>>
     }
-    GameEntity <|-- Enemy
-    GameEntity <|-- Player
-    GameEntity <|-- Chest
+    GameEntity <|.. Enemy
+    GameEntity <|.. Player
+    GameEntity <|.. Chest
     GameEntity --* World
     World *-- Map
     Map *-- Obstacle
@@ -88,6 +88,11 @@ classDiagram
     EngineView --> Pages
 ```
 ## 2.2 Design dettagliato
+Alcuni dei nostri schemi UML potrebbero mostrare unicamente le interfacce interessate al design che vogliamo mostrare, questo perché abbiamo cercato di applicare il pattern Strategy il più possibile per poter rendere ogni elemento dell'applicazione modificabile senza dover modificare altre parti del codice, di conseguenza le sole interfacce sono spesso sufficienti a spiegare il design del progetto.
+
+Quando nei diagrammi utilizzeremo collegamenti propri delle classi concrete tra interfacce è invece per indicare che l'effettiva implementazione di tale interfaccia avrà quel tipo di collegamento con l'implementazione dell'altra, omettiamo di mostrare le classi concrete per semplice chiarezza e facilità di lettura del diagramma.
+
+---
 ### Baldazzi Andrea
 #### Creazione e salvataggio di entità di gioco
 
@@ -240,6 +245,7 @@ data entità di gioco è contenuta al suo interno. La mappa invece è passiva, c
 Inoltre, alla sua creazione si occupa di creare un grafo delle GameTile libere, che verrà sfruttato dalla AI dei nemici
 per permettere loro di inseguire un certo target.
 
+---
 ### Bittasi Francesco
 #### GraphicsComponent
 ```mermaid
@@ -367,6 +373,7 @@ classDiagram
 
 **Soluzione:** Per permettere al Model dell'applicazione di creare i componenti grafici senza dover sapere dell'associazione di questi coi GraphicsComponentRenderer è stata creata una factory che restituisse il tipo di componente grafico richiesto con già incorporato il renderer della view necessario per permetterne la stampa.
 
+---
 #### Camera
 ```mermaid
 classDiagram
@@ -407,13 +414,13 @@ classDiagram
     Camera --|> WorldCamera
     Camera --|> ViewCamera 
 
-    CameraImpl --|> Camera
+    CameraImpl ..|> Camera
     EngineImpl *-- CameraImpl
 
-    World --|> CameraMover
+    World ..|> CameraMover
     World *-- CameraImpl
     ViewImpl *-- CameraImpl
-    ViewImpl --|> CameraViewer
+    ViewImpl ..|> CameraViewer
 ```
 **Problema:** Sullo schermo va visualizzata solo una parte del mondo di gioco, deve mantere le proporzioni corrette per qualunque formato di schermo e la porzione visibile deve essere scelta dal Model dell'applicazione.
 
@@ -424,6 +431,7 @@ classDiagram
 
 Non è stato adottato alcun design pattern particolare se non lo Strategy: le diverse interfacce definiscono infatti una classe Camera generica che può avere l'implementazione che vogliamo, quella adottata nel nostro gioco è una implementazione standard, ma potremmo adottarne una che segue una logica diversa andando a distorcere le cose visualizzate a schermo senza dover modificare in alcun modo le classi che usano la telecamera.
 
+---
 #### Input
 ```mermaid
 classDiagram
@@ -438,8 +446,8 @@ classDiagram
     }
     ViewImpl *-- EngineImpl
 
-    EngineImpl --|> InputEventListener
-    ViewImpl --|> InputEventProvider
+    EngineImpl ..|> InputEventListener
+    ViewImpl ..|> InputEventProvider
 ```
 **Problema:** Notificare il controller delle azioni dell'utente sulle periferiche.
 
@@ -448,12 +456,12 @@ classDiagram
 ```mermaid
 classDiagram
     ViewImpl *-- InputEventFactoryImpl
-    ViewImpl --|> InputEventProvider
+    ViewImpl ..|> InputEventProvider
     class InputEventProvider {
         <<interface>>
     }
     InputEventProvider --> InputEventFactory
-    InputEventFactoryImpl --|> InputEventFactory
+    InputEventFactoryImpl ..|> InputEventFactory
     class InputEventFactory {
         <<interface>>
         +filterKeyValue(key: int): Optional<Value>
@@ -504,6 +512,7 @@ classDiagram
 - E' grazie al metodo `filterKeyValue` della factory che i tasti della tastiera vengono convertiti in valori che rappresentano un'azione di gioco.
 - Sarà compito del listener filtrare i vari input che riceve per vedere cosa gli interessa e agire di conseguenza.
 
+---
 #### Weapon
 ```mermaid
 classDiagram
@@ -535,7 +544,7 @@ classDiagram
     EntityFactory --> Projectile
     
     SimpleGun *-- EntityFactory
-    SimpleGun --|> Weapon
+    SimpleGun ..|> Weapon
 
     class Projectile {
         <<interface>>
@@ -554,6 +563,7 @@ classDiagram
 
 **Soluzione:** SimpleGun implementa l'interfaccia Weapon e fa riferimento ad una EntityFactory per generare nuovi proiettili; questi infatti sono delle ActiveEntiy, entità che si possono muovere e collidere con altre. SimpleGun alla creazione accetta parametri per impostare la velocità di sparo, la dimensione dei proiettili, la loro velocità e danno. Dunque solo da SimpleGun si potrebbero creare diversi tipi di armi.
 
+---
 ### Marchi Luca
 #### **Realizzazione di entità dotate di "vita"**
 ```mermaid
@@ -608,7 +618,7 @@ Nella gerarchia del Composite l' `ActiveEntity`, ovvero entità in grado di muov
 Il difetto di questo design è che non si possono creare entità con la vita senza il movimento. Per risolvere questo problema si sarebbe potuto realizzare una classe intermedia la quale avrebbe fornito esclusivamente la vita. In questo modo però, `ActiveEntity` avrebbe dovuto estendere sia quest'ultima classe, sia `MovingEntity`. Rendendo il movimento un campo `Optional` si è risolto il problema, permettendo di creare entità dotate di vita, ma che non si possono muovere come `Chest` (foglia del composite).
 Inoltre viene utilizzato il pattern Strategy tramite l'utilizzo di interfacce. Questo permette di aggiungere diverse implementazioni, diverse "strategie" e di poter scegliere la più opportuna a runtime.
 
-
+---
 #### **Creazione entità**
 ```mermaid
 classDiagram
@@ -657,6 +667,7 @@ classDiagram
 Si è preferito scegliere questo pattern rispetto ad un Builder perchè in questo caso i dettagli necessari alla creazione dell'oggetto sono noti a priori, ogni metodo della factory crea un tipo specifico di oggetto con parametri ben definiti. Istanziare oggetti step-by-step con numerosi passaggi, come fornisce il pattern Builder, non era adeguato.
 La classe EntityFactoryImpl utilizza una classe utilità per calcolare le coordinate dei vertici che sono necessari alla creazione di oggetti. Quest'ultima classe, VertexCalculatorImpl, si occupa esclusivamente del calcolo dei vertici di diverse figure geometriche.
 
+---
 #### IA dei nemici
 ```mermaid
 classDiagram
@@ -677,6 +688,7 @@ classDiagram
 L'implementazione della BFS è stata presa dalla libreria JGrapht.
 L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta verso il nodo successivo in direzione del target (Player o Chest).
 
+---
 ### Monaco Andrea
 #### Creazione di entità con hitbox e movimento
 ```mermaid
@@ -698,7 +710,7 @@ classDiagram
   }
 
   class CachedGameEntityImpl{
-    Optional~Hitbox~ hitbox
+    Hitbox hitbox
     GameEntity entity
 
     +reset()
@@ -711,6 +723,7 @@ classDiagram
 **Soluzione:** Per risolvere questo problema è implementato il pattern proxy. In questo modo è possibile controllare la hitbox delle varie entità senza doverla ricalcolare ogni volta, quindi è possibile inserire anche un gran numero di entità all'interno di una singola scena senza che venga richiesto uno sforzo computazionale eccessivo.
 La motivazione principale che spinge a questa soluzione è l'ottimizzazione delle collisioni: il proxy `CachedGameEntityImpl` memorizza le informazioni sulla hitbox dell'entità. Questo permette di ricalcolare le collisioni e le hitbox solo dopo che le entità effettuino un movimento. Qualora si volesse utilizzare `GameEntity` al posto di `CachedGameEntity` è sufficente rinominare la classe Cached Game entity in game entity dove necessario e rimuovere dalla classe principale world l'utilizzo del metodo reset.
 
+---
 #### Creazione delle Hitbox nel gioco
 ```mermaid
 classDiagram
@@ -741,8 +754,9 @@ classDiagram
 ```
 **Problema:** Ogni entità deve avere una hitbox con cui possa interfacciarsi con le altre e rilevare le collisioni.
 
-**Soluzione:** Un'implementazione dei poligoni comoda si può ottenere dalla librerria JTS che però è molto complessa. In questo caso si fa uso del pattern Facade per creare una serie di metodi che sfruttando JTS permettono di eseguire operazioni tra poligoni in modo semplificato.
+**Soluzione:** Per risolvere questo problema, ho deciso di utilizzare il pattern facade. Questo pattern mi permette di fornire un'interfaccia semplificata per l'utilizzo delle hitbox all'interno del gioco.
 
+---
 #### Gestione delle collisioni nel gioco
 ```mermaid
 classDiagram
@@ -759,8 +773,9 @@ classDiagram
   }
 
   class AbstractCollisionCommand{
-    collider
-    collided
+    <<Abstract>>
+    collider : MovingEntity
+    collided : GameEntity
     AbstractCollisionCommand(collider, collided)
   }
 ```
@@ -769,6 +784,7 @@ classDiagram
 **Soluzione:** Per risolvere il problema si è scelto di utilizzare il pattern Command. Questo pattern consente di variare le azioni da intraprendere a seguito di una collisione in base alla classe contreta che estende il command.
 `CollisionCommand` è l'interfaccia che definisce il metodo execute che sarà implementato dalle classi concrete per eseguire azioni specifiche a seguito di una collisione. In `PushAwayCommand` e in `SlideCommand` la direzione del collider, che è una moving entity, viene modificata in base alla posizione dell'altra entità.
 
+---
 #### Implementazione dei movimenti delle entità
 ```mermaid
 classDiagram
@@ -778,7 +794,7 @@ classDiagram
   BaseMovement <|-- InputMovement
   BaseMovement <|-- LinearMovement
   BaseMovement <|-- Fixed
-  BaseMovement <|-- RandomMovement
+  BaseMovement <|-- BfsMovement
 
   MovementFactory <|.. MovementFactoryImpl
   InputMovement <-- MovementFactory
@@ -809,12 +825,13 @@ classDiagram
 
   class MovementFactory{
     createLinearMovement(Vect direction) : LinearMovement
-    createRandomMovement() : RandomMovement
+    createBfsMovement() : BfsMovement
     createInput() : InputMovement
     createFixed() : Fixed
   }
 
   class BaseMovingEntity{
+    <<Abstract>>
     Movement movement
     +updatePos(long deltatime)
     +getDirection() : Vect
@@ -825,9 +842,9 @@ classDiagram
 **Problema:** Diverse entità di gioco possono avere diversi movimenti che potrebbero anche cambire a seconda di diversi fattori. Inoltre è importante separare la logica di moviemento dalla logica delle entità stessa per migliorare la modularità e la manutelibilità del codice.
 
 **Soluzione:** Per affrontare il problema è stata implementata una soluzione che combina il pattern Factory Method e il pattern Strategy.
-Factory Method Pattern:
-La classe MovemntFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
-Strategy Pattern:
+- Factory Method Pattern:
+La classe MovementFactory funge da creatore di oggetti di tipo Movement. Questo pattern consente di creare vari tipi di Movement in modo flessibile e scalabile.
+- Strategy Pattern:
 Le varie classi condividono l'interfaccia Movement ma l'implementazione dei metodi varia a seconda del tipo di movement.
 Inoltre il movimento è inserito come campo all'interno delle varie classi che possono richiamare il vettore direzione risultante del movement e chiamare update per far aggionare al movement questo vettore in base alle logiche della classe.
 
@@ -841,6 +858,8 @@ Inoltre il movimento è inserito come campo all'interno delle varie classi che p
 almeno un muro, una cassa, un player e degli spawner.
 * EntityManagerTest: viene testato l'EntityManager, quindi il salvataggio delle entità
 create, la pulizia di quelle non più vive e la condizione di morte di tutti i nemici.
+* HitboxTest: viene testata la corretta creazione delle hitbox a partire da una lista di vertici e il corretto test delle collisioni.
+* MovementTest: in particolare viene testa il corretto funzionamento di inputMovement e di LinearMovement e se lo spostamento avviene come previsto.
 ## 3.2 Note di sviluppo
 ### Baldazzi Andrea
 #### Utilizzo della libreria JGraphT
@@ -857,6 +876,7 @@ Usati molto frequentemente, due esempi:
 #### Utilizzo di Lambda
 Un esempio: https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/view/impl/MenuPanel.java#L95
 
+---
 ### Bittasi Francesco
 #### Utilizzo di Stream
 Adottate frequentemente per la gestione di elenchi di dati:
@@ -880,6 +900,7 @@ Nella classe EngineImpl per gestire conflitti tra main thread e AWT-EventQueue t
 Ho preso ispirazione dal codice di Game as a lab per la base dell'engine e della view, in particolare per la scrittura della classe `Canvas`.
 - https://github.com/pslab-unibo/oop-game-prog-patterns-2022
 
+---
 ### Marchi Luca
 #### Utilizzo di stream, lambda expressions, method reference e Optional
 Queste feaure vengono utilizzate spesso in tutto il codice. Riporto un esempio dove vengono utilizzate tutte quante assieme:
@@ -893,6 +914,7 @@ Viene utilizzata l'algoritmo BFS della libreria JGrapht:
 Per effettuare i bordi rotondi nei bottoni in Swing, non essendo presenti di default, ho trovato un classe che li implementava:
 - https://stackoverflow.com/a/3634480
 
+---
 ### Monaco Andrea
 #### Utilizzo di stream, lambda e method reference
 Utilizzati spesso in tutto il codice:
@@ -921,7 +943,7 @@ ciò che ho realizzato. Per quanto ci siano delle parti di codice un po' macchin
 manutenibile.
 
 ### Bittasi Francesco
-Sono abbastanza soddisfatto di quanto abbiamo prodotto: le scelte di design che abbiamo fatto ci hanno permesso di apportare numerose modifiche in corso d'opera, ma queste aggiunte/cambiamenti sono stati facili da implementare e non hanno mai rotto il resto del codice: segno che il design fatto a priori era efficace per i nostri obiettivi.
+Sono soddisfatto di quanto abbiamo prodotto: le scelte di design che abbiamo fatto ci hanno permesso di apportare numerose modifiche in corso d'opera, ma queste aggiunte/cambiamenti sono stati facili da implementare e non hanno mai rotto il resto del codice: segno che il design fatto a priori era efficace per i nostri obiettivi.
 L'unione delle diverse parti di progetto svolte individualmente è stata immediata e senza problemi, potremmo anche implementare nuove feature nel gioco senza modificare il resto del codice: armi, tipi di giocatori e nemici diversi, grafica, etc.
 Ci sono diversi casi in cui avrei potuto applicare design Pattern che non ho applicato o seguire tecniche di programmazione java più avanzate, ad esempio avrei potuto pensare di seguire il Decorator per creare le sottocategorie di input ed elementi grafici.
 Avevo come parte del progetto una componente fondamentale per permetterne un funzionamento basilare: la gestione della grafica e degli input. Sono due elementi che portano molta soddisfazione da ragionare e implementare in quanto danno un immediato riscontro visivo; guardando indietro avrei potuto cedere l'implementazione delle armi ad un altro membro del gruppo per bilanciare meglio il carico di lavoro visto che anche solo quelle due hanno impiegato gran parte del tempo che ho dedicato al progetto.
@@ -951,3 +973,9 @@ Tuttavia, ho incontrato alcune difficoltà:
 - Riteniamo sarebbe stato molto più utile al fine del corso e della realizzazione del progetto che i Design Patterns venissero più approfonditi durante le lezioni in aula, in quanto sono stati trattati rapidamente alla fine del corso e ci siamo trovati in difficoltà nell'usarli e riconoscerli.
 - Riteniamo che l'attuale forma di prova pratica metta a disposizione troppo poco tempo: in questo momento la prova induce a consegnare un codice scritto male ma funzionante per ottenere il bonus, al posto di valorizzare codice scritto decentemente.
 - Potrebbe essere utile dare maggiori esempi e spiegazioni di come strutturare progetti di dimensioni simili a quelli del progetto, similmente a GameAsALab, per avere dei punti di riferimento di codice di qualità.
+
+# Guida utente
+Comandi di Geometry Fight:
+- per muovere il personaggio nelle quattro direzioni usare i tasti WASD;
+- per mirare e sparare usare il mouse e il suo tasto sinistro;
+- premere il tasto esc o mettere la finestra in secondo piano per mettere in pausa il gioco.
