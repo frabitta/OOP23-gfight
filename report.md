@@ -593,9 +593,142 @@ classDiagram
 **Soluzione:** SimpleGun implementa l'interfaccia Weapon e fa riferimento ad una EntityFactory per generare nuovi proiettili; questi infatti sono delle ActiveEntiy, entità che si possono muovere e collidere con altre. SimpleGun alla creazione accetta parametri per impostare la velocità di sparo, la dimensione dei proiettili, la loro velocità e danno. Dunque solo da SimpleGun si potrebbero creare diversi tipi di armi.
 
 ### Marchi Luca
+#### **Realizzazione di entità dotate di "vita"**
+```mermaid
+classDiagram
+  MovingEntity <|-- ActiveEntity
+  BaseMovingEntity <|-- AbstractActiveEntity
+  MovingEntity <|.. BaseMovingEntity
+  ActiveEntity <|.. AbstractActiveEntity
+  ActiveEntity <|-- Character
+  AbstractActiveEntity <|-- CharacterImpl
+  Character <|.. CharacterImpl
+  CharacterType <-- Character
+  AbstractActiveEntity <|-- Chest
+  AbstractActiveEntity <|-- Projectile
+
+  <<Interface>> MovingEntity
+  <<Inteface>> ActiveEntity
+  <<Interface>> Character
+  <<enumeration>> CharacterType
+
+  class ActiveEntity{
+    getHealth() : int
+    takeDamage(int damage) : void
+    isAlive() : boolean 
+  }
+
+  class Character{
+    makeDamage() : void
+    setWeapon() : void
+    pointTo(Position2D target) : void
+    getType() : CharacterType
+  }
+
+  class CharacterType{
+    <<Enumeration>>
+    PLAYER 
+    SHOOTER
+    RUNNER
+  }
+
+  class AbstractActiveEntity{
+  }
+
+  class CharacterImpl{
+  }
+
+```
+**Problema**
+Progettazione delle diverse entità di gioco (in particolare quelle dotate di vita). Il design deve essere tale da dividere in maniera chiara le entità e i loro ruoli, inoltre deve garantire una facile estendibilità per modifiche future evitando la ripetizione di codice.
+
+**Soluzione**
+Per risolvere il problema di design delle entità è stato utilizzato il pattern Composite, dove la struttura ad albero (tipica di questo pattern) ha come radice `CachedGameEntity`, da cui tutte le altre entità ereditano le caratteristiche comuni. 
+Nella gerarchia del Composite l' `ActiveEntity`, ovvero entità in grado di muoversi e dotata di vita, eredita il movimento estendendo `MovingEntity` e implementa il componente vita. Le entità di tipo `Character`, invece, rappresentano il player ed i nemici, quindi sono dotate di un'arma per poter infliggere danni. Questo tipo di design consente di estendere facilmente le funzionalità del gioco, rendendo possibile l'aggiunta di nuove entità o di nuovi comportamenti evitando di duplicare porzioni di codice. Ad esempio se si volesse creare un nuovo oggetto dotato di vita, basterebbe estendere la classe astratta `AbstractActiveEntity` (la quale definisce un'implementazione di base dei metodi relativi alle entità con la vita), e quest'ultimo risulterebbe una foglia dell'albero del Composite.
+Il difetto di questo design è che non si possono creare entità con la vita senza il movimento. Per risolvere questo problema si sarebbe potuto realizzare una classe intermedia la quale avrebbe fornito esclusivamente la vita. In questo modo però, `ActiveEntity` avrebbe dovuto estendere sia quest'ultima classe, sia `MovingEntity`. Rendendo il movimento un campo `Optional` si è risolto il problema, permettendo di creare entità dotate di vita, ma che non si possono muovere come `Chest` (foglia del composite).
+Inoltre viene utilizzato il pattern Strategy tramite l'utilizzo di interfacce. Questo permette di aggiungere diverse implementazioni, diverse "strategie" e di poter scegliere la più opportuna a runtime.
+
+
+#### **Creazione entità**
+```mermaid
+classDiagram
+  EntityFactory <|.. EntityFactoryImpl
+  EntityFactoryImpl  *-- VertexCalculator
+  VertexCalculator <|.. VertexCalculatorImpl
+
+  <<Interface>> EntityFactory
+  <<Interface>> VertexCalculator
+
+  class EntityFactory{
+    createPlayer(double sideLength, Position2D position, int health, InputMovement movement) : Character
+
+    createRunner(GameEntity target, double sideLength, Position2D position, int health, GameMap map) : Character
+
+    createShooter(GameEntity target, double sideLength, Position2D position, int health, GameMap map) : Character
+
+    createObstacle(double sideLength, Position2D position) : CachedGameEntity
+
+    createChest(double sideLength, Position2D position, int health) : ActiveEntity
+
+    createProjectile(Character.CharacterType team, Position2D position, Vect direction, double projectileSize, int damage) : Projectile
+
+  }
+
+  class EntityFactoryImpl{
+    - VertexCalculator vertexCalculator
+  }
+
+  class VertexCalculator{
+    traingle(double sideLength, Position2D position) : List~Position2D~
+
+    square(double sideLength, Position2D position) : List~Position2D~
+
+    reactangle(double width, double height, Position2D position) : List~Position2D~
+  }
+
+```
+
+**Problema**
+Nel videogame sono presenti molteplici entità di gioco, tra cui player, nemici, ostacoli, proiettili, ecc. Ogni tipo di entità ha comportamenti e attributi diversi. Questi oggetti devono poter essere istanziati comodamente nel World e nelle altre classi che li utilizzano, così da disporli nella mappa. Se si utilizzasse direttamente l'operatore 'new' nella creazione di oggetti ciò potrebbe portare ad una dipendenza diretta tra il codice che lo istanzia e la classe dell'oggetto stesso.
+
+**Soluzione**
+Utilizzando il design pattern Factory Method viene risolto il problema:
+* Questo pattern separa il codice che crea gli oggetti dalla loro implementazione concreta, garantendo una migliore divisione delle responsabilità nel codice.
+* I metodi della Factory (nel codice rappresentata da EntityFactory) consentono di istanziare vari tipi di entità in maniera flessibile. Così facendo la classe client può richiedere l'oggetto desiderato senza dover conoscere i dettagli implementativi.
+* Delegando la logica creazionale alla Factory inoltre vengono ridotte le dipendenza tra la classe client e la classe concreta dell'oggetto.
+Si è preferito scegliere questo pattern rispetto ad un Builder perchè in questo caso i dettagli necessari alla creazione dell'oggetto sono noti a priori, ogni metodo della factory crea un tipo specifico di oggetto con parametri ben definiti. Istanziare oggetti step-by-step con numerosi passaggi, come fornisce il pattern Builder, non era adeguato.
+La classe EntityFactoryImpl utilizza una classe utilità per calcolare le coordinate dei vertici che sono necessari alla creazione di oggetti. Quest'ultima classe, VertexCalculatorImpl, si occupa esclusivamente del calcolo dei vertici di diverse figure geometriche.
+
+
+
+
+#### Movimento dei nemici
+```mermaid
+classDiagram
+  BaseMovement <|-- BfsMovement
+  Character --* BfsMovement
+  GameEntity --* BfsMovement
+
+  class BfsMovement{
+    - target : GameEntity
+    - agent : Character
+
+    + update() : void
+  }
+```
+ **Problema**
+All'interno del gioco è necessario gestire il movimento dei nemici. Questi ultimi devono muoversi verso il player, oppure verso la chest e fermarsi una volta giunti a destinazione.
+ **Soluzione**
+ Per risolvere il problema del movimento dei nemici, viene utilizzato un algoritmo di ricerca Breadth-First Search (BFS), che è efficace ed efficiente nel trovare il percorso più breve tra due punti (nel codice rappresentati dal centro di due GameTile) in un grafo non pesato. 
+ L'implementazione della BFS è stata presa dalla libreria Jgrapht.
+ L'algoritmo di ricerca viene implementato nella classe `BfsMovement` la quale estende `BaseMovement`. Ogni volta che il metodo update() viene chiamato, se il nemico (agent), che viene preso nel costruttore della classe, non ha ancora raggiunto il suo obiettivo, si sposta nel nodo successivo in direzione del target (Player o Chest).
 ### Monaco Andrea
 # Capitolo 3 - Sviluppo
 ## 3.1 Testing automatizzato
+* BfsMovementTest: viene testato il funzionamento del movimento dei nemici. Ad ogni chiamata update() il nemico, se non ha ancora raggiunto l'obiettivo, deve spostarsi nella posizione successiva in direzine del target. Per ogni tipologia di nemico viene controllato che si fermi nella corretta posizione, gli Shooter dovranno arrestarsi lontano dal target mentre i Runner devono avvicinarsi il più possibile.
+
+* EntityFactoryTest: Per ognuna delle entità viene testata la sua corretta creazione.
+* VertexCalculatorTest: Viene testato il corretto calcolo della posizione dei vertici, per le figure geometriche triangolo equilatero, quadrato e rettangolo.
 ## 3.2 Note di sviluppo
 ### Baldazzi Andrea
 #### Utilizzo della libreria JGraphT
@@ -632,6 +765,17 @@ nella classe EngineImpl
 Ho preso ispirazione dal codice di Game as a lab per la base dell'engine e della view, in particolare per la scrittura della classe `Canvas`.
 
 ### Marchi Luca
+**Utilizzo di stream, lambda expressions, method reference e Optional**
+Queste feaure vengono utilizzate spesso in tutto il codice. Riporto un esempio dove vengono utilizzate tutte quante assieme:
+https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L96C9-L102C50
+
+**Uso di librerie di terze parti (JGrapht)**
+Viene utilizzata l'algoritmo BFS della libreria JGrapht.
+https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L95C9-L95C102
+
+**Codice preso da Internet**
+Per effettuare i bordi rotondi nei bottoni in Swing, non essendo presenti di default, ho trovato un classe che li implementava:
+https://stackoverflow.com/a/3634480
 ### Monaco Andrea
 # Capitolo 4 - Commenti finali
 ## 4.1 Autovalutazione e lavori futuri
@@ -648,4 +792,13 @@ L'unione delle diverse parti di progetto svolte individualmente è stata immedia
 Ci sono diversi casi in cui avrei potuto applicare design Pattern che non ho applicato o seguire tecniche di programmazione java più avanzate, ad esempio avrei potuto pensare di seguire il Decorator per creare le sottocategorie di input ed elementi grafici.
 Avevo come parte del progetto una componente fondamentale per permetterne un funzionamento basilare: la gestione della grafica e degli input. Sono due elementi che portano molta soddisfazione da ragionare e implementare in quanto danno un immediato riscontro visivo; guardando indietro avrei potuto cedere l'implementazione delle armi ad un altro membro del gruppo per bilanciare meglio il carico di lavoro visto che anche solo quelle due hanno impiegato gran parte del tempo che ho dedicato al progetto.
 Non credo svilupperemo ancora questo gioco, ma è possibile che nel tempo libero io prenda l'engine e la view di questo per sviluppare un gioco diverso.
+### Marchi Luca
+Durante la realizzazione del progetto, ho avuto l'opportunità di immergermi nel campo dello sviluppo software, affrontando una serie di sfide che hanno arricchito la mia esperienza e le mie conoscenze. 
+La mia principale responsabilità all'interno del gruppo è stata la progettazione e il design delle entità di gioco, concentrandomi in particolare su quelle dotate di vita. 
+Nello svolgimento di questo processo ho avuto modo di applicare le best practice apprese durante il corso, concentrandomi sulla scrittura di codice facilmente estendibile e senza ripetizioni.
+Un aspetto che ho cercato di mantenere costante nel mio lavoro è stato il rispetto del principio single responsibility, garantendo che le classi e i metodi avessero un ruolo e un compito ben specifico.
+Il design scelto favorisce l'OCP (principio di apertura/chiusura), il codice è chiuso al cambiamento però se si volessero implementare nuove entità con caratteristiche aggiuntive, sarabbe possibile farlo comodamente.
+Era la prima volta che lavoravo ad un progetto di tali dimensioni, è stata un'esperienza stimolante, ma anche molto impegnativa.
+La partenza è stato lo scoglio più grande, inizialmente ho avuto difficoltà a rapportami con git e a gestire i file nei diversi package, però a progetto terminato posso affermare di essere soddisfatto del risultato ottenuto.
+Abbiamo collaborato tutti assieme nella risoluzione di bug e problemi, ci siamo coordianti riuscendo a consegnare un gioco ben strutturato.
 ## 4.2 Difficoltà incontrate e commenti per i docenti
