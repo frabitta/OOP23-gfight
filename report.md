@@ -706,7 +706,7 @@ classDiagram
   }
 
   class CachedGameEntityImpl{
-    Optional~Hitbox~ hitbox
+    Hitbox hitbox
     GameEntity entity
 
     +reset()
