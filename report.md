@@ -874,43 +874,37 @@ Nella classe EngineImpl per gestire conflitti tra main thread e AWT-EventQueue t
 
 #### Game as a lab
 Ho preso ispirazione dal codice di Game as a lab per la base dell'engine e della view, in particolare per la scrittura della classe `Canvas`.
+- https://github.com/pslab-unibo/oop-game-prog-patterns-2022
 
 ### Marchi Luca
-**Utilizzo di stream, lambda expressions, method reference e Optional**
+#### Utilizzo di stream, lambda expressions, method reference e Optional
 Queste feaure vengono utilizzate spesso in tutto il codice. Riporto un esempio dove vengono utilizzate tutte quante assieme:
-https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L96C9-L102C50
+- https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L96C9-L102C50
 
-**Uso di librerie di terze parti (JGrapht)**
-Viene utilizzata l'algoritmo BFS della libreria JGrapht.
-https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L95C9-L95C102
+#### Uso di librerie di terze parti (JGrapht)
+Viene utilizzata l'algoritmo BFS della libreria JGrapht:
+- https://github.com/frabitta/OOP23-gfight/blob/f616e07d4aab0a1bc7f136b06cddd62747df43a6/src/main/java/gfight/world/movement/impl/BfsMovement.java#L95C9-L95C102
 
-**Codice preso da Internet**
+#### Codice preso da Internet
 Per effettuare i bordi rotondi nei bottoni in Swing, non essendo presenti di default, ho trovato un classe che li implementava:
-https://stackoverflow.com/a/3634480
+- https://stackoverflow.com/a/3634480
+
 ### Monaco Andrea
-**Utilizzo di stream, lambda e method referece**
-
+#### Utilizzo di stream, lambda e method reference
 Utilizzati spesso in tutto il codice:
+- https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/GameEntityImpl.java#L66C9-L69C48
 
-https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/GameEntityImpl.java#L66C9-L69C48
-
-**Uso di Optional**
-
+#### Uso di Optional
 Utilizzati in particolare in cached game entity:
+- https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/CachedGameEntityImpl.java#L21C2-L21C41
 
-https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/entity/impl/CachedGameEntityImpl.java#L21C2-L21C41
-
-**Classe con Generics**
-
+#### Classe con Generics
 Molte classi usufruiscono dei generics ad esempio tutte quelle che implementano collision:
+- https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/collision/api/CollisionCommand.java#L12C1-L12C80
 
-https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/collision/api/CollisionCommand.java#L12C1-L12C80
-
-**Uso di librerie di terze parti**
-
+#### Uso di librerie di terze parti
 Faccio uso di varie classi di JTS (Polygon, Coordinates ...) e di Vector2D di Apache
-
-https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/hitbox/impl/HitboxesImpl.java#L20C1-L20C52
+- https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e1317836fbd691eb322ea7/src/main/java/gfight/world/hitbox/impl/HitboxesImpl.java#L20C1-L20C52
 
 # Capitolo 4 - Commenti finali
 ## 4.1 Autovalutazione e lavori futuri
@@ -921,12 +915,14 @@ tra di noi e ad affrontare i problemi insieme per trovare le migliori soluzioni.
 la sfera personale, penso di aver fatto il mio meglio ed essermi impegnato per quanto riuscissi e sono soddisfatto di
 ciò che ho realizzato. Per quanto ci siano delle parti di codice un po' macchinose, come la lettura della mappa da file, o il salvataggio delle statistiche, credo di essere riuscito a sviluppare codice riutilizzabile e facilmente
 manutenibile.
+
 ### Bittasi Francesco
 Sono abbastanza soddisfatto di quanto abbiamo prodotto: le scelte di design che abbiamo fatto ci hanno permesso di apportare numerose modifiche in corso d'opera, ma queste aggiunte/cambiamenti sono stati facili da implementare e non hanno mai rotto il resto del codice: segno che il design fatto a priori era efficace per i nostri obiettivi.
 L'unione delle diverse parti di progetto svolte individualmente è stata immediata e senza problemi, potremmo anche implementare nuove feature nel gioco senza modificare il resto del codice: armi, tipi di giocatori e nemici diversi, grafica, etc.
 Ci sono diversi casi in cui avrei potuto applicare design Pattern che non ho applicato o seguire tecniche di programmazione java più avanzate, ad esempio avrei potuto pensare di seguire il Decorator per creare le sottocategorie di input ed elementi grafici.
 Avevo come parte del progetto una componente fondamentale per permetterne un funzionamento basilare: la gestione della grafica e degli input. Sono due elementi che portano molta soddisfazione da ragionare e implementare in quanto danno un immediato riscontro visivo; guardando indietro avrei potuto cedere l'implementazione delle armi ad un altro membro del gruppo per bilanciare meglio il carico di lavoro visto che anche solo quelle due hanno impiegato gran parte del tempo che ho dedicato al progetto.
 Non credo svilupperemo ancora questo gioco, ma è possibile che nel tempo libero io prenda l'engine e la view di questo per sviluppare un gioco diverso.
+
 ### Marchi Luca
 Durante la realizzazione del progetto, ho avuto l'opportunità di immergermi nel campo dello sviluppo software, affrontando una serie di sfide che hanno arricchito la mia esperienza e le mie conoscenze. 
 La mia principale responsabilità all'interno del gruppo è stata la progettazione e il design delle entità di gioco, concentrandomi in particolare su quelle dotate di vita. 
@@ -936,6 +932,7 @@ Il design scelto favorisce l'OCP (principio di apertura/chiusura), il codice è 
 Era la prima volta che lavoravo ad un progetto di tali dimensioni, è stata un'esperienza stimolante, ma anche molto impegnativa.
 La partenza è stato lo scoglio più grande, inizialmente ho avuto difficoltà a rapportami con git e a gestire i file nei diversi package, però a progetto terminato posso affermare di essere soddisfatto del risultato ottenuto.
 Abbiamo collaborato tutti assieme nella risoluzione di bug e problemi, ci siamo coordianti riuscendo a consegnare un gioco ben strutturato.
+
 ### Andrea Monaco
 Sono abbastanza soddisfatto del risultato finale del nostro lavoro di gruppo. Abbiamo fatto del nostro meglio nell'organizzare il codice e siamo riusciti a coordinarci bene nella divisione dei compiti. In particolare io mi sono occupato di gestire i movimenti di tutte l'entità, apparte i nemici che sfruttano una bfs, e di scrivere il codice di entità dotate di movimento e di hitboxes in modo di favorire il riuso e di lasciare la possibilità di effettuare numerose modifiche agli elementi di gioco.
 I punti di forza del mio codice includono la facilità nel aggiungere e rimuovere feature al gioco grazie all'indipendenza del movimento dalle entità e la semplicità nell'implementare le hitbox.
