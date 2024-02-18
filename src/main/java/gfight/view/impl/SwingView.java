@@ -49,7 +49,7 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     /**
      * Constructor of the view.
      * 
-     * @param engine            engine managing the appp
+     * @param engine            engine managing the app
      * @param camera            ViewCamera through wich observe the world
      * @param inputEventFactory factory to create input events
      */
