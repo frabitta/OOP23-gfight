@@ -741,7 +741,7 @@ classDiagram
 ```
 **Problema:** Ogni entità deve avere una hitbox con cui possa interfacciarsi con le altre e rilevare le collisioni.
 
-**Soluzione:** Un'implementazione dei poligoni comoda si può ottenere dalla librerria JTS che però è molto complessa. In questo caso si fa uso del pattern Facade per creare una serie di metodi che sfruttando JTS permettono di eseguire operazioni tra poligoni in modo semplificato.
+**Soluzione:** Per risolvere questo problema, ho deciso di utilizzare il pattern facade. Questo pattern mi permette di fornire un'interfaccia semplificata per l'utilizzo delle hitbox all'interno del gioco.
 
 #### Gestione delle collisioni nel gioco
 ```mermaid
@@ -759,8 +759,9 @@ classDiagram
   }
 
   class AbstractCollisionCommand{
-    collider
-    collided
+    <<Abstract>>
+    collider : MovingEntity
+    collided : GameEntity
     AbstractCollisionCommand(collider, collided)
   }
 ```
@@ -778,7 +779,7 @@ classDiagram
   BaseMovement <|-- InputMovement
   BaseMovement <|-- LinearMovement
   BaseMovement <|-- Fixed
-  BaseMovement <|-- RandomMovement
+  BaseMovement <|-- BfsMovement
 
   MovementFactory <|.. MovementFactoryImpl
   InputMovement <-- MovementFactory
@@ -809,12 +810,13 @@ classDiagram
 
   class MovementFactory{
     createLinearMovement(Vect direction) : LinearMovement
-    createRandomMovement() : RandomMovement
+    createBfsMovement() : BfsMovement
     createInput() : InputMovement
     createFixed() : Fixed
   }
 
   class BaseMovingEntity{
+    <<Abstract>>
     Movement movement
     +updatePos(long deltatime)
     +getDirection() : Vect
