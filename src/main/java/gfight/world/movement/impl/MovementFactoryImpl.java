@@ -28,11 +28,6 @@ public final class MovementFactoryImpl implements MovementFactory {
     }
 
     @Override
-    public LinearMovement createLinearMovement(final double accelleration, final Vect direction) {
-        return new LinearMovement(accelleration, direction);
-    }
-
-    @Override
     public InputMovement createInput() {
         return new InputMovementImpl();
     }
