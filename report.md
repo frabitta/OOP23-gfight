@@ -903,18 +903,21 @@ Un esempio: https://github.com/frabitta/OOP23-gfight/blob/1f46024e7a794b0b54e131
 ### Bittasi Francesco
 #### Utilizzo di Stream
 Adottate frequentemente per la gestione di elenchi di dati:
-- https://github.com/frabitta/OOP23-gfight/blob/fb4012549a225ac1774cfe5618e629f0fbe8a238/src/main/java/gfight/engine/input/impl/InputEventFactoryImpl.java#L18
-- paint in canvas
-- PolygonGraphicsRenderer
+- https://github.com/frabitta/OOP23-gfight/blob/fb4012549a225ac1774cfe5618e629f0fbe8a238/src/main/java/gfight/engine/input/impl/InputEventFactoryImpl.java#L19
+- https://github.com/frabitta/OOP23-gfight/blob/dc63c887effa5add94c655e99de1bdea0b6ec113/src/main/java/gfight/view/impl/Canvas.java#L67
 
 #### Utilizzo di Optional
 Usati per convertire i tasti premuti in possibili Value:
 - https://github.com/frabitta/OOP23-gfight/blob/fb4012549a225ac1774cfe5618e629f0fbe8a238/src/main/java/gfight/engine/input/impl/InputEventFactoryImpl.java#L18
 
 #### Sincronizzazioni dei thread
-nella classe EngineImpl
-- Semaphore per input: processInput, notifyInputEvent
-- sincronizzazione tramite wait e notify per gli stati dell'engine: holdPageUntilNotified, changeStatus
+Nella classe EngineImpl per gestire conflitti tra main thread e AWT-EventQueue thread:
+- Utilizzo di Semaphore per gestire l'accesso alla coda di input:
+    - https://github.com/frabitta/OOP23-gfight/blob/c9d24b2e9f147e8c17c4e537ac0ab8cd9a664bd8/src/main/java/gfight/engine/impl/EngineImpl.java#L164
+    - https://github.com/frabitta/OOP23-gfight/blob/c9d24b2e9f147e8c17c4e537ac0ab8cd9a664bd8/src/main/java/gfight/engine/impl/EngineImpl.java#L192
+- Utilizzo di wait e notify per gestire gli stati dell'engine:
+    - https://github.com/frabitta/OOP23-gfight/blob/c9d24b2e9f147e8c17c4e537ac0ab8cd9a664bd8/src/main/java/gfight/engine/impl/EngineImpl.java#L132
+    - https://github.com/frabitta/OOP23-gfight/blob/c9d24b2e9f147e8c17c4e537ac0ab8cd9a664bd8/src/main/java/gfight/engine/impl/EngineImpl.java#L213
 
 #### Game as a lab
 Ho preso ispirazione dal codice di Game as a lab per la base dell'engine e della view, in particolare per la scrittura della classe `Canvas`.
