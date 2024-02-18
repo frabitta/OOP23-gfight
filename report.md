@@ -953,3 +953,9 @@ Tuttavia, ho incontrato alcune difficoltà:
 - Riteniamo sarebbe stato molto più utile al fine del corso e della realizzazione del progetto che i Design Patterns venissero più approfonditi durante le lezioni in aula, in quanto sono stati trattati rapidamente alla fine del corso e ci siamo trovati in difficoltà nell'usarli e riconoscerli.
 - Riteniamo che l'attuale forma di prova pratica metta a disposizione troppo poco tempo: in questo momento la prova induce a consegnare un codice scritto male ma funzionante per ottenere il bonus, al posto di valorizzare codice scritto decentemente.
 - Potrebbe essere utile dare maggiori esempi e spiegazioni di come strutturare progetti di dimensioni simili a quelli del progetto, similmente a GameAsALab, per avere dei punti di riferimento di codice di qualità.
+
+# Guida utente
+Comandi di Geometry Fight:
+- per muovere il personaggio nelle quattro direzioni usare i tasti WASD;
+- per mirare e sparare usare il mouse e il suo tasto sinistro;
+- premere il tasto esc o mettere la finestra in secondo piano per mettere in pausa il gioco.
