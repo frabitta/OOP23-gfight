@@ -25,14 +25,14 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 /**
  * An EngineView implementation using JSwing.
  */
 public final class SwingView implements EngineView, InputEventProvider, CameraViewer {
 
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 720;
+    private static final double SCREEN_RATIO = 0.7;
 
     private final Engine engine;
     private final JFrame frame;
@@ -49,12 +49,12 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     /**
      * Constructor of the view.
      * 
-     * @param engine engine managing the app
-     * @param camera ViewCamera through wich observe the world
+     * @param engine            engine managing the appp
+     * @param camera            ViewCamera through wich observe the world
      * @param inputEventFactory factory to create input events
      */
     @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP2",
+        value = "EI_EXPOSE_REP2", 
         justification = "It's necessary to store and external camera to print correctly on screen")
     public SwingView(final Engine engine, final ViewCamera camera, final InputEventFactory inputEventFactory) {
         final String path = "src/main/resources/images/";
@@ -88,8 +88,13 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     }
 
     private void setupFrame() {
-        this.frame.setSize(WIDTH, HEIGHT);
-        this.frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final double width = screenSize.getWidth() * SCREEN_RATIO;
+        final double height = screenSize.getHeight() * SCREEN_RATIO;
+        this.frame.setPreferredSize(new Dimension((int) width, (int) height));
+        this.frame.setLocation(
+                (int) (screenSize.getWidth() / 2 - width / 2),
+                (int) (screenSize.getHeight() / 2 - height / 2));
 
         this.frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -120,7 +125,7 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
     }
 
     private Canvas setupGamePanel(final ViewCamera camera) {
-        final Canvas canvas = new Canvas(WIDTH, HEIGHT, this, camera);
+        final Canvas canvas = new Canvas(this.frame.getWidth(), this.frame.getHeight(), this, camera);
         canvas.setInputEventListener(this.listener);
         canvas.setInputEventFactory(this.inputEventFactory);
         canvas.requestFocusInWindow();
@@ -133,7 +138,7 @@ public final class SwingView implements EngineView, InputEventProvider, CameraVi
 
     @Override
     public void render(final List<GraphicsComponent> gComponentsList) {
-        this.camera.setScreenDimension(frame.getSize().getWidth(), frame.getSize().getHeight());
+        this.camera.setScreenDimension(this.frame.getSize().getWidth(), this.frame.getSize().getHeight());
         this.gComponentsList = Collections.unmodifiableList(gComponentsList);
         this.frame.repaint();
     }
