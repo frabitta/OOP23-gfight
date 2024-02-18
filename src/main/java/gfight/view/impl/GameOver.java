@@ -21,7 +21,7 @@ import gfight.engine.api.Engine.EngineStatus;
 public class GameOver extends JPanel {
     private static final long serialVersionUID = 4003161718422635256L;
 
-    private static final String PATH_STRING = "src/main/resources/images/";
+    private static final String PATH_STRING = "images/";
     private static final int TITLE_FONT_DIM = 70;
     private static final int BUTTON_FONT_DIM = 22;
     private static final int TILE_SPACING = 5;
@@ -38,7 +38,7 @@ public class GameOver extends JPanel {
      */
     public GameOver(final Engine engine) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backgroundImage = new ImageIcon(PATH_STRING + "game_over.png");
+        backgroundImage = new ImageIcon(getClass().getClassLoader().getResource(PATH_STRING + "game_over.png"));
 
         final JLabel titleLabel = new JLabel("GAME OVER!");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TITLE_FONT_DIM));

@@ -43,7 +43,7 @@ public class MenuPanel extends JPanel {
     private static final int TEXT_SIZE = TITLE_SIZE / 4;
     private static final int SCALE_BUTTON = 6;
     private static final int RADIUS = 10;
-    private static final String PATH_STRING = "src/main/resources/images/";
+    private static final String PATH_STRING = "images/";
     /**
      * The background image.
      */
@@ -61,17 +61,17 @@ public class MenuPanel extends JPanel {
     public MenuPanel(final Engine engine) {
         this.setLayout(new BorderLayout());
         // BACKGROUND IMAGE
-        background = new ImageIcon(PATH_STRING + "Background.png");
+        background = new ImageIcon(getClass().getClassLoader().getResource(PATH_STRING + "Background.png"));
         // BUTTON IMAGES
-        final ImageIcon playImage = new ImageIcon(PATH_STRING + "play.png");
-        final ImageIcon statsImage = new ImageIcon(PATH_STRING + "stats.jpg");
+        final ImageIcon playImage = new ImageIcon(getClass().getClassLoader().getResource(PATH_STRING + "play.png"));
+        final ImageIcon statsImage = new ImageIcon(getClass().getClassLoader().getResource(PATH_STRING + "stats.jpg"));
         final ImageIcon resizedPlayImage = resizeImage(BUTTON_IMAGE_WIDTH, BUTTON_IMAGE_HEIGHT, playImage);
         final ImageIcon resizedStatsImage = resizeImage(BUTTON_IMAGE_WIDTH, BUTTON_IMAGE_HEIGHT, statsImage);
 
         // MAIN PANEL
         final JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, DISTANCE, 0, 0));
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(0, DISTANCE, 200, 0));
 
         // TITLE
         final JLabel firstLabel = new JLabel("Geometry");
@@ -101,7 +101,7 @@ public class MenuPanel extends JPanel {
         });
 
         // MENU BAR
-        final JMenu mapMenu = new JMenu("     Map 1     ");
+        final JMenu mapMenu = new JMenu("         Map 1         ");
         mapMenu.setBorder(new RoundedBorder(RADIUS));
         mapMenu.setBackground(Color.WHITE);
         mapMenu.setFont(new Font("Arial", Font.BOLD, TEXT_SIZE));
@@ -111,19 +111,19 @@ public class MenuPanel extends JPanel {
         final JMenuItem map4 = new JMenuItem("Map 4");
         map1.addActionListener(e -> {
             engine.selectLevel("map1");
-            mapMenu.setText("     Map 1     ");
+            mapMenu.setText("         Map 1         ");
         });
         map2.addActionListener(e -> {
             engine.selectLevel("map2");
-            mapMenu.setText("     Map 2     ");
+            mapMenu.setText("         Map 2         ");
         });
         map3.addActionListener(e -> {
             engine.selectLevel("map3");
-            mapMenu.setText("     Map 3     ");
+            mapMenu.setText("         Map 3         ");
         });
         map4.addActionListener(e -> {
             engine.selectLevel("map4");
-            mapMenu.setText("     Map 4     ");
+            mapMenu.setText("         Map 4         ");
         });
         mapMenu.add(map1);
         mapMenu.add(map2);
@@ -131,6 +131,7 @@ public class MenuPanel extends JPanel {
         mapMenu.add(map4);
         menuBar.add(mapMenu);
         menuBar.setAlignmentX(CENTER_ALIGNMENT);
+
 
         leftPanel.add(Box.createVerticalGlue());
         leftPanel.add(firstLabel);
@@ -140,6 +141,7 @@ public class MenuPanel extends JPanel {
         leftPanel.add(statsButton);
         leftPanel.add(menuBar);
         leftPanel.add(Box.createVerticalGlue());
+
 
         add(leftPanel, BorderLayout.WEST);
     }
