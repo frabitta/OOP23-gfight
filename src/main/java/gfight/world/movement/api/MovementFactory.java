@@ -6,7 +6,6 @@ import gfight.world.entity.api.GameEntity;
 import gfight.world.map.api.GameMap;
 import gfight.world.movement.impl.BfsMovement;
 import gfight.world.movement.impl.LinearMovement;
-import gfight.world.movement.impl.RandomMovement;
 import gfight.world.movement.impl.Fixed;
 
 /**
@@ -41,12 +40,6 @@ public interface MovementFactory {
      * @return the Linear Movement Class object
      */
     LinearMovement createLinearMovement(double acceleration, Vect direction);
-
-    /**
-     * 
-     * @return the random Movement class object
-     */
-    RandomMovement createRandomMovement();
 
     /**
      * 

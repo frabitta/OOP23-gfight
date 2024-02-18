@@ -23,11 +23,6 @@ public final class MovementFactoryImpl implements MovementFactory {
     }
 
     @Override
-    public RandomMovement createRandomMovement() {
-        return new RandomMovement();
-    }
-
-    @Override
     public Fixed createFixed() {
         return new Fixed();
     }
