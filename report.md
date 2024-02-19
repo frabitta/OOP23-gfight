@@ -979,8 +979,35 @@ Tuttavia, ho incontrato alcune difficoltà:
 - Riteniamo che l'attuale forma di prova pratica metta a disposizione troppo poco tempo: in questo momento la prova induce a consegnare un codice scritto male ma funzionante per ottenere il bonus, al posto di valorizzare codice scritto decentemente.
 - Potrebbe essere utile dare maggiori esempi e spiegazioni di come strutturare progetti di dimensioni simili a quelli del progetto, similmente a GameAsALab, per avere dei punti di riferimento di codice di qualità.
 
-# Guida utente
+# Appendice A - Guida utente
 Comandi di Geometry Fight:
 - per muovere il personaggio nelle quattro direzioni usare i tasti WASD;
 - per mirare e sparare usare il mouse e il suo tasto sinistro;
 - premere il tasto esc o mettere la finestra in secondo piano per mettere in pausa il gioco.
+
+# Appendice B - Esercitazioni di laboratorio
+## B.0.1 andrea.baldazzi7@studio.unibo.it
+- Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss.php?d=146511#p208418
+- Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss.php?d=147598#p209242
+- Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss.php?d=148025#p209779
+- Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss.php?d=149231#p211558
+- Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss.php?d=150252#p212661
+- Laboratorio 11: https://virtuale.unibo.it/mod/forum/discuss.php?d=151542#p213922
+## B.0.2 francesco.bittasi@studio.unibo.it
+- Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss.php?d=146511#p208335
+- Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss.php?d=147598#p209241
+- Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss.php?d=148025#p209754
+- Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss.php?d=149231#p211483
+- Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss.php?d=150252#p212726
+- Laboratorio 11: https://virtuale.unibo.it/mod/forum/discuss.php?d=151542#p213929
+## B.0.3 luca.marchi13@studio.unibo.it
+- Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss.php?d=147598#p209331
+- Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss.php?d=148025#p210404
+- Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss.php?d=149231#p211533
+- Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss.php?d=150252#p212814
+## B.0.4 andrea.monaco4@studio.unibo.it
+- Laboratorio 06: https://virtuale.unibo.it/mod/forum/discuss.php?d=146511#p208457
+- Laboratorio 07: https://virtuale.unibo.it/mod/forum/discuss.php?d=147598#p209382
+- Laboratorio 08: https://virtuale.unibo.it/mod/forum/discuss.php?d=148025#p210337
+- Laboratorio 09: https://virtuale.unibo.it/mod/forum/discuss.php?d=149231#p211551
+- Laboratorio 10: https://virtuale.unibo.it/mod/forum/discuss.php?d=150252#p212799
