@@ -31,11 +31,3 @@ tasks.test {
         showStandardStreams = true 
         }
 }
-
-sourceSets {
-    main {
-        resources {
-            srcDirs("src/main/resources")
-        }
-    }
-}
